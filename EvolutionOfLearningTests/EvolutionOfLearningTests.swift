@@ -92,6 +92,14 @@ class EvolutionOfLearningTests: XCTestCase {
 		}
 	}
 	
+	func testSingleLayerSingleOutputFFNNPerformance() {
+		let inputs = makeRandomInputs(), weights = makeRandomWeights()
+		measureBlock() {
+			let network = SingleLayerSingleOutputFFNN(weights: weights, activation: self.activation)
+			network.activateWithInputs(inputs)
+		}
+	}
+	
 	func testSingleLayerNeuralNetworkPerformance() {
 		let inputs = makeRandomInputs(), weights = [makeRandomWeights()]
 		measureBlock() {

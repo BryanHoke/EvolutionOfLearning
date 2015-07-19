@@ -48,6 +48,33 @@ public struct SingleLayerSingleOutputNeuralNetwork {
 	
 }
 
+public final class SingleLayerSingleOutputFFNN {
+	
+	public init(size: Int, activation: ActivationFunction, weightGenerator: () -> Double = randomDouble) {
+		for _ in 0..<size {
+			weights.append(weightGenerator())
+		}
+		self.activation = activation
+	}
+	
+	public init(weights: [Double], activation: ActivationFunction) {
+		self.weights = weights
+		self.activation = activation
+	}
+	
+	/// weights[ i ] = weight from neuron i to output neuron
+	public var weights = [Double]()
+	
+	public var activation: ActivationFunction
+	
+	public func activateWithInputs(var inputs: [Double]) -> Double {
+		inputs.append(-1)
+		let output = activation(cblas_ddot(Int32(weights.count), weights, 1, inputs, 1))
+		return output
+	}
+	
+}
+
 public struct SingleLayerNeuralNetwork {
 	
 	public init(inputSize: Int, outputSize: Int, activation: ActivationFunction, weightGenerator: () -> Double = randomDouble) {

@@ -1,4 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model name="untitled.xcdatamodel" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1" systemVersion="11A491" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
-    <elements/>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="8118.17" systemVersion="15A178w" minimumToolsVersion="Automatic">
+    <entity name="Individual" syncable="YES">
+        <attribute name="chromosome" attributeType="String" syncable="YES"/>
+        <attribute name="fitness" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+    </entity>
+    <entity name="Population" syncable="YES">
+        <relationship name="members" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Individual" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Individual" positionX="-54" positionY="-9" width="128" height="73"/>
+        <element name="Population" positionX="225" positionY="129" width="128" height="58"/>
+    </elements>
 </model>

@@ -7,8 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4A1D739D1B54A8C300E788B9 /* ArrayWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1D739C1B54A8C300E788B9 /* ArrayWrapper.swift */; };
+		4A1D739E1B54A8C300E788B9 /* ArrayWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1D739C1B54A8C300E788B9 /* ArrayWrapper.swift */; };
 		4A50A8341B30F9F10004BC5D /* Chromosome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A50A8331B30F9F10004BC5D /* Chromosome.swift */; };
 		4A50A8351B30F9F10004BC5D /* Chromosome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A50A8331B30F9F10004BC5D /* Chromosome.swift */; };
+		4A558F251B37D77D00242E23 /* EvolutionOfLearningModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4A558F231B37D77D00242E23 /* EvolutionOfLearningModel.xcdatamodeld */; };
+		4A7E06931B5C2FC40000E561 /* Experiment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7E06921B5C2FC40000E561 /* Experiment.swift */; };
+		4A7E06941B5C2FC40000E561 /* Experiment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7E06921B5C2FC40000E561 /* Experiment.swift */; };
 		4A825EC61B2D019E00C8CEA3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A825EC51B2D019E00C8CEA3 /* AppDelegate.swift */; };
 		4A825EC81B2D019E00C8CEA3 /* Document.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A825EC71B2D019E00C8CEA3 /* Document.swift */; };
 		4A825ECB1B2D019E00C8CEA3 /* Document.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A825EC91B2D019E00C8CEA3 /* Document.xib */; };
@@ -19,7 +24,17 @@
 		4A825EE91B2D019E00C8CEA3 /* EvolutionOfLearningUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A825EE81B2D019E00C8CEA3 /* EvolutionOfLearningUITests.swift */; };
 		4A825EFB1B2D057B00C8CEA3 /* SingleLayerNeuralNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A825EFA1B2D057B00C8CEA3 /* SingleLayerNeuralNetwork.swift */; };
 		4A825EFC1B2D057B00C8CEA3 /* SingleLayerNeuralNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A825EFA1B2D057B00C8CEA3 /* SingleLayerNeuralNetwork.swift */; };
+		4A9B76C51B55574800BE653D /* Array-Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9B76C41B55574800BE653D /* Array-Extensions.swift */; };
+		4A9B76C61B55574800BE653D /* Array-Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9B76C41B55574800BE653D /* Array-Extensions.swift */; };
+		4A9B76C81B55576800BE653D /* CustomOperators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9B76C71B55576800BE653D /* CustomOperators.swift */; };
+		4A9B76C91B55576800BE653D /* CustomOperators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9B76C71B55576800BE653D /* CustomOperators.swift */; };
 		4AD3F53F1B33097C000E9BA4 /* EvolutionOfLearningGeneticAlgorithmTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD3F53E1B33097C000E9BA4 /* EvolutionOfLearningGeneticAlgorithmTests.swift */; };
+		4AE6209F1B39A1D60033980F /* GeneticAlgorithm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE6209E1B39A1D60033980F /* GeneticAlgorithm.swift */; };
+		4AE620A01B39A1D60033980F /* GeneticAlgorithm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE6209E1B39A1D60033980F /* GeneticAlgorithm.swift */; };
+		4AF11C0D1B3F036C00AED909 /* Individual.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF11C0C1B3F036C00AED909 /* Individual.swift */; };
+		4AF11C0E1B3F036C00AED909 /* Individual.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF11C0C1B3F036C00AED909 /* Individual.swift */; };
+		4AF11C111B4092EB00AED909 /* Population.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF11C101B4092EB00AED909 /* Population.swift */; };
+		4AF11C121B4092EB00AED909 /* Population.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF11C101B4092EB00AED909 /* Population.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,7 +55,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4A1D739C1B54A8C300E788B9 /* ArrayWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayWrapper.swift; sourceTree = "<group>"; };
 		4A50A8331B30F9F10004BC5D /* Chromosome.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Chromosome.swift; sourceTree = "<group>"; };
+		4A558F241B37D77D00242E23 /* EvolutionOfLearningModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = EvolutionOfLearningModel.xcdatamodel; sourceTree = "<group>"; };
+		4A7E06921B5C2FC40000E561 /* Experiment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Experiment.swift; sourceTree = "<group>"; };
 		4A825EC21B2D019E00C8CEA3 /* EvolutionOfLearning.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EvolutionOfLearning.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A825EC51B2D019E00C8CEA3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4A825EC71B2D019E00C8CEA3 /* Document.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Document.swift; sourceTree = "<group>"; };
@@ -56,7 +74,12 @@
 		4A825EE81B2D019E00C8CEA3 /* EvolutionOfLearningUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EvolutionOfLearningUITests.swift; sourceTree = "<group>"; };
 		4A825EEA1B2D019E00C8CEA3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4A825EFA1B2D057B00C8CEA3 /* SingleLayerNeuralNetwork.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleLayerNeuralNetwork.swift; sourceTree = "<group>"; };
+		4A9B76C41B55574800BE653D /* Array-Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array-Extensions.swift"; sourceTree = "<group>"; };
+		4A9B76C71B55576800BE653D /* CustomOperators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomOperators.swift; sourceTree = "<group>"; };
 		4AD3F53E1B33097C000E9BA4 /* EvolutionOfLearningGeneticAlgorithmTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EvolutionOfLearningGeneticAlgorithmTests.swift; sourceTree = "<group>"; };
+		4AE6209E1B39A1D60033980F /* GeneticAlgorithm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneticAlgorithm.swift; sourceTree = "<group>"; };
+		4AF11C0C1B3F036C00AED909 /* Individual.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Individual.swift; sourceTree = "<group>"; };
+		4AF11C101B4092EB00AED909 /* Population.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Population.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,12 +107,41 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4A1D739B1B54A8AC00E788B9 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				4A1D739C1B54A8C300E788B9 /* ArrayWrapper.swift */,
+				4A9B76C41B55574800BE653D /* Array-Extensions.swift */,
+				4A9B76C71B55576800BE653D /* CustomOperators.swift */,
+			);
+			name = Helpers;
+			sourceTree = "<group>";
+		};
+		4A248D831B5B45F800C78F2B /* Experiments */ = {
+			isa = PBXGroup;
+			children = (
+				4A7E06921B5C2FC40000E561 /* Experiment.swift */,
+			);
+			name = Experiments;
+			sourceTree = "<group>";
+		};
 		4A50A8321B30F9D60004BC5D /* Genetic algorithms */ = {
 			isa = PBXGroup;
 			children = (
 				4A50A8331B30F9F10004BC5D /* Chromosome.swift */,
+				4AE6209E1B39A1D60033980F /* GeneticAlgorithm.swift */,
+				4AF11C0C1B3F036C00AED909 /* Individual.swift */,
+				4AF11C101B4092EB00AED909 /* Population.swift */,
 			);
 			name = "Genetic algorithms";
+			sourceTree = "<group>";
+		};
+		4A558F221B37D74700242E23 /* Data Model */ = {
+			isa = PBXGroup;
+			children = (
+				4A558F231B37D77D00242E23 /* EvolutionOfLearningModel.xcdatamodeld */,
+			);
+			name = "Data Model";
 			sourceTree = "<group>";
 		};
 		4A825EB91B2D019E00C8CEA3 = {
@@ -118,8 +170,11 @@
 				4A825EC51B2D019E00C8CEA3 /* AppDelegate.swift */,
 				4A825EC71B2D019E00C8CEA3 /* Document.swift */,
 				4A825EC91B2D019E00C8CEA3 /* Document.xib */,
+				4A248D831B5B45F800C78F2B /* Experiments */,
 				4A825EF91B2D053600C8CEA3 /* Neural Networks */,
 				4A50A8321B30F9D60004BC5D /* Genetic algorithms */,
+				4A558F221B37D74700242E23 /* Data Model */,
+				4A1D739B1B54A8AC00E788B9 /* Helpers */,
 				4A825ECF1B2D019E00C8CEA3 /* Assets.xcassets */,
 				4A825ED11B2D019E00C8CEA3 /* MainMenu.xib */,
 				4A825ED41B2D019E00C8CEA3 /* Info.plist */,
@@ -285,11 +340,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4A9B76C51B55574800BE653D /* Array-Extensions.swift in Sources */,
+				4AF11C111B4092EB00AED909 /* Population.swift in Sources */,
+				4A9B76C81B55576800BE653D /* CustomOperators.swift in Sources */,
 				4A825ECE1B2D019E00C8CEA3 /* Document.xcdatamodeld in Sources */,
 				4A50A8341B30F9F10004BC5D /* Chromosome.swift in Sources */,
+				4A558F251B37D77D00242E23 /* EvolutionOfLearningModel.xcdatamodeld in Sources */,
 				4A825EC81B2D019E00C8CEA3 /* Document.swift in Sources */,
+				4AF11C0D1B3F036C00AED909 /* Individual.swift in Sources */,
 				4A825EC61B2D019E00C8CEA3 /* AppDelegate.swift in Sources */,
+				4A7E06931B5C2FC40000E561 /* Experiment.swift in Sources */,
+				4AE6209F1B39A1D60033980F /* GeneticAlgorithm.swift in Sources */,
 				4A825EFB1B2D057B00C8CEA3 /* SingleLayerNeuralNetwork.swift in Sources */,
+				4A1D739D1B54A8C300E788B9 /* ArrayWrapper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -297,8 +360,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4A9B76C91B55576800BE653D /* CustomOperators.swift in Sources */,
+				4AF11C0E1B3F036C00AED909 /* Individual.swift in Sources */,
+				4AE620A01B39A1D60033980F /* GeneticAlgorithm.swift in Sources */,
 				4AD3F53F1B33097C000E9BA4 /* EvolutionOfLearningGeneticAlgorithmTests.swift in Sources */,
+				4AF11C121B4092EB00AED909 /* Population.swift in Sources */,
+				4A9B76C61B55574800BE653D /* Array-Extensions.swift in Sources */,
 				4A825EDE1B2D019E00C8CEA3 /* EvolutionOfLearningTests.swift in Sources */,
+				4A7E06941B5C2FC40000E561 /* Experiment.swift in Sources */,
+				4A1D739E1B54A8C300E788B9 /* ArrayWrapper.swift in Sources */,
 				4A50A8351B30F9F10004BC5D /* Chromosome.swift in Sources */,
 				4A825EFC1B2D057B00C8CEA3 /* SingleLayerNeuralNetwork.swift in Sources */,
 			);
@@ -448,6 +518,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = BryanHoke.EvolutionOfLearning;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 			};
 			name = Release;
 		};
@@ -473,6 +544,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = BryanHoke.EvolutionOfLearningTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EvolutionOfLearning.app/Contents/MacOS/EvolutionOfLearning";
 			};
 			name = Release;
@@ -545,6 +617,16 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
+		4A558F231B37D77D00242E23 /* EvolutionOfLearningModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				4A558F241B37D77D00242E23 /* EvolutionOfLearningModel.xcdatamodel */,
+			);
+			currentVersion = 4A558F241B37D77D00242E23 /* EvolutionOfLearningModel.xcdatamodel */;
+			path = EvolutionOfLearningModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
 		4A825ECC1B2D019E00C8CEA3 /* Document.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (

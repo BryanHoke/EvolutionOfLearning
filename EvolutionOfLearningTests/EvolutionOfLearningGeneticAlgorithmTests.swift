@@ -10,7 +10,8 @@ import XCTest
 
 class EvolutionOfLearningGeneticAlgorithmTests: XCTestCase {
 	
-	var tChromosome1: Chromosome = "01010010100101001010101001010010100101"
+	let tChromosome1: Chromosome = "01010010100101001010101001010010100101"
+//	let tChromosome2: Chromosome = "01010010100101010010101001010100101010"
 
     override func setUp() {
         super.setUp()
@@ -65,8 +66,24 @@ class EvolutionOfLearningGeneticAlgorithmTests: XCTestCase {
 		}
 		XCTAssert(testGenesMutated2 == testGenesMutated1)
 		var testChromosome2 = tChromosome1
-		testChromosome2.mutateAtIndices(mutationIndices)
+		testChromosome2.mutateInPlaceAtIndices(mutationIndices)
 		XCTAssert(testChromosome2 == testChromosome1)
+	}
+	
+	func testChromosomeMutationPerformance() {
+		var testChromosome1 = tChromosome1
+		let mutationRate = 0.5
+		measureBlock { () -> Void in
+			testChromosome1.mutateWithRate(mutationRate)
+		}
+	}
+	
+	func testChromosomeTwoPointCrossover() {
+		var testChromosome1 = tChromosome1
+		var testChromosome2 = !testChromosome1
+		let seed = UInt32(0)
+		let offspring = testChromosome1.twoPointCrossoverWithChromosome(testChromosome2, seed: seed)
+		
 	}
 
 }
