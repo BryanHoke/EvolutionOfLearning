@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="8118.17" systemVersion="15A178w" minimumToolsVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="8166.2" systemVersion="15A226f" minimumToolsVersion="Automatic">
     <entity name="Individual" syncable="YES">
         <attribute name="chromosome" attributeType="String" syncable="YES"/>
         <attribute name="fitness" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="parentID1" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="parentID2" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="population" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Population" inverseName="members" inverseEntity="Population" syncable="YES"/>
     </entity>
     <entity name="Population" syncable="YES">
-        <relationship name="members" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Individual" syncable="YES"/>
+        <attribute name="fitnessAverage" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="fitnessTotal" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="generation" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <relationship name="members" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Individual" inverseName="population" inverseEntity="Individual" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Individual" positionX="-54" positionY="-9" width="128" height="73"/>
-        <element name="Population" positionX="225" positionY="129" width="128" height="58"/>
+        <element name="Individual" positionX="-54" positionY="-9" width="128" height="133"/>
+        <element name="Population" positionX="225" positionY="129" width="128" height="103"/>
     </elements>
 </model>

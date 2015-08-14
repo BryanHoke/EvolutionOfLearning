@@ -8,6 +8,8 @@
 
 import Foundation
 
+public typealias FitnessFunc = Chromosome -> Double
+
 public protocol GeneticAlgorithmDelegate: class {
 	
 	func geneticAlgorithm(geneticAlgorithm: GeneticAlgorithm, didEvaluatePopulation population: Population)
@@ -18,7 +20,7 @@ public final class GeneticAlgorithm {
 	
 	public var initializationFunction: (Void -> Population)?
 	
-	public var fitnessFunction: (Individual -> Double)?
+	public var fitnessFunc: FitnessFunc?
 	
 	public var recordingFunction: (Population -> Void)?
 	
@@ -26,14 +28,10 @@ public final class GeneticAlgorithm {
 	
 	public func runForNumberOfGenerations(numberOfGenerations: Int) {
 		
-		func evaluatePopulation(population: Population) {
-			for individual in population {
-				individual.fitness = fitnessFunction?(individual) ?? 0
-			}
-		}
-		
 		func mainRoutine(population: Population, inout generation: Int) {
-			evaluatePopulation(population)
+			if let fitnessFunc = self.fitnessFunc {
+				population.evaluateWithFitnessFunc(fitnessFunc)
+			}
 			self.recordingFunction?(population)
 			generation++
 		}

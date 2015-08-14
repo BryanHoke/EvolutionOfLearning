@@ -9,7 +9,7 @@
 import Foundation
 import Accelerate
 
-public typealias ActivationFunction = Double -> Double
+public typealias ActivationFunc = Double -> Double
 
 public func sigmoid(x: Double)(lambda: Double) -> Double {
 	let f = 1 / (1 + exp(-lambda * x))
@@ -21,24 +21,104 @@ public func randomDouble() -> Double {
 	return randDouble
 }
 
-public struct SingleLayerSingleOutputNeuralNetwork {
+public protocol FeedForwardNeuralNetwork {
 	
-	public init(size: Int, activation: ActivationFunction, weightGenerator: () -> Double = randomDouble) {
+	/// A value fed forward alongside an input vector to act as a threshold for output activation.
+	var bias: Double { get }
+	
+	/// weights[ i ] = weight from neuron i to output neuron
+	var weights: [Double] { get set }
+	
+	/// Activates the input units with a vector of input values, which are then fed forward through the weights to activate the output unit and produce an output value.
+	func activateWithInputs(var inputs: [Double]) -> Double
+	
+	/// Convenience access into `weights`.
+	subscript(index: Int) -> Double { get set }
+	
+}
+
+/// A single-layer, feed-forward neural network with multiple input units but only a single output unit.
+public struct SingleLayerSingleOutputNeuralNetwork: FeedForwardNeuralNetwork {
+	
+	/// Constructs a network with a number of weights to create, an `ActivationFunc`, and a weight generator `func`.
+	public init(size: Int, activation: ActivationFunc, weightGenerator: () -> Double = randomDouble) {
 		for _ in 0..<size {
 			weights.append(weightGenerator())
 		}
 		self.activation = activation
 	}
 	
-	public init(weights: [Double], activation: ActivationFunction) {
+	/// Constructs a network with weights and an `ActivationFunc`.
+	public init(weights: [Double], activation: ActivationFunc) {
 		self.weights = weights
 		self.activation = activation
+	}
+	
+	/// The function that an output unit applies to the sum of its input to generate its output value.
+	public var activation: ActivationFunc
+	
+	/// A value fed forward alongside an input vector to act as a threshold for output activation.
+	public var bias: Double {
+		return -1
+	}
+	
+	/// The number of weights in the network
+	public var count: Int {
+		return weights.count
 	}
 	
 	/// weights[ i ] = weight from neuron i to output neuron
 	public var weights = [Double]()
 	
-	public var activation: ActivationFunction
+	/// Activates the network's input units with a vector of input values, which are then fed forward through the weights to activate the output unit and compute an output value.
+	public func activateWithInputs(var inputs: [Double]) -> Double {
+		inputs.append(bias)
+		let output = activation(cblas_ddot(Int32(count), weights, 1, inputs, 1))
+		return output
+	}
+	
+	/// Convenience access into `weights`.
+	public subscript(index: Int) -> Double {
+		get {
+			return weights[index]
+		}
+		set {
+			weights[index] = newValue
+		}
+	}
+	
+}
+
+/// A single-layer, feed-forward neural network with multiple input units but only a single output unit.
+public final class SingleLayerSingleOutputFFNN: FeedForwardNeuralNetwork {
+	
+	public init(size: Int, activation: ActivationFunc, weightGenerator: () -> Double = randomDouble) {
+		for _ in 0..<size {
+			weights.append(weightGenerator())
+		}
+		self.activation = activation
+	}
+	
+	public init(weights: [Double], activation: ActivationFunc) {
+		self.weights = weights
+		self.activation = activation
+	}
+	
+	/// The function that an output unit applies to the sum of its input to generate its output value.
+	public var activation: ActivationFunc
+	
+	/// A value fed forward alongside an input vector to act as a threshold for output activation.
+	public var bias: Double {
+		return -1
+	}
+	
+	/// The number of weights in the network
+	public var count: Int {
+		return weights.count
+	}
+	
+	/// weights[ i ] = weight from neuron i to output neuron
+	public var weights = [Double]()
 	
 	public func activateWithInputs(var inputs: [Double]) -> Double {
 		inputs.append(-1)
@@ -46,38 +126,21 @@ public struct SingleLayerSingleOutputNeuralNetwork {
 		return output
 	}
 	
-}
-
-public final class SingleLayerSingleOutputFFNN {
-	
-	public init(size: Int, activation: ActivationFunction, weightGenerator: () -> Double = randomDouble) {
-		for _ in 0..<size {
-			weights.append(weightGenerator())
+	public subscript(index: Int) -> Double {
+		get {
+			return weights[index]
 		}
-		self.activation = activation
-	}
-	
-	public init(weights: [Double], activation: ActivationFunction) {
-		self.weights = weights
-		self.activation = activation
-	}
-	
-	/// weights[ i ] = weight from neuron i to output neuron
-	public var weights = [Double]()
-	
-	public var activation: ActivationFunction
-	
-	public func activateWithInputs(var inputs: [Double]) -> Double {
-		inputs.append(-1)
-		let output = activation(cblas_ddot(Int32(weights.count), weights, 1, inputs, 1))
-		return output
+		set {
+			weights[index] = newValue
+		}
 	}
 	
 }
 
+/// A single-layer, feed-forward neural network with multiple input units and multiple output units.
 public struct SingleLayerNeuralNetwork {
 	
-	public init(inputSize: Int, outputSize: Int, activation: ActivationFunction, weightGenerator: () -> Double = randomDouble) {
+	public init(inputSize: Int, outputSize: Int, activation: ActivationFunc, weightGenerator: () -> Double = randomDouble) {
 		for _ in 0..<outputSize {
 			var weights_i = [Double]()
 			for _ in 0..<inputSize {
@@ -88,15 +151,16 @@ public struct SingleLayerNeuralNetwork {
 		self.activation = activation
 	}
 	
-	public init(weights: [[Double]], activation: ActivationFunction) {
+	public init(weights: [[Double]], activation: ActivationFunc) {
 		self.weights = weights
 		self.activation = activation
 	}
 	
+	/// The function that an output unit applies to the sum of its input to generate its output value.
+	public var activation: ActivationFunc
+	
 	/// weights[ i ][ j ] = weight from neuron j to neuron i
 	public var weights = [[Double]]()
-	
-	public var activation: Double -> Double
 	
 	public func activateWithInputs(var inputs: [Double]) -> [Double] {
 		inputs.append(-1)

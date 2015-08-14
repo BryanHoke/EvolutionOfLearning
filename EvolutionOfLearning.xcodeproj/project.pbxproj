@@ -7,13 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4A13A0D51B64404D0047E858 /* SupervisedLearningRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A13A0D41B64404D0047E858 /* SupervisedLearningRule.swift */; };
+		4A13A0D61B64404D0047E858 /* SupervisedLearningRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A13A0D41B64404D0047E858 /* SupervisedLearningRule.swift */; };
 		4A1D739D1B54A8C300E788B9 /* ArrayWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1D739C1B54A8C300E788B9 /* ArrayWrapper.swift */; };
 		4A1D739E1B54A8C300E788B9 /* ArrayWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1D739C1B54A8C300E788B9 /* ArrayWrapper.swift */; };
+		4A2F11631B5DD7520055AFF8 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A2F11621B5DD7520055AFF8 /* DataManager.swift */; };
+		4A2F11641B5DD7530055AFF8 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A2F11621B5DD7520055AFF8 /* DataManager.swift */; };
 		4A50A8341B30F9F10004BC5D /* Chromosome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A50A8331B30F9F10004BC5D /* Chromosome.swift */; };
 		4A50A8351B30F9F10004BC5D /* Chromosome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A50A8331B30F9F10004BC5D /* Chromosome.swift */; };
 		4A558F251B37D77D00242E23 /* EvolutionOfLearningModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4A558F231B37D77D00242E23 /* EvolutionOfLearningModel.xcdatamodeld */; };
 		4A7E06931B5C2FC40000E561 /* Experiment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7E06921B5C2FC40000E561 /* Experiment.swift */; };
 		4A7E06941B5C2FC40000E561 /* Experiment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7E06921B5C2FC40000E561 /* Experiment.swift */; };
+		4A7E06961B5C52AD0000E561 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7E06951B5C52AD0000E561 /* Environment.swift */; };
+		4A7E06971B5C52AD0000E561 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7E06951B5C52AD0000E561 /* Environment.swift */; };
+		4A7E06991B5C536A0000E561 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7E06981B5C536A0000E561 /* Task.swift */; };
+		4A7E069A1B5C536A0000E561 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7E06981B5C536A0000E561 /* Task.swift */; };
+		4A7E069C1B5C63190000E561 /* Pattern.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7E069B1B5C63190000E561 /* Pattern.swift */; };
+		4A7E069D1B5C63190000E561 /* Pattern.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7E069B1B5C63190000E561 /* Pattern.swift */; };
 		4A825EC61B2D019E00C8CEA3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A825EC51B2D019E00C8CEA3 /* AppDelegate.swift */; };
 		4A825EC81B2D019E00C8CEA3 /* Document.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A825EC71B2D019E00C8CEA3 /* Document.swift */; };
 		4A825ECB1B2D019E00C8CEA3 /* Document.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A825EC91B2D019E00C8CEA3 /* Document.xib */; };
@@ -55,10 +65,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4A13A0D41B64404D0047E858 /* SupervisedLearningRule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SupervisedLearningRule.swift; sourceTree = "<group>"; };
 		4A1D739C1B54A8C300E788B9 /* ArrayWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayWrapper.swift; sourceTree = "<group>"; };
+		4A2F11621B5DD7520055AFF8 /* DataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		4A50A8331B30F9F10004BC5D /* Chromosome.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Chromosome.swift; sourceTree = "<group>"; };
 		4A558F241B37D77D00242E23 /* EvolutionOfLearningModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = EvolutionOfLearningModel.xcdatamodel; sourceTree = "<group>"; };
 		4A7E06921B5C2FC40000E561 /* Experiment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Experiment.swift; sourceTree = "<group>"; };
+		4A7E06951B5C52AD0000E561 /* Environment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
+		4A7E06981B5C536A0000E561 /* Task.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
+		4A7E069B1B5C63190000E561 /* Pattern.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pattern.swift; sourceTree = "<group>"; };
 		4A825EC21B2D019E00C8CEA3 /* EvolutionOfLearning.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EvolutionOfLearning.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A825EC51B2D019E00C8CEA3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4A825EC71B2D019E00C8CEA3 /* Document.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Document.swift; sourceTree = "<group>"; };
@@ -121,6 +136,10 @@
 			isa = PBXGroup;
 			children = (
 				4A7E06921B5C2FC40000E561 /* Experiment.swift */,
+				4A7E06951B5C52AD0000E561 /* Environment.swift */,
+				4A7E06981B5C536A0000E561 /* Task.swift */,
+				4A7E069B1B5C63190000E561 /* Pattern.swift */,
+				4A2F11621B5DD7520055AFF8 /* DataManager.swift */,
 			);
 			name = Experiments;
 			sourceTree = "<group>";
@@ -206,6 +225,7 @@
 			isa = PBXGroup;
 			children = (
 				4A825EFA1B2D057B00C8CEA3 /* SingleLayerNeuralNetwork.swift */,
+				4A13A0D41B64404D0047E858 /* SupervisedLearningRule.swift */,
 			);
 			name = "Neural Networks";
 			sourceTree = "<group>";
@@ -341,11 +361,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				4A9B76C51B55574800BE653D /* Array-Extensions.swift in Sources */,
+				4A13A0D51B64404D0047E858 /* SupervisedLearningRule.swift in Sources */,
 				4AF11C111B4092EB00AED909 /* Population.swift in Sources */,
 				4A9B76C81B55576800BE653D /* CustomOperators.swift in Sources */,
+				4A7E06961B5C52AD0000E561 /* Environment.swift in Sources */,
 				4A825ECE1B2D019E00C8CEA3 /* Document.xcdatamodeld in Sources */,
 				4A50A8341B30F9F10004BC5D /* Chromosome.swift in Sources */,
+				4A7E069C1B5C63190000E561 /* Pattern.swift in Sources */,
 				4A558F251B37D77D00242E23 /* EvolutionOfLearningModel.xcdatamodeld in Sources */,
+				4A7E06991B5C536A0000E561 /* Task.swift in Sources */,
+				4A2F11631B5DD7520055AFF8 /* DataManager.swift in Sources */,
 				4A825EC81B2D019E00C8CEA3 /* Document.swift in Sources */,
 				4AF11C0D1B3F036C00AED909 /* Individual.swift in Sources */,
 				4A825EC61B2D019E00C8CEA3 /* AppDelegate.swift in Sources */,
@@ -361,15 +386,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				4A9B76C91B55576800BE653D /* CustomOperators.swift in Sources */,
+				4A2F11641B5DD7530055AFF8 /* DataManager.swift in Sources */,
+				4A7E06971B5C52AD0000E561 /* Environment.swift in Sources */,
 				4AF11C0E1B3F036C00AED909 /* Individual.swift in Sources */,
 				4AE620A01B39A1D60033980F /* GeneticAlgorithm.swift in Sources */,
 				4AD3F53F1B33097C000E9BA4 /* EvolutionOfLearningGeneticAlgorithmTests.swift in Sources */,
 				4AF11C121B4092EB00AED909 /* Population.swift in Sources */,
 				4A9B76C61B55574800BE653D /* Array-Extensions.swift in Sources */,
 				4A825EDE1B2D019E00C8CEA3 /* EvolutionOfLearningTests.swift in Sources */,
+				4A13A0D61B64404D0047E858 /* SupervisedLearningRule.swift in Sources */,
+				4A7E069A1B5C536A0000E561 /* Task.swift in Sources */,
 				4A7E06941B5C2FC40000E561 /* Experiment.swift in Sources */,
 				4A1D739E1B54A8C300E788B9 /* ArrayWrapper.swift in Sources */,
 				4A50A8351B30F9F10004BC5D /* Chromosome.swift in Sources */,
+				4A7E069D1B5C63190000E561 /* Pattern.swift in Sources */,
 				4A825EFC1B2D057B00C8CEA3 /* SingleLayerNeuralNetwork.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

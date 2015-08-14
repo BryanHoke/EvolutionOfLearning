@@ -20,7 +20,7 @@ public protocol GeneticIndividual {
 	
 }
 
-public final class Individual {
+public final class Individual: GeneticIndividual {
 	
 	public init(chromosome: Chromosome) {
 		self.chromosome = chromosome
