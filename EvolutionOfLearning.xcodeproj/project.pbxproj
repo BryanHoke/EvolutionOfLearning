@@ -15,7 +15,6 @@
 		4A2F11641B5DD7530055AFF8 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A2F11621B5DD7520055AFF8 /* DataManager.swift */; };
 		4A50A8341B30F9F10004BC5D /* Chromosome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A50A8331B30F9F10004BC5D /* Chromosome.swift */; };
 		4A50A8351B30F9F10004BC5D /* Chromosome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A50A8331B30F9F10004BC5D /* Chromosome.swift */; };
-		4A558F251B37D77D00242E23 /* EvolutionOfLearningModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4A558F231B37D77D00242E23 /* EvolutionOfLearningModel.xcdatamodeld */; };
 		4A7E06931B5C2FC40000E561 /* Experiment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7E06921B5C2FC40000E561 /* Experiment.swift */; };
 		4A7E06941B5C2FC40000E561 /* Experiment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7E06921B5C2FC40000E561 /* Experiment.swift */; };
 		4A7E06961B5C52AD0000E561 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7E06951B5C52AD0000E561 /* Environment.swift */; };
@@ -69,7 +68,6 @@
 		4A1D739C1B54A8C300E788B9 /* ArrayWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayWrapper.swift; sourceTree = "<group>"; };
 		4A2F11621B5DD7520055AFF8 /* DataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		4A50A8331B30F9F10004BC5D /* Chromosome.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Chromosome.swift; sourceTree = "<group>"; };
-		4A558F241B37D77D00242E23 /* EvolutionOfLearningModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = EvolutionOfLearningModel.xcdatamodel; sourceTree = "<group>"; };
 		4A7E06921B5C2FC40000E561 /* Experiment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Experiment.swift; sourceTree = "<group>"; };
 		4A7E06951B5C52AD0000E561 /* Environment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
 		4A7E06981B5C536A0000E561 /* Task.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
@@ -155,14 +153,6 @@
 			name = "Genetic algorithms";
 			sourceTree = "<group>";
 		};
-		4A558F221B37D74700242E23 /* Data Model */ = {
-			isa = PBXGroup;
-			children = (
-				4A558F231B37D77D00242E23 /* EvolutionOfLearningModel.xcdatamodeld */,
-			);
-			name = "Data Model";
-			sourceTree = "<group>";
-		};
 		4A825EB91B2D019E00C8CEA3 = {
 			isa = PBXGroup;
 			children = (
@@ -192,7 +182,6 @@
 				4A248D831B5B45F800C78F2B /* Experiments */,
 				4A825EF91B2D053600C8CEA3 /* Neural Networks */,
 				4A50A8321B30F9D60004BC5D /* Genetic algorithms */,
-				4A558F221B37D74700242E23 /* Data Model */,
 				4A1D739B1B54A8AC00E788B9 /* Helpers */,
 				4A825ECF1B2D019E00C8CEA3 /* Assets.xcassets */,
 				4A825ED11B2D019E00C8CEA3 /* MainMenu.xib */,
@@ -368,7 +357,6 @@
 				4A825ECE1B2D019E00C8CEA3 /* Document.xcdatamodeld in Sources */,
 				4A50A8341B30F9F10004BC5D /* Chromosome.swift in Sources */,
 				4A7E069C1B5C63190000E561 /* Pattern.swift in Sources */,
-				4A558F251B37D77D00242E23 /* EvolutionOfLearningModel.xcdatamodeld in Sources */,
 				4A7E06991B5C536A0000E561 /* Task.swift in Sources */,
 				4A2F11631B5DD7520055AFF8 /* DataManager.swift in Sources */,
 				4A825EC81B2D019E00C8CEA3 /* Document.swift in Sources */,
@@ -647,16 +635,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		4A558F231B37D77D00242E23 /* EvolutionOfLearningModel.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				4A558F241B37D77D00242E23 /* EvolutionOfLearningModel.xcdatamodel */,
-			);
-			currentVersion = 4A558F241B37D77D00242E23 /* EvolutionOfLearningModel.xcdatamodel */;
-			path = EvolutionOfLearningModel.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
 		4A825ECC1B2D019E00C8CEA3 /* Document.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (

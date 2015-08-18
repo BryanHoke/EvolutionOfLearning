@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Darwin
 
 public typealias TaskFitnessFunc = (Chromosome, Task) -> Double
 
@@ -41,16 +42,62 @@ public final class ChalmersEnvironment: FitnessEnvironment {
 		self.historyLength = historyLength
 	}
 	
-	/// Evaluates the fitness value of a `Chromosome` by applying the `taskFitnessFunc` to the `evolutionaryTasks` and averaging the results.
+	/// Evaluates the fitness value of a `Chromosome` by computing the avereapplying the `evolutionaryTasks` to the `taskFitnessFunc` and averaging the results.
 	public func evaluateFitnessOfChromosome(chromosome: Chromosome) -> Double {
+		
+		// 🚦 Prevent concurrent access to fitnessHistory
 		let semaphore = dispatch_semaphore_create(1)
 		
+		// 🚦 Retrieve fitness history
 		var fitnessHistory = [Double]()
 		dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER)
 		fitnessHistory += self.fitnessHistory[chromosome] ?? []
 		dispatch_semaphore_signal(semaphore)
 		
-		return 0
+		// Compute new fitness history entry if history isn't capped
+		if fitnessHistory.count < historyLength {
+			
+			// Compute fitness on evolutionaryTasks
+			let fitness = evaluateFitnessOfChromosome(chromosome, onTasks: evolutionaryTasks)
+			fitnessHistory.append(fitness)
+			
+			// 🚦 Update the fitness history
+			dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER)
+			self.fitnessHistory[chromosome] = fitnessHistory
+			dispatch_semaphore_signal(semaphore)
+		}
+		
+		// Compute the historical average fitness
+		var fitness = fitnessHistory.reduce(0, combine: +)
+		fitness /= Double(fitnessHistory.count)
+		
+		return fitness
+	}
+	
+	/// Computes the average fitness of *chromosome* across *tasks* using `taskFitnessFunc`.
+	func evaluateFitnessOfChromosome(chromsome: Chromosome, onTasks tasks: [Task]) -> Double {
+		
+		var fitness = tasks.reduce(Double(0)) { (sum, task) in
+			sum + self.taskFitnessFunc(chromsome, task)
+		}
+		
+		fitness /= Double(tasks.count)
+		
+		return fitness
+	}
+	
+	public func generateEvolutionaryTasks(count count: Int) {
+		
+		evolutionaryTasks.removeAll(keepCapacity: true)
+		
+		let count = min(count, tasks.count)
+		var pool = tasks
+		
+		for _ in 0..<count {
+
+			let index = Int(arc4random_uniform(UInt32(pool.count)))
+			evolutionaryTasks.append(pool.removeAtIndex(index))
+		}
 	}
 	
 }
