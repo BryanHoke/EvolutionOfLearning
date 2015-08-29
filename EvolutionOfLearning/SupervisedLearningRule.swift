@@ -22,7 +22,30 @@ public func encodedInt(fromBits bits: [Bool]) -> Int {
 
 public protocol SupervisedLearningRule {
 
-	func trainNetwork(inout network: FeedForwardNeuralNetwork, withPattern pattern: Pattern)
+	func trainNetwork(inout network: FeedForwardNeuralNetwork,
+		withPattern pattern: Pattern)
+	
+	func trainNetwork(inout network: FeedForwardNeuralNetwork,
+		task: Task)
+	
+	func trainNetwork(inout network: FeedForwardNeuralNetwork,
+		task: Task,
+		numberOfTimes: Int)
+}
+
+public extension SupervisedLearningRule {
+	
+	func trainNetwork(inout network: FeedForwardNeuralNetwork, task: Task) {
+		for pattern in task.patterns {
+			trainNetwork(&network, withPattern: pattern)
+		}
+	}
+	
+	func trainNetwork(inout network: FeedForwardNeuralNetwork, task: Task, numberOfTimes: Int) {
+		for _ in 0..<numberOfTimes {
+			trainNetwork(&network, task: task)
+		}
+	}
 	
 }
 
@@ -85,6 +108,18 @@ public struct ChalmersLearningRule: SupervisedLearningRule {
 			network[i] = newWeight
 		}
 	}
+	
+//	public func trainNetwork(inout network: FeedForwardNeuralNetwork, task: Task) {
+//		for pattern in task.patterns {
+//			trainNetwork(&network, withPattern: pattern)
+//		}
+//	}
+//	
+//	public func trainNetwork(inout network: FeedForwardNeuralNetwork, task: Task, numberOfTimes: Int) {
+//		for _ in 0..<numberOfTimes {
+//			trainNetwork(&network, task: task)
+//		}
+//	}
 	
 	public func weightDelta(weight weight: Double, input: Double, output: Double, target: Double) -> Double {
 		var delta: Double = 0

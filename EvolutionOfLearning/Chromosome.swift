@@ -15,6 +15,16 @@ public typealias RecombinationOperator = (Chromosome, Chromosome) -> Chromosome
 public typealias CrossoverOperator = (Chromosome, Chromosome) -> (Chromosome, Chromosome)
 
 public struct Chromosome: ArrayLiteralConvertible, StringLiteralConvertible, CollectionType, Hashable {
+	
+	public static func mutation(mutationRate: Double)(chromosome: Chromosome) -> Chromosome {
+		
+		return chromosome.mutateWithRate(mutationRate)
+	}
+	
+	public static func twoPointCrossover(chromosome1: Chromosome, chromosome2: Chromosome) -> (Chromosome, Chromosome) {
+		
+		return chromosome1.twoPointCrossoverWithChromosome(chromosome2)
+	}
 
 	public typealias Element = Bool
 	

@@ -38,6 +38,7 @@
 		4A9B76C81B55576800BE653D /* CustomOperators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9B76C71B55576800BE653D /* CustomOperators.swift */; };
 		4A9B76C91B55576800BE653D /* CustomOperators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9B76C71B55576800BE653D /* CustomOperators.swift */; };
 		4AD3F53F1B33097C000E9BA4 /* EvolutionOfLearningGeneticAlgorithmTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD3F53E1B33097C000E9BA4 /* EvolutionOfLearningGeneticAlgorithmTests.swift */; };
+		4AE03EF51B8A4F3A00A94234 /* Environment1.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4AE03EF41B8A4F3A00A94234 /* Environment1.txt */; };
 		4AE6209F1B39A1D60033980F /* GeneticAlgorithm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE6209E1B39A1D60033980F /* GeneticAlgorithm.swift */; };
 		4AE620A01B39A1D60033980F /* GeneticAlgorithm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE6209E1B39A1D60033980F /* GeneticAlgorithm.swift */; };
 		4AF11C0D1B3F036C00AED909 /* Individual.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF11C0C1B3F036C00AED909 /* Individual.swift */; };
@@ -90,6 +91,7 @@
 		4A9B76C41B55574800BE653D /* Array-Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array-Extensions.swift"; sourceTree = "<group>"; };
 		4A9B76C71B55576800BE653D /* CustomOperators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomOperators.swift; sourceTree = "<group>"; };
 		4AD3F53E1B33097C000E9BA4 /* EvolutionOfLearningGeneticAlgorithmTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EvolutionOfLearningGeneticAlgorithmTests.swift; sourceTree = "<group>"; };
+		4AE03EF41B8A4F3A00A94234 /* Environment1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Environment1.txt; sourceTree = "<group>"; };
 		4AE6209E1B39A1D60033980F /* GeneticAlgorithm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneticAlgorithm.swift; sourceTree = "<group>"; };
 		4AF11C0C1B3F036C00AED909 /* Individual.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Individual.swift; sourceTree = "<group>"; };
 		4AF11C101B4092EB00AED909 /* Population.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Population.swift; sourceTree = "<group>"; };
@@ -159,6 +161,7 @@
 				4A825EC41B2D019E00C8CEA3 /* EvolutionOfLearning */,
 				4A825EDC1B2D019E00C8CEA3 /* EvolutionOfLearningTests */,
 				4A825EE71B2D019E00C8CEA3 /* EvolutionOfLearningUITests */,
+				4AE03EF31B8A4EDA00A94234 /* Resources */,
 				4A825EC31B2D019E00C8CEA3 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -217,6 +220,15 @@
 				4A13A0D41B64404D0047E858 /* SupervisedLearningRule.swift */,
 			);
 			name = "Neural Networks";
+			sourceTree = "<group>";
+		};
+		4AE03EF31B8A4EDA00A94234 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				4AE03EF41B8A4F3A00A94234 /* Environment1.txt */,
+			);
+			name = Resources;
+			path = EvolutionOfLearning;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -322,6 +334,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4AE03EF51B8A4F3A00A94234 /* Environment1.txt in Resources */,
 				4A825ED01B2D019E00C8CEA3 /* Assets.xcassets in Resources */,
 				4A825ECB1B2D019E00C8CEA3 /* Document.xib in Resources */,
 				4A825ED31B2D019E00C8CEA3 /* MainMenu.xib in Resources */,

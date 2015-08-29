@@ -21,8 +21,16 @@ public protocol FitnessEnvironment {
 
 public final class ChalmersEnvironment: FitnessEnvironment {
 	
-	/// The pool of `Tasks` in use for fitness evaluation in an evolutionary process.
+	/// The pool of `Task`s in use for fitness evaluation in an evolutionary process.
 	public var evolutionaryTasks = [Task]()
+	
+	/// The pool of `Task`s in use for fitness evaluation in a post-evolutionary experimental evaluation process.
+	public var testTasks = [Task]()
+	
+	/// The pool of `Tasks` not in use for fitness evaluation in an evolutionary process.
+//	public var nonEvolutionaryTasks: [Task] {
+//		return tasks.filter { !self.evolutionaryTasks.contains($0) }
+//	}
 	
 	/// The list of fitness values measured per `Chromosome`, in order of recording.
 	public var fitnessHistory = [Chromosome: [Double]]()
@@ -86,7 +94,7 @@ public final class ChalmersEnvironment: FitnessEnvironment {
 		return fitness
 	}
 	
-	public func generateEvolutionaryTasks(count count: Int) {
+	public func generateEvolutionaryTasks(count: Int) {
 		
 		evolutionaryTasks.removeAll(keepCapacity: true)
 		
@@ -98,6 +106,13 @@ public final class ChalmersEnvironment: FitnessEnvironment {
 			let index = Int(arc4random_uniform(UInt32(pool.count)))
 			evolutionaryTasks.append(pool.removeAtIndex(index))
 		}
+	}
+	
+	public func generateTestTasks(count: Int) {
+		
+		self.testTasks.removeAll(keepCapacity: true)
+		
+//		var pool =
 	}
 	
 }

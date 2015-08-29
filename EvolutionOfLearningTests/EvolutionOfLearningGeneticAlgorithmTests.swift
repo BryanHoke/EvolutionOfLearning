@@ -79,8 +79,8 @@ class EvolutionOfLearningGeneticAlgorithmTests: XCTestCase {
 	}
 	
 	func testChromosomeTwoPointCrossover() {
-		var testChromosome1 = tChromosome1
-		var testChromosome2 = !testChromosome1
+		let testChromosome1 = tChromosome1
+		let testChromosome2 = !testChromosome1
 		let seed = UInt32(0)
 		let offspring = testChromosome1.twoPointCrossoverWithChromosome(testChromosome2, seed: seed)
 		

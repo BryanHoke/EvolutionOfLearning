@@ -75,7 +75,7 @@ extension ArrayWrapper {
 	}
 	
 	public mutating func extend(newElements: [Element]) {
-		wrappedArray.extend(newElements)
+		wrappedArray.appendContentsOf(newElements)
 	}
 	
 	public func generate() -> IndexingGenerator<[Element]> {

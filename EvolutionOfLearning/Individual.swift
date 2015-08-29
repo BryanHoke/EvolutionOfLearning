@@ -61,3 +61,11 @@ public final class Individual: GeneticIndividual {
 		return offspring
 	}
 }
+
+public func <(left: Individual, right: Individual) -> Bool {
+	return left.fitness < right.fitness
+}
+
+public func >(left: Individual, right: Individual) -> Bool {
+	return left.fitness > right.fitness
+}
