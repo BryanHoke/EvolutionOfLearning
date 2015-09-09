@@ -32,8 +32,36 @@ public protocol FeedForwardNeuralNetwork {
 	/// Activates the input units with a vector of input values, which are then fed forward through the weights to activate the output unit and produce an output value.
 	func activateWithInputs(var inputs: [Double]) -> Double
 	
-	/// Convenience access into `weights`.
+	/// Measures the error in the network's response to the pattern inputs compared to the pattern target.
+	func testOnPattern(pattern: Pattern) -> Double
+	
+	/// Measures the total error in the network's repsonse to all patterns in the task.
+	func testOnTask(task: Task) -> Double
+	
+	/// Convenience accessor for the values in `weights`.
 	subscript(index: Int) -> Double { get set }
+	
+}
+
+extension FeedForwardNeuralNetwork {
+	
+	public func testOnPattern(pattern: Pattern) -> Double {
+		
+		let output = activateWithInputs(pattern.inputs)
+		
+		let error = abs(pattern.target - output)
+		
+		return error
+	}
+	
+	public func testOnTask(task: Task) -> Double {
+		
+		let totalError = task.patterns.reduce(0) { (sum, pattern) in
+			sum + testOnPattern(pattern)
+		}
+		
+		return totalError
+	}
 	
 }
 

@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="8166.2" systemVersion="15A226f" minimumToolsVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="8193.2" systemVersion="15A279b" minimumToolsVersion="Automatic">
+    <entity name="Experiment" syncable="YES">
+        <relationship name="histories" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="History" inverseName="experiment" inverseEntity="History" syncable="YES"/>
+    </entity>
+    <entity name="History" syncable="YES">
+        <relationship name="experiment" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Experiment" inverseName="histories" inverseEntity="Experiment" syncable="YES"/>
+        <relationship name="populations" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Population" inverseName="history" inverseEntity="Population" syncable="YES"/>
+    </entity>
     <entity name="Individual" syncable="YES">
         <attribute name="chromosome" attributeType="String" syncable="YES"/>
         <attribute name="fitness" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
@@ -12,10 +19,13 @@
         <attribute name="fitnessAverage" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="fitnessTotal" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="generation" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <relationship name="history" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="History" inverseName="populations" inverseEntity="History" syncable="YES"/>
         <relationship name="members" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Individual" inverseName="population" inverseEntity="Individual" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Individual" positionX="-54" positionY="-9" width="128" height="133"/>
-        <element name="Population" positionX="225" positionY="129" width="128" height="103"/>
+        <element name="Individual" positionX="313" positionY="182" width="128" height="133"/>
+        <element name="Population" positionX="79" positionY="195" width="128" height="120"/>
+        <element name="History" positionX="88" positionY="71" width="128" height="73"/>
+        <element name="Experiment" positionX="133" positionY="-81" width="128" height="60"/>
     </elements>
 </model>
