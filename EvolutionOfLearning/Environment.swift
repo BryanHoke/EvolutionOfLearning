@@ -13,6 +13,8 @@ public typealias TaskFitnessFunc = (Chromosome, Task) -> Double
 
 public protocol FitnessEnvironment {
 	
+	var tasks: [Task] { get set }
+	
 	/// Evaluates the fitness value of a `Chromosome`.
 	/// - note: This method can be used as a `FitnessFunc` when `self` is partially applied.
 	func evaluateFitnessOfChromosome(chromosome: Chromosome) -> Double
@@ -94,6 +96,7 @@ public final class ChalmersEnvironment: FitnessEnvironment {
 		return fitness
 	}
 	
+	///
 	public func generateEvolutionaryTasks(count: Int) {
 		
 		evolutionaryTasks.removeAll(keepCapacity: true)
@@ -108,6 +111,7 @@ public final class ChalmersEnvironment: FitnessEnvironment {
 		}
 	}
 	
+	///
 	public func generateTestTasks(count: Int) {
 		
 		self.testTasks.removeAll(keepCapacity: true)

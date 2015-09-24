@@ -16,27 +16,40 @@ public protocol GeneticAlgorithmDelegate: class {
 	
 }
 
+/**
+
+*/
 public final class GeneticAlgorithm {
 	
-	public var initializationFunction: (Void -> Population)?
+	///
+	public var initializationFunc: (Void -> Population)?
 	
+	///
 	public var fitnessFunc: FitnessFunc?
 	
-	public var recordingFunction: (Population -> Void)?
+	///
+	public var recordingFunc: (Population -> Void)?
 	
-	public var reproductionFunction: (Population -> Population)?
+	///
+	public var reproductionFunc: (Population -> Population)?
 	
+	///
 	public func runForNumberOfGenerations(numberOfGenerations: Int) {
 		
+		///
 		func mainRoutine(population: Population, inout generation: Int) {
+			
 			if let fitnessFunc = self.fitnessFunc {
+				
 				population.evaluateWithFitnessFunc(fitnessFunc)
 			}
-			self.recordingFunction?(population)
+			
+			self.recordingFunc?(population)
+			
 			generation++
 		}
 		
-		guard numberOfGenerations > 0, var population = initializationFunction?() else {
+		guard numberOfGenerations > 0, var population = initializationFunc?() else {
 			return
 		}
 		
@@ -45,7 +58,9 @@ public final class GeneticAlgorithm {
 		mainRoutine(population, generation: &generation)
 		
 		while generation < numberOfGenerations {
-			population = reproductionFunction?(population) ?? population
+			
+			population = reproductionFunc?(population) ?? population
+			
 			mainRoutine(population, generation: &generation)
 		}
 	}

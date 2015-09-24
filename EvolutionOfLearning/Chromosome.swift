@@ -14,13 +14,18 @@ public typealias RecombinationOperator = (Chromosome, Chromosome) -> Chromosome
 
 public typealias CrossoverOperator = (Chromosome, Chromosome) -> (Chromosome, Chromosome)
 
+/**
+
+*/
 public struct Chromosome: ArrayLiteralConvertible, StringLiteralConvertible, CollectionType, Hashable {
 	
+	///
 	public static func mutation(mutationRate: Double)(chromosome: Chromosome) -> Chromosome {
 		
 		return chromosome.mutateWithRate(mutationRate)
 	}
 	
+	///
 	public static func twoPointCrossover(chromosome1: Chromosome, chromosome2: Chromosome) -> (Chromosome, Chromosome) {
 		
 		return chromosome1.twoPointCrossoverWithChromosome(chromosome2)
@@ -34,52 +39,87 @@ public struct Chromosome: ArrayLiteralConvertible, StringLiteralConvertible, Col
 	
 	public typealias SubSlice = ArraySlice<Bool>
 	
+	///
+	public init(size: Int, seed: () -> Bool) {
+		
+		for _ in 0..<size {
+			
+			let gene = seed()
+			
+			genes.append(gene)
+		}
+	}
+	
+	///
 	public init(arrayLiteral elements: Chromosome.Element...) {
+		
 		self.genes += elements
 	}
 	
+	///
 	public init(unicodeScalarLiteral value: String) {
-		self.genes = value.characters.map { $0 != "0" }
+		
+		self.genes += value.characters.map { $0 != "0" }
 	}
 	
+	///
 	public init(extendedGraphemeClusterLiteral value: String) {
-		self.genes = value.characters.map { $0 != "0" }
+		
+		self.genes += value.characters.map { $0 != "0" }
 	}
 	
+	///
 	public init(stringLiteral value: String) {
-		self.genes = value.characters.map { $0 != "0" }
+		
+		self.genes += value.characters.map { $0 != "0" }
 	}
 	
+	///
 	public var genes = [Bool]()
 	
+	///
 	public var count: Int {
+		
 		return genes.count
 	}
 	
+	///
 	public var endIndex: Int {
+		
 		return genes.endIndex
 	}
 	
+	///
 	public var first: Bool? {
+		
 		return genes.first
 	}
 	
+	///
 	public var isEmpty: Bool {
+		
 		return genes.isEmpty
 	}
 	
+	///
 	public var startIndex: Int {
+		
 		return 0
 	}
 	
+	///
 	public var stringValue: String {
+		
 		return genes.reduce("") { $0 + ($1 ? "1" : "0") }
 	}
 	
+	///
 	public var hashValue: Int {
+		
 		return stringValue.hashValue
 	}
 	
+	///
 	public subscript(index: Int) -> Bool {
 		get {
 			return self.genes[index]
@@ -89,6 +129,7 @@ public struct Chromosome: ArrayLiteralConvertible, StringLiteralConvertible, Col
 		}
 	}
 	
+	///
 	public subscript(subRange: Range<Int>) -> Chromosome.SubSlice {
 		get {
 			return self.genes[subRange]
@@ -98,30 +139,35 @@ public struct Chromosome: ArrayLiteralConvertible, StringLiteralConvertible, Col
 		}
 	}
 	
+	///
 	public func mutateAtIndices(mutationIndices: Set<Int>) -> Chromosome {
 		var mutant = self
 		mutant.mutateInPlaceAtIndices(mutationIndices)
 		return mutant
 	}
 	
+	///
 	public func mutateAtIndex(index: Int) -> Chromosome {
 		var mutant = self
 		mutant.mutateInPlaceAtIndex(index)
 		return mutant
 	}
 	
+	///
 	public func mutateWithRate(mutationRate: Double, seed: Int = Int(arc4random())) -> Chromosome {
 		var mutant = self
 		mutant.mutateInPlaceWithRate(mutationRate, seed: seed)
 		return mutant
 	}
 	
+	///
 	public mutating func mutateInPlaceAtIndices(mutationIndices: Set<Int>) {
 		for index in mutationIndices {
 			self.mutateInPlaceAtIndex(index)
 		}
 	}
 
+	///
 	public mutating func mutateInPlaceAtIndex(index: Int) {
 		self[index] = !self[index]
 	}
@@ -140,6 +186,7 @@ public struct Chromosome: ArrayLiteralConvertible, StringLiteralConvertible, Col
 		mutateInPlaceAtIndices(mutationIndices)
 	}
 
+	///
 	public func twoPointCrossoverWithChromosome(pairChromosome: Chromosome) -> (Chromosome, Chromosome) {
 		let start = Int(arc4random_uniform(UInt32(count - 1)))
 		let end = twoPointCrossoverEndLocusForStartLocus(start) { (rangeSpan: UInt32) -> Int in
@@ -148,6 +195,7 @@ public struct Chromosome: ArrayLiteralConvertible, StringLiteralConvertible, Col
 		return twoPointCrossoverWithChromosome(pairChromosome, atRange: start...end)
 	}
 	
+	///
 	public func twoPointCrossoverWithChromosome(pairChromosome: Chromosome, seed: UInt32) -> (Chromosome, Chromosome) {
 		srand(seed)
 		let start = Int(rand()) % (count - 1)
@@ -157,6 +205,7 @@ public struct Chromosome: ArrayLiteralConvertible, StringLiteralConvertible, Col
 		return twoPointCrossoverWithChromosome(pairChromosome, atRange: start...end)
 	}
 	
+	///
 	public func twoPointCrossoverWithChromosome(pairChromosome: Chromosome, atRange range: Range<Int>) -> (Chromosome, Chromosome) {
 		var offspring = (self, pairChromosome)
 		let beforeRange = 0..<range.startIndex
@@ -167,6 +216,7 @@ public struct Chromosome: ArrayLiteralConvertible, StringLiteralConvertible, Col
 		return offspring
 	}
 	
+	///
 	private func twoPointCrossoverEndLocusForStartLocus(start: Int, randomGenerator: (UInt32) -> (Int)) -> Int {
 		var end: Int
 		// Make sure the entire chromosome isn't crossed-over
@@ -177,6 +227,7 @@ public struct Chromosome: ArrayLiteralConvertible, StringLiteralConvertible, Col
 		return end
 	}
 	
+	///
 	public func generate() -> Chromosome.Generator {
 		return Chromosome.Generator(genes)
 	}

@@ -8,61 +8,87 @@
 
 import Foundation
 
+/**
+
+*/
 public class Experiment {
 	
-	var environment: ChalmersEnvironment!
+	// MARK: - Instance Properties
 	
+	let geneticAlgorithm = GeneticAlgorithm()
+	
+	var numberOfGenerations: Int?
+	
+	var numberOfTrials: Int?
+	
+	///
+	var environment: FitnessEnvironment!
+	
+	///
 	var taskCount = 0
 	
-	var taskFitnessFuncIndex = 0
-	
-	var reproductionFuncIndex = 0
-	
+	///
 	var resourceName: String?
 	
+	///
 	var basePath: String {
 		return "/Users/bryanhoke/Projects/BDHSoftware/OS X/EvolutionOfLearning"
 	}
 	
+	///
 	var resourcePath: String {
-		return self.basePath + "/Resources"
+		return self.basePath + "/Resources/"
 	}
 	
+	///
 	var resultsPath: String {
-		return self.basePath + "/Results"
+		return self.basePath + "/Results/"
 	}
 	
-	var taskFitnessFunc: TaskFitnessFunc {
-		return taskFitnessFuncs[taskFitnessFuncIndex]
-	}
+	///
+	weak var dataManager: DataManager?
 	
-	var taskFitnessFuncs: [TaskFitnessFunc] {
-		return [taskFitnessFunc0]
-	}
-	
-	var reproductionFunc: Population -> Population {
-		return reproductionFuncs[reproductionFuncIndex]
-	}
-	
-	var reproductionFuncs: [Population -> Population] {
-		return [reproductionFunc0]
-	}
+	// MARK: - Instance Methods
 	
 	///
 	func configureAlgorithm(algorithm: GeneticAlgorithm) {
 		
-		environment = ChalmersEnvironment(taskFitnessFunc: taskFitnessFunc, historyLength: 10)
+		environment = ChalmersEnvironment(taskFitnessFunc: fitnessOfChromosome, historyLength: 10)
 		
-		algorithm.fitnessFunc = ChalmersEnvironment.evaluateFitnessOfChromosome(environment)
+		let tasks = try! Task.tasksWithFileAtPath(resourcePath + "Environment1.txt")
+		environment.tasks += tasks
 		
-		algorithm.reproductionFunction = reproductionFunc
+		algorithm.initializationFunc = seeding
 		
+		algorithm.fitnessFunc = ChalmersEnvironment.evaluateFitnessOfChromosome(environment as! ChalmersEnvironment)
 		
+		algorithm.recordingFunc = dataManager?.recordPopulation
+		
+		algorithm.reproductionFunc = reproduction
 	}
 	
-	///
-	let taskFitnessFunc0 = {
-		(chromosome chromosome: Chromosome, task: Task) -> Double in
+	/// Used to generate an initial population.
+	func seeding() -> Population {
+		
+		// Parameters
+		let chromosomeSize = 35
+		let populationSize = 40
+		
+		return Population(size: populationSize) {
+			() -> Individual in
+			
+			let chromosome = Chromosome(size: chromosomeSize) {
+				() -> Bool in
+				
+				return arc4random_uniform(2) == 1
+			}
+			
+			return Individual(chromosome: chromosome)
+		}
+	}
+	
+	/// Used to evaluate the fitness of a `Chromosome` on a given task.
+	func fitnessOfChromosome(chromosome: Chromosome, onTask task: Task) -> Double {
 		
 		var network = SingleLayerSingleOutputNeuralNetwork(
 			size: task.inputCount,
@@ -80,10 +106,10 @@ public class Experiment {
 		return fitness
 	}
 	
-	///
-	let reproductionFunc0 = {
-		(var population: Population) -> Population in
+	/// Used to create the next-generation population by applying selection, mutation, and reproductive operations.
+	func reproduction(var population: Population) -> Population {
 		
+		// Parameters
 		let elitismCount = 1
 		let crossoverRate = 0.8
 		let mutationRate = 0.01
@@ -99,6 +125,7 @@ public class Experiment {
 		
 		do { // Roulette wheel selection
 			var indices = Set<Int>()
+			
 			for i in 0..<elitismCount {
 				indices.insert(i)
 			}
@@ -109,12 +136,11 @@ public class Experiment {
 		let branchSelector = Population.uniformSelectionIndices(crossoverSize)
 		
 		// Perform crossover on portion of population proportional to crossoverRate, and cloning on the rest
-		selectedPopulation.selectionBranch(branchSelector) {
-			(selected: Population, unselected: Population) in
+		newPopulation += selectedPopulation.selectionBranch(branchSelector) {
+			(selected: Population, unselected: Population) -> Population in
 			
-			newPopulation += selected.reproduceWithCrossover(Chromosome.twoPointCrossover)
-			
-			newPopulation += unselected
+			selected.reproduceWithCrossover(Chromosome.twoPointCrossover)
+				+ unselected
 		}
 		
 		// Mutation

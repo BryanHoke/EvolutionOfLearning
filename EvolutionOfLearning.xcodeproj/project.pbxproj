@@ -7,12 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4A1252491BA85EC60096A717 /* ManagedObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1252481BA85EC60096A717 /* ManagedObjects.swift */; settings = {ASSET_TAGS = (); }; };
+		4A12524A1BA85EC60096A717 /* ManagedObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1252481BA85EC60096A717 /* ManagedObjects.swift */; settings = {ASSET_TAGS = (); }; };
+		4A12524B1BA860FC0096A717 /* Document.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4A825ECC1B2D019E00C8CEA3 /* Document.xcdatamodeld */; settings = {ASSET_TAGS = (); }; };
 		4A13A0D51B64404D0047E858 /* SupervisedLearningRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A13A0D41B64404D0047E858 /* SupervisedLearningRule.swift */; };
 		4A13A0D61B64404D0047E858 /* SupervisedLearningRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A13A0D41B64404D0047E858 /* SupervisedLearningRule.swift */; };
 		4A1D739D1B54A8C300E788B9 /* ArrayWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1D739C1B54A8C300E788B9 /* ArrayWrapper.swift */; };
 		4A1D739E1B54A8C300E788B9 /* ArrayWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1D739C1B54A8C300E788B9 /* ArrayWrapper.swift */; };
 		4A2F11631B5DD7520055AFF8 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A2F11621B5DD7520055AFF8 /* DataManager.swift */; };
 		4A2F11641B5DD7530055AFF8 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A2F11621B5DD7520055AFF8 /* DataManager.swift */; };
+		4A42A4741BA9B44500F797BD /* ManagedDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A42A4731BA9B44500F797BD /* ManagedDataManager.swift */; settings = {ASSET_TAGS = (); }; };
+		4A42A4751BA9B44500F797BD /* ManagedDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A42A4731BA9B44500F797BD /* ManagedDataManager.swift */; settings = {ASSET_TAGS = (); }; };
 		4A50A8341B30F9F10004BC5D /* Chromosome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A50A8331B30F9F10004BC5D /* Chromosome.swift */; };
 		4A50A8351B30F9F10004BC5D /* Chromosome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A50A8331B30F9F10004BC5D /* Chromosome.swift */; };
 		4A7A1DCC1B9FF4AE001F5C18 /* ChalmersExperiment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7A1DCB1B9FF4AE001F5C18 /* ChalmersExperiment.swift */; settings = {ASSET_TAGS = (); }; };
@@ -67,9 +72,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4A1252481BA85EC60096A717 /* ManagedObjects.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagedObjects.swift; sourceTree = "<group>"; };
 		4A13A0D41B64404D0047E858 /* SupervisedLearningRule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SupervisedLearningRule.swift; sourceTree = "<group>"; };
 		4A1D739C1B54A8C300E788B9 /* ArrayWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayWrapper.swift; sourceTree = "<group>"; };
 		4A2F11621B5DD7520055AFF8 /* DataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
+		4A42A4731BA9B44500F797BD /* ManagedDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagedDataManager.swift; sourceTree = "<group>"; };
 		4A50A8331B30F9F10004BC5D /* Chromosome.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Chromosome.swift; sourceTree = "<group>"; };
 		4A7A1DCB1B9FF4AE001F5C18 /* ChalmersExperiment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChalmersExperiment.swift; sourceTree = "<group>"; };
 		4A7E06921B5C2FC40000E561 /* Experiment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Experiment.swift; sourceTree = "<group>"; };
@@ -125,6 +132,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4A1252471BA85E5B0096A717 /* Data Model */ = {
+			isa = PBXGroup;
+			children = (
+				4A1252481BA85EC60096A717 /* ManagedObjects.swift */,
+				4A42A4731BA9B44500F797BD /* ManagedDataManager.swift */,
+			);
+			name = "Data Model";
+			sourceTree = "<group>";
+		};
 		4A1D739B1B54A8AC00E788B9 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
@@ -151,10 +167,10 @@
 		4A50A8321B30F9D60004BC5D /* Genetic algorithms */ = {
 			isa = PBXGroup;
 			children = (
-				4A50A8331B30F9F10004BC5D /* Chromosome.swift */,
 				4AE6209E1B39A1D60033980F /* GeneticAlgorithm.swift */,
-				4AF11C0C1B3F036C00AED909 /* Individual.swift */,
 				4AF11C101B4092EB00AED909 /* Population.swift */,
+				4AF11C0C1B3F036C00AED909 /* Individual.swift */,
+				4A50A8331B30F9F10004BC5D /* Chromosome.swift */,
 			);
 			name = "Genetic algorithms";
 			sourceTree = "<group>";
@@ -189,6 +205,7 @@
 				4A248D831B5B45F800C78F2B /* Experiments */,
 				4A825EF91B2D053600C8CEA3 /* Neural Networks */,
 				4A50A8321B30F9D60004BC5D /* Genetic algorithms */,
+				4A1252471BA85E5B0096A717 /* Data Model */,
 				4A1D739B1B54A8AC00E788B9 /* Helpers */,
 				4A825ECF1B2D019E00C8CEA3 /* Assets.xcassets */,
 				4A825ED11B2D019E00C8CEA3 /* MainMenu.xib */,
@@ -297,6 +314,7 @@
 		4A825EBA1B2D019E00C8CEA3 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 0700;
 				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "Bryan Hoke";
 				TargetAttributes = {
@@ -375,6 +393,7 @@
 				4A50A8341B30F9F10004BC5D /* Chromosome.swift in Sources */,
 				4A7E069C1B5C63190000E561 /* Pattern.swift in Sources */,
 				4A7E06991B5C536A0000E561 /* Task.swift in Sources */,
+				4A42A4741BA9B44500F797BD /* ManagedDataManager.swift in Sources */,
 				4A2F11631B5DD7520055AFF8 /* DataManager.swift in Sources */,
 				4A825EC81B2D019E00C8CEA3 /* Document.swift in Sources */,
 				4AF11C0D1B3F036C00AED909 /* Individual.swift in Sources */,
@@ -383,6 +402,7 @@
 				4AE6209F1B39A1D60033980F /* GeneticAlgorithm.swift in Sources */,
 				4A7A1DCC1B9FF4AE001F5C18 /* ChalmersExperiment.swift in Sources */,
 				4A825EFB1B2D057B00C8CEA3 /* SingleLayerNeuralNetwork.swift in Sources */,
+				4A1252491BA85EC60096A717 /* ManagedObjects.swift in Sources */,
 				4A1D739D1B54A8C300E788B9 /* ArrayWrapper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -400,13 +420,16 @@
 				4AF11C121B4092EB00AED909 /* Population.swift in Sources */,
 				4A9B76C61B55574800BE653D /* Array-Extensions.swift in Sources */,
 				4A7A1DCD1B9FF4AE001F5C18 /* ChalmersExperiment.swift in Sources */,
+				4A42A4751BA9B44500F797BD /* ManagedDataManager.swift in Sources */,
 				4A825EDE1B2D019E00C8CEA3 /* EvolutionOfLearningTests.swift in Sources */,
 				4A13A0D61B64404D0047E858 /* SupervisedLearningRule.swift in Sources */,
 				4A7E069A1B5C536A0000E561 /* Task.swift in Sources */,
+				4A12524B1BA860FC0096A717 /* Document.xcdatamodeld in Sources */,
 				4A7E06941B5C2FC40000E561 /* Experiment.swift in Sources */,
 				4A1D739E1B54A8C300E788B9 /* ArrayWrapper.swift in Sources */,
 				4A50A8351B30F9F10004BC5D /* Chromosome.swift in Sources */,
 				4A7E069D1B5C63190000E561 /* Pattern.swift in Sources */,
+				4A12524A1BA85EC60096A717 /* ManagedObjects.swift in Sources */,
 				4A825EFC1B2D057B00C8CEA3 /* SingleLayerNeuralNetwork.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -9,11 +9,35 @@
 import Cocoa
 
 class Document: NSPersistentDocument {
+	
+	// MARK: - Initializers
 
 	override init() {
-	    super.init()
-		// Add your subclass-specific initialization here.
+		
+		super.init()
+		
+		dataManager = ManagedDataManager(context: managedObjectContext!, model: managedObjectModel!)
+		
+		experiment = Experiment()
+		
+		experiment.dataManager = dataManager
 	}
+	
+	// MARK: - Instance Properties
+	
+	var dataManager: DataManager!
+	
+	var experiment: Experiment!
+	
+	// MARK: Interface Builder Outlets
+	
+	@IBOutlet weak var runExperimentButton: NSButton!
+	
+	@IBOutlet weak var generationsTextField: NSTextField!
+	
+	@IBOutlet weak var trialsTextField: NSTextField!
+	
+	// MARK: - Instance Methods
 
 	override func windowControllerDidLoadNib(aController: NSWindowController) {
 		super.windowControllerDidLoadNib(aController)
@@ -29,5 +53,17 @@ class Document: NSPersistentDocument {
 		// If you need to use a subclass of NSWindowController or if your document supports multiple NSWindowControllers, you should remove this property and override -makeWindowControllers instead.
 		return "Document"
 	}
-
+	
+	// MARK: Control Editing Notifications
+	
+	override func controlTextDidChange(obj: NSNotification) {
+		
+	}
+	
+	// MARK: Interface Builder Actions
+	
+	@IBAction func runExperimentButtonClicked(sender: NSButton) {
+		
+		
+	}
 }

@@ -1,21 +1,24 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="8193.2" systemVersion="15A279b" minimumToolsVersion="Automatic">
-    <entity name="Experiment" syncable="YES">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="8195" systemVersion="15A282b" minimumToolsVersion="Automatic">
+    <entity name="Experiment" representedClassName=".ManagedExperiment" syncable="YES">
+        <attribute name="numberOfGenerations" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="numberOfTrials" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <relationship name="histories" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="History" inverseName="experiment" inverseEntity="History" syncable="YES"/>
     </entity>
-    <entity name="History" syncable="YES">
+    <entity name="History" representedClassName=".ManagedHistory" syncable="YES">
+        <attribute name="trialNumber" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <relationship name="experiment" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Experiment" inverseName="histories" inverseEntity="Experiment" syncable="YES"/>
         <relationship name="populations" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Population" inverseName="history" inverseEntity="Population" syncable="YES"/>
     </entity>
-    <entity name="Individual" syncable="YES">
+    <entity name="Individual" representedClassName=".ManagedIndividual" syncable="YES">
         <attribute name="chromosome" attributeType="String" syncable="YES"/>
         <attribute name="fitness" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="id" attributeType="String" syncable="YES"/>
         <attribute name="parentID1" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="parentID2" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="population" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Population" inverseName="members" inverseEntity="Population" syncable="YES"/>
     </entity>
-    <entity name="Population" syncable="YES">
+    <entity name="Population" representedClassName=".ManagedPopulation" syncable="YES">
         <attribute name="fitnessAverage" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="fitnessTotal" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="generation" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
@@ -23,9 +26,9 @@
         <relationship name="members" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Individual" inverseName="population" inverseEntity="Individual" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Individual" positionX="313" positionY="182" width="128" height="133"/>
+        <element name="Experiment" positionX="133" positionY="-81" width="128" height="90"/>
+        <element name="History" positionX="88" positionY="71" width="128" height="90"/>
+        <element name="Individual" positionX="313" positionY="182" width="128" height="135"/>
         <element name="Population" positionX="79" positionY="195" width="128" height="120"/>
-        <element name="History" positionX="88" positionY="71" width="128" height="73"/>
-        <element name="Experiment" positionX="133" positionY="-81" width="128" height="60"/>
     </elements>
 </model>

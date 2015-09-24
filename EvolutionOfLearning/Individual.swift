@@ -8,8 +8,11 @@
 
 import Foundation
 
+
 public typealias IndividualPair = (Individual, Individual)
 
+
+///
 public protocol GeneticIndividual {
 	
 	var chromosome: Chromosome { get }
@@ -18,24 +21,36 @@ public protocol GeneticIndividual {
 	
 	var id: NSUUID { get }
 	
+	var parentID1: NSUUID? { get }
+	
+	var parentID2: NSUUID? { get }
 }
 
+
+///
 public final class Individual: GeneticIndividual {
 	
+	///
 	public init(chromosome: Chromosome) {
 		self.chromosome = chromosome
 	}
 	
+	///
 	public let chromosome: Chromosome
 	
+	///
 	public var fitness: Double = 0
 	
+	///
 	public let id = NSUUID()
 	
+	///
 	public private(set) var parentID1: NSUUID?
 	
+	///
 	public private(set) var parentID2: NSUUID?
 	
+	///
 	public func reproduceWithCrossover(crossoverOperator: CrossoverOperator, pairIndividual: Individual) -> (Individual, Individual) {
 		let offspringChromosomes = crossoverOperator(chromosome, pairIndividual.chromosome)
 		let offspring = (Individual(chromosome: offspringChromosomes.0), Individual(chromosome: offspringChromosomes.1))
@@ -46,6 +61,7 @@ public final class Individual: GeneticIndividual {
 		return offspring
 	}
 	
+	///
 	public func reproduceWithMutation(mutationOperator: MutationOperator) -> Individual {
 		let offspringChromosome = mutationOperator(chromosome)
 		let offspring = Individual(chromosome: offspringChromosome)
@@ -53,6 +69,7 @@ public final class Individual: GeneticIndividual {
 		return offspring
 	}
 	
+	///
 	public func reproduceWithRecombination(recombinationOperator: RecombinationOperator, pairIndividual: Individual) -> Individual {
 		let offspringChromosome = recombinationOperator(chromosome, pairIndividual.chromosome)
 		let offspring = Individual(chromosome: offspringChromosome)
@@ -61,6 +78,7 @@ public final class Individual: GeneticIndividual {
 		return offspring
 	}
 }
+
 
 public func <(left: Individual, right: Individual) -> Bool {
 	return left.fitness < right.fitness

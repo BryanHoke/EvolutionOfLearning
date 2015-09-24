@@ -8,10 +8,13 @@
 
 import Foundation
 
-public class DataManager {
+
+///
+public protocol DataManager: class {
 	
-	public func recordPopulation(population: Population) {
-		
-	}
+	///
+	func recordPopulation(population: Population)
 	
+	///
+	func beginNewTrial()
 }

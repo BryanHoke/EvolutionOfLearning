@@ -9,7 +9,12 @@
 import Foundation
 import Darwin
 
+/**
+An ordered collection of `Individual` objects.
+*/
 public struct Population: CollectionType, ArrayLiteralConvertible {
+	
+	// MARK: - Class Methods
 	
 	///
 	public static func uniformSelection(count: Int)(population: Population) -> Population {
@@ -34,30 +39,57 @@ public struct Population: CollectionType, ArrayLiteralConvertible {
 		return selectedIndices
 	}
 	
-	public typealias Element = Individual
+	// MARK: - Initializers
 	
-	public typealias Index = Int
-	
-	public typealias Generator = IndexingGenerator<[Individual]>
-	
-	public init() {
-		members = [Individual]()
+	///
+	public init(members: [Individual]) {
+		
+		self.members += members
 	}
 	
+	///
+	public init(size: Int, seed: () -> Individual) {
+		
+		for _ in 0..<size {
+			
+			members.append(seed())
+		}
+	}
+	
+	///
 	public init(arrayLiteral elements: Individual...) {
-		members = elements
+		
+		members += elements
 	}
 	
+	// MARK: - Instance Properties
+	
+	/// The `Individual`s which comprise this population.
 	public var members = [Individual]()
 	
+	/// An `Array` of the `Population`'s members paired by order into tuples.
+	/// E.g., `[(members[0], members[1]), (members[2], members[3]),` ... `(members[count - 2], members[count - 1])]`.
+	/// - Note: The implementation currently assumes that the population contains an even number of members.
+	public var pairs: [(Individual, Individual)] {
+		
+		return 0.stride(through: count, by: 2)
+			
+			.map { (self[$0], self[$0 + 1]) }
+	}
+	
+	/// The total fitness of all `Individual`s in the populatin.
 	var totalFitness: Double {
+		
 		return members.map { $0.fitness }.reduce(0, combine: +)
 	}
+	
+	// MARK: - Instance Methods
 	
 	/// Selects the top *n* members of the population ranked by fitness and returns them in a new population.
 	/// - parameter elitistCount: The number of most-fit individuals to selected.
 	/// - returns: A new `Population` containing the top *n* fitness-ranked members of `self` (where *n* is equal to `elitistCount`).
 	public func elitismSelectionWithCount(elitistCount: Int) -> Population {
+		
 		var elitistPopulation = self
 		for index in 0..<elitistCount {
 			elitistPopulation.append(self[index])
@@ -67,6 +99,7 @@ public struct Population: CollectionType, ArrayLiteralConvertible {
 	
 	/// Evaluates the fitness of each of the `members` with *fitnessFunc*.
 	public func evaluateWithFitnessFunc(fitnessFunc: FitnessFunc) {
+		
 		// Create dispatch queue and group
 		let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)
 		let group = dispatch_group_create()
@@ -82,21 +115,12 @@ public struct Population: CollectionType, ArrayLiteralConvertible {
 		dispatch_group_wait(group, DISPATCH_TIME_FOREVER)
 	}
 	
-	///
-	public func pairs() -> [(Individual, Individual)] {
-		var pairings = [(Individual, Individual)]()
-		for index in 0.stride(through: count, by: 2) {
-			pairings.append((self[index], self[index + 1]))
-		}
-		return pairings
-	}
-	
-	///
+	/// Creates a new `Population` by applying *crossoverOperator* to each of this `Population`'s `pairs`.
 	public func reproduceWithCrossover(crossoverOperator: CrossoverOperator) -> Population {
 		
 		var offspringPopulation = Population()
 		
-		for pair in pairs() {
+		for pair in pairs {
 			
 			let offspringPair = pair.0.reproduceWithCrossover(crossoverOperator, pairIndividual: pair.1)
 			
@@ -105,61 +129,75 @@ public struct Population: CollectionType, ArrayLiteralConvertible {
 		
 		return offspringPopulation
 	}
-	
-	///
+
+	/// Creates a new `Population` by applying *mutationOperator* to each of this `Population`'s `members`.
 	public func reproduceWithMutation(mutationOperator: MutationOperator) -> Population {
-		var offspringPopulation = Population()
-		for individual in self {
-			let offspring = individual.reproduceWithMutation(mutationOperator)
-			offspringPopulation.append(offspring)
-		}
-		return offspringPopulation
+		
+		let mutatedMembers = map { $0.reproduceWithMutation(mutationOperator) }
+		
+		return Population(members: mutatedMembers)
 	}
 	
-	///
+	/// Creates a new `Population` by applying *recombinationOperator* to each of this `Population`'s `pairs`.
 	public func reproduceWithRecombination(recombinationOperator: RecombinationOperator) -> Population
 	{
-		var offspringPopulation = Population()
-		for pair in pairs() {
-			let offspring = pair.0.reproduceWithRecombination(recombinationOperator, pairIndividual: pair.1)
-			offspringPopulation.append(offspring)
+		let recombinedMembers = pairs.map { pair in
+			
+			pair.0.reproduceWithRecombination(recombinationOperator,
+				pairIndividual: pair.1)
 		}
-		return offspringPopulation
+		
+		return Population(members: recombinedMembers)
 	}
 	
 	///
 	public func rouletteWheelSelection(newPopulationSize newPopulationSize: Int? = nil, excludedIndices: Set<Int> = Set<Int>()) -> Population {
+		
+		// Filter out excluded members
 		var includedPopulation = self
+		
 		for excludedIndex in excludedIndices {
+			
 			includedPopulation.members.removeAtIndex(excludedIndex)
 		}
 		
+		// Select new members
 		var selectedPopulation = Population()
-		let newPopulationSize = newPopulationSize ?? members.count
-		for _ in 0..<newPopulationSize {
+		
+		for _ in 0..<(newPopulationSize ?? members.count) {
+			
 			let selectedIndividual = includedPopulation.rouletteWheelSelect()
+			
 			selectedPopulation.append(selectedIndividual)
 		}
 		
 		return selectedPopulation
 	}
 	
-	/// Selects and returns an individual in this `Population` using the "roulette wheel" method.
+	/// Selects and returns an individual in this `Population` using the "roulette wheel" technique.
 	public func rouletteWheelSelect() -> Individual {
-		let totalFitness = self.totalFitness
+		
+		// Seed the random double generator (once)
 		var onceToken: dispatch_once_t = 0
 		dispatch_once(&onceToken) { () -> Void in
 			srand48(Int(arc4random()))
 		}
-		let random = drand48()
+		
+		// Randomly generate a cumulative fitness ratio threshold
+		let fitnessRatioThreshold = drand48()
+		
+		let totalFitness = self.totalFitness
 		var selectionIndex = 0
 		var selectionIndividual: Individual
 		var fitnessRatioSum: Double = 0
 		
 		repeat {
+			
 			selectionIndividual = self[selectionIndex++]
+			
 			fitnessRatioSum += selectionIndividual.fitness / totalFitness
-		} while fitnessRatioSum < random
+			
+		} while fitnessRatioSum < fitnessRatioThreshold
 		
 		return selectionIndividual
 	}
@@ -206,15 +244,23 @@ public struct Population: CollectionType, ArrayLiteralConvertible {
 	}
 	
 	///
-	public func selectionBranch(branchSelector: Population -> Set<Int>, branchHandler: (selected: Population, unselected: Population) -> ()) {
+	public func selectionBranch(branchSelector: Population -> Set<Int>, branchHandler: (selected: Population, unselected: Population) -> (Population)) -> Population {
 		
 		let selectionIndices = branchSelector(self)
 		
 		let selectedPopulation = self.populationWithSelectionIndices(selectionIndices)
 		let unselectedPopulation = self.populationWithExcludedIndices(selectionIndices)
 		
-		branchHandler(selected: selectedPopulation, unselected: unselectedPopulation)
+		return branchHandler(selected: selectedPopulation, unselected: unselectedPopulation)
 	}
+	
+	// MARK: - CollectionType
+	
+	public typealias Element = Individual
+	
+	public typealias Index = Int
+	
+	public typealias Generator = IndexingGenerator<[Individual]>
 	
 	public var count: Int {
 		return members.count
@@ -258,6 +304,8 @@ public struct Population: CollectionType, ArrayLiteralConvertible {
 	}
 	
 }
+
+// MARK: - Operators
 
 public func +(lhs: Population, rhs: Population) -> Population {
 	return lhs + rhs.members
