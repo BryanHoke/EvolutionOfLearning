@@ -17,9 +17,9 @@ public class Experiment {
 	
 	let geneticAlgorithm = GeneticAlgorithm()
 	
-	var numberOfGenerations: Int?
+	var numberOfGenerations: Int = 0
 	
-	var numberOfTrials: Int?
+	var numberOfTrials: Int = 0
 	
 	///
 	var environment: FitnessEnvironment!
@@ -51,6 +51,19 @@ public class Experiment {
 	// MARK: - Instance Methods
 	
 	///
+	func run() {
+		
+		guard numberOfGenerations > 0 && numberOfTrials > 0 else {
+			return
+		}
+		
+		for _ in 0..<numberOfTrials {
+			
+			geneticAlgorithm.runForNumberOfGenerations(numberOfGenerations)
+		}
+	}
+	
+	///
 	func configureAlgorithm(algorithm: GeneticAlgorithm) {
 		
 		environment = ChalmersEnvironment(taskFitnessFunc: fitnessOfChromosome, historyLength: 10)
@@ -74,11 +87,9 @@ public class Experiment {
 		let chromosomeSize = 35
 		let populationSize = 40
 		
-		return Population(size: populationSize) {
-			() -> Individual in
+		return Population(size: populationSize) { () -> Individual in
 			
-			let chromosome = Chromosome(size: chromosomeSize) {
-				() -> Bool in
+			let chromosome = Chromosome(size: chromosomeSize) { () -> Bool in
 				
 				return arc4random_uniform(2) == 1
 			}
@@ -92,7 +103,8 @@ public class Experiment {
 		
 		var network = SingleLayerSingleOutputNeuralNetwork(
 			size: task.inputCount,
-			activation: sigmoid(1)) as FeedForwardNeuralNetwork
+			activation: sigmoid(1))
+			as FeedForwardNeuralNetwork
 		
 		let learningRule = ChalmersLearningRule(
 			bits: chromosome.genes)

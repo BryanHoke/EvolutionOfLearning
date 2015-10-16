@@ -58,6 +58,18 @@ class Document: NSPersistentDocument {
 	
 	override func controlTextDidChange(obj: NSNotification) {
 		
+		guard let textField = obj.object as? NSTextField else {
+			return
+		}
+		
+		if textField === generationsTextField {
+			
+			experiment.numberOfGenerations = textField.integerValue
+		}
+		else if textField === trialsTextField {
+			
+			experiment.numberOfTrials = textField.integerValue
+		}
 	}
 	
 	// MARK: Interface Builder Actions
