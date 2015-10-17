@@ -57,8 +57,10 @@ public class Experiment {
 			return
 		}
 		
+		configureAlgorithm(geneticAlgorithm)
+		
 		for _ in 0..<numberOfTrials {
-			
+			dataManager?.beginNewTrial()
 			geneticAlgorithm.runForNumberOfGenerations(numberOfGenerations)
 		}
 	}
