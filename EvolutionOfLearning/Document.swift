@@ -74,8 +74,12 @@ class Document: NSPersistentDocument {
 	
 	// MARK: Interface Builder Actions
 	
-	@IBAction func runExperimentButtonClicked(sender: NSButton) {
+	@IBAction
+	func runExperimentButtonClicked(sender: NSButton) {
 		
-		
+		dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)) {
+			() -> Void in
+			self.experiment.run()
+		}
 	}
 }
