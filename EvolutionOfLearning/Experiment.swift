@@ -17,29 +17,41 @@ public class Experiment {
 	
 	let geneticAlgorithm = GeneticAlgorithm()
 	
-	var numberOfGenerations: Int = 0
-	
-	var numberOfTrials: Int = 0
-	
 	///
 	var environment: FitnessEnvironment!
 	
-	///
-	var taskCount = 0
-	
-	///
-	var resourceName: String?
-	
+	/// The file path from which the `environment` should be loaded at the start of the experiment.
 	var environmentPath: String?
 	
 	///
 	weak var dataManager: DataManager?
 	
+	let chromosomeSize = 35
+	
+	let populationSize = 40
+	
+	let elitismCount = 1
+	
+	let crossoverRate = 0.8
+	
+	let mutationRate = 0.01
+	
+	let historyLength = 10
+	
+	let numberOfTrainingEpochs = 10
+	
+	var taskCount = 0
+	
+	var numberOfGenerations: Int = 0
+	
+	var numberOfTrials: Int = 0
+	
 	// MARK: - Instance Methods
 	
-	///
+	/// Runs the experiment by configuring the `geneticAlgorithm` and then executing it with a number of generations given by the `numberOfGenerations` for a number of times given by the `numberOfTrials`.
+	/// - note: The `numberOfGenerations` and `numberOfTrials` must both be greater than `0` for this method to do anything.
 	func run() {
-		
+
 		guard numberOfGenerations > 0 && numberOfTrials > 0 else {
 			return
 		}
@@ -52,10 +64,10 @@ public class Experiment {
 		}
 	}
 	
-	///
+	/// Configures the `geneticAlgorithm` before beginning the experiment.
 	func configureAlgorithm(algorithm: GeneticAlgorithm) {
 		
-		environment = ChalmersEnvironment(taskFitnessFunc: fitnessOfChromosome, historyLength: 10)
+		environment = ChalmersEnvironment(taskFitnessFunc: fitnessOfChromosome, historyLength: historyLength)
 		
 		if let
 			path = environmentPath,
@@ -72,36 +84,33 @@ public class Experiment {
 		algorithm.reproductionFunc = reproduction
 	}
 	
-	/// Used to generate an initial population.
+	/// Generates an initial `Population` at the beginning of each trial of the experiment.
 	func seeding() -> Population {
 		
-		// Parameters
-		let chromosomeSize = 35
-		let populationSize = 40
-		
+		// Initial population has randomly generated individuals
 		return Population(size: populationSize) { () -> Individual in
 			
-			let chromosome = Chromosome(size: chromosomeSize) { () -> Bool in
+			// Initial individuals have randomly generated chromosomes
+			let chromosome = Chromosome(size: self.chromosomeSize) { () -> Bool in
 				
-				return arc4random_uniform(2) == 1
+				// Initial chromosomes have randomly generated genes
+				arc4random_uniform(2) == 1
 			}
-			
 			return Individual(chromosome: chromosome)
 		}
 	}
 	
-	/// Used to evaluate the fitness of a `Chromosome` on a given task.
+	/// Evaluates the fitness of a `Chromosome` on a given `Task`.
 	func fitnessOfChromosome(chromosome: Chromosome, onTask task: Task) -> Double {
 		
 		var network = SingleLayerSingleOutputNeuralNetwork(
 			size: task.inputCount,
-			activation: sigmoid(1))
-			as FeedForwardNeuralNetwork
+			activation: sigmoid(1)) as FeedForwardNeuralNetwork
 		
 		let learningRule = ChalmersLearningRule(
 			bits: chromosome.genes)
 		
-		learningRule.trainNetwork(&network, task: task, numberOfTimes: 10)
+		learningRule.trainNetwork(&network, task: task, numberOfTimes: numberOfTrainingEpochs)
 		
 		let error = network.testOnTask(task)
 		
@@ -110,37 +119,36 @@ public class Experiment {
 		return fitness
 	}
 	
-	/// Used to create the next-generation population by applying selection, mutation, and reproductive operations.
+	/// Creates the next-generation `Population`s by applying selection, mutation, and reproductive operations.
 	func reproduction(var population: Population) -> Population {
 		
-		// Parameters
-		let elitismCount = 1
-		let crossoverRate = 0.8
-		let mutationRate = 0.01
-		let size = population.count
-		let crossoverSize = Int(Double(size) * crossoverRate)
-		
-		var newPopulation = Population()
-		
+		// Sort population by highest fitness
 		population.members.sortInPlace(>)
 		
 		// Elitist selection
 		var selectedPopulation = population.elitismSelectionWithCount(elitismCount)
 		
-		do { // Roulette wheel selection
-			var indices = Set<Int>()
-			
+		let size = population.count
+		
+		// Roulette wheel selection
+		do {
+			// The elite inviduals do not participate in roulette wheel
+			let selectionSize = size - elitismCount
+			var eliteIndices = Set<Int>()
 			for i in 0..<elitismCount {
-				indices.insert(i)
+				eliteIndices.insert(i)
 			}
 			
-			selectedPopulation += population.rouletteWheelSelection(newPopulationSize: size - elitismCount, excludedIndices: indices)
+			let roulettePop = population.rouletteWheelSelection(newPopulationSize: selectionSize, excludedIndices: eliteIndices)
+			selectedPopulation += roulettePop
 		}
 		
+		// Individuals are selected for crossover uniformly
+		let crossoverSize = Int(Double(size) * crossoverRate)
 		let branchSelector = Population.uniformSelectionIndices(crossoverSize)
 		
-		// Perform crossover on portion of population proportional to crossoverRate, and cloning on the rest
-		newPopulation += selectedPopulation.selectionBranch(branchSelector) {
+		// Perform crossover on portion of population and cloning on the rest
+		var newPopulation = selectedPopulation.selectionBranch(branchSelector) {
 			(selected: Population, unselected: Population) -> Population in
 			
 			selected.reproduceWithCrossover(Chromosome.twoPointCrossover)
