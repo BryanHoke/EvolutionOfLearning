@@ -19,9 +19,10 @@ class Document: NSPersistentDocument {
 		dataManager = ManagedDataManager(context: managedObjectContext!, model: managedObjectModel!)
 		
 		experiment = Experiment()
-		
+		experiment.environmentPath = environmentPath
 		experiment.dataManager = dataManager
 	}
+	
 	
 	// MARK: - Instance Properties
 	
@@ -29,13 +30,37 @@ class Document: NSPersistentDocument {
 	
 	var experiment: Experiment!
 	
+	///
+	var basePath: String {
+		return "/Users/bryanhoke/Projects/BDHSoftware/OS X/EvolutionOfLearning"
+	}
+	
+	///
+	var resourcePath: String {
+		return basePath + "/Resources"
+	}
+	
+	///
+	var resultsPath: String {
+		return basePath + "/Results"
+	}
+	
+	var environmentPath: String {
+		return resourcePath + "/Environment1.txt"
+	}
+	
+	
 	// MARK: Interface Builder Outlets
 	
-	@IBOutlet weak var runExperimentButton: NSButton!
+	@IBOutlet
+	weak var runExperimentButton: NSButton!
 	
-	@IBOutlet weak var generationsTextField: NSTextField!
+	@IBOutlet
+	weak var generationsTextField: NSTextField!
 	
-	@IBOutlet weak var trialsTextField: NSTextField!
+	@IBOutlet
+	weak var trialsTextField: NSTextField!
+	
 	
 	// MARK: - Instance Methods
 
@@ -53,6 +78,7 @@ class Document: NSPersistentDocument {
 		// If you need to use a subclass of NSWindowController or if your document supports multiple NSWindowControllers, you should remove this property and override -makeWindowControllers instead.
 		return "Document"
 	}
+	
 	
 	// MARK: Control Editing Notifications
 	
@@ -72,13 +98,14 @@ class Document: NSPersistentDocument {
 		}
 	}
 	
+	
 	// MARK: Interface Builder Actions
 	
 	@IBAction
 	func runExperimentButtonClicked(sender: NSButton) {
 		
 		dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)) {
-			() -> Void in
+			
 			self.experiment.run()
 		}
 	}

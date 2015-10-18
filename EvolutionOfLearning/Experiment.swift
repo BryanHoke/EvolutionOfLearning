@@ -30,20 +30,7 @@ public class Experiment {
 	///
 	var resourceName: String?
 	
-	///
-	var basePath: String {
-		return "/Users/bryanhoke/Projects/BDHSoftware/OS X/EvolutionOfLearning"
-	}
-	
-	///
-	var resourcePath: String {
-		return self.basePath + "/Resources/"
-	}
-	
-	///
-	var resultsPath: String {
-		return self.basePath + "/Results/"
-	}
+	var environmentPath: String?
 	
 	///
 	weak var dataManager: DataManager?
@@ -70,12 +57,15 @@ public class Experiment {
 		
 		environment = ChalmersEnvironment(taskFitnessFunc: fitnessOfChromosome, historyLength: 10)
 		
-		let tasks = try! Task.tasksWithFileAtPath(resourcePath + "Environment1.txt")
-		environment.tasks += tasks
+		if let
+			path = environmentPath,
+			tasks = try? Task.tasksWithFileAtPath(path) {
+				environment.tasks += tasks
+		}
 		
 		algorithm.initializationFunc = seeding
 		
-		algorithm.fitnessFunc = ChalmersEnvironment.evaluateFitnessOfChromosome(environment as! ChalmersEnvironment)
+		algorithm.fitnessFunc = environment.evaluateFitnessOfChromosome
 		
 		algorithm.recordingFunc = dataManager?.recordPopulation
 		
@@ -162,5 +152,4 @@ public class Experiment {
 		
 		return newPopulation
 	}
-	
 }
