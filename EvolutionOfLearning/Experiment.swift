@@ -46,11 +46,14 @@ public class Experiment {
 	
 	var numberOfTrials: Int = 0
 	
+	var output: ExperimentOutput?
+	
 	// MARK: - Instance Methods
 	
 	/// Runs the experiment by configuring the `geneticAlgorithm` and then executing it with a number of generations given by the `numberOfGenerations` for a number of times given by the `numberOfTrials`.
 	/// - note: The `numberOfGenerations` and `numberOfTrials` must both be greater than `0` for this method to do anything.
 	func run() {
+		
 		guard numberOfGenerations > 0 && numberOfTrials > 0 else {
 			return
 		}
@@ -58,13 +61,14 @@ public class Experiment {
 		configureAlgorithm(geneticAlgorithm)
 		
 		for _ in 0..<numberOfTrials {
-			dataManager?.beginNewTrial()
+			output?.experimentDidBeginNewTrial(self)
 			geneticAlgorithm.runForNumberOfGenerations(numberOfGenerations)
 		}
 	}
 	
 	/// Configures the `geneticAlgorithm` before beginning the experiment.
 	func configureAlgorithm(algorithm: GeneticAlgorithm) {
+		
 		environment = ChalmersEnvironment(taskFitnessFunc: fitnessOfChromosome, historyLength: historyLength)
 		
 		if let

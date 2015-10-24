@@ -42,6 +42,8 @@
 		4A825EFC1B2D057B00C8CEA3 /* SingleLayerNeuralNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A825EFA1B2D057B00C8CEA3 /* SingleLayerNeuralNetwork.swift */; };
 		4A8B579F1BDC2583002BABCF /* DocumentEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8B579E1BDC2583002BABCF /* DocumentEventHandler.swift */; };
 		4A8B57A11BDC274F002BABCF /* ExperimentCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8B57A01BDC274F002BABCF /* ExperimentCoordinator.swift */; };
+		4A8B57A31BDC2CDE002BABCF /* ExperimentOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8B57A21BDC2CDE002BABCF /* ExperimentOutput.swift */; };
+		4A8B57A41BDC2E56002BABCF /* ExperimentOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8B57A21BDC2CDE002BABCF /* ExperimentOutput.swift */; };
 		4A9B76C51B55574800BE653D /* Array-Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9B76C41B55574800BE653D /* Array-Extensions.swift */; };
 		4A9B76C61B55574800BE653D /* Array-Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9B76C41B55574800BE653D /* Array-Extensions.swift */; };
 		4A9B76C81B55576800BE653D /* CustomOperators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9B76C71B55576800BE653D /* CustomOperators.swift */; };
@@ -102,6 +104,7 @@
 		4A825EFA1B2D057B00C8CEA3 /* SingleLayerNeuralNetwork.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleLayerNeuralNetwork.swift; sourceTree = "<group>"; };
 		4A8B579E1BDC2583002BABCF /* DocumentEventHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DocumentEventHandler.swift; sourceTree = "<group>"; };
 		4A8B57A01BDC274F002BABCF /* ExperimentCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExperimentCoordinator.swift; sourceTree = "<group>"; };
+		4A8B57A21BDC2CDE002BABCF /* ExperimentOutput.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExperimentOutput.swift; sourceTree = "<group>"; };
 		4A9B76C41B55574800BE653D /* Array-Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array-Extensions.swift"; sourceTree = "<group>"; };
 		4A9B76C71B55576800BE653D /* CustomOperators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomOperators.swift; sourceTree = "<group>"; };
 		4AD3F53E1B33097C000E9BA4 /* EvolutionOfLearningGeneticAlgorithmTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EvolutionOfLearningGeneticAlgorithmTests.swift; sourceTree = "<group>"; };
@@ -164,6 +167,7 @@
 				4A7E06981B5C536A0000E561 /* Task.swift */,
 				4A7E069B1B5C63190000E561 /* Pattern.swift */,
 				4A2F11621B5DD7520055AFF8 /* DataManager.swift */,
+				4A8B57A21BDC2CDE002BABCF /* ExperimentOutput.swift */,
 			);
 			name = Experiments;
 			sourceTree = "<group>";
@@ -405,6 +409,7 @@
 				4A7E06961B5C52AD0000E561 /* Environment.swift in Sources */,
 				4A825ECE1B2D019E00C8CEA3 /* Document.xcdatamodeld in Sources */,
 				4A50A8341B30F9F10004BC5D /* Chromosome.swift in Sources */,
+				4A8B57A31BDC2CDE002BABCF /* ExperimentOutput.swift in Sources */,
 				4A7E069C1B5C63190000E561 /* Pattern.swift in Sources */,
 				4A7E06991B5C536A0000E561 /* Task.swift in Sources */,
 				4A8B579F1BDC2583002BABCF /* DocumentEventHandler.swift in Sources */,
@@ -431,6 +436,7 @@
 				4A2F11641B5DD7530055AFF8 /* DataManager.swift in Sources */,
 				4A7E06971B5C52AD0000E561 /* Environment.swift in Sources */,
 				4AF11C0E1B3F036C00AED909 /* Individual.swift in Sources */,
+				4A8B57A41BDC2E56002BABCF /* ExperimentOutput.swift in Sources */,
 				4AE620A01B39A1D60033980F /* GeneticAlgorithm.swift in Sources */,
 				4AD3F53F1B33097C000E9BA4 /* EvolutionOfLearningGeneticAlgorithmTests.swift in Sources */,
 				4AF11C121B4092EB00AED909 /* Population.swift in Sources */,

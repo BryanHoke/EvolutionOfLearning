@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ExperimentCoordinator: DocumentEventHandler {
+class ExperimentCoordinator: DocumentEventHandler, ExperimentOutput {
 	
 	// MARK: Initializers
 	
@@ -64,5 +64,15 @@ class ExperimentCoordinator: DocumentEventHandler {
 		dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)) {
 			self.experiment.run()
 		}
+	}
+	
+	// MARK: Experiment Output
+	
+	func experimentDidBeginNewTrial(experiment: Experiment) {
+		dataManager?.beginNewTrial()
+	}
+	
+	func experiment(experiment: Experiment, didEvaluatePopulation pop: Population) {
+		dataManager?.recordPopulation(pop)
 	}
 }
