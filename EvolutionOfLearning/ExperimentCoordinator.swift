@@ -14,6 +14,7 @@ class ExperimentCoordinator: DocumentEventHandler, ExperimentOutput {
 	
 	init() {
 		experiment = Experiment()
+		experiment.output = self
 	}
 	
 	// MARK: Instance Properties
@@ -29,8 +30,6 @@ class ExperimentCoordinator: DocumentEventHandler, ExperimentOutput {
 		dataManager = ManagedDataManager(
 			context: doc.managedObjectContext!,
 			model: doc.managedObjectModel!)
-		
-		experiment.dataManager = dataManager
 	}
 	
 	func document(doc: Document,

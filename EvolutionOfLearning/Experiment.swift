@@ -11,10 +11,11 @@ import Foundation
 /**
 
 */
-public class Experiment {
+public class Experiment: GeneticAlgorithmOutput {
 	
 	// MARK: - Instance Properties
 	
+	///
 	let geneticAlgorithm = GeneticAlgorithm()
 	
 	///
@@ -22,9 +23,6 @@ public class Experiment {
 	
 	/// The file path from which the `environment` should be loaded at the start of the experiment.
 	var environmentPath: String?
-	
-	///
-	weak var dataManager: DataManager?
 	
 	let chromosomeSize = 35
 	
@@ -81,9 +79,9 @@ public class Experiment {
 		
 		algorithm.fitnessFunc = environment.evaluateFitnessOfChromosome
 		
-		algorithm.recordingFunc = dataManager?.recordPopulation
-		
 		algorithm.reproductionFunc = reproduction
+		
+		algorithm.output = self
 	}
 	
 	/// Generates an initial `Population` at the beginning of each trial of the experiment.
@@ -161,5 +159,13 @@ public class Experiment {
 		newPopulation = newPopulation.reproduceWithMutation(Chromosome.mutation(mutationRate))
 		
 		return newPopulation
+	}
+	
+	// MARK: Genetic Algorithm Output
+	
+	public func geneticAlgorithm(algorithm: GeneticAlgorithm,
+		didEvaluatePopulation pop: Population)
+	{
+		output?.experiment(self, didEvaluatePopulation: pop)
 	}
 }

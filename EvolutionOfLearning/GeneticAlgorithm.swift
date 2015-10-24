@@ -10,10 +10,10 @@ import Foundation
 
 public typealias FitnessFunc = Chromosome -> Double
 
-public protocol GeneticAlgorithmDelegate: class {
+public protocol GeneticAlgorithmOutput {
 	
-	func geneticAlgorithm(geneticAlgorithm: GeneticAlgorithm, didEvaluatePopulation population: Population)
-	
+	func geneticAlgorithm(algorithm: GeneticAlgorithm,
+		didEvaluatePopulation pop: Population)
 }
 
 /**
@@ -28,10 +28,10 @@ public final class GeneticAlgorithm {
 	public var fitnessFunc: FitnessFunc?
 	
 	///
-	public var recordingFunc: (Population -> Void)?
+	public var reproductionFunc: (Population -> Population)?
 	
 	///
-	public var reproductionFunc: (Population -> Population)?
+	public var output: GeneticAlgorithmOutput?
 	
 	///
 	public func runForNumberOfGenerations(numberOfGenerations: Int) {
@@ -44,7 +44,7 @@ public final class GeneticAlgorithm {
 				population.evaluateWithFitnessFunc(fitnessFunc)
 			}
 			
-			self.recordingFunc?(population)
+			output?.geneticAlgorithm(self, didEvaluatePopulation: population)
 			
 			generation++
 		}
