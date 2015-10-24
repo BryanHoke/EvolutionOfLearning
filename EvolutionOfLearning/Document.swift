@@ -14,17 +14,18 @@ class Document: NSPersistentDocument {
 
 	override init() {
 		
+		eventHandler = ExperimentCoordinator()
+		
 		super.init()
 		
-		dataManager = ManagedDataManager(context: managedObjectContext!, model: managedObjectModel!)
-		
-		experiment = Experiment()
-		experiment.environmentPath = environmentPath
-		experiment.dataManager = dataManager
+		eventHandler.documentWasCreated(self)
+		eventHandler.document(self, environmentPathChanged: environmentPath)
 	}
 	
 	
 	// MARK: - Instance Properties
+	
+	var eventHandler: DocumentEventHandler
 	
 	var dataManager: DataManager!
 	
@@ -88,13 +89,14 @@ class Document: NSPersistentDocument {
 			return
 		}
 		
+		let value = textField.integerValue
+		
+		// Assign the text field value to the respective experimental parameter
 		if textField === generationsTextField {
-			
-			experiment.numberOfGenerations = textField.integerValue
+			eventHandler.document(self, numberOfGenerationsChangedToValue: value)
 		}
 		else if textField === trialsTextField {
-			
-			experiment.numberOfTrials = textField.integerValue
+			eventHandler.document(self, numberOfTrialsChangedToValue: value)
 		}
 	}
 	
@@ -103,10 +105,6 @@ class Document: NSPersistentDocument {
 	
 	@IBAction
 	func runExperimentButtonClicked(sender: NSButton) {
-		
-		dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)) {
-			
-			self.experiment.run()
-		}
+		eventHandler.runButtonClickedForDocument(self)
 	}
 }

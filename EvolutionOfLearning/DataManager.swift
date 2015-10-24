@@ -17,4 +17,8 @@ public protocol DataManager: class {
 	
 	///
 	func beginNewTrial()
+	
+	func recordExperimentalNumberOfGenerations(number: Int)
+	
+	func recordExperimentalNumberOfTrials(number: Int)
 }

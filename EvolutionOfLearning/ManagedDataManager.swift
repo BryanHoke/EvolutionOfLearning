@@ -76,4 +76,12 @@ public class ManagedDataManager: DataManager {
 		
 		currentHistory = history
 	}
+	
+	public func recordExperimentalNumberOfGenerations(number: Int) {
+		experiment.numberOfGenerations = number
+	}
+	
+	public func recordExperimentalNumberOfTrials(number: Int) {
+		experiment.numberOfTrials = number
+	}
 }

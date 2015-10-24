@@ -51,7 +51,6 @@ public class Experiment {
 	/// Runs the experiment by configuring the `geneticAlgorithm` and then executing it with a number of generations given by the `numberOfGenerations` for a number of times given by the `numberOfTrials`.
 	/// - note: The `numberOfGenerations` and `numberOfTrials` must both be greater than `0` for this method to do anything.
 	func run() {
-
 		guard numberOfGenerations > 0 && numberOfTrials > 0 else {
 			return
 		}
@@ -66,7 +65,6 @@ public class Experiment {
 	
 	/// Configures the `geneticAlgorithm` before beginning the experiment.
 	func configureAlgorithm(algorithm: GeneticAlgorithm) {
-		
 		environment = ChalmersEnvironment(taskFitnessFunc: fitnessOfChromosome, historyLength: historyLength)
 		
 		if let

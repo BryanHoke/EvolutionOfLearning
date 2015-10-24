@@ -39,6 +39,7 @@ public struct Population: CollectionType, ArrayLiteralConvertible {
 		return selectedIndices
 	}
 	
+	
 	// MARK: - Initializers
 	
 	///
@@ -47,11 +48,10 @@ public struct Population: CollectionType, ArrayLiteralConvertible {
 		self.members += members
 	}
 	
-	///
+	/// Creates a new `Population` instance with a specified number of members and a func to generate each member.
 	public init(size: Int, seed: () -> Individual) {
 		
 		for _ in 0..<size {
-			
 			members.append(seed())
 		}
 	}
@@ -61,6 +61,7 @@ public struct Population: CollectionType, ArrayLiteralConvertible {
 		
 		members += elements
 	}
+	
 	
 	// MARK: - Instance Properties
 	
@@ -150,31 +151,31 @@ public struct Population: CollectionType, ArrayLiteralConvertible {
 		return Population(members: recombinedMembers)
 	}
 	
-	///
-	public func rouletteWheelSelection(newPopulationSize newPopulationSize: Int? = nil, excludedIndices: Set<Int> = Set<Int>()) -> Population {
+	/// Returns a new `Population` of a given size by selecting individuals from this population using the "roulette wheel" technique, optionally excluding certain members of this population from this process.
+	public func rouletteWheelSelection(newPopulationSize newPopSize: Int? = nil, excludedIndices: Set<Int> = Set<Int>()) -> Population {
 		
-		// Filter out excluded members
 		var includedPopulation = self
 		
+		// Filter out excluded members (if any)
 		for excludedIndex in excludedIndices {
-			
 			includedPopulation.members.removeAtIndex(excludedIndex)
 		}
 		
 		// Select new members
 		var selectedPopulation = Population()
 		
-		for _ in 0..<(newPopulationSize ?? members.count) {
+		// Select individuals with odds proportional to their fitness.
+		for _ in 0..<(newPopSize ?? members.count) {
 			
 			let selectedIndividual = includedPopulation.rouletteWheelSelect()
-			
+
 			selectedPopulation.append(selectedIndividual)
 		}
 		
 		return selectedPopulation
 	}
 	
-	/// Selects and returns an individual in this `Population` using the "roulette wheel" technique.
+	/// Selects and returns an individual in this `Population` using the "roulette wheel" technique, which performs selection-with-replacement where the probability of an individual being selected is linearly proportional to its fitness.
 	public func rouletteWheelSelect() -> Individual {
 		
 		// Seed the random double generator (once)
@@ -192,7 +193,6 @@ public struct Population: CollectionType, ArrayLiteralConvertible {
 		var fitnessRatioSum: Double = 0
 		
 		repeat {
-			
 			selectionIndividual = self[selectionIndex++]
 			
 			fitnessRatioSum += selectionIndividual.fitness / totalFitness
@@ -202,7 +202,7 @@ public struct Population: CollectionType, ArrayLiteralConvertible {
 		return selectionIndividual
 	}
 	
-	///
+	/// Returns a `Population` instance comprised of the members of this population
 	public func populationWithSelectionIndices(indices: Set<Int>) -> Population {
 		
 		var selectedPopulation = Population()
@@ -214,7 +214,8 @@ public struct Population: CollectionType, ArrayLiteralConvertible {
 		return selectedPopulation
 	}
 	
-	///
+	/// Returns a `Population` instance comprised of this population's members, excluding the members at the specified indices.
+	/// - param indices: The indices of the `Individuals` to exclude from the returned `Population`.
 	public func populationWithExcludedIndices(indices: Set<Int>) -> Population {
 		
 		var allIndices = Set<Int>()
@@ -253,6 +254,7 @@ public struct Population: CollectionType, ArrayLiteralConvertible {
 		
 		return branchHandler(selected: selectedPopulation, unselected: unselectedPopulation)
 	}
+	
 	
 	// MARK: - CollectionType
 	
