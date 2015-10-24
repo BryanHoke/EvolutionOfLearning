@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="8195" systemVersion="15A282b" minimumToolsVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9057" systemVersion="15B42" minimumToolsVersion="Automatic">
     <entity name="Experiment" representedClassName=".ManagedExperiment" syncable="YES">
+        <attribute name="crossoverRate" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="elitismCount" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="historyLength" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="mutationRate" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="numberOfGenerations" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="numberOfTrials" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="populationSize" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <relationship name="histories" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="History" inverseName="experiment" inverseEntity="History" syncable="YES"/>
     </entity>
     <entity name="History" representedClassName=".ManagedHistory" syncable="YES">
@@ -26,7 +31,7 @@
         <relationship name="members" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Individual" inverseName="population" inverseEntity="Individual" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Experiment" positionX="133" positionY="-81" width="128" height="90"/>
+        <element name="Experiment" positionX="133" positionY="-81" width="128" height="165"/>
         <element name="History" positionX="88" positionY="71" width="128" height="90"/>
         <element name="Individual" positionX="313" positionY="182" width="128" height="135"/>
         <element name="Population" positionX="79" positionY="195" width="128" height="120"/>

@@ -22,14 +22,6 @@ public class ManagedDataManager: DataManager {
 		self.managedObjectContext = context
 		
 		self.managedObjectModel = model
-		
-		// Create new managed experiment, insert into context
-		if let experimentEntity = managedObjectModel.entitiesByName[EXPERIMENT_ENTITY_NAME] {
-			
-			self.experiment = ManagedExperiment(entity: experimentEntity, insertIntoManagedObjectContext: managedObjectContext)
-			
-			self.managedObjectContext.insertObject(self.experiment)
-		}
 	}
 	
 	// MARK: Instance Properties
@@ -49,6 +41,32 @@ public class ManagedDataManager: DataManager {
 	// MARK: DataManager Protocol
 	
 	///
+	public func beginNewTrial() {
+		
+		let history = ManagedHistory()
+		
+		history.trialNumber = trialNumber++
+		
+		experiment.histories.append(history)
+		
+		currentHistory = history
+	}
+	
+	public func beginRecordingExperiment(experiment: Experiment) {
+		// Create new managed experiment, insert into context
+		if let experimentEntity = managedObjectModel.entitiesByName[EXPERIMENT_ENTITY_NAME] {
+			
+			self.experiment = ManagedExperiment(
+				entity: experimentEntity,
+				insertIntoManagedObjectContext: managedObjectContext)
+			
+			self.experiment.adaptFromExperiment(experiment)
+			
+			self.managedObjectContext.insertObject(self.experiment)
+		}
+	}
+	
+	///
 	public func recordPopulation(population: Population) {
 		
 		let managedPopulation = ManagedPopulation()
@@ -63,25 +81,5 @@ public class ManagedDataManager: DataManager {
 		}
 		
 		currentHistory?.populations.append(managedPopulation)
-	}
-	
-	///
-	public func beginNewTrial() {
-		
-		let history = ManagedHistory()
-		
-		history.trialNumber = trialNumber++
-		
-		experiment.histories.append(history)
-		
-		currentHistory = history
-	}
-	
-	public func recordExperimentalNumberOfGenerations(number: Int) {
-		experiment.numberOfGenerations = number
-	}
-	
-	public func recordExperimentalNumberOfTrials(number: Int) {
-		experiment.numberOfTrials = number
 	}
 }

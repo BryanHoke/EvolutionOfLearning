@@ -66,9 +66,37 @@ public class ManagedHistory: NSManagedObject {
 
 public class ManagedExperiment: NSManagedObject {
 	
+	@NSManaged var crossoverRate: Double
+	
+	@NSManaged var elitismCount: Int
+	
+	@NSManaged var historyLength: Int
+	
+	@NSManaged var mutationRate: Double
+	
 	@NSManaged var numberOfGenerations: Int
 	
 	@NSManaged var numberOfTrials: Int
 	
+	@NSManaged var populationSize: Int
+	
 	@NSManaged var histories: [ManagedHistory]
+	
+	/// Adapts the property values of an `Experiment` onto this model's properties.
+	public func adaptFromExperiment(experiment: Experiment) {
+		
+		crossoverRate = experiment.crossoverRate
+		
+		elitismCount = experiment.elitismCount
+		
+		historyLength = experiment.historyLength
+
+		mutationRate = experiment.mutationRate
+		
+		numberOfGenerations = experiment.numberOfGenerations
+		
+		numberOfTrials = experiment.numberOfTrials
+
+		populationSize = experiment.populationSize
+	}
 }

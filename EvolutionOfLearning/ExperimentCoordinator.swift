@@ -48,18 +48,19 @@ class ExperimentCoordinator: DocumentEventHandler, ExperimentOutput {
 		numberOfGenerationsChangedToValue value: Int)
 	{
 		experiment.numberOfGenerations = value
-		dataManager?.recordExperimentalNumberOfGenerations(value)
 	}
 	
 	func document(doc: Document,
 		numberOfTrialsChangedToValue value: Int)
 	{
 		experiment.numberOfTrials = value
-		dataManager?.recordExperimentalNumberOfTrials(value)
 	}
 	
 	func runButtonClickedForDocument(doc: Document)
 	{
+		dataManager?.beginRecordingExperiment(experiment)
+		
+		// Run the experiment off the main thread
 		dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)) {
 			self.experiment.run()
 		}

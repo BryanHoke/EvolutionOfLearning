@@ -13,12 +13,11 @@ import Foundation
 public protocol DataManager: class {
 	
 	///
-	func recordPopulation(population: Population)
-	
-	///
 	func beginNewTrial()
 	
-	func recordExperimentalNumberOfGenerations(number: Int)
+	///
+	func beginRecordingExperiment(experiment: Experiment)
 	
-	func recordExperimentalNumberOfTrials(number: Int)
+	///
+	func recordPopulation(population: Population)
 }
