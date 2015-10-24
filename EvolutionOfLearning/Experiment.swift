@@ -8,6 +8,14 @@
 
 import Foundation
 
+protocol ExperimentOutput {
+	
+	func experimentDidBeginNewTrial(experiment: Experiment)
+	
+	func experiment(experiment: Experiment,
+		didEvaluatePopulation pop: Population)
+}
+
 /**
 
 */
