@@ -175,7 +175,9 @@ public struct Chromosome: ArrayLiteralConvertible, StringLiteralConvertible, Col
 	/// Mutates the `Chromosome` with a given mutation rate and random seed.
 	/// - parameter mutationRate: A real-valued number between 0 and 1 (inclusive) which determines the probability of a given gene being mutated.
 	/// - parameter seed: A random seed for a function that generates a real-valued number between 0 and 1 (inclusive).
-	public mutating func mutateInPlaceWithRate(mutationRate: Double, seed: Int = Int(arc4random())) {
+	public mutating func mutateInPlaceWithRate(mutationRate: Double,
+		seed: Int = Int(arc4random()))
+	{
 		var mutationIndices = Set<Int>()
 		srand48(seed)
 		for (index, _) in enumerate() {
@@ -186,27 +188,41 @@ public struct Chromosome: ArrayLiteralConvertible, StringLiteralConvertible, Col
 		mutateInPlaceAtIndices(mutationIndices)
 	}
 
-	///
-	public func twoPointCrossoverWithChromosome(pairChromosome: Chromosome) -> (Chromosome, Chromosome) {
+	/// Returns the offspring of a two-point crossover operation between this `Chromosome` and a pair `Chromosome`.
+	/// - note: The number of genes crossed-over is in the range `2..<(count - 1)`. I.e., the two points are never equal and never span the length of the `Chromosome`.
+	public func twoPointCrossoverWithChromosome(pairChromosome: Chromosome) -> (Chromosome, Chromosome)
+	{
+		// Generate a start point in the range 0..<(count - 1)
 		let start = Int(arc4random_uniform(UInt32(count - 1)))
-		let end = twoPointCrossoverEndLocusForStartLocus(start) { (rangeSpan: UInt32) -> Int in
+		
+		// Generate an end point in the range (start + 1)..<count
+		let end = twoPointCrossoverEndLocusForStartLocus(start, randomGenerator: { (rangeSpan: UInt32) -> Int in
 			return Int(arc4random_uniform(rangeSpan))
-		}
-		return twoPointCrossoverWithChromosome(pairChromosome, atRange: start...end)
+		})
+		
+		return twoPointCrossoverWithChromosome(pairChromosome, range: start...end)
 	}
 	
-	///
-	public func twoPointCrossoverWithChromosome(pairChromosome: Chromosome, seed: UInt32) -> (Chromosome, Chromosome) {
+	/// Returns the offspring of a two-point crossover operation between this `Chromosome` and a pair `Chromosome`, using a specified random seed to generate the crossover points.
+	/// - note: The number of genes crossed-over is in the range `2..<(count - 1)`. I.e., the two points are never equal and never span the length of the `Chromosome`.
+	public func twoPointCrossoverWithChromosome(pairChromosome: Chromosome,
+		seed: UInt32) -> (Chromosome, Chromosome)
+	{
 		srand(seed)
+		// Generate a start locus in the range 0..<(count - 1)
 		let start = Int(rand()) % (count - 1)
-		let end = twoPointCrossoverEndLocusForStartLocus(start) { (rangeSpan: UInt32) -> Int in
+		
+		let end = twoPointCrossoverEndLocusForStartLocus(start, randomGenerator: { (rangeSpan: UInt32) -> Int in
 			return Int(rand()) % Int(rangeSpan)
-		}
-		return twoPointCrossoverWithChromosome(pairChromosome, atRange: start...end)
+		})
+		
+		return twoPointCrossoverWithChromosome(pairChromosome, range: start...end)
 	}
 	
-	///
-	public func twoPointCrossoverWithChromosome(pairChromosome: Chromosome, atRange range: Range<Int>) -> (Chromosome, Chromosome) {
+	/// Returns the offspring of a two-point crossover operation between this `Chromosome` and a pair `Chromosome`, using a specified range defined by the two points of crossover
+	public func twoPointCrossoverWithChromosome(pairChromosome: Chromosome,
+		range: Range<Int>) -> (Chromosome, Chromosome)
+	{
 		var offspring = (self, pairChromosome)
 		let beforeRange = 0..<range.startIndex
 		let afterRange = range.endIndex..<count
@@ -221,18 +237,19 @@ public struct Chromosome: ArrayLiteralConvertible, StringLiteralConvertible, Col
 		return offspring
 	}
 	
-	///
+	/// Returns a point in the range `start..<count`, unless `start == 0` in which case the range is `start..<(count - 1)`.
+	/// - parameter randomGenerator: Generates an `Int` in the range `0..<$0`.
 	private func twoPointCrossoverEndLocusForStartLocus(start: Int,
 		randomGenerator: (UInt32) -> (Int)) -> Int
 	{
-		var end: Int
-		
+		var rangeSpan = UInt32(count - start)
 		// Make sure the entire chromosome isn't crossed-over
-		repeat {
-			let rangeSpan = UInt32(count - start)
-			let randomIndex = randomGenerator(rangeSpan)
-			end = randomIndex + start
-		} while start == 0 && end == count - 1
+		if start == 0 {
+			rangeSpan--
+		}
+		
+		let randomIndex = randomGenerator(rangeSpan)
+		let end = randomIndex + start
 		
 		assert(end < count)
 		
