@@ -77,6 +77,8 @@ public class Experiment: GeneticAlgorithmOutput {
 			output?.experimentDidBeginNewTrial(self)
 			geneticAlgorithm.runForNumberOfGenerations(numberOfGenerations)
 		}
+		
+		output?.experimentDidComplete(self)
 	}
 	
 	/// Configures the `geneticAlgorithm` before beginning the experiment.
@@ -172,6 +174,8 @@ public class Experiment: GeneticAlgorithmOutput {
 		
 		// Mutation
 		newPopulation = newPopulation.reproduceWithMutation(Chromosome.mutation(mutationRate))
+		
+		assert(newPopulation.count == population.count)
 		
 		return newPopulation
 	}

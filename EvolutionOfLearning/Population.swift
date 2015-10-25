@@ -91,7 +91,7 @@ public struct Population: CollectionType, ArrayLiteralConvertible {
 	/// - returns: A new `Population` containing the top *n* fitness-ranked members of `self` (where *n* is equal to `elitistCount`).
 	public func elitismSelectionWithCount(elitistCount: Int) -> Population {
 		
-		var elitistPopulation = self
+		var elitistPopulation = Population()
 		for index in 0..<elitistCount {
 			elitistPopulation.append(self[index])
 		}
