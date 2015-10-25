@@ -73,7 +73,7 @@ public struct Population: CollectionType, ArrayLiteralConvertible {
 	/// - Note: The implementation currently assumes that the population contains an even number of members.
 	public var pairs: [(Individual, Individual)] {
 		
-		return 0.stride(through: count, by: 2)
+		return 0.stride(through: count - 1, by: 2)
 			
 			.map { (self[$0], self[$0 + 1]) }
 	}
