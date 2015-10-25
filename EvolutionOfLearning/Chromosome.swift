@@ -189,7 +189,7 @@ public struct Chromosome: ArrayLiteralConvertible, StringLiteralConvertible, Col
 	}
 
 	/// Returns the offspring of a two-point crossover operation between this `Chromosome` and a pair `Chromosome`.
-	/// - note: The number of genes crossed-over is in the range `2..<(count - 1)`. I.e., the two points are never equal and never span the length of the `Chromosome`.
+	/// - note: The number of genes crossed-over is in the range `1..<count`. I.e., the two points may be equal and never span the length of the `Chromosome`.
 	public func twoPointCrossoverWithChromosome(pairChromosome: Chromosome) -> (Chromosome, Chromosome)
 	{
 		// Generate a start point in the range 0..<(count - 1)
@@ -204,7 +204,7 @@ public struct Chromosome: ArrayLiteralConvertible, StringLiteralConvertible, Col
 	}
 	
 	/// Returns the offspring of a two-point crossover operation between this `Chromosome` and a pair `Chromosome`, using a specified random seed to generate the crossover points.
-	/// - note: The number of genes crossed-over is in the range `2..<(count - 1)`. I.e., the two points are never equal and never span the length of the `Chromosome`.
+	/// - note: The number of genes crossed-over is in the range `1..<count`. I.e., the two points may be equal and never span the length of the `Chromosome`.
 	public func twoPointCrossoverWithChromosome(pairChromosome: Chromosome,
 		seed: UInt32) -> (Chromosome, Chromosome)
 	{
