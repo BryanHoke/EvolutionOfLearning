@@ -7,7 +7,7 @@
 //
 
 import XCTest
-import EvolutionOfLearning
+//import EvolutionOfLearning
 import GameplayKit
 
 class EvolutionOfLearningTests: XCTestCase {

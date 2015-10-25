@@ -10,7 +10,8 @@ import XCTest
 
 class EvolutionOfLearningGeneticAlgorithmTests: XCTestCase {
 	
-	let tChromosome1: Chromosome = "01010010100101001010101001010010100101"
+	let tChromosome1: Chromosome = "00000"
+//	let tChromosome1: Chromosome = "01010010100101001010101001010010100101"
 //	let tChromosome2: Chromosome = "01010010100101010010101001010100101010"
 
     override func setUp() {
@@ -48,10 +49,11 @@ class EvolutionOfLearningGeneticAlgorithmTests: XCTestCase {
 	func testChromosomeMutation() {
 		var testChromosome1 = tChromosome1, testGenes = testChromosome1.genes
 		let seed = 0, mutationRate = 0.5
-		testChromosome1.mutateWithRate(mutationRate, seed: seed)
+		testChromosome1.mutateInPlaceWithRate(mutationRate, seed: seed)
 		srand48(seed)
 		let testGenesMutated1 = testGenes.map { (drand48() >= mutationRate) ? !$0 : $0 }
-		XCTAssert(testChromosome1.genes == testGenesMutated1)
+		XCTAssert(testChromosome1.genes == testGenesMutated1,
+		"Mutation 1: expected \(testChromosome1.genes) but found \(testGenesMutated1)")
 		srand48(seed)
 		var mutationIndices = Set<Int>()
 		for index in 0..<testGenes.count {
@@ -67,11 +69,12 @@ class EvolutionOfLearningGeneticAlgorithmTests: XCTestCase {
 		XCTAssert(testGenesMutated2 == testGenesMutated1)
 		var testChromosome2 = tChromosome1
 		testChromosome2.mutateInPlaceAtIndices(mutationIndices)
-		XCTAssert(testChromosome2 == testChromosome1)
+		XCTAssert(testChromosome2 == testChromosome1,
+		"Mutation2 : expected \(testChromosome1.genes) but found \(testChromosome2.genes)")
 	}
 	
 	func testChromosomeMutationPerformance() {
-		var testChromosome1 = tChromosome1
+		let testChromosome1 = tChromosome1
 		let mutationRate = 0.5
 		measureBlock { () -> Void in
 			testChromosome1.mutateWithRate(mutationRate)
