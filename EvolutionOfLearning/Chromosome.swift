@@ -210,20 +210,32 @@ public struct Chromosome: ArrayLiteralConvertible, StringLiteralConvertible, Col
 		var offspring = (self, pairChromosome)
 		let beforeRange = 0..<range.startIndex
 		let afterRange = range.endIndex..<count
+		
 		offspring.1.genes[beforeRange] = offspring.0.genes[beforeRange]
 		offspring.0.genes[range] = offspring.1.genes[range]
-		offspring.1.genes[afterRange] = offspring.0.genes[beforeRange]
+		offspring.1.genes[afterRange] = offspring.0.genes[afterRange]
+		
+		assert(offspring.0.count == count)
+		assert(offspring.1.count == pairChromosome.count)
+		
 		return offspring
 	}
 	
 	///
-	private func twoPointCrossoverEndLocusForStartLocus(start: Int, randomGenerator: (UInt32) -> (Int)) -> Int {
+	private func twoPointCrossoverEndLocusForStartLocus(start: Int,
+		randomGenerator: (UInt32) -> (Int)) -> Int
+	{
 		var end: Int
+		
 		// Make sure the entire chromosome isn't crossed-over
 		repeat {
 			let rangeSpan = UInt32(count - start)
-			end = Int(randomGenerator(rangeSpan)) + start
+			let randomIndex = randomGenerator(rangeSpan)
+			end = randomIndex + start
 		} while start == 0 && end == count - 1
+		
+		assert(end < count)
+		
 		return end
 	}
 	
