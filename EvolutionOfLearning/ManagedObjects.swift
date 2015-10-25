@@ -50,7 +50,7 @@ public class ManagedPopulation: NSManagedObject {
 	
 	@NSManaged var history: ManagedHistory
 	
-	@NSManaged var members: [ManagedIndividual]
+	@NSManaged var members: NSMutableOrderedSet
 }
 
 
@@ -60,7 +60,7 @@ public class ManagedHistory: NSManagedObject {
 	
 	@NSManaged var experiment: ManagedExperiment
 	
-	@NSManaged var populations: [ManagedPopulation]
+	@NSManaged var populations: NSMutableOrderedSet
 }
 
 
@@ -80,7 +80,7 @@ public class ManagedExperiment: NSManagedObject {
 	
 	@NSManaged var populationSize: Int
 	
-	@NSManaged var histories: [ManagedHistory]
+	@NSManaged var histories: NSMutableOrderedSet
 	
 	/// Adapts the property values of an `Experiment` onto this model's properties.
 	public func adaptFromExperiment(experiment: Experiment) {

@@ -8,13 +8,19 @@
 
 import Foundation
 
+// MARK: - Experiment Output Protocol
+
 protocol ExperimentOutput {
 	
 	func experimentDidBeginNewTrial(experiment: Experiment)
 	
 	func experiment(experiment: Experiment,
 		didEvaluatePopulation pop: Population)
+	
+	func experimentDidComplete(experiment: Experiment)
 }
+
+// MARK: - Experiment
 
 /**
 
@@ -54,10 +60,11 @@ public class Experiment: GeneticAlgorithmOutput {
 	
 	var output: ExperimentOutput?
 	
+	
 	// MARK: - Instance Methods
 	
 	/// Runs the experiment by configuring the `geneticAlgorithm` and then executing it with a number of generations given by the `numberOfGenerations` for a number of times given by the `numberOfTrials`.
-	/// - note: The `numberOfGenerations` and `numberOfTrials` must both be greater than `0` for this method to do anything.
+	/// - note: The `numberOfGenerations` and `numberOfTrials` must both be greater than `0` for this method to proceed.
 	func run() {
 		
 		guard numberOfGenerations > 0 && numberOfTrials > 0 else {

@@ -10,6 +10,9 @@ import Foundation
 import AppKit
 
 let EXPERIMENT_ENTITY_NAME = "Experiment"
+let HISTORY_ENTITY_NAME = "History"
+let POPULATION_ENTITY_NAME = "Population"
+let INDIVIDUAL_ENTITY_NAME = "Invididual"
 
 ///
 public class ManagedDataManager: DataManager {
@@ -43,13 +46,18 @@ public class ManagedDataManager: DataManager {
 	///
 	public func beginNewTrial() {
 		
-		let history = ManagedHistory()
-		
-		history.trialNumber = trialNumber++
-		
-		experiment.histories.append(history)
-		
-		currentHistory = history
+		if let historyEntity = managedObjectModel.entitiesByName[HISTORY_ENTITY_NAME] {
+			
+			let history = ManagedHistory(
+				entity: historyEntity,
+				insertIntoManagedObjectContext: managedObjectContext)
+			
+			history.trialNumber = trialNumber++
+			
+			experiment.histories.addObject(history)
+			
+			currentHistory = history
+		}
 	}
 	
 	public func beginRecordingExperiment(experiment: Experiment) {
@@ -69,17 +77,24 @@ public class ManagedDataManager: DataManager {
 	///
 	public func recordPopulation(population: Population) {
 		
-		let managedPopulation = ManagedPopulation()
+		let populationEntity = managedObjectModel.entitiesByName[POPULATION_ENTITY_NAME]!
+		let individualEntity = managedObjectModel.entitiesByName[INDIVIDUAL_ENTITY_NAME]!
+		
+		let managedPopulation = ManagedPopulation(
+			entity: populationEntity,
+			insertIntoManagedObjectContext: managedObjectContext)
 		
 		for individual in population {
 			
-			let managedIndividual = ManagedIndividual()
+			let managedIndividual = ManagedIndividual(
+				entity: individualEntity,
+				insertIntoManagedObjectContext: managedObjectContext)
 			
 			managedIndividual.adaptFromIndividual(individual)
 			
-			managedPopulation.members.append(managedIndividual)
+			managedPopulation.members.addObject(managedIndividual)
 		}
 		
-		currentHistory?.populations.append(managedPopulation)
+		currentHistory?.populations.addObject(managedPopulation)
 	}
 }

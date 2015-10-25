@@ -10,26 +10,36 @@ import Foundation
 
 class ExperimentCoordinator: DocumentEventHandler, ExperimentOutput {
 	
-	// MARK: Initializers
+	// MARK: - Initializers
 	
 	init() {
 		experiment = Experiment()
 		experiment.output = self
 	}
 	
-	// MARK: Instance Properties
+	
+	// MARK: - Instance Properties
 	
 	var dataManager: DataManager?
 	
+	weak var document: Document?
+	
 	var experiment: Experiment
+	
+	
+	// MARK: - Instance Methods
 	
 	// MARK: Document Event Handler
 	
 	func documentWasCreated(doc: Document)
 	{
+		document = doc
+		
 		dataManager = ManagedDataManager(
 			context: doc.managedObjectContext!,
 			model: doc.managedObjectModel!)
+		
+		experiment.environmentPath = doc.environmentPath
 	}
 	
 	func document(doc: Document,
@@ -69,10 +79,20 @@ class ExperimentCoordinator: DocumentEventHandler, ExperimentOutput {
 	// MARK: Experiment Output
 	
 	func experimentDidBeginNewTrial(experiment: Experiment) {
-		dataManager?.beginNewTrial()
+		dispatch_async(dispatch_get_main_queue()) { () -> Void in
+			self.dataManager?.beginNewTrial()
+		}
 	}
 	
 	func experiment(experiment: Experiment, didEvaluatePopulation pop: Population) {
-		dataManager?.recordPopulation(pop)
+		dispatch_async(dispatch_get_main_queue()) { () -> Void in
+			self.dataManager?.recordPopulation(pop)
+		}
+	}
+	
+	func experimentDidComplete(experiment: Experiment) {
+		dispatch_async(dispatch_get_main_queue()) { () -> Void in
+			self.document?.writeExperiment()
+		}
 	}
 }

@@ -8,7 +8,7 @@
         <attribute name="numberOfGenerations" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="numberOfTrials" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="populationSize" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
-        <relationship name="histories" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="History" inverseName="experiment" inverseEntity="History" syncable="YES"/>
+        <relationship name="histories" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="History" inverseName="experiment" inverseEntity="History" syncable="YES"/>
     </entity>
     <entity name="History" representedClassName=".ManagedHistory" syncable="YES">
         <attribute name="trialNumber" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>

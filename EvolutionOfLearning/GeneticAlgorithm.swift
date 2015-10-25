@@ -37,12 +37,15 @@ public final class GeneticAlgorithm {
 	public func runForNumberOfGenerations(numberOfGenerations: Int) {
 		
 		///
-		func mainRoutine(population: Population, inout generation: Int) {
+		func mainRoutine(var population: Population, inout generation: Int) {
 			
 			if let fitnessFunc = self.fitnessFunc {
 				
 				population.evaluateWithFitnessFunc(fitnessFunc)
 			}
+			
+			// Sort population by highest fitness
+			population.members.sortInPlace(>)
 			
 			output?.geneticAlgorithm(self, didEvaluatePopulation: population)
 			

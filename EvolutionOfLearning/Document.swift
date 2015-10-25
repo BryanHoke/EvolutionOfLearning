@@ -80,6 +80,17 @@ class Document: NSPersistentDocument {
 		return "Document"
 	}
 	
+	func writeExperiment() {
+		do {
+			try managedObjectContext?.save()
+			let url = NSURL(string: resultsPath + "/Results0")!
+			try writeToURL(url, ofType: "XML")
+		}
+		catch {
+			
+		}
+	}
+	
 	
 	// MARK: Control Editing Notifications
 	
