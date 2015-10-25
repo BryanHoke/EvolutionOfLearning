@@ -12,7 +12,7 @@ import AppKit
 let EXPERIMENT_ENTITY_NAME = "Experiment"
 let HISTORY_ENTITY_NAME = "History"
 let POPULATION_ENTITY_NAME = "Population"
-let INDIVIDUAL_ENTITY_NAME = "Invididual"
+let INDIVIDUAL_ENTITY_NAME = "Individual"
 
 ///
 public class ManagedDataManager: DataManager {
