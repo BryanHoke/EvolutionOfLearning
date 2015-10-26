@@ -24,13 +24,6 @@ class EvolutionOfLearningGeneticAlgorithmTests: XCTestCase {
         super.tearDown()
     }
 	
-//    func testPerformanceExample() {
-//        // This is an example of a performance test case.
-//        self.measureBlock() {
-//            // Put the code you want to measure the time of here.
-//        }
-//    }
-	
 	func testDRand48Seed() {
 		let size = 20
 		let seed = 0
@@ -84,9 +77,26 @@ class EvolutionOfLearningGeneticAlgorithmTests: XCTestCase {
 	func testChromosomeTwoPointCrossover() {
 		let testChromosome1 = tChromosome1
 		let testChromosome2 = !testChromosome1
-		let seed = UInt32(0)
-		let offspring = testChromosome1.twoPointCrossoverWithChromosome(testChromosome2, seed: seed)
+		let point1 = 1, point2 = 3
+		let range = point1...point2
+		let offspring = testChromosome1.twoPointCrossoverWithChromosome(testChromosome2, range: range)
 		
+		let beforeRange = 0..<point1
+		for i in beforeRange {
+			XCTAssert(offspring.0[i] == testChromosome1[i])
+			XCTAssert(offspring.1[i] == testChromosome2[i])
+		}
+		
+		for i in range {
+			XCTAssert(offspring.0[i] == testChromosome2[i])
+			XCTAssert(offspring.1[i] == testChromosome1[i])
+		}
+		
+		let afterRange = (point2 + 1)..<testChromosome1.count
+		for i in afterRange {
+			XCTAssert(offspring.0[i] == testChromosome1[i])
+			XCTAssert(offspring.1[i] == testChromosome2[i])
+		}
 	}
 
 }

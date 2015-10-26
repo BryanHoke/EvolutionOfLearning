@@ -224,12 +224,9 @@ public struct Chromosome: ArrayLiteralConvertible, StringLiteralConvertible, Col
 		range: Range<Int>) -> (Chromosome, Chromosome)
 	{
 		var offspring = (self, pairChromosome)
-		let beforeRange = 0..<range.startIndex
-		let afterRange = range.endIndex..<count
 		
-		offspring.1.genes[beforeRange] = offspring.0.genes[beforeRange]
-		offspring.0.genes[range] = offspring.1.genes[range]
-		offspring.1.genes[afterRange] = offspring.0.genes[afterRange]
+		offspring.0.genes[range] = pairChromosome.genes[range]
+		offspring.1.genes[range] = genes[range]
 		
 		assert(offspring.0.count == count)
 		assert(offspring.1.count == pairChromosome.count)
