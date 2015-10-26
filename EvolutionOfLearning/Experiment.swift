@@ -125,7 +125,7 @@ public class Experiment: GeneticAlgorithmOutput {
 	func fitnessOfChromosome(chromosome: Chromosome, onTask task: Task) -> Double {
 		
 		var network = SingleLayerSingleOutputNeuralNetwork(
-			size: task.inputCount,
+			size: task.inputCount + 1,
 			activation: sigmoid(1)) as FeedForwardNeuralNetwork
 		
 		let learningRule = ChalmersLearningRule(
