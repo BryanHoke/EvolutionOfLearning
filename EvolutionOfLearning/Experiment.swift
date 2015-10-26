@@ -52,7 +52,7 @@ public class Experiment: GeneticAlgorithmOutput {
 	
 	let numberOfTrainingEpochs = 10
 	
-	var taskCount = 0
+	var taskCount = 10
 	
 	var numberOfGenerations: Int = 0
 	
@@ -67,7 +67,7 @@ public class Experiment: GeneticAlgorithmOutput {
 	/// - note: The `numberOfGenerations` and `numberOfTrials` must both be greater than `0` for this method to proceed.
 	func run() {
 		
-		guard numberOfGenerations > 0 && numberOfTrials > 0 else {
+		guard numberOfGenerations > 0 && numberOfTrials > 0 && taskCount > 0 else {
 			return
 		}
 		
@@ -84,13 +84,17 @@ public class Experiment: GeneticAlgorithmOutput {
 	/// Configures the `geneticAlgorithm` before beginning the experiment.
 	func configureAlgorithm(algorithm: GeneticAlgorithm) {
 		
-		environment = ChalmersEnvironment(taskFitnessFunc: fitnessOfChromosome, historyLength: historyLength)
+		let environment = ChalmersEnvironment(taskFitnessFunc: fitnessOfChromosome, historyLength: historyLength)
 		
 		if let
 			path = environmentPath,
-			tasks = try? Task.tasksWithFileAtPath(path) {
-				environment.tasks += tasks
+			tasks = try? Task.tasksWithFileAtPath(path)
+		{
+			environment.tasks += tasks
+			environment.generateEvolutionaryTasks(taskCount)
 		}
+		
+		self.environment = environment
 		
 		algorithm.initializationFunc = seeding
 		
