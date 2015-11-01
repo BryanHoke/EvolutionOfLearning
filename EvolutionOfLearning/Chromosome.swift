@@ -181,7 +181,7 @@ public struct Chromosome: ArrayLiteralConvertible, StringLiteralConvertible, Col
 		var mutationIndices = Set<Int>()
 		srand48(seed)
 		for (index, _) in enumerate() {
-			if drand48() >= mutationRate {
+			if drand48() < mutationRate {
 				mutationIndices.insert(index)
 			}
 		}
