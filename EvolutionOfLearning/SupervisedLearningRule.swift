@@ -105,21 +105,10 @@ public struct ChalmersLearningRule: SupervisedLearningRule {
 			let delta = weightDelta(weight: weight, input: input, output: output, target: target)
 			var newWeight = weight + delta
 			newWeight = max(min(newWeight, weightLimit), -weightLimit)
+			assert(newWeight >= -weightLimit && newWeight <= weightLimit)
 			network[i] = newWeight
 		}
 	}
-	
-//	public func trainNetwork(inout network: FeedForwardNeuralNetwork, task: Task) {
-//		for pattern in task.patterns {
-//			trainNetwork(&network, withPattern: pattern)
-//		}
-//	}
-//	
-//	public func trainNetwork(inout network: FeedForwardNeuralNetwork, task: Task, numberOfTimes: Int) {
-//		for _ in 0..<numberOfTimes {
-//			trainNetwork(&network, task: task)
-//		}
-//	}
 	
 	public func weightDelta(weight weight: Double, input: Double, output: Double, target: Double) -> Double {
 		var delta: Double = 0
