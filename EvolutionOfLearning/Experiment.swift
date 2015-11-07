@@ -42,23 +42,26 @@ public class Experiment: GeneticAlgorithmOutput {
 	
 	let populationSize = 40
 	
-	let elitismCount = 1
+	let elitismCount = 2
 	
 	let crossoverRate = 0.8
 	
 	let mutationRate = 0.01
 	
-	let historyLength = 10
+	let historyLength = 15
 	
 	let numberOfTrainingEpochs = 10
 	
-	var taskCount = 10
+	var taskCount = 30
 	
 	var numberOfGenerations: Int = 0
 	
 	var numberOfTrials: Int = 0
 	
 	var output: ExperimentOutput?
+	
+	/// The list of fitness values measured per `Chromosome`, in order of recording.
+	public var fitnessHistory = [Chromosome: [Double]]()
 	
 	
 	// MARK: - Instance Methods
@@ -98,7 +101,8 @@ public class Experiment: GeneticAlgorithmOutput {
 		
 		algorithm.initializationFunc = seeding
 		
-		algorithm.fitnessFunc = environment.evaluateFitnessOfChromosome
+		algorithm.populationFitnessFunc = fitness
+//		algorithm.fitnessFunc = environment.evaluateFitnessOfChromosome
 		
 		algorithm.reproductionFunc = reproduction
 		
@@ -118,6 +122,35 @@ public class Experiment: GeneticAlgorithmOutput {
 				arc4random_uniform(2) == 1
 			}
 			return Individual(chromosome: chromosome)
+		}
+	}
+	
+	/// Evaluates the fitness of all `Individual`s in a `Population`.
+	func fitness(inout population: Population) {
+		
+		environment.evaluateFitness(&population)
+		
+		// We're done if we aren't tracking fitness histories
+		guard historyLength > 0 else {
+			return
+		}
+		
+		// Average each member's fitness with historical values
+		for member in population {
+			
+			// Retrieve the member chromosome's fitness history
+			var history: [Double] = fitnessHistory[member.chromosome] ?? []
+			
+			// Update history if there's room for another entry
+			if history.count < historyLength {
+				
+				history.append(member.fitness)
+				
+				fitnessHistory[member.chromosome] = history
+			}
+			
+			// Update the member's fitness to be the historical average
+			member.fitness = history.reduce(0, combine: +) / Double(history.count)
 		}
 	}
 	
@@ -146,21 +179,17 @@ public class Experiment: GeneticAlgorithmOutput {
 		// Sort population by highest fitness
 		population.members.sortInPlace(>)
 		
+		var selectedPopulation = Population()
+		
 		// Elitist selection
-		var selectedPopulation = population.elitismSelectionWithCount(elitismCount)
+		selectedPopulation += population.elitismSelectionWithCount(elitismCount)
 		
 		let size = population.count
 		
 		// Roulette wheel selection
 		do {
-			// The elite inviduals do not participate in roulette wheel
 			let selectionSize = size - elitismCount
-			var eliteIndices = Set<Int>()
-			for i in 0..<elitismCount {
-				eliteIndices.insert(i)
-			}
-			
-			let roulettePop = population.rouletteWheelSelection(newPopulationSize: selectionSize, excludedIndices: eliteIndices)
+			let roulettePop = population.rouletteWheelSelection(newPopulationSize: selectionSize)
 			selectedPopulation += roulettePop
 		}
 		

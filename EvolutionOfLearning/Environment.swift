@@ -15,6 +15,9 @@ public protocol FitnessEnvironment {
 	
 	var tasks: [Task] { get set }
 	
+	/// Evaluates the fitness of all members of a `Population`.
+	func evaluateFitness(inout population: Population)
+	
 	/// Evaluates the fitness value of a `Chromosome`.
 	/// - note: This method can be used as a `FitnessFunc` when `self` is partially applied.
 	func evaluateFitnessOfChromosome(chromosome: Chromosome) -> Double
@@ -52,16 +55,37 @@ public final class ChalmersEnvironment: FitnessEnvironment {
 		self.historyLength = historyLength
 	}
 	
+	/// Evaluates the fitness of all members of a `Population`.
+	public func evaluateFitness(inout population: Population) {
+		
+		// Create dispatch queue and group
+		let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)
+		let group = dispatch_group_create()
+		
+		// Concurrently evaluate fitness of all individuals
+		for member in population {
+			dispatch_group_async(group, queue, { () -> Void in
+				member.fitness = self.evaluateFitnessOfChromosome(member.chromosome)
+			})
+		}
+		
+		// Wait until all individuals have been evaluated
+		dispatch_group_wait(group, DISPATCH_TIME_FOREVER)
+	}
+	
 	/// Evaluates the fitness value of a `Chromosome` by computing the avereapplying the `evolutionaryTasks` to the `taskFitnessFunc` and averaging the results.
 	public func evaluateFitnessOfChromosome(chromosome: Chromosome) -> Double {
-		
+		/*
 		// 🚦 Prevent concurrent access to fitnessHistory
 		let semaphore = dispatch_semaphore_create(1)
 		
 		// 🚦 Retrieve fitness history
 		var fitnessHistory = [Double]()
+		print("wait")
 		dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER)
+		print("critical section")
 		fitnessHistory += self.fitnessHistory[chromosome] ?? []
+		print("signal")
 		dispatch_semaphore_signal(semaphore)
 		
 		// Compute new fitness history entry if history isn't capped
@@ -72,15 +96,19 @@ public final class ChalmersEnvironment: FitnessEnvironment {
 			fitnessHistory.append(fitness)
 			
 			// 🚦 Update the fitness history
+			print("wait")
 			dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER)
+			print("critical section")
 			self.fitnessHistory[chromosome] = fitnessHistory
 			dispatch_semaphore_signal(semaphore)
+			print("signal")
 		}
 		
 		// Compute the historical average fitness
 		var fitness = fitnessHistory.reduce(0, combine: +)
 		fitness /= Double(fitnessHistory.count)
-		
+		*/
+		let fitness = evaluateFitnessOfChromosome(chromosome, onTasks: evolutionaryTasks)
 		return fitness
 	}
 	
