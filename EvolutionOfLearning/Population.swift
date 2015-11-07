@@ -78,10 +78,13 @@ public struct Population: CollectionType, ArrayLiteralConvertible {
 			.map { (self[$0], self[$0 + 1]) }
 	}
 	
-	/// The total fitness of all `Individual`s in the populatin.
-	var totalFitness: Double {
-		
+	/// The total fitness of all `Individual`s in the population.
+	public var totalFitness: Double {
 		return members.map { $0.fitness }.reduce(0, combine: +)
+	}
+	
+	public var averageFitness: Double {
+		return totalFitness / Double(count)
 	}
 	
 	// MARK: - Instance Methods
