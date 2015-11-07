@@ -71,18 +71,6 @@ class EvolutionOfLearningTests: XCTestCase {
 		}
 		return weights
 	}
-    
-//    func testExample() {
-//        // This is an example of a functional test case.
-//        // Use XCTAssert and related functions to verify your tests produce the correct results.
-//    }
-	
-//    func testPerformanceExample() {
-//        // This is an example of a performance test case.
-//        self.measureBlock() {
-//            // Put the code you want to measure the time of here.
-//        }
-//    }
 	
 	func testSingleLayerSingleOutputNeuralNetworkPerformance() {
 		let inputs = makeRandomInputs(), weights = makeRandomWeights()
@@ -125,5 +113,60 @@ class EvolutionOfLearningTests: XCTestCase {
 		output2 = network2.activateWithInputs(inputs)[0]
 		XCTAssertEqual(output1, output2, "The network outputs \(output1) and \(output2) are not equal.")
 	}
-    
+	
+	let deltaRuleBits: [Bool] = [
+		1, 1, 0, 1, 1,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 1, 0,
+		1, 1, 0,
+		0, 0, 0
+	]
+	
+	let deltaRuleCoefficients = [
+		4, 0, 0, 0, 0, 0, 0, 0, -2, 2, 0
+	]
+	
+	let environmentPath = "/Users/bryanhoke/Projects/BDHSoftware/OS X/EvolutionOfLearning/Resources/Environment1.txt"
+
+	func testChalmersLearningRule() {
+		// Test rule initialization
+		let rule = ChalmersLearningRule(bits: deltaRuleBits)
+		XCTAssertEqual(rule.coefficients, deltaRuleCoefficients)
+		
+		guard
+			let tasks = try? Task.tasksWithFileAtPath(environmentPath),
+			let task = tasks.first else {
+			return
+		}
+		
+		var network = SingleLayerSingleOutputNeuralNetwork(
+			size: task.inputCount + 1,
+			activation: sigmoid(1)) as FeedForwardNeuralNetwork
+		
+		let error1 = network.testOnTask(task) / Double(task.patterns.count)
+		
+		rule.trainNetwork(&network, task: task, numberOfTimes: 10)
+		
+		let error2 = network.testOnTask(task) / Double(task.patterns.count)
+		
+		XCTAssert(error1 > error2)
+	}
+}
+
+extension Bool: IntegerLiteralConvertible {
+	
+	public init(integerLiteral: Int) {
+		if integerLiteral == 0 {
+			self.init(false)
+		}
+		else {
+			self.init(true)
+		}
+	}
 }
