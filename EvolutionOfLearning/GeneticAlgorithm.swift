@@ -10,6 +10,8 @@ import Foundation
 
 public typealias FitnessFunc = Chromosome -> Double
 
+public typealias PopulationFitnessFunc = inout Population -> ()
+
 public protocol GeneticAlgorithmOutput {
 	
 	func geneticAlgorithm(algorithm: GeneticAlgorithm,
@@ -28,6 +30,9 @@ public final class GeneticAlgorithm {
 	public var fitnessFunc: FitnessFunc?
 	
 	///
+	public var populationFitnessFunc: PopulationFitnessFunc?
+	
+	///
 	public var reproductionFunc: (Population -> Population)?
 	
 	///
@@ -39,13 +44,19 @@ public final class GeneticAlgorithm {
 		///
 		func mainRoutine(var population: Population, inout generation: Int) {
 			
-			if let fitnessFunc = self.fitnessFunc {
+			if let popFitnessFunc = self.populationFitnessFunc {
+				
+				popFitnessFunc(&population)
+			}
+			else if let fitnessFunc = self.fitnessFunc {
 				
 				population.evaluateWithFitnessFunc(fitnessFunc)
 			}
 			
 			// Sort population by highest fitness
 			population.members.sortInPlace(>)
+			
+			print("#\(generation): \(population.averageFitness)")
 			
 			output?.geneticAlgorithm(self, didEvaluatePopulation: population)
 			
