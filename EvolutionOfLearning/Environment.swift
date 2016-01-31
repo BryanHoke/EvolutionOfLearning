@@ -15,6 +15,16 @@ public protocol FitnessEnvironment {
 	
 	var tasks: [Task] { get set }
 	
+	/// The pool of `Task`s in use for fitness evaluation in an evolutionary process.
+	var evolutionaryTasks: [Task] { get }
+	
+	/// The pool of `Task`s in use for fitness evaluation in a post-evolutionary experimental evaluation process.
+	var testTasks: [Task] { get }
+	
+	/// Evaluates the fitness value of a `Chromosome`.
+	/// - note: This method can be used as a `FitnessFunc` when `self` is partially applied.
+	func evaluateFitness(chromosome: Chromosome) -> Double
+	
 	/// Evaluates the fitness of all members of a `Population`.
 	func evaluateFitness(inout population: Population)
 	
@@ -22,9 +32,10 @@ public protocol FitnessEnvironment {
 	/// - note: This method can be used as a `FitnessFunc` when `self` is partially applied.
 	func evaluateFitnessOfChromosome(chromosome: Chromosome) -> Double
 	
+	func selectEvolutionaryTasks(count: Int)
 }
 
-public final class ChalmersEnvironment: FitnessEnvironment {
+public class Environment: FitnessEnvironment {
 	
 	/// The pool of `Task`s in use for fitness evaluation in an evolutionary process.
 	public var evolutionaryTasks = [Task]()
@@ -41,18 +52,24 @@ public final class ChalmersEnvironment: FitnessEnvironment {
 	public var fitnessHistory = [Chromosome: [Double]]()
 	
 	/// The number of fitness history measurements to be stored per `Chromosome`.
-	public var historyLength: Int
+	public var historyLength: Int = 0
 	
 	/// The function used to evaluate the fitness of a `Chromosome` on a given `Task`.
-	public var taskFitnessFunc: TaskFitnessFunc
+//	public var taskFitnessFunc: TaskFitnessFunc
 	
 	/// The pool of all `Task`s available to the environment.
 	public var tasks = [Task]()
 	
 	/// Constructs a new `Environment` with a `TaskFitnessFunc` and a history length.
-	public init(taskFitnessFunc: TaskFitnessFunc, historyLength: Int = 0) {
-		self.taskFitnessFunc = taskFitnessFunc
-		self.historyLength = historyLength
+//	public init(taskFitnessFunc: TaskFitnessFunc, historyLength: Int = 0) {
+//		self.taskFitnessFunc = taskFitnessFunc
+//		self.historyLength = historyLength
+//	}
+	
+	let numberOfTrainingEpochs = 10
+	
+	public func evaluateFitness(chromosome: Chromosome) -> Double {
+		return evaluateFitness(chromosome, tasks: evolutionaryTasks)
 	}
 	
 	/// Evaluates the fitness of all members of a `Population`.
@@ -62,10 +79,39 @@ public final class ChalmersEnvironment: FitnessEnvironment {
 		let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)
 		let group = dispatch_group_create()
 		
+		// 🚦 Prevent concurrent access to fitnessHistory
+		let semaphore = dispatch_semaphore_create(1)
+		
 		// Concurrently evaluate fitness of all individuals
 		for member in population {
 			dispatch_group_async(group, queue, { () -> Void in
-				member.fitness = self.evaluateFitnessOfChromosome(member.chromosome)
+				let chromosome = member.chromosome
+				// Just compute fitness if we aren't tracking histories
+				guard self.historyLength > 0 else {
+					member.fitness = self.evaluateFitness(chromosome)
+					return
+				}
+				
+				// 🚦 Retrieve fitness history
+				dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER)
+				var fitnessHistory = self.fitnessHistory[chromosome] ?? []
+				dispatch_semaphore_signal(semaphore)
+				
+				// Compute new fitness history entry if history isn't capped
+				if fitnessHistory.count < self.historyLength {
+					// Compute fitness on evolutionaryTasks
+					let fitness = self.evaluateFitness(chromosome, tasks: self.evolutionaryTasks)
+					fitnessHistory.append(fitness)
+					
+					// 🚦 Update the fitness history
+					dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER)
+					self.fitnessHistory[chromosome] = fitnessHistory
+					dispatch_semaphore_signal(semaphore)
+				}
+				
+				// Compute the historical average fitness
+				let fitness = fitnessHistory.reduce(0, combine: +) / Double(fitnessHistory.count)
+				member.fitness = fitness
 			})
 		}
 		
@@ -108,15 +154,34 @@ public final class ChalmersEnvironment: FitnessEnvironment {
 		var fitness = fitnessHistory.reduce(0, combine: +)
 		fitness /= Double(fitnessHistory.count)
 		*/
-		let fitness = evaluateFitnessOfChromosome(chromosome, onTasks: evolutionaryTasks)
+		let fitness = evaluateFitness(chromosome, tasks: evolutionaryTasks)
+		return fitness
+	}
+	
+	/// Evaluates the fitness of a `Chromosome` on a given `Task`.
+	func evaluateFitness(chromosome: Chromosome, task: Task) -> Double {
+		
+		var network = SingleLayerSingleOutputNeuralNetwork(
+			size: task.inputCount + 1,
+			activation: sigmoid(1)) as FeedForwardNeuralNetwork
+		
+		let learningRule = ChalmersLearningRule(
+			bits: chromosome.genes)
+		
+		learningRule.trainNetwork(&network, task: task, numberOfTimes: numberOfTrainingEpochs)
+		
+		let error = network.testOnTask(task)
+		
+		let fitness = 1.0 - (error / Double(task.patterns.count))
+		
 		return fitness
 	}
 	
 	/// Computes the average fitness of *chromosome* across *tasks* using `taskFitnessFunc`.
-	func evaluateFitnessOfChromosome(chromsome: Chromosome, onTasks tasks: [Task]) -> Double {
+	func evaluateFitness(chromosome: Chromosome, tasks: [Task]) -> Double {
 		
 		var fitness = tasks.reduce(Double(0)) { (sum, task) in
-			sum + self.taskFitnessFunc(chromsome, task)
+			sum + self.evaluateFitness(chromosome, task: task)
 		}
 		
 		fitness /= Double(tasks.count)
@@ -125,7 +190,7 @@ public final class ChalmersEnvironment: FitnessEnvironment {
 	}
 	
 	///
-	public func generateEvolutionaryTasks(count: Int) {
+	public func selectEvolutionaryTasks(count: Int) {
 		
 		evolutionaryTasks.removeAll(keepCapacity: true)
 		
@@ -142,7 +207,7 @@ public final class ChalmersEnvironment: FitnessEnvironment {
 	///
 	public func generateTestTasks(count: Int) {
 		
-		self.testTasks.removeAll(keepCapacity: true)
+//		self.testTasks.removeAll(keepCapacity: true)
 		
 //		var pool =
 	}

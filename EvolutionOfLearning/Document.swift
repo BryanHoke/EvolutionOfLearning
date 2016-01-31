@@ -81,14 +81,17 @@ class Document: NSPersistentDocument {
 	}
 	
 	func writeExperiment() {
-		do {
-			try managedObjectContext?.save()
-			let url = NSURL(string: resultsPath + "/Results0")!
-			try writeToURL(url, ofType: "XML")
-		}
-		catch {
-			
-		}
+		print("writeExperiment")
+//		do {
+//			try managedObjectContext?.save()
+//			var urlString = resultsPath + "/Results0.xml"
+//			urlString = (urlString as NSString).stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.whitespaceAndNewlineCharacterSet().invertedSet)!
+//			let url = NSURL(fileURLWithPath: urlString)
+//			try writeToURL(url, ofType: "XML", forSaveOperation: .SaveAsOperation, originalContentsURL: nil)
+//		}
+//		catch {
+//			print("error: writeExperiment")
+//		}
 	}
 	
 	

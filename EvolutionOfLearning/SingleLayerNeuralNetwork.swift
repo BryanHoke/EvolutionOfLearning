@@ -11,60 +11,6 @@ import Accelerate
 
 public typealias ActivationFunc = Double -> Double
 
-public func sigmoid(x: Double)(lambda: Double) -> Double {
-	let f = 1 / (1 + exp(-lambda * x))
-	return f
-}
-
-public func randomDouble() -> Double {
-	let randDouble = Double(Double(arc4random()) / Double(UINT32_MAX))
-	return randDouble
-}
-
-public protocol FeedForwardNeuralNetwork {
-	
-	/// A value fed forward alongside an input vector to act as a threshold for output activation.
-	var bias: Double { get }
-	
-	/// weights[ i ] = weight from neuron i to output neuron
-	var weights: [Double] { get set }
-	
-	/// Activates the input units with a vector of input values, which are then fed forward through the weights to activate the output unit and produce an output value.
-	func activateWithInputs(var inputs: [Double]) -> Double
-	
-	/// Measures the error in the network's response to the pattern inputs compared to the pattern target.
-	func testOnPattern(pattern: Pattern) -> Double
-	
-	/// Measures the total error in the network's repsonse to all patterns in the task.
-	func testOnTask(task: Task) -> Double
-	
-	/// Convenience accessor for the values in `weights`.
-	subscript(index: Int) -> Double { get set }
-	
-}
-
-extension FeedForwardNeuralNetwork {
-	
-	public func testOnPattern(pattern: Pattern) -> Double {
-		
-		let output = activateWithInputs(pattern.inputs)
-		
-		let error = abs(pattern.target - output)
-		
-		return error
-	}
-	
-	public func testOnTask(task: Task) -> Double {
-		
-		let totalError = task.patterns.reduce(0) { (sum, pattern) in
-			sum + testOnPattern(pattern)
-		}
-		
-		return totalError
-	}
-	
-}
-
 /// A single-layer, feed-forward neural network with multiple input units but only a single output unit.
 public struct SingleLayerSingleOutputNeuralNetwork: FeedForwardNeuralNetwork {
 	

@@ -8,6 +8,13 @@
 
 import Foundation
 
+// MARK: - ExperimentType Protocol
+
+public protocol ExperimentType {
+	
+	
+}
+
 // MARK: - Experiment Output Protocol
 
 protocol ExperimentOutput {
@@ -42,7 +49,7 @@ public class Experiment: GeneticAlgorithmOutput {
 	
 	let populationSize = 40
 	
-	let elitismCount = 2
+	let elitismCount = 1
 	
 	let crossoverRate = 0.8
 	
@@ -87,21 +94,22 @@ public class Experiment: GeneticAlgorithmOutput {
 	/// Configures the `geneticAlgorithm` before beginning the experiment.
 	func configureAlgorithm(algorithm: GeneticAlgorithm) {
 		
-		let environment = ChalmersEnvironment(taskFitnessFunc: fitnessOfChromosome, historyLength: historyLength)
+		let environment = Environment()
 		
 		if let
 			path = environmentPath,
 			tasks = try? Task.tasksWithFileAtPath(path)
 		{
 			environment.tasks += tasks
-			environment.generateEvolutionaryTasks(taskCount)
+			environment.selectEvolutionaryTasks(taskCount)
+			environment.historyLength = historyLength
 		}
 		
 		self.environment = environment
 		
 		algorithm.initializationFunc = seeding
 		
-		algorithm.populationFitnessFunc = fitness
+		algorithm.populationFitnessFunc = evaluateFitness //as (inout Population) -> ()
 //		algorithm.fitnessFunc = environment.evaluateFitnessOfChromosome
 		
 		algorithm.reproductionFunc = reproduction
@@ -126,36 +134,88 @@ public class Experiment: GeneticAlgorithmOutput {
 	}
 	
 	/// Evaluates the fitness of all `Individual`s in a `Population`.
-	func fitness(inout population: Population) {
+	func evaluateFitness(inout population: Population) {
 		
-		environment.evaluateFitness(&population)
+//		environment.evaluateFitness(&population)
 		
-		// We're done if we aren't tracking fitness histories
-		guard historyLength > 0 else {
-			return
+		// Create dispatch queue and group
+		let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)
+		let group = dispatch_group_create()
+		
+		// Concurrently evaluate fitness of all individuals
+		for individual in population {
+			dispatch_group_async(group, queue, { () -> Void in
+				// 🚦 Prevent concurrent access to fitnessHistory
+				let semaphore = dispatch_semaphore_create(1)
+				
+				let chromosome = individual.chromosome
+				
+				// Retrieve the chromosome's fitness history
+				var history: [Double] = self.fitnessHistory[chromosome] ?? []
+				
+				// Evaluate individual's fitness
+				individual.fitness = self.evaluateEvolutionaryFitness(individual.chromosome)
+				
+				// Update history with individual's fitness if there's room for another entry
+				if history.count < self.historyLength {
+					
+					history.append(individual.fitness)
+					
+					self.fitnessHistory[chromosome] = history
+				}
+				
+				// Update the member's fitness to be the historical average
+				individual.fitness = history.reduce(0.0, combine: +) / Double(history.count)
+			})
 		}
 		
-		// Average each member's fitness with historical values
-		for member in population {
-			
-			// Retrieve the member chromosome's fitness history
-			var history: [Double] = fitnessHistory[member.chromosome] ?? []
-			
-			// Update history if there's room for another entry
-			if history.count < historyLength {
-				
-				history.append(member.fitness)
-				
-				fitnessHistory[member.chromosome] = history
-			}
-			
-			// Update the member's fitness to be the historical average
-			member.fitness = history.reduce(0, combine: +) / Double(history.count)
+		// Wait until all individuals have been evaluated
+		dispatch_group_wait(group, DISPATCH_TIME_FOREVER)
+		
+//		// We're done if we aren't tracking fitness histories
+//		guard historyLength > 0 else {
+//			return
+//		}
+//		
+//		// Average each member's fitness with historical values
+//		for member in population {
+//			
+//			// Retrieve the member chromosome's fitness history
+//			var history: [Double] = fitnessHistory[member.chromosome] ?? []
+//			
+//			// Update history if there's room for another entry
+//			if history.count < historyLength {
+//				
+//				history.append(member.fitness)
+//				
+//				fitnessHistory[member.chromosome] = history
+//			}
+//			
+//			// Update the member's fitness to be the historical average
+//			member.fitness = history.reduce(0, combine: +) / Double(history.count)
+//		}
+	}
+	
+	/// Evaluates the fitness of a `Chromosome` on the `environment`'s `evolutionaryTasks`.
+	func evaluateEvolutionaryFitness(chromosome: Chromosome) -> Double {
+		return evaluateFitness(chromosome, tasks: environment.evolutionaryTasks)
+	}
+	
+	/// Evaluates the average fitness of a `Chromosome` on an array of `Task`s.
+	func evaluateFitness(chromosome: Chromosome, tasks: [Task]) -> Double {
+		// Sum chromosome's fitness on all tasks
+		var fitness = tasks.reduce(0.0) { (sum, task) in
+			sum + self.evaluateFitness(chromosome, task: task)
 		}
+		
+		// Compute average fitness across all tasks
+		fitness /= Double(tasks.count)
+		
+		return fitness
 	}
 	
 	/// Evaluates the fitness of a `Chromosome` on a given `Task`.
-	func fitnessOfChromosome(chromosome: Chromosome, onTask task: Task) -> Double {
+	func evaluateFitness(chromosome: Chromosome, task: Task) -> Double {
 		
 		var network = SingleLayerSingleOutputNeuralNetwork(
 			size: task.inputCount + 1,
