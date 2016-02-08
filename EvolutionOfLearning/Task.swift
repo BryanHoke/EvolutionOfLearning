@@ -91,6 +91,7 @@ public struct Task {
 
 extension Task {
 	
+	/// The base width required to represent `self` on a `Chromosome`.
 	var width: Int {
 		return (inputCount + 1) * targetCount
 	}
