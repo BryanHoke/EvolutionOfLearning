@@ -88,3 +88,11 @@ public struct Task {
 	}
 	
 }
+
+extension Task {
+	
+	var width: Int {
+		return (inputCount + 1) * targetCount
+	}
+	
+}

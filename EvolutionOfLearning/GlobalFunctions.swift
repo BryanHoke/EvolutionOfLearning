@@ -13,6 +13,10 @@ public func sigmoid(x: Double)(lambda: Double) -> Double {
 	return f
 }
 
+public func randomBool() -> Bool {
+	return arc4random_uniform(2) == 1
+}
+
 public func randomDouble() -> Double {
 	let randDouble = Double(Double(arc4random()) / Double(UINT32_MAX))
 	return randDouble

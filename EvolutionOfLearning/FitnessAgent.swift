@@ -8,21 +8,102 @@
 
 import Foundation
 
-public protocol FitnessAgent {
+protocol FitnessAgent {
 	
-	func evaluateFitness(inout population: Population)
+	func seedingFor(tasks: [Task]) -> () -> GeneticIndividual
 	
+	func fitnessOf(chromosome: Chromosome, on task: Task) -> Double
 	
 }
 
-public struct EnvironmentalFitnessAgent: FitnessAgent {
+struct ChalmersFitnessAgent: FitnessAgent {
 	
-	public var historyLength = 15
+	var historyLength = 15
+	
+	let learningRuleSize = 35
+	
+	var numberOfTrainingEpochs = 10
 	
 	/// The list of fitness values measured per `Chromosome`, in order of recording.
-	public var fitnessHistory = [Chromosome: [Double]]()
+	var fitnessHistory = [Chromosome: [Double]]()
 	
-	public func evaluateFitness(inout population: Population) {
-		
+	func seedingFor(tasks: [Task]) -> () -> GeneticIndividual {
+		return {
+			let chromosome = Chromosome(size: self.learningRuleSize, seed: randomBool)
+			return Individual(chromosome: chromosome)
+		}
 	}
+	
+	func fitnessOf(chromosome: Chromosome, on task: Task) -> Double {
+		var network = SingleLayerSingleOutputNeuralNetwork(
+			size: task.inputCount + 1,
+			activation: sigmoid(1)) as FeedForwardNeuralNetwork
+		let learningRule = ChalmersLearningRule(
+			bits: chromosome.genes)
+		learningRule.trainNetwork(&network, task: task, numberOfTimes: numberOfTrainingEpochs)
+		let error = network.testOnTask(task)
+		let fitness = 1.0 - (error / Double(task.patterns.count))
+		return fitness
+	}
+	
+}
+
+struct WeightEvolutionFitnessAgent: FitnessAgent {
+	
+	let bitsPerWeight = 3
+	
+	let exponentialCap = 4
+	
+	var geneMap = IndexedDictionary<Int, Int>()
+	
+	func seedingFor(tasks: [Task]) -> () -> GeneticIndividual {
+		let size = chromosomeSizeFor(tasks)
+		return {
+			let chromosome = Chromosome(size: size, seed: randomBool)
+			return Individual(chromosome: chromosome)
+		}
+	}
+	
+	private func chromosomeSizeFor(tasks: [Task]) -> Int {
+		return tasks.reduce(bitsPerWeight) { (sum, task) -> Int in
+			sum + self.bitsPerWeight * task.width
+		}
+	}
+	
+	func fitnessOf(chromosome: Chromosome, on task: Task) -> Double {
+		
+		return 0
+	}
+	
+}
+
+struct ExtendedChalmersFitnessAgent: FitnessAgent {
+	
+	let bitsPerWeight = 3
+	
+	let exponentialCap = 4
+	
+	let learningRuleSize = 35
+	
+	var geneMap = IndexedDictionary<Int, Int>()
+	
+	func seedingFor(tasks: [Task]) -> () -> GeneticIndividual {
+		let size = chromosomeSizeFor(tasks)
+		return {
+			let chromosome = Chromosome(size: size, seed: randomBool)
+			return Individual(chromosome: chromosome)
+		}
+	}
+	
+	private func chromosomeSizeFor(tasks: [Task]) -> Int {
+		return tasks.reduce(bitsPerWeight) { (sum, task) -> Int in
+			sum + self.bitsPerWeight * task.width
+		}
+	}
+	
+	func fitnessOf(chromosome: Chromosome, on task: Task) -> Double {
+		
+		return 0
+	}
+	
 }
