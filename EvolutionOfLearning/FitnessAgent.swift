@@ -71,6 +71,16 @@ struct WeightEvolutionFitnessAgent: FitnessAgent {
 	}
 	
 	func fitnessOf(chromosome: Chromosome, on task: Task) -> Double {
+		guard let taskId = task.id,
+		tail = geneMap[taskId] else {
+			return 0
+		}
+		var loc = 0
+		if let prevIdx = geneMap.previousValueForKey(taskId) {
+			loc = prevIdx
+		}
+		var genes: [Bool] = []
+		genes.appendContentsOf(chromosome[loc..<tail])
 		
 		return 0
 	}
