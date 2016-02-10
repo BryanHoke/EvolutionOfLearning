@@ -78,14 +78,16 @@ struct WeightEvolutionFitnessAgent: FitnessAgent {
 		}
 	}
 	
+	// TODO: buildGeneMap
+	
 	func fitnessOf(chromosome: Chromosome, on task: Task) -> Double {
-		guard let taskId = task.id,
-		tail = geneMap[taskId] else {
-			return 0
+		guard let taskID = task.id,
+			tail = geneMap[taskID] else {
+				return 0
 		}
 		
 		var loc = 0
-		if let prevIdx = geneMap.previousValueForKey(taskId) {
+		if let prevIdx = geneMap.previousValueForKey(taskID) {
 			loc = prevIdx
 		}
 		
@@ -110,6 +112,8 @@ struct ExtendedChalmersFitnessAgent: FitnessAgent {
 	
 	var geneMap = IndexedDictionary<Int, Int>()
 	
+	var numberOfTrainingEpochs = 10
+	
 	func seedingFor(tasks: [Task]) -> () -> GeneticIndividual {
 		let size = chromosomeSizeFor(tasks)
 		return {
@@ -119,15 +123,35 @@ struct ExtendedChalmersFitnessAgent: FitnessAgent {
 	}
 	
 	private func chromosomeSizeFor(tasks: [Task]) -> Int {
-		return tasks.reduce(bitsPerWeight) { (sum, task) -> Int in
+		return tasks.reduce(learningRuleSize + bitsPerWeight) { (sum, task) -> Int in
 			sum + self.bitsPerWeight * task.width
 		}
 	}
 	
+	// TODO: buildGeneMap
+	
 	// TODO: Implement
 	func fitnessOf(chromosome: Chromosome, on task: Task) -> Double {
+		guard let taskID = task.id,
+			tail = geneMap[taskID] else {
+				return 0
+		}
+		var loc = 0
+		if let prevIdx = geneMap.previousValueForKey(taskID) {
+			loc = prevIdx
+		}
 		
-		return 0
+		let genes = [Bool](chromosome[loc..<tail])
+		let exponentShift = Int(pow(2.0, Double(bitsPerWeight - 1)) - 1) - exponentialCap
+		let encoding = signedExponentialEncodingWithOffset(exponentShift)
+		let weights = decodeWeightsFrom(genes, bitsPerWeight: bitsPerWeight, layerSize: task.inputCount, encoding: encoding)
+		var network = SingleLayerSingleOutputNeuralNetwork(weights: weights, activation: sigmoid(1)) as FeedForwardNeuralNetwork
+		
+		let learningRuleGenes = [Bool](chromosome[0..<learningRuleSize])
+		let learningRule = ChalmersLearningRule(bits: learningRuleGenes)
+		learningRule.trainNetwork(&network, task: task, numberOfTimes: numberOfTrainingEpochs)
+		
+		return fitnessOf(network, on: task)
 	}
 	
 }

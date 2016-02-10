@@ -63,6 +63,7 @@
 		4AF11C0E1B3F036C00AED909 /* Individual.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF11C0C1B3F036C00AED909 /* Individual.swift */; };
 		4AF11C111B4092EB00AED909 /* Population.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF11C101B4092EB00AED909 /* Population.swift */; };
 		4AF11C121B4092EB00AED909 /* Population.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF11C101B4092EB00AED909 /* Population.swift */; };
+		4AF21B101C6B89F200E462D3 /* FitnessAgentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF21B0F1C6B89F200E462D3 /* FitnessAgentTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -123,6 +124,7 @@
 		4AE6209E1B39A1D60033980F /* GeneticAlgorithm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneticAlgorithm.swift; sourceTree = "<group>"; };
 		4AF11C0C1B3F036C00AED909 /* Individual.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Individual.swift; sourceTree = "<group>"; };
 		4AF11C101B4092EB00AED909 /* Population.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Population.swift; sourceTree = "<group>"; };
+		4AF21B0F1C6B89F200E462D3 /* FitnessAgentTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FitnessAgentTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -241,6 +243,7 @@
 			children = (
 				4A825EDD1B2D019E00C8CEA3 /* EvolutionOfLearningTests.swift */,
 				4AD3F53E1B33097C000E9BA4 /* EvolutionOfLearningGeneticAlgorithmTests.swift */,
+				4AF21B0F1C6B89F200E462D3 /* FitnessAgentTests.swift */,
 				4A9A9FD71C6A471500073469 /* HelperTests.swift */,
 				4A825EDF1B2D019E00C8CEA3 /* Info.plist */,
 			);
@@ -452,6 +455,7 @@
 			files = (
 				4A2EE7A31BEFF467007D17FD /* GlobalFunctions.swift in Sources */,
 				4A9B76C91B55576800BE653D /* CustomOperators.swift in Sources */,
+				4AF21B101C6B89F200E462D3 /* FitnessAgentTests.swift in Sources */,
 				4A2F11641B5DD7530055AFF8 /* DataManager.swift in Sources */,
 				4A7E06971B5C52AD0000E561 /* Environment.swift in Sources */,
 				4AF11C0E1B3F036C00AED909 /* Individual.swift in Sources */,
