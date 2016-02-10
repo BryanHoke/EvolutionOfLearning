@@ -8,18 +8,6 @@
 
 import Foundation
 
-public func encodedInt(fromBits bits: [Bool]) -> Int {
-	var value: Int = 0
-	for i in 0..<bits.count {
-		let index: Int = bits.count - i - 1
-		let bit = bits[index]
-		if bit == true {
-			value += Int(pow(Double(2), Double(i)))
-		}
-	}
-	return value
-}
-
 public protocol SupervisedLearningRule {
 
 	func trainNetwork(inout network: FeedForwardNeuralNetwork,
@@ -72,7 +60,7 @@ public struct ChalmersLearningRule: SupervisedLearningRule {
 		for i in 1..<5 {
 			bits_0 += [bits[i]]
 		}
-		var k_0: Double = Double(encodedInt(fromBits: bits_0))
+		var k_0: Double = Double(encodedIntFor(bits_0))
 		if k_0 != 0 {
 			k_0 = pow(2.0, k_0 - 9)
 			k_0 = bits[0] == true ? k_0 : -k_0
@@ -86,7 +74,7 @@ public struct ChalmersLearningRule: SupervisedLearningRule {
 			for j in (signIndex + 1)..<(signIndex + 3) {
 				bits_i += [bits[j]]
 			}
-			var k_i = Double(encodedInt(fromBits: bits_i))
+			var k_i = Double(encodedIntFor(bits_i))
 			if k_i != 0 {
 				k_i = pow(2, k_i - 1)
 				k_i *= Double(sign)

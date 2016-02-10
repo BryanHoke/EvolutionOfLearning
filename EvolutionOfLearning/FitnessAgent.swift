@@ -16,6 +16,16 @@ protocol FitnessAgent {
 	
 }
 
+extension FitnessAgent {
+	
+	func fitnessOf(network: FeedForwardNeuralNetwork, on task: Task) -> Double {
+		let error = network.testOnTask(task)
+		let meanError = error / Double(task.patterns.count)
+		return 1.0 - meanError
+	}
+	
+}
+
 struct ChalmersFitnessAgent: FitnessAgent {
 	
 	var historyLength = 15
@@ -41,9 +51,7 @@ struct ChalmersFitnessAgent: FitnessAgent {
 		let learningRule = ChalmersLearningRule(
 			bits: chromosome.genes)
 		learningRule.trainNetwork(&network, task: task, numberOfTimes: numberOfTrainingEpochs)
-		let error = network.testOnTask(task)
-		let fitness = 1.0 - (error / Double(task.patterns.count))
-		return fitness
+		return fitnessOf(network, on: task)
 	}
 	
 }
@@ -75,14 +83,19 @@ struct WeightEvolutionFitnessAgent: FitnessAgent {
 		tail = geneMap[taskId] else {
 			return 0
 		}
+		
 		var loc = 0
 		if let prevIdx = geneMap.previousValueForKey(taskId) {
 			loc = prevIdx
 		}
-		var genes: [Bool] = []
-		genes.appendContentsOf(chromosome[loc..<tail])
 		
-		return 0
+		let genes = [Bool](chromosome[loc..<tail])
+		
+		let exponentShift = Int(pow(2.0, Double(bitsPerWeight - 1)) - 1) - exponentialCap
+		let encoding = signedExponentialEncodingWithOffset(exponentShift)
+		let weights = decodeWeightsFrom(genes, bitsPerWeight: bitsPerWeight, layerSize: task.inputCount, encoding: encoding)
+		let network = SingleLayerSingleOutputNeuralNetwork(weights: weights, activation: sigmoid(1))
+		return fitnessOf(network, on: task)
 	}
 	
 }
@@ -111,6 +124,7 @@ struct ExtendedChalmersFitnessAgent: FitnessAgent {
 		}
 	}
 	
+	// TODO: Implement
 	func fitnessOf(chromosome: Chromosome, on task: Task) -> Double {
 		
 		return 0
