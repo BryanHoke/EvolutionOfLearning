@@ -58,7 +58,15 @@ struct IndexedDictionary<Key: Hashable, Value> {
 	}
 	
 	subscript(key: Key) -> Value? {
-		return dictionary[key]
+		get {
+			return dictionary[key]
+		}
+		set(newValue) {
+			dictionary[key] = newValue
+			if !indexedKeys.contains(key) {
+				indexedKeys.append(key)
+			}
+		}
 	}
 	
 }

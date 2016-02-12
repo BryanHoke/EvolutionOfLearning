@@ -74,12 +74,38 @@ struct WeightEvolutionFitnessAgent: FitnessAgent {
 	
 	private func chromosomeSizeFor(tasks: [Task]) -> Int {
 		return tasks.reduce(bitsPerWeight) { (sum, task) -> Int in
-			sum + self.bitsPerWeight * task.width
+			sum + self.geneSize(of: task)
 		}
 	}
 	
-	// TODO: buildGeneMap
+	private func geneSize(of task: Task) -> Int {
+		return bitsPerWeight * task.width
+	}
 	
+	// TODO: Test
+	mutating func buildGeneMap(with tasks: [Task]) {
+		for task in tasks {
+			buildGeneMapEntry(of: task)
+		}
+	}
+	
+	private mutating func buildGeneMapEntry(of task: Task) {
+		guard let taskID = task.id else {
+			return
+		}
+		geneMap[taskID] = geneMapIndex(of: task)
+	}
+	
+	private func geneMapIndex(of task: Task) -> Int {
+		var index = 0
+		if let prevIndex = geneMap.lastValue {
+			index += prevIndex
+		}
+		index += geneSize(of: task)
+		return index
+	}
+	
+	// TODO: Test
 	func fitnessOf(chromosome: Chromosome, on task: Task) -> Double {
 		guard let taskID = task.id,
 			tail = geneMap[taskID] else {
@@ -124,13 +150,40 @@ struct ExtendedChalmersFitnessAgent: FitnessAgent {
 	
 	private func chromosomeSizeFor(tasks: [Task]) -> Int {
 		return tasks.reduce(learningRuleSize + bitsPerWeight) { (sum, task) -> Int in
-			sum + self.bitsPerWeight * task.width
+			sum + self.geneSize(of: task)
 		}
 	}
 	
-	// TODO: buildGeneMap
+	private func geneSize(of task: Task) -> Int {
+		return bitsPerWeight * task.width
+	}
 	
-	// TODO: Implement
+	// TODO: Test
+	mutating func buildGeneMap(with tasks: [Task]) {
+		for task in tasks {
+			buildGeneMapEntry(of: task)
+		}
+	}
+	
+	private mutating func buildGeneMapEntry(of task: Task) {
+		guard let taskID = task.id else {
+			return
+		}
+		geneMap[taskID] = geneMapIndex(of: task)
+	}
+	
+	private func geneMapIndex(of task: Task) -> Int {
+		var index = 0
+		if let prevIndex = geneMap.lastValue {
+			index += prevIndex
+		} else {
+			index += learningRuleSize
+		}
+		index += geneSize(of: task)
+		return index
+	}
+	
+	// TODO: Test
 	func fitnessOf(chromosome: Chromosome, on task: Task) -> Double {
 		guard let taskID = task.id,
 			tail = geneMap[taskID] else {
