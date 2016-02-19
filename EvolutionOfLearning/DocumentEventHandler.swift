@@ -25,4 +25,5 @@ protocol DocumentEventHandler {
 		numberOfTrialsChangedToValue value: Int)
 	
 	func runButtonClickedForDocument(doc: Document)
+	
 }

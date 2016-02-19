@@ -17,7 +17,6 @@ class ExperimentCoordinator: DocumentEventHandler, ExperimentOutput {
 		experiment.output = self
 	}
 	
-	
 	// MARK: - Instance Properties
 	
 	var dataManager: DataManager?
@@ -26,13 +25,11 @@ class ExperimentCoordinator: DocumentEventHandler, ExperimentOutput {
 	
 	var experiment: Experiment
 	
-	
 	// MARK: - Instance Methods
 	
 	// MARK: Document Event Handler
 	
-	func documentWasCreated(doc: Document)
-	{
+	func documentWasCreated(doc: Document) {
 		document = doc
 		
 		dataManager = ManagedDataManager(
@@ -42,32 +39,23 @@ class ExperimentCoordinator: DocumentEventHandler, ExperimentOutput {
 		experiment.environmentPath = doc.environmentPath
 	}
 	
-	func document(doc: Document,
-		environmentPathChanged path: String)
-	{
+	func document(doc: Document, environmentPathChanged path: String) {
 		experiment.environmentPath = path
 	}
 	
-	func document(doc: Document,
-		resultsPathChanged path: String)
-	{
+	func document(doc: Document, resultsPathChanged path: String) {
 		
 	}
 	
-	func document(doc: Document,
-		numberOfGenerationsChangedToValue value: Int)
-	{
+	func document(doc: Document, numberOfGenerationsChangedToValue value: Int) {
 		experiment.numberOfGenerations = value
 	}
 	
-	func document(doc: Document,
-		numberOfTrialsChangedToValue value: Int)
-	{
+	func document(doc: Document, numberOfTrialsChangedToValue value: Int) {
 		experiment.numberOfTrials = value
 	}
 	
-	func runButtonClickedForDocument(doc: Document)
-	{
+	func runButtonClickedForDocument(doc: Document) {
 		dataManager?.beginRecordingExperiment(experiment)
 		
 		// Run the experiment off the main thread
@@ -79,20 +67,21 @@ class ExperimentCoordinator: DocumentEventHandler, ExperimentOutput {
 	// MARK: Experiment Output
 	
 	func experimentDidBeginNewTrial(experiment: Experiment) {
-		dispatch_async(dispatch_get_main_queue()) { () -> Void in
+		dispatch_async(dispatch_get_main_queue()) {
 			self.dataManager?.beginNewTrial()
 		}
 	}
 	
 	func experiment(experiment: Experiment, didEvaluatePopulation pop: Population) {
-		dispatch_async(dispatch_get_main_queue()) { () -> Void in
+		dispatch_async(dispatch_get_main_queue()) {
 			self.dataManager?.recordPopulation(pop)
 		}
 	}
 	
 	func experimentDidComplete(experiment: Experiment) {
-		dispatch_async(dispatch_get_main_queue()) { () -> Void in
+		dispatch_async(dispatch_get_main_queue()) {
 			self.document?.writeExperiment()
 		}
 	}
+	
 }

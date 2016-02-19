@@ -13,7 +13,6 @@ class Document: NSPersistentDocument {
 	// MARK: - Initializers
 
 	override init() {
-		
 		eventHandler = ExperimentCoordinator()
 		
 		super.init()
@@ -21,7 +20,6 @@ class Document: NSPersistentDocument {
 		eventHandler.documentWasCreated(self)
 		eventHandler.document(self, environmentPathChanged: environmentPath)
 	}
-	
 	
 	// MARK: - Instance Properties
 	
@@ -50,7 +48,6 @@ class Document: NSPersistentDocument {
 		return resourcePath + "/Environment1.txt"
 	}
 	
-	
 	// MARK: Interface Builder Outlets
 	
 	@IBOutlet
@@ -61,7 +58,6 @@ class Document: NSPersistentDocument {
 	
 	@IBOutlet
 	weak var trialsTextField: NSTextField!
-	
 	
 	// MARK: - Instance Methods
 
@@ -94,11 +90,9 @@ class Document: NSPersistentDocument {
 //		}
 	}
 	
-	
 	// MARK: Control Editing Notifications
 	
 	override func controlTextDidChange(obj: NSNotification) {
-		
 		guard let textField = obj.object as? NSTextField else {
 			return
 		}
@@ -114,11 +108,11 @@ class Document: NSPersistentDocument {
 		}
 	}
 	
-	
 	// MARK: Interface Builder Actions
 	
 	@IBAction
 	func runExperimentButtonClicked(sender: NSButton) {
 		eventHandler.runButtonClickedForDocument(self)
 	}
+	
 }
