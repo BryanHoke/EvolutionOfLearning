@@ -21,9 +21,7 @@ public class ManagedDataManager: DataManager {
 	
 	///
 	public init(context: NSManagedObjectContext, model: NSManagedObjectModel) {
-		
 		self.managedObjectContext = context
-		
 		self.managedObjectModel = model
 	}
 	
@@ -45,33 +43,34 @@ public class ManagedDataManager: DataManager {
 	
 	///
 	public func beginNewTrial() {
-		
-		if let historyEntity = managedObjectModel.entitiesByName[HISTORY_ENTITY_NAME] {
-			
-			let history = ManagedHistory(
-				entity: historyEntity,
-				insertIntoManagedObjectContext: managedObjectContext)
-			
-			history.trialNumber = trialNumber++
-			
-			experiment.histories.addObject(history)
-			
-			currentHistory = history
+		guard let historyEntity = managedObjectModel.entitiesByName[HISTORY_ENTITY_NAME] else {
+			return
 		}
+		
+		let history = ManagedHistory(
+			entity: historyEntity,
+			insertIntoManagedObjectContext: managedObjectContext)
+		
+		history.trialNumber = trialNumber++
+		
+		experiment.histories.addObject(history)
+		
+		currentHistory = history
 	}
 	
+	/// Creates a new managed experiment and inserts it into the context.
 	public func beginRecordingExperiment(experiment: Experiment) {
-		// Create new managed experiment, insert into context
-		if let experimentEntity = managedObjectModel.entitiesByName[EXPERIMENT_ENTITY_NAME] {
-			
-			self.experiment = ManagedExperiment(
-				entity: experimentEntity,
-				insertIntoManagedObjectContext: managedObjectContext)
-			
-			self.experiment.adaptFromExperiment(experiment)
-			
-			self.managedObjectContext.insertObject(self.experiment)
+		guard let experimentEntity = managedObjectModel.entitiesByName[EXPERIMENT_ENTITY_NAME] else {
+			return
 		}
+		
+		self.experiment = ManagedExperiment(
+			entity: experimentEntity,
+			insertIntoManagedObjectContext: managedObjectContext)
+		
+		self.experiment.adaptFromExperiment(experiment)
+		
+		self.managedObjectContext.insertObject(self.experiment)
 	}
 	
 	///
@@ -85,7 +84,6 @@ public class ManagedDataManager: DataManager {
 			insertIntoManagedObjectContext: managedObjectContext)
 		
 		for individual in population {
-			
 			let managedIndividual = ManagedIndividual(
 				entity: individualEntity,
 				insertIntoManagedObjectContext: managedObjectContext)
@@ -97,4 +95,5 @@ public class ManagedDataManager: DataManager {
 		
 		currentHistory?.populations.addObject(managedPopulation)
 	}
+	
 }
