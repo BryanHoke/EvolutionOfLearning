@@ -26,17 +26,13 @@ public class ManagedIndividual: NSManagedObject {
 	
 	/// Adapts the property values of a `GeneticIndividual` onto this model's properties.
 	public func adaptFromIndividual(individual: GeneticIndividual) {
-		
 		chromosome = individual.chromosome.stringValue
-		
 		fitness = individual.fitness
-		
 		id = individual.id.UUIDString
-		
 		parentID1 = individual.parentID1?.UUIDString
-		
 		parentID2 = individual.parentID2?.UUIDString
 	}
+	
 }
 
 
@@ -51,6 +47,7 @@ public class ManagedPopulation: NSManagedObject {
 	@NSManaged var history: ManagedHistory
 	
 	@NSManaged var members: NSMutableOrderedSet
+	
 }
 
 
@@ -61,6 +58,7 @@ public class ManagedHistory: NSManagedObject {
 	@NSManaged var experiment: ManagedExperiment
 	
 	@NSManaged var populations: NSMutableOrderedSet
+	
 }
 
 
@@ -84,19 +82,13 @@ public class ManagedExperiment: NSManagedObject {
 	
 	/// Adapts the property values of an `Experiment` onto this model's properties.
 	public func adaptFromExperiment(experiment: Experiment) {
-		
 		crossoverRate = experiment.crossoverRate
-		
 		elitismCount = experiment.elitismCount
-		
 		historyLength = experiment.historyLength
-
 		mutationRate = experiment.mutationRate
-		
 		numberOfGenerations = experiment.numberOfGenerations
-		
 		numberOfTrials = experiment.numberOfTrials
-
 		populationSize = experiment.populationSize
 	}
+	
 }
