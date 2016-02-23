@@ -219,7 +219,7 @@ public class Experiment: GeneticAlgorithmOutput {
 		
 		var network = SingleLayerSingleOutputNeuralNetwork(
 			size: task.inputCount + 1,
-			activation: sigmoid(1)) as FeedForwardNeuralNetwork
+			activation: sigmoid(λ: 1)) as FeedForwardNeuralNetwork
 		
 		let learningRule = ChalmersLearningRule(
 			bits: chromosome.genes)

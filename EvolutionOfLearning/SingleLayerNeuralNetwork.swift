@@ -9,8 +9,6 @@
 import Foundation
 import Accelerate
 
-public typealias ActivationFunc = Double -> Double
-
 /// A single-layer, feed-forward neural network with multiple input units but only a single output unit.
 public struct SingleLayerSingleOutputNeuralNetwork: FeedForwardNeuralNetwork {
 	
@@ -41,12 +39,13 @@ public struct SingleLayerSingleOutputNeuralNetwork: FeedForwardNeuralNetwork {
 		return weights.count
 	}
 	
-	/// weights[ i ] = weight from neuron i to output neuron
+	/// weights[ i ] = weight from neuron i to output neuron.
+	/// The last weight is a bias weight.
 	public var weights = [Double]()
 	
 	/// Activates the network's input units with a vector of input values, which are then fed forward through the weights to activate the output unit and compute an output value.
-	public func activateWithInputs(var inputs: [Double]) -> Double {
-		inputs.append(bias)
+	public func activateWithInputs(inputs: [Double]) -> Double {
+		let inputs = inputs + [bias]
 		let output = activation(cblas_ddot(Int32(count), weights, 1, inputs, 1))
 		return output
 	}
@@ -94,8 +93,8 @@ public final class SingleLayerSingleOutputFFNN: FeedForwardNeuralNetwork {
 	/// weights[ i ] = weight from neuron i to output neuron
 	public var weights = [Double]()
 	
-	public func activateWithInputs(var inputs: [Double]) -> Double {
-		inputs.append(-1)
+	public func activateWithInputs(inputs: [Double]) -> Double {
+		let inputs = inputs + [bias]
 		let output = activation(cblas_ddot(Int32(weights.count), weights, 1, inputs, 1))
 		return output
 	}
@@ -136,8 +135,8 @@ public struct SingleLayerNeuralNetwork {
 	/// weights[ i ][ j ] = weight from neuron j to neuron i
 	public var weights = [[Double]]()
 	
-	public func activateWithInputs(var inputs: [Double]) -> [Double] {
-		inputs.append(-1)
+	public func activateWithInputs(inputs: [Double]) -> [Double] {
+		let inputs = inputs + [-1]
 		let outputs = weights.map { weights_i in
 			cblas_ddot(Int32(weights_i.count), weights_i, 1, inputs, 1)
 			}.map { activation($0) }

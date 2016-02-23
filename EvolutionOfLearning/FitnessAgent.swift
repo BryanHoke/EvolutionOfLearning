@@ -10,15 +10,15 @@ import Foundation
 
 protocol FitnessAgent {
 	
-	func seedingFor(tasks: [Task]) -> () -> GeneticIndividual
+	func seeding(with tasks: [Task]) -> () -> GeneticIndividual
 	
-	func fitnessOf(chromosome: Chromosome, on task: Task) -> Double
+	func fitness(of chromosome: Chromosome, on task: Task) -> Double
 	
 }
 
 extension FitnessAgent {
 	
-	func fitnessOf(network: FeedForwardNeuralNetwork, on task: Task) -> Double {
+	func fitness(of network: FeedForwardNeuralNetwork, on task: Task) -> Double {
 		let error = network.testOnTask(task)
 		let meanError = error / Double(task.patterns.count)
 		return 1.0 - meanError
@@ -37,21 +37,21 @@ struct ChalmersFitnessAgent: FitnessAgent {
 	/// The list of fitness values measured per `Chromosome`, in order of recording.
 	var fitnessHistory = [Chromosome: [Double]]()
 	
-	func seedingFor(tasks: [Task]) -> () -> GeneticIndividual {
+	func seeding(with tasks: [Task]) -> () -> GeneticIndividual {
 		return {
 			let chromosome = Chromosome(size: self.learningRuleSize, seed: randomBool)
 			return Individual(chromosome: chromosome)
 		}
 	}
 	
-	func fitnessOf(chromosome: Chromosome, on task: Task) -> Double {
+	func fitness(of chromosome: Chromosome, on task: Task) -> Double {
 		var network = SingleLayerSingleOutputNeuralNetwork(
 			size: task.inputCount + 1,
-			activation: sigmoid(1)) as FeedForwardNeuralNetwork
+			activation: sigmoid(λ: 1)) as FeedForwardNeuralNetwork
 		let learningRule = ChalmersLearningRule(
 			bits: chromosome.genes)
 		learningRule.trainNetwork(&network, task: task, numberOfTimes: numberOfTrainingEpochs)
-		return fitnessOf(network, on: task)
+		return fitness(of: network, on: task)
 	}
 	
 }
@@ -64,7 +64,7 @@ struct WeightEvolutionFitnessAgent: FitnessAgent {
 	
 	var geneMap = IndexedDictionary<Int, Int>()
 	
-	func seedingFor(tasks: [Task]) -> () -> GeneticIndividual {
+	func seeding(with tasks: [Task]) -> () -> GeneticIndividual {
 		let size = chromosomeSizeFor(tasks)
 		return {
 			let chromosome = Chromosome(size: size, seed: randomBool)
@@ -106,7 +106,7 @@ struct WeightEvolutionFitnessAgent: FitnessAgent {
 	}
 	
 	// TODO: Test
-	func fitnessOf(chromosome: Chromosome, on task: Task) -> Double {
+	func fitness(of chromosome: Chromosome, on task: Task) -> Double {
 		guard let taskID = task.id,
 			tail = geneMap[taskID] else {
 				return 0
@@ -122,8 +122,8 @@ struct WeightEvolutionFitnessAgent: FitnessAgent {
 		let exponentShift = Int(pow(2.0, Double(bitsPerWeight - 1)) - 1) - exponentialCap
 		let encoding = signedExponentialEncodingWithOffset(exponentShift)
 		let weights = decodeWeightsFrom(genes, bitsPerWeight: bitsPerWeight, layerSize: task.inputCount, encoding: encoding)
-		let network = SingleLayerSingleOutputNeuralNetwork(weights: weights, activation: sigmoid(1))
-		return fitnessOf(network, on: task)
+		let network = SingleLayerSingleOutputNeuralNetwork(weights: weights, activation: sigmoid(λ: 1))
+		return fitness(of: network, on: task)
 	}
 	
 }
@@ -140,7 +140,7 @@ struct ExtendedChalmersFitnessAgent: FitnessAgent {
 	
 	var numberOfTrainingEpochs = 10
 	
-	func seedingFor(tasks: [Task]) -> () -> GeneticIndividual {
+	func seeding(with tasks: [Task]) -> () -> GeneticIndividual {
 		let size = chromosomeSizeFor(tasks)
 		return {
 			let chromosome = Chromosome(size: size, seed: randomBool)
@@ -184,7 +184,7 @@ struct ExtendedChalmersFitnessAgent: FitnessAgent {
 	}
 	
 	// TODO: Test
-	func fitnessOf(chromosome: Chromosome, on task: Task) -> Double {
+	func fitness(of chromosome: Chromosome, on task: Task) -> Double {
 		guard let taskID = task.id,
 			tail = geneMap[taskID] else {
 				return 0
@@ -198,13 +198,13 @@ struct ExtendedChalmersFitnessAgent: FitnessAgent {
 		let exponentShift = Int(pow(2.0, Double(bitsPerWeight - 1)) - 1) - exponentialCap
 		let encoding = signedExponentialEncodingWithOffset(exponentShift)
 		let weights = decodeWeightsFrom(genes, bitsPerWeight: bitsPerWeight, layerSize: task.inputCount, encoding: encoding)
-		var network = SingleLayerSingleOutputNeuralNetwork(weights: weights, activation: sigmoid(1)) as FeedForwardNeuralNetwork
+		var network = SingleLayerSingleOutputNeuralNetwork(weights: weights, activation: sigmoid(λ: 1)) as FeedForwardNeuralNetwork
 		
 		let learningRuleGenes = [Bool](chromosome[0..<learningRuleSize])
 		let learningRule = ChalmersLearningRule(bits: learningRuleGenes)
 		learningRule.trainNetwork(&network, task: task, numberOfTimes: numberOfTrainingEpochs)
 		
-		return fitnessOf(network, on: task)
+		return fitness(of: network, on: task)
 	}
 	
 }

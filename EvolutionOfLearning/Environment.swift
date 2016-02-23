@@ -163,7 +163,7 @@ public class Environment: FitnessEnvironment {
 		
 		var network = SingleLayerSingleOutputNeuralNetwork(
 			size: task.inputCount + 1,
-			activation: sigmoid(1)) as FeedForwardNeuralNetwork
+			activation: sigmoid(λ: 1)) as FeedForwardNeuralNetwork
 		
 		let learningRule = ChalmersLearningRule(
 			bits: chromosome.genes)
@@ -191,14 +191,12 @@ public class Environment: FitnessEnvironment {
 	
 	///
 	public func selectEvolutionaryTasks(count: Int) {
-		
 		evolutionaryTasks.removeAll(keepCapacity: true)
 		
 		let count = min(count, tasks.count)
 		var pool = tasks
 		
 		for _ in 0..<count {
-
 			let index = Int(arc4random_uniform(UInt32(pool.count)))
 			evolutionaryTasks.append(pool.removeAtIndex(index))
 		}

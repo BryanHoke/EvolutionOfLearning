@@ -14,7 +14,7 @@ class EvolutionOfLearningTests: XCTestCase {
 	
 	let inputSize = 8
 	
-	let activation = sigmoid(1.0)
+	let activation = sigmoid(λ: 1.0)
 	
 	var randomInputSeed: NSData {
 		let seed = "input"
@@ -98,7 +98,7 @@ class EvolutionOfLearningTests: XCTestCase {
 	
 	func testSingleLayerNeuralNetworks() {
 		let inputSize = 8
-		let activation = sigmoid(1.0)
+		let activation = sigmoid(λ: 1.0)
 		var inputs = [Double]()
 		var weights = [Double]()
 		for _ in 0..<inputSize {
@@ -147,7 +147,7 @@ class EvolutionOfLearningTests: XCTestCase {
 		
 		var network = SingleLayerSingleOutputNeuralNetwork(
 			size: task.inputCount + 1,
-			activation: sigmoid(1)) as FeedForwardNeuralNetwork
+			activation: sigmoid(λ: 1)) as FeedForwardNeuralNetwork
 		
 		let error1 = network.testOnTask(task) / Double(task.patterns.count)
 		

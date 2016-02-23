@@ -24,6 +24,10 @@ class EvolutionOfLearningGeneticAlgorithmTests: XCTestCase {
         super.tearDown()
     }
 	
+	func stringify(bools: [Bool]) -> String {
+		return bools.reduce("") {$0 + ($1 ? "1" : "0") }
+	}
+	
 	func testDRand48Seed() {
 		let size = 20
 		let seed = 0
@@ -44,13 +48,13 @@ class EvolutionOfLearningGeneticAlgorithmTests: XCTestCase {
 		let seed = 0, mutationRate = 0.5
 		testChromosome1.mutateInPlaceWithRate(mutationRate, seed: seed)
 		srand48(seed)
-		let testGenesMutated1 = testGenes.map { (drand48() >= mutationRate) ? !$0 : $0 }
+		let testGenesMutated1 = testGenes.map { (drand48() < mutationRate) ? !$0 : $0 }
 		XCTAssert(testChromosome1.genes == testGenesMutated1,
-		"Mutation 1: expected \(testChromosome1.genes) but found \(testGenesMutated1)")
+		"Mutation 1: expected \(stringify(testGenesMutated1)) but found \(testChromosome1.stringValue)")
 		srand48(seed)
 		var mutationIndices = Set<Int>()
 		for index in 0..<testGenes.count {
-			if drand48() >= mutationRate {
+			if drand48() < mutationRate {
 				mutationIndices.insert(index)
 			}
 		}
@@ -63,7 +67,7 @@ class EvolutionOfLearningGeneticAlgorithmTests: XCTestCase {
 		var testChromosome2 = tChromosome1
 		testChromosome2.mutateInPlaceAtIndices(mutationIndices)
 		XCTAssert(testChromosome2 == testChromosome1,
-		"Mutation2 : expected \(testChromosome1.genes) but found \(testChromosome2.genes)")
+		"Mutation2 : expected \(testChromosome1.stringValue) but found \(testChromosome2.stringValue)")
 	}
 	
 	func testChromosomeMutationPerformance() {

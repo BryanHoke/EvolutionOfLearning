@@ -8,9 +8,12 @@
 
 import Foundation
 
-public func sigmoid(x: Double)(lambda: Double) -> Double {
-	let f = 1 / (1 + exp(-lambda * x))
-	return f
+public typealias ActivationFunc = Double -> Double
+
+public func sigmoid(λ λ: Double) -> ActivationFunc {
+	return { x in
+		1 / (1 + exp(-λ * x))
+	}
 }
 
 public func randomBool() -> Bool {
