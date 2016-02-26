@@ -48,17 +48,6 @@ class Document: NSPersistentDocument {
 		return resourcePath + "/Environment1.txt"
 	}
 	
-	// MARK: Interface Builder Outlets
-	
-	@IBOutlet
-	weak var runExperimentButton: NSButton!
-	
-	@IBOutlet
-	weak var generationsTextField: NSTextField!
-	
-	@IBOutlet
-	weak var trialsTextField: NSTextField!
-	
 	// MARK: - Instance Methods
 
 	override func windowControllerDidLoadNib(aController: NSWindowController) {
@@ -70,10 +59,15 @@ class Document: NSPersistentDocument {
 		return true
 	}
 
-	override var windowNibName: String? {
-		// Returns the nib file name of the document
-		// If you need to use a subclass of NSWindowController or if your document supports multiple NSWindowControllers, you should remove this property and override -makeWindowControllers instead.
-		return "Document"
+//	override var windowNibName: String? {
+//		// Returns the nib file name of the document
+//		// If you need to use a subclass of NSWindowController or if your document supports multiple NSWindowControllers, you should remove this property and override -makeWindowControllers instead.
+//		return "Document"
+//	}
+	
+	override func makeWindowControllers() {
+		let documentController = DocumentWindowController(windowNibName: "Document")
+		addWindowController(documentController)
 	}
 	
 	func writeExperiment() {
@@ -88,31 +82,6 @@ class Document: NSPersistentDocument {
 //		catch {
 //			print("error: writeExperiment")
 //		}
-	}
-	
-	// MARK: Control Editing Notifications
-	
-	override func controlTextDidChange(obj: NSNotification) {
-		guard let textField = obj.object as? NSTextField else {
-			return
-		}
-		
-		let value = textField.integerValue
-		
-		// Assign the text field value to the respective experimental parameter
-		if textField === generationsTextField {
-			eventHandler.document(self, numberOfGenerationsChangedToValue: value)
-		}
-		else if textField === trialsTextField {
-			eventHandler.document(self, numberOfTrialsChangedToValue: value)
-		}
-	}
-	
-	// MARK: Interface Builder Actions
-	
-	@IBAction
-	func runExperimentButtonClicked(sender: NSButton) {
-		eventHandler.runButtonClickedForDocument(self)
 	}
 	
 }

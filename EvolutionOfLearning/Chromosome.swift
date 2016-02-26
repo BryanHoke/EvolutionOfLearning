@@ -47,22 +47,18 @@ public struct Chromosome: ArrayLiteralConvertible, StringLiteralConvertible, Col
 		}
 	}
 	
-	///
 	public init(arrayLiteral elements: Chromosome.Element...) {
 		genes += elements
 	}
 	
-	///
 	public init(unicodeScalarLiteral value: String) {
 		genes += value.characters.map { $0 != "0" }
 	}
 	
-	///
 	public init(extendedGraphemeClusterLiteral value: String) {
 		genes += value.characters.map { $0 != "0" }
 	}
 	
-	///
 	public init(stringLiteral value: String) {
 		genes += value.characters.map { $0 != "0" }
 	}
