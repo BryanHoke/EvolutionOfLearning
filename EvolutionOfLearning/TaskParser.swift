@@ -11,14 +11,14 @@ import Foundation
 public struct TaskParser {
 	
 	/// Constructs `Task` values from the parsed data stored in a file at a given path.
-	public func tasksWithFileAtPath(path: String) throws -> [Task] {
+	public func tasks(withFileAt path: String) throws -> [Task] {
 		let fileContent = try! String(contentsOfFile: path)
 		let tokens = fileContent.componentsSeparatedByCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
-		return try tasksWithTokens(tokens)
+		return try tasks(with: tokens)
 	}
 	
 	/// Constructs `Task` values from `String` tokens of a task representation language.
-	public func tasksWithTokens(tokens: [String]) throws -> [Task] {
+	public func tasks(with tokens: [String]) throws -> [Task] {
 		var inputs = [[[Double]]]()
 		var targets = [[[Double]]]()
 		var index = 0
@@ -50,11 +50,11 @@ public struct TaskParser {
 			inputs.append(inputVectors)
 			targets.append(targetVectors)
 		}
-		return tasksWithInputs(inputs, targets: targets)
+		return tasksWith(inputs: inputs, targets: targets)
 	}
 	
 	/// Constructs `Task` values from input and target vectors.
-	public func tasksWithInputs(inputs: [[[Double]]], targets: [[[Double]]]) -> [Task] {
+	public func tasksWith(inputs inputs: [[[Double]]], targets: [[[Double]]]) -> [Task] {
 		var count = 0
 		var tasks = [Task]()
 		for (i, inputVectors) in inputs.enumerate() {

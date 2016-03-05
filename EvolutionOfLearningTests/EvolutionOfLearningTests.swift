@@ -140,7 +140,7 @@ class EvolutionOfLearningTests: XCTestCase {
 		XCTAssertEqual(rule.coefficients, deltaRuleCoefficients)
 		
 		guard
-			let tasks = try? TaskParser().tasksWithFileAtPath(environmentPath),
+			let tasks = try? TaskParser().tasks(withFileAt: environmentPath),
 			let task = tasks.first else {
 			return
 		}

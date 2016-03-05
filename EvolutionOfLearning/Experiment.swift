@@ -98,7 +98,7 @@ public class Experiment: GeneticAlgorithmOutput {
 		
 		if let
 			path = environmentPath,
-			tasks = try? TaskParser().tasksWithFileAtPath(path)
+			tasks = try? TaskParser().tasks(withFileAt: path)
 		{
 			environment.tasks += tasks
 			environment.selectEvolutionaryTasks(taskCount)
