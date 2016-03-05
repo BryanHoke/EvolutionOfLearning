@@ -135,8 +135,11 @@ public struct WeightEvolutionFitnessAgent: FitnessAgent {
 	
 	// TODO: Test
 	func makeWeights(`for` task: Task, genes: [Bool]) -> [Double] {
-		let encoding = signedExponentialEncodingWithOffset(exponentShift)
-		return decodeWeightsFrom(genes, bitsPerWeight: bitsPerWeight, layerSize: task.inputCount, encoding: encoding)
+		let encoding = signedExponentialEncoding(with: exponentShift)
+		return decodeWeights(from: genes,
+			bitsPerWeight: bitsPerWeight,
+			layerSize: task.inputCount,
+			encoding: encoding)
 	}
 	
 }
@@ -221,8 +224,11 @@ public struct ExtendedChalmersFitnessAgent: FitnessAgent {
 	
 	// TODO: Test
 	func makeWeights(`for` task: Task, genes: [Bool]) -> [Double] {
-		let encoding = signedExponentialEncodingWithOffset(exponentShift)
-		return decodeWeightsFrom(genes, bitsPerWeight: bitsPerWeight, layerSize: task.inputCount, encoding: encoding)
+		let encoding = signedExponentialEncoding(with: exponentShift)
+		return decodeWeights(from: genes,
+			bitsPerWeight: bitsPerWeight,
+			layerSize: task.inputCount,
+			encoding: encoding)
 	}
 	
 }

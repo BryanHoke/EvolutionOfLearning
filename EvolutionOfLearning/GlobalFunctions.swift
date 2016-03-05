@@ -29,7 +29,7 @@ public func randomDouble() -> Double {
 	return randDouble
 }
 
-func encodedIntFor(bits: [Bool]) -> Int {
+func encodedInt(from bits: [Bool]) -> Int {
 	return bits.reverse().enumerate().reduce(0, combine: { (sum, pair: (i: Int, bit: Bool)) -> Int in
 		sum + (pair.bit ? pow(2, pair.i) : 0)
 	})
@@ -41,9 +41,9 @@ public func exponentOffset(bitCount count: Int, cap: Int) -> Int {
 }
 
 // TODO: Test
-func signedExponentialEncodingWithOffset(exponentOffset: Int) -> (bits: [Bool]) -> Double {
+func signedExponentialEncoding(with exponentOffset: Int) -> (bits: [Bool]) -> Double {
 	return { bits -> Double in
-		let base = encodedIntFor(bits)
+		let base = encodedInt(from: bits)
 		var value = 0.0
 		if base != 0 {
 			value = pow(2.0, Double(base - exponentOffset))
@@ -55,7 +55,7 @@ func signedExponentialEncodingWithOffset(exponentOffset: Int) -> (bits: [Bool]) 
 }
 
 // TODO: Test
-func decodeWeightsFrom(bits: [Bool], bitsPerWeight: Int, layerSize: Int, encoding: [Bool] -> Double) -> [Double] {
+func decodeWeights(from bits: [Bool], bitsPerWeight: Int, layerSize: Int, encoding: [Bool] -> Double) -> [Double] {
 	var weights: [Double] = []
 	for i in 0..<layerSize {
 		let start = i * bitsPerWeight,
