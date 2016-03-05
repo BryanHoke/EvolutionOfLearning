@@ -25,7 +25,7 @@ class EvolutionOfLearningGeneticAlgorithmTests: XCTestCase {
     }
 	
 	func stringify(bools: [Bool]) -> String {
-		return bools.reduce("") {$0 + ($1 ? "1" : "0") }
+		return bools.reduce("") { $0 + ($1 ? "1" : "0") }
 	}
 	
 	func testDRand48Seed() {

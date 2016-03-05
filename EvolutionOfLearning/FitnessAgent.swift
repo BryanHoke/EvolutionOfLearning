@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol FitnessAgent {
+public protocol FitnessAgent {
 	
 	func seeding(with tasks: [Task]) -> () -> GeneticIndividual
 	
@@ -18,7 +18,7 @@ protocol FitnessAgent {
 
 extension FitnessAgent {
 	
-	func fitness(of network: FeedForwardNeuralNetwork, on task: Task) -> Double {
+	public func fitness(of network: FeedForwardNeuralNetwork, on task: Task) -> Double {
 		let error = network.testOnTask(task)
 		let meanError = error / Double(task.patterns.count)
 		return 1.0 - meanError
@@ -26,25 +26,25 @@ extension FitnessAgent {
 	
 }
 
-struct ChalmersFitnessAgent: FitnessAgent {
+public struct ChalmersFitnessAgent: FitnessAgent {
 	
-	var historyLength = 15
+	public var historyLength = 15
 	
-	let learningRuleSize = 35
+	public let learningRuleSize = 35
 	
-	var numberOfTrainingEpochs = 10
+	public var numberOfTrainingEpochs = 10
 	
 	/// The list of fitness values measured per `Chromosome`, in order of recording.
 	var fitnessHistory = [Chromosome: [Double]]()
 	
-	func seeding(with tasks: [Task]) -> () -> GeneticIndividual {
+	public func seeding(with tasks: [Task]) -> () -> GeneticIndividual {
 		return {
 			let chromosome = Chromosome(size: self.learningRuleSize, seed: randomBool)
 			return Individual(chromosome: chromosome)
 		}
 	}
 	
-	func fitness(of chromosome: Chromosome, on task: Task) -> Double {
+	public func fitness(of chromosome: Chromosome, on task: Task) -> Double {
 		var network = SingleLayerSingleOutputNeuralNetwork(
 			size: task.inputCount + 1,
 			activation: sigmoid(λ: 1)) as FeedForwardNeuralNetwork
@@ -56,145 +56,111 @@ struct ChalmersFitnessAgent: FitnessAgent {
 	
 }
 
-struct WeightEvolutionFitnessAgent: FitnessAgent {
+public struct WeightEvolutionFitnessAgent: FitnessAgent {
 	
-	let bitsPerWeight = 3
+	public init(bitsPerWeight: Int, exponentialCap: Int, tasks: [Task]) {
+		self.bitsPerWeight = bitsPerWeight
+		self.exponentialCap = exponentialCap
+		self.tasks = tasks
+		geneMap = GeneMap(bitsPerWeight: bitsPerWeight, offset: 0)
+		buildGeneMap()
+	}
 	
-	let exponentialCap = 4
+	/// Preferred value is `3`.
+	public let bitsPerWeight: Int
 	
-	var geneMap = IndexedDictionary<Int, Int>()
+	/// Preferred value is `4`.
+	public let exponentialCap: Int
 	
-	func seeding(with tasks: [Task]) -> () -> GeneticIndividual {
-		let size = chromosomeSizeFor(tasks)
+	public let tasks: [Task]
+	
+	var geneMap: GeneMap
+	
+	private mutating func buildGeneMap() {
+		for task in tasks {
+			geneMap.addMapping(`for`: task)
+		}
+	}
+	
+	// TODO: Test
+	public func seeding(with tasks: [Task]) -> () -> GeneticIndividual {
+		let size = geneMap.chromosomeSize
 		return {
 			let chromosome = Chromosome(size: size, seed: randomBool)
 			return Individual(chromosome: chromosome)
 		}
 	}
 	
-	private func chromosomeSizeFor(tasks: [Task]) -> Int {
-		return tasks.reduce(bitsPerWeight) { (sum, task) -> Int in
-			sum + self.geneSize(of: task)
-		}
-	}
-	
-	private func geneSize(of task: Task) -> Int {
-		return bitsPerWeight * task.width
-	}
-	
 	// TODO: Test
-	mutating func buildGeneMap(with tasks: [Task]) {
-		for task in tasks {
-			buildGeneMapEntry(of: task)
-		}
-	}
-	
-	private mutating func buildGeneMapEntry(of task: Task) {
-		guard let taskID = task.id else {
-			return
-		}
-		geneMap[taskID] = geneMapIndex(of: task)
-	}
-	
-	private func geneMapIndex(of task: Task) -> Int {
-		var index = 0
-		if let prevIndex = geneMap.lastValue {
-			index += prevIndex
-		}
-		index += geneSize(of: task)
-		return index
-	}
-	
-	// TODO: Test
-	func fitness(of chromosome: Chromosome, on task: Task) -> Double {
-		guard let taskID = task.id,
-			tail = geneMap[taskID] else {
+	public func fitness(of chromosome: Chromosome, on task: Task) -> Double {
+		guard let geneRange = geneMap.geneRange(of: task) else {
 				return 0
 		}
 		
-		var loc = 0
-		if let prevIdx = geneMap.previousValueForKey(taskID) {
-			loc = prevIdx
-		}
+		let genes = Array(chromosome[geneRange])
 		
-		let genes = [Bool](chromosome[loc..<tail])
-		
-		let exponentShift = Int(pow(2.0, Double(bitsPerWeight - 1)) - 1) - exponentialCap
 		let encoding = signedExponentialEncodingWithOffset(exponentShift)
 		let weights = decodeWeightsFrom(genes, bitsPerWeight: bitsPerWeight, layerSize: task.inputCount, encoding: encoding)
 		let network = SingleLayerSingleOutputNeuralNetwork(weights: weights, activation: sigmoid(λ: 1))
 		return fitness(of: network, on: task)
 	}
 	
+	// TODO: Test
+	var exponentShift: Int {
+		return Int(pow(2.0, Double(bitsPerWeight - 1)) - 1) - exponentialCap
+	}
+	
 }
 
-struct ExtendedChalmersFitnessAgent: FitnessAgent {
+public struct ExtendedChalmersFitnessAgent: FitnessAgent {
 	
-	let bitsPerWeight = 3
+	public init(bitsPerWeight: Int, exponentialCap: Int, learningRuleSize: Int, numberOfTrainingEpochs: Int, tasks: [Task]) {
+		self.bitsPerWeight = bitsPerWeight
+		self.exponentialCap = exponentialCap
+		self.learningRuleSize = learningRuleSize
+		self.numberOfTrainingEpochs = numberOfTrainingEpochs
+		self.tasks = tasks
+		geneMap = GeneMap(bitsPerWeight: bitsPerWeight, offset: learningRuleSize)
+		buildGeneMap()
+	}
 	
-	let exponentialCap = 4
+	/// Preferred value is `3`.
+	public let bitsPerWeight: Int
 	
-	let learningRuleSize = 35
+	/// Preferred value is `4`.
+	public let exponentialCap: Int
 	
-	var geneMap = IndexedDictionary<Int, Int>()
+	/// Preferred value is `35`.
+	public let learningRuleSize: Int
 	
-	var numberOfTrainingEpochs = 10
+	/// Preferred value is `10`.
+	public var numberOfTrainingEpochs: Int
 	
-	func seeding(with tasks: [Task]) -> () -> GeneticIndividual {
-		let size = chromosomeSizeFor(tasks)
+	public let tasks: [Task]
+	
+	var geneMap: GeneMap
+	
+	private mutating func buildGeneMap() {
+		for task in tasks {
+			geneMap.addMapping(`for`: task)
+		}
+	}
+	
+	public func seeding(with tasks: [Task]) -> () -> GeneticIndividual {
+		let size = geneMap.chromosomeSize
 		return {
 			let chromosome = Chromosome(size: size, seed: randomBool)
 			return Individual(chromosome: chromosome)
 		}
 	}
 	
-	private func chromosomeSizeFor(tasks: [Task]) -> Int {
-		return tasks.reduce(learningRuleSize + bitsPerWeight) { (sum, task) -> Int in
-			sum + self.geneSize(of: task)
-		}
-	}
-	
-	private func geneSize(of task: Task) -> Int {
-		return bitsPerWeight * task.width
-	}
-	
 	// TODO: Test
-	mutating func buildGeneMap(with tasks: [Task]) {
-		for task in tasks {
-			buildGeneMapEntry(of: task)
-		}
-	}
-	
-	private mutating func buildGeneMapEntry(of task: Task) {
-		guard let taskID = task.id else {
-			return
-		}
-		geneMap[taskID] = geneMapIndex(of: task)
-	}
-	
-	private func geneMapIndex(of task: Task) -> Int {
-		var index = 0
-		if let prevIndex = geneMap.lastValue {
-			index += prevIndex
-		} else {
-			index += learningRuleSize
-		}
-		index += geneSize(of: task)
-		return index
-	}
-	
-	// TODO: Test
-	func fitness(of chromosome: Chromosome, on task: Task) -> Double {
-		guard let taskID = task.id,
-			tail = geneMap[taskID] else {
-				return 0
-		}
-		var loc = 0
-		if let prevIdx = geneMap.previousValueForKey(taskID) {
-			loc = prevIdx
+	public func fitness(of chromosome: Chromosome, on task: Task) -> Double {
+		guard let geneRange = geneMap.geneRange(of: task) else {
+			return 0
 		}
 		
-		let genes = [Bool](chromosome[loc..<tail])
+		let genes = Array(chromosome[geneRange])
 		let exponentShift = Int(pow(2.0, Double(bitsPerWeight - 1)) - 1) - exponentialCap
 		let encoding = signedExponentialEncodingWithOffset(exponentShift)
 		let weights = decodeWeightsFrom(genes, bitsPerWeight: bitsPerWeight, layerSize: task.inputCount, encoding: encoding)
@@ -205,6 +171,11 @@ struct ExtendedChalmersFitnessAgent: FitnessAgent {
 		learningRule.trainNetwork(&network, task: task, numberOfTimes: numberOfTrainingEpochs)
 		
 		return fitness(of: network, on: task)
+	}
+	
+	// TODO: Test
+	var exponentShift: Int {
+		return Int(pow(2.0, Double(bitsPerWeight - 1)) - 1) - exponentialCap
 	}
 	
 }
