@@ -33,8 +33,8 @@ class HelperTests: XCTestCase {
     }
 	
 	func testEncodedIntForBits() {
-		XCTAssertEqual(encodedIntFor([false, false, false]), 0)
-		XCTAssertEqual(encodedIntFor([true, false, true, true]), 11)
+		XCTAssertEqual(encodedInt(from: [false, false, false]), 0)
+		XCTAssertEqual(encodedInt(from: [true, false, true, true]), 11)
 	}
 
 }
