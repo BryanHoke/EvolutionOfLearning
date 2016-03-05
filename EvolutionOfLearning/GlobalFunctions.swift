@@ -16,6 +16,10 @@ public func sigmoid(λ λ: Double) -> ActivationFunc {
 	}
 }
 
+public func pow(base: Int, _ exponent: Int) -> Int {
+	return Int(pow(Double(base), Double(exponent)))
+}
+
 public func randomBool() -> Bool {
 	return arc4random_uniform(2) == 1
 }
@@ -27,8 +31,13 @@ public func randomDouble() -> Double {
 
 func encodedIntFor(bits: [Bool]) -> Int {
 	return bits.reverse().enumerate().reduce(0, combine: { (sum, pair: (i: Int, bit: Bool)) -> Int in
-		sum + (pair.bit ? Int(pow(2.0, Double(pair.i))) : 0)
+		sum + (pair.bit ? pow(2, pair.i) : 0)
 	})
+}
+
+// TODO: Test
+public func exponentOffset(bitCount count: Int, cap: Int) -> Int {
+	return pow(2, count - 1) - 1 - cap
 }
 
 // TODO: Test
@@ -36,7 +45,6 @@ func signedExponentialEncodingWithOffset(exponentOffset: Int) -> (bits: [Bool]) 
 	return { bits -> Double in
 		let base = encodedIntFor(bits)
 		var value = 0.0
-		value = 0.0
 		if base != 0 {
 			value = pow(2.0, Double(base - exponentOffset))
 			let signBit = bits[0]
