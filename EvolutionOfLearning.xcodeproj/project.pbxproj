@@ -41,6 +41,8 @@
 		4A620D101C8B75030084B0A2 /* TaskParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A620D0E1C8B75030084B0A2 /* TaskParser.swift */; };
 		4A620D121C8BB02A0084B0A2 /* ConcurrentDispatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A620D111C8BB02A0084B0A2 /* ConcurrentDispatcher.swift */; };
 		4A620D131C8BB02A0084B0A2 /* ConcurrentDispatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A620D111C8BB02A0084B0A2 /* ConcurrentDispatcher.swift */; };
+		4A620D151C8BB5610084B0A2 /* ReproductionAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A620D141C8BB5610084B0A2 /* ReproductionAgent.swift */; };
+		4A620D161C8BB5610084B0A2 /* ReproductionAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A620D141C8BB5610084B0A2 /* ReproductionAgent.swift */; };
 		4A7A1DCC1B9FF4AE001F5C18 /* ChalmersExperiment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7A1DCB1B9FF4AE001F5C18 /* ChalmersExperiment.swift */; };
 		4A7A1DCD1B9FF4AE001F5C18 /* ChalmersExperiment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7A1DCB1B9FF4AE001F5C18 /* ChalmersExperiment.swift */; };
 		4A7E06931B5C2FC40000E561 /* Experiment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7E06921B5C2FC40000E561 /* Experiment.swift */; };
@@ -118,6 +120,7 @@
 		4A50A8331B30F9F10004BC5D /* Chromosome.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Chromosome.swift; sourceTree = "<group>"; };
 		4A620D0E1C8B75030084B0A2 /* TaskParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskParser.swift; sourceTree = "<group>"; };
 		4A620D111C8BB02A0084B0A2 /* ConcurrentDispatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConcurrentDispatcher.swift; sourceTree = "<group>"; };
+		4A620D141C8BB5610084B0A2 /* ReproductionAgent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReproductionAgent.swift; sourceTree = "<group>"; };
 		4A7A1DCB1B9FF4AE001F5C18 /* ChalmersExperiment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChalmersExperiment.swift; sourceTree = "<group>"; };
 		4A7E06921B5C2FC40000E561 /* Experiment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Experiment.swift; sourceTree = "<group>"; };
 		4A7E06951B5C52AD0000E561 /* Environment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
@@ -218,6 +221,7 @@
 				4A7A1DCB1B9FF4AE001F5C18 /* ChalmersExperiment.swift */,
 				4A7E06951B5C52AD0000E561 /* Environment.swift */,
 				4A2EE79E1BEE8DA4007D17FD /* FitnessAgent.swift */,
+				4A620D141C8BB5610084B0A2 /* ReproductionAgent.swift */,
 				4A7E06981B5C536A0000E561 /* Task.swift */,
 				4A620D0E1C8B75030084B0A2 /* TaskParser.swift */,
 				4AD030F31C803797005266E8 /* GeneMap.swift */,
@@ -467,6 +471,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4A9B76C51B55574800BE653D /* Array-Extensions.swift in Sources */,
+				4A620D151C8BB5610084B0A2 /* ReproductionAgent.swift in Sources */,
 				4A620D121C8BB02A0084B0A2 /* ConcurrentDispatcher.swift in Sources */,
 				4A13A0D51B64404D0047E858 /* SupervisedLearningRule.swift in Sources */,
 				4A2EE7A21BEFF467007D17FD /* GlobalFunctions.swift in Sources */,
@@ -521,6 +526,7 @@
 				4A825EDE1B2D019E00C8CEA3 /* EvolutionOfLearningTests.swift in Sources */,
 				4A13A0D61B64404D0047E858 /* SupervisedLearningRule.swift in Sources */,
 				4A7E069A1B5C536A0000E561 /* Task.swift in Sources */,
+				4A620D161C8BB5610084B0A2 /* ReproductionAgent.swift in Sources */,
 				4AE99EA51C7A83770096D321 /* NeuralNetworkTests.swift in Sources */,
 				4A7FDE451C79592F00E79AB9 /* DataFetcher.swift in Sources */,
 				4A12524B1BA860FC0096A717 /* Document.xcdatamodeld in Sources */,
