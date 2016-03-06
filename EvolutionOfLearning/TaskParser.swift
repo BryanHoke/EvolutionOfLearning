@@ -61,7 +61,8 @@ public struct TaskParser {
 			for j in 0..<targets[i].count {
 				let targetVector = targets[i][j]
 				let patterns = Pattern.patternsWithInputVectors(inputVectors, targets: targetVector)
-				let task = Task(id: count++, patterns: patterns)
+				let task = Task(id: count, patterns: patterns)
+				count += 1
 				tasks.append(task)
 			}
 		}

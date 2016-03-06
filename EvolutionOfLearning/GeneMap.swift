@@ -28,18 +28,14 @@ public struct GeneMap {
 	var mapping = IndexedDictionary<Int, Range<Int>>()
 	
 	public mutating func addMapping(`for` task: Task) {
-		guard let index = task.id else {
-			return assertionFailure("Expect tasks to have an id")
-		}
+		let index = task.id
 		let start = chromosomeSize
 		let end = start + geneLength(of: task)
 		mapping[index] = start..<end
 	}
 	
 	public func geneRange(of task: Task) -> Range<Int>? {
-		guard let index = task.id else {
-			preconditionFailure("Expect task to have an id")
-		}
+		let index = task.id
 		return mapping[index]
 	}
 	

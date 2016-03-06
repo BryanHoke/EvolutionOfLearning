@@ -11,8 +11,8 @@ import Foundation
 /// A collection of `Pattern` values on which genetic individuals are evaluated based on their ability to learn the patterns.
 public struct Task {
 	
-	/// The optional ID of the task, which may be useful to have in some situations.
-	public var id: Int?
+	/// The unique ID of the task.
+	public var id: Int
 	
 	/// The array of `Pattern` values which comprise the task's main data.
 	public var patterns = [Pattern]()
