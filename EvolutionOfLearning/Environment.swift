@@ -11,6 +11,16 @@ import Darwin
 
 public typealias TaskFitnessFunc = (Chromosome, Task) -> Double
 
+public protocol EvolutionaryEnvironment {
+	
+	func seeding() -> () -> Chromosome
+	
+	func fitness(of chromosome: Chromosome) -> Double
+	
+	func reproduce(population: Population) -> Population
+	
+}
+
 public protocol FitnessEnvironment {
 	
 	var tasks: [Task] { get set }
