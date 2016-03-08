@@ -65,6 +65,7 @@ extension Population {
 	}
 	
 	/// Selects the top *n* members of the population ranked by fitness and returns them in a new population.
+	///
 	/// - parameter elitistCount: The number of most-fit individuals to selected.
 	/// - returns: A new `Population` containing the top *n* fitness-ranked members of `self` (where *n* is equal to `elitistCount`).
 	public func elitismSelectionWithCount(elitistCount: Int) -> Population {
@@ -159,6 +160,7 @@ extension Population {
 	}
 	
 	/// Returns a `Population` instance comprised of this population's members, excluding the members at the specified indices.
+	///
 	/// - param indices: The indices of the `Individuals` to exclude from the returned `Population`.
 	public func populationWithExcludedIndices(indices: Set<Int>) -> Population {
 		var allIndices = Set<Int>()
@@ -170,6 +172,7 @@ extension Population {
 	}
 	
 	/// Selects a subset of the population, where all members have an equal chance of being selected.
+	///
 	/// - parameter count: The number of members to select.
 	public func populationWithUniformSelection(count: Int) -> Population {
 		var newPopulation = Population()
