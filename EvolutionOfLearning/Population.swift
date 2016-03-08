@@ -102,23 +102,6 @@ public struct Population: CollectionType, ArrayLiteralConvertible {
 		return elitistPopulation
 	}
 	
-	/// Evaluates the fitness of each of the `members` with *fitnessFunc*.
-//	public func evaluateWithFitnessFunc(fitnessFunc: FitnessFunc) {
-//		// Create dispatch queue and group
-//		let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)
-//		let group = dispatch_group_create()
-//		
-//		// Concurrently evaluate fitness of all individuals
-//		for individual in self {
-//			dispatch_group_async(group, queue, { () -> Void in
-//				individual.fitness = fitnessFunc(individual.chromosome)
-//			})
-//		}
-//		
-//		// Wait until all individuals have been evaluated
-//		dispatch_group_wait(group, DISPATCH_TIME_FOREVER)
-//	}
-	
 	/// Creates a new `Population` by applying *crossoverOperator* to each of this `Population`'s `pairs`.
 	public func reproduceWithCrossover(crossoverOperator: CrossoverOperator) -> Population {
 		var offspringPopulation = Population()
