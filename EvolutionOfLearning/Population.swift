@@ -9,67 +9,37 @@
 import Foundation
 import Darwin
 
-
 /// An ordered collection of `Individual`s.
-public struct Population: CollectionType, ArrayLiteralConvertible {
+public struct Population {
 	
-	// MARK: - Class Methods
-	
-	///
-	public static func uniformSelection(count: Int) -> Population -> Population {
-		return { population in
-			let selectionIndices = uniformSelectionIndices(count)(population)
-			return population.populationWithSelectionIndices(selectionIndices)
-		}
-	}
-	
-	///
-	public static func uniformSelectionIndices(count: Int) -> Population -> Set<Int> {
-		return { population in
-			var selectedIndices = Set<Int>()
-			var pool = (0..<population.count).map { $0 }
-			let selectionCount = min(count, pool.count)
-			
-			for i in 0..<selectionCount {
-				let index = Int(arc4random_uniform(UInt32(selectionCount - i)))
-				selectedIndices.insert(pool.removeAtIndex(index))
-			}
-			
-			return selectedIndices
-		}
-	}
-	
-	
-	// MARK: - Initializers
-	
-	///
 	public init(members: [Individual]) {
-		self.members += members
+		self.members = members
 	}
 	
 	/// Creates a new `Population` instance with a specified number of members and a func to generate each member.
 	public init(size: Int, seed: () -> Individual) {
-		for _ in 0..<size {
-			members.append(seed())
+		members = (0..<size).map { _ in
+			seed()
 		}
 	}
 	
-	///
-	public init(arrayLiteral elements: Individual...) {
-		members += elements
-	}
-	
-	
-	// MARK: - Instance Properties
-	
 	/// The `Individual`s which comprise this population.
-	public var members = [Individual]()
+	public var members: [Individual] = []
+	
+}
+
+// MARK: - Computed Properties
+
+extension Population {
 	
 	/// An `Array` of the `Population`'s members paired by order into tuples.
+	///
 	/// E.g., `[(members[0], members[1]), (members[2], members[3]),` ... `(members[count - 2], members[count - 1])]`.
+	///
 	/// - Note: The implementation currently assumes that the population contains an even number of members.
 	public var pairs: [(Individual, Individual)] {
-		return 0.stride(through: count - 1, by: 2)
+		return 0
+			.stride(through: count - 1, by: 2)
 			.map { (self[$0], self[$0 + 1]) }
 	}
 	
@@ -82,7 +52,11 @@ public struct Population: CollectionType, ArrayLiteralConvertible {
 		return totalFitness / Double(count)
 	}
 	
-	// MARK: - Instance Methods
+}
+
+// MARK: - Instance Methods
+
+extension Population {
 	
 	public mutating func visitMembers(using block: (inout member: Individual) -> Void) {
 		for i in indices {
@@ -210,16 +184,55 @@ public struct Population: CollectionType, ArrayLiteralConvertible {
 		return newPopulation
 	}
 	
-	///
 	public func selectionBranch(branchSelector: Population -> Set<Int>, branchHandler: (selected: Population, unselected: Population) -> (Population)) -> Population {
 		let selectionIndices = branchSelector(self)
 		let selectedPopulation = self.populationWithSelectionIndices(selectionIndices)
 		let unselectedPopulation = self.populationWithExcludedIndices(selectionIndices)
 		return branchHandler(selected: selectedPopulation, unselected: unselectedPopulation)
 	}
+}
+
+// MARK: - Type Methods
+
+extension Population {
 	
+	public static func uniformSelection(count: Int) -> Population -> Population {
+		return { population in
+			let selectionIndices = uniformSelectionIndices(count)(population)
+			return population.populationWithSelectionIndices(selectionIndices)
+		}
+	}
 	
-	// MARK: - CollectionType
+	public static func uniformSelectionIndices(count: Int) -> Population -> Set<Int> {
+		return { population in
+			var selectedIndices = Set<Int>()
+			var pool = (0..<population.count).map { $0 }
+			let selectionCount = min(count, pool.count)
+			
+			for i in 0..<selectionCount {
+				let index = Int(arc4random_uniform(UInt32(selectionCount - i)))
+				selectedIndices.insert(pool.removeAtIndex(index))
+			}
+			
+			return selectedIndices
+		}
+	}
+	
+}
+
+// MARK: - ArrayLiteralConvertible
+
+extension Population: ArrayLiteralConvertible {
+	
+	public init(arrayLiteral elements: Individual...) {
+		members = elements
+	}
+	
+}
+
+// MARK: - CollectionType
+
+extension Population: CollectionType {
 	
 	public typealias Element = Individual
 	
