@@ -84,7 +84,7 @@ public class ManagedExperiment: NSManagedObject {
 	public func adaptFromExperiment(experiment: Experiment) {
 		crossoverRate = experiment.crossoverRate
 		elitismCount = experiment.elitismCount
-		historyLength = experiment.historyLength
+//		historyLength = experiment.historyLength
 		mutationRate = experiment.mutationRate
 		numberOfGenerations = experiment.numberOfGenerations
 		numberOfTrials = experiment.numberOfTrials

@@ -9,9 +9,8 @@
 import Foundation
 import Darwin
 
-/**
-An ordered collection of `Individual` objects.
-*/
+
+/// An ordered collection of `Individual`s.
 public struct Population: CollectionType, ArrayLiteralConvertible {
 	
 	// MARK: - Class Methods
@@ -107,7 +106,7 @@ public struct Population: CollectionType, ArrayLiteralConvertible {
 		var offspringPopulation = Population()
 		
 		for pair in pairs {
-			let offspringPair = pair.0.reproduceWithCrossover(crossoverOperator, pairIndividual: pair.1)
+			let offspringPair = crossover(pair, using: crossoverOperator)
 			offspringPopulation += [offspringPair.0, offspringPair.1]
 		}
 		
@@ -116,15 +115,14 @@ public struct Population: CollectionType, ArrayLiteralConvertible {
 
 	/// Creates a new `Population` by applying *mutationOperator* to each of this `Population`'s `members`.
 	public func reproduceWithMutation(mutationOperator: MutationOperator) -> Population {
-		let mutatedMembers = map { $0.reproduceWithMutation(mutationOperator) }
+		let mutatedMembers = map { mutate($0, using: mutationOperator) }
 		return Population(members: mutatedMembers)
 	}
 	
 	/// Creates a new `Population` by applying *recombinationOperator* to each of this `Population`'s `pairs`.
 	public func reproduceWithRecombination(recombinationOperator: RecombinationOperator) -> Population {
 		let recombinedMembers = pairs.map { pair in
-			pair.0.reproduceWithRecombination(recombinationOperator,
-				pairIndividual: pair.1)
+			recombine(pair, using: recombinationOperator)
 		}
 		
 		return Population(members: recombinedMembers)

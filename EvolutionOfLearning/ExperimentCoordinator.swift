@@ -60,7 +60,7 @@ class ExperimentCoordinator: DocumentEventHandler, ExperimentOutput {
 		
 		// Run the experiment off the main thread
 		dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)) {
-			self.experiment.run()
+//			self.experiment.run()
 		}
 	}
 	
