@@ -187,11 +187,11 @@ extension Population {
 		return newPopulation
 	}
 	
-	public func selectionBranch(branchSelector: Population -> Set<Int>, branchHandler: (selected: Population, unselected: Population) -> (Population)) -> Population {
+	public func selectionBranch(branchSelector: Population -> Set<Int>, branchCombine: (selected: Population, unselected: Population) -> (Population)) -> Population {
 		let selectionIndices = branchSelector(self)
 		let selectedPopulation = self.populationWithSelectionIndices(selectionIndices)
 		let unselectedPopulation = self.populationWithExcludedIndices(selectionIndices)
-		return branchHandler(selected: selectedPopulation, unselected: unselectedPopulation)
+		return branchCombine(selected: selectedPopulation, unselected: unselectedPopulation)
 	}
 }
 
