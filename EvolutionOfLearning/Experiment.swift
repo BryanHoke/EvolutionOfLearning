@@ -37,7 +37,7 @@ public class Experiment: GeneticAlgorithmOutput {
 	// MARK: - Instance Properties
 	
 	///
-	let geneticAlgorithm = GeneticAlgorithm()
+	let geneticAlgorithm = _GeneticAlgorithm()
 	
 	///
 	var environment: FitnessEnvironment!
@@ -92,7 +92,7 @@ public class Experiment: GeneticAlgorithmOutput {
 	}
 	
 	/// Configures the `geneticAlgorithm` before beginning the experiment.
-	func configureAlgorithm(algorithm: GeneticAlgorithm) {
+	func configureAlgorithm(algorithm: _GeneticAlgorithm) {
 		
 		let environment = Environment()
 		
@@ -275,7 +275,7 @@ public class Experiment: GeneticAlgorithmOutput {
 	
 	// MARK: Genetic Algorithm Output
 	
-	public func geneticAlgorithm(algorithm: GeneticAlgorithm,
+	public func geneticAlgorithm(algorithm: _GeneticAlgorithm,
 		didEvaluatePopulation pop: Population)
 	{
 		output?.experiment(self, didEvaluatePopulation: pop)

@@ -13,6 +13,8 @@ public typealias TaskFitnessFunc = (Chromosome, Task) -> Double
 
 public protocol EvolutionaryEnvironment {
 	
+	func makePopulation(size size: Int) -> Population
+	
 	func seeding() -> () -> Chromosome
 	
 	func fitness(of chromosome: Chromosome) -> Double
