@@ -21,15 +21,20 @@ public struct GeneticAlgorithm {
 	public func run(forGenerations numberOfGenerations: Int, populationSize: Int, initialPopulation: Population? = nil) {
 		var population = initialPopulation ?? environment.makePopulation(size: populationSize)
 		for _ in 0..<numberOfGenerations {
-			evaluateFitness(of: &population)
-			onPopulationEvaluated?(population: population)
-			population = environment.reproduce(population)
+			runGeneration(of: &population)
 		}
 	}
 	
+	private func runGeneration(inout of population: Population) {
+		evaluateFitness(of: &population)
+		population.members.sortInPlace(>)
+		onPopulationEvaluated?(population: population)
+		population = environment.reproduce(population)
+	}
+	
 	private func evaluateFitness(inout of population: Population) {
-		let blocks = dispatchBlocks(forEvaluating: &population)
 		let dispatcher = ConcurrentDispatcher(queuePriority: DISPATCH_QUEUE_PRIORITY_HIGH)
+		let blocks = dispatchBlocks(forEvaluating: &population)
 		dispatcher.concurrentlyDispatch(blocks)
 	}
 	
