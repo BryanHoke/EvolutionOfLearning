@@ -29,10 +29,8 @@ public protocol GeneticIndividual {
 public func crossover(pair: IndividualPair, using `operator`: CrossoverOperator) -> IndividualPair {
 	let offspringChromosomes = `operator`(pair.0.chromosome, pair.1.chromosome)
 	var offspring = (Individual(chromosome: offspringChromosomes.0), Individual(chromosome: offspringChromosomes.1))
-	offspring.0.parentID1 = pair.0.id
-	offspring.0.parentID2 = pair.1.id
-	offspring.1.parentID1 = pair.0.id
-	offspring.1.parentID2 = pair.1.id
+	offspring.0.inhereritParentIDs(of: pair)
+	offspring.1.inhereritParentIDs(of: pair)
 	return offspring
 }
 
@@ -46,8 +44,7 @@ public func mutate(individual: Individual, using `operator`: MutationOperator) -
 public func recombine(pair: IndividualPair, using `operator`: RecombinationOperator) -> Individual {
 	let offspringChromosome = `operator`(pair.0.chromosome, pair.1.chromosome)
 	var offspring = Individual(chromosome: offspringChromosome)
-	offspring.parentID1 = pair.0.id
-	offspring.parentID2 = pair.1.id
+	offspring.inhereritParentIDs(of: pair)
 	return offspring
 }
 
@@ -73,6 +70,11 @@ public struct Individual: GeneticIndividual {
 	
 	///
 	public private(set) var parentID2: NSUUID?
+	
+	public mutating func inhereritParentIDs(of pair: IndividualPair) {
+		parentID1 = pair.0.id
+		parentID2 = pair.1.id
+	}
 	
 }
 
