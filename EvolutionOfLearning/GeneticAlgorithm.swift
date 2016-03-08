@@ -12,30 +12,28 @@ public typealias FitnessFunc = Chromosome -> Double
 
 public typealias PopulationFitnessFunc = inout Population -> ()
 
-public protocol GeneticAlgorithmOutput {
-	
-	func geneticAlgorithm(algorithm: _GeneticAlgorithm,
-		didEvaluatePopulation pop: Population)
-}
-
 public struct GeneticAlgorithm {
 	
-	public init(environment: EvolutionaryEnvironment) {
-		self.environment = environment
-	}
+	public let environment: EvolutionaryEnvironment
 	
-	public var environment: EvolutionaryEnvironment
+	public let onPopulationEvaluated: ((population: Population) -> Void)?
 	
 	public func run(forGenerations numberOfGenerations: Int, populationSize: Int, initialPopulation: Population? = nil) {
 		var population = initialPopulation ?? environment.makePopulation(size: populationSize)
-		
 		for _ in 0..<numberOfGenerations {
 			evaluateFitness(of: &population)
+			onPopulationEvaluated?(population: population)
 			population = environment.reproduce(population)
 		}
 	}
 	
 	private func evaluateFitness(inout of population: Population) {
+		let blocks = dispatchBlocks(forEvaluating: &population)
+		let dispatcher = ConcurrentDispatcher(queuePriority: DISPATCH_QUEUE_PRIORITY_HIGH)
+		dispatcher.concurrentlyDispatch(blocks)
+	}
+	
+	private func dispatchBlocks(inout forEvaluating population: Population) -> [dispatch_block_t] {
 		var blocks: [dispatch_block_t] = []
 		population.visitMembers { member in
 			blocks.append({
@@ -44,8 +42,7 @@ public struct GeneticAlgorithm {
 				member.fitness = fitness
 			})
 		}
-		let dispatcher = ConcurrentDispatcher(queuePriority: DISPATCH_QUEUE_PRIORITY_HIGH)
-		dispatcher.concurrentlyDispatch(blocks)
+		return blocks
 	}
 	
 }
@@ -68,9 +65,6 @@ public final class _GeneticAlgorithm {
 	public var reproductionFunc: (Population -> Population)?
 	
 	///
-	public var output: GeneticAlgorithmOutput?
-	
-	///
 	public func runForNumberOfGenerations(numberOfGenerations: Int) {
 		
 		///
@@ -90,7 +84,7 @@ public final class _GeneticAlgorithm {
 			
 			print("#\(generation): \(population.averageFitness)")
 			
-			output?.geneticAlgorithm(self, didEvaluatePopulation: population)
+//			output?.geneticAlgorithm(self, didEvaluatePopulation: population)
 			
 			generation += 1
 		}
