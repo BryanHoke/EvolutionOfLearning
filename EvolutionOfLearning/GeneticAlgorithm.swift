@@ -37,7 +37,7 @@ public struct GeneticAlgorithm {
 	
 	private func evaluateFitness(inout of population: Population) {
 		var blocks: [dispatch_block_t] = []
-		for member in population {
+		population.visitMembers { member in
 			blocks.append({
 				let chromosome = member.chromosome
 				let fitness = self.environment.fitness(of: chromosome)
@@ -82,7 +82,7 @@ public final class _GeneticAlgorithm {
 			}
 			else if let fitnessFunc = self.fitnessFunc {
 				
-				population.evaluateWithFitnessFunc(fitnessFunc)
+//				population.evaluateWithFitnessFunc(fitnessFunc)
 			}
 			
 			// Sort population by highest fitness

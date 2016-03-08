@@ -100,7 +100,7 @@ public class Environment: FitnessEnvironment {
 				let chromosome = member.chromosome
 				// Just compute fitness if we aren't tracking histories
 				guard self.historyLength > 0 else {
-					member.fitness = self.evaluateFitness(chromosome)
+//					member.fitness = self.evaluateFitness(chromosome)
 					return
 				}
 				
@@ -123,7 +123,7 @@ public class Environment: FitnessEnvironment {
 				
 				// Compute the historical average fitness
 				let fitness = fitnessHistory.reduce(0, combine: +) / Double(fitnessHistory.count)
-				member.fitness = fitness
+//				member.fitness = fitness
 			})
 		}
 		

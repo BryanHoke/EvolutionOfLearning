@@ -26,9 +26,33 @@ public protocol GeneticIndividual {
 	var parentID2: NSUUID? { get }
 }
 
+public func crossover(individual1: Individual, individual2: Individual,  crossoverOperator: CrossoverOperator) -> IndividualPair {
+	let offspringChromosomes = crossoverOperator(individual1.chromosome, individual2.chromosome)
+	var offspring = (Individual(chromosome: offspringChromosomes.0), Individual(chromosome: offspringChromosomes.1))
+	offspring.0.parentID1 = individual1.id
+	offspring.0.parentID2 = individual2.id
+	offspring.1.parentID1 = individual1.id
+	offspring.1.parentID2 = individual2.id
+	return offspring
+}
+
+public func mutate(individual: Individual, mutationOperator: MutationOperator) -> Individual {
+	let offspringChromosome = mutationOperator(individual.chromosome)
+	var offspring = Individual(chromosome: offspringChromosome)
+	offspring.parentID1 = individual.id
+	return offspring
+}
+
+public func recombine(individual1: Individual, individual2: Individual, recombinationOperator: RecombinationOperator) -> Individual {
+	let offspringChromosome = recombinationOperator(individual1.chromosome, individual2.chromosome)
+	var offspring = Individual(chromosome: offspringChromosome)
+	offspring.parentID1 = individual1.id
+	offspring.parentID2 = individual2.id
+	return offspring
+}
 
 ///
-public final class Individual: GeneticIndividual {
+public struct Individual: GeneticIndividual {
 	
 	///
 	public init(chromosome: Chromosome) {
@@ -53,18 +77,22 @@ public final class Individual: GeneticIndividual {
 	///
 	public func reproduceWithCrossover(crossoverOperator: CrossoverOperator, pairIndividual: Individual) -> (Individual, Individual) {
 		let offspringChromosomes = crossoverOperator(chromosome, pairIndividual.chromosome)
-		let offspring = (Individual(chromosome: offspringChromosomes.0), Individual(chromosome: offspringChromosomes.1))
-		for child in [offspring.0, offspring.1] {
-			child.parentID1 = id
-			child.parentID2 = pairIndividual.id
-		}
+		var offspring = (Individual(chromosome: offspringChromosomes.0), Individual(chromosome: offspringChromosomes.1))
+		offspring.0.parentID1 = id
+		offspring.0.parentID2 = pairIndividual.id
+		offspring.1.parentID1 = id
+		offspring.1.parentID2 = pairIndividual.id
+//		for child in [offspring.0, offspring.1] {
+//			child.parentID1 = id
+//			child.parentID2 = pairIndividual.id
+//		}
 		return offspring
 	}
 	
 	///
 	public func reproduceWithMutation(mutationOperator: MutationOperator) -> Individual {
 		let offspringChromosome = mutationOperator(chromosome)
-		let offspring = Individual(chromosome: offspringChromosome)
+		var offspring = Individual(chromosome: offspringChromosome)
 		offspring.parentID1 = id
 		return offspring
 	}
@@ -72,7 +100,7 @@ public final class Individual: GeneticIndividual {
 	///
 	public func reproduceWithRecombination(recombinationOperator: RecombinationOperator, pairIndividual: Individual) -> Individual {
 		let offspringChromosome = recombinationOperator(chromosome, pairIndividual.chromosome)
-		let offspring = Individual(chromosome: offspringChromosome)
+		var offspring = Individual(chromosome: offspringChromosome)
 		offspring.parentID1 = id
 		offspring.parentID2 = pairIndividual.id
 		return offspring

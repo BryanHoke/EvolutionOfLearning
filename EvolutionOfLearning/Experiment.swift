@@ -154,7 +154,7 @@ public class Experiment: GeneticAlgorithmOutput {
 				var history: [Double] = self.fitnessHistory[chromosome] ?? []
 				
 				// Evaluate individual's fitness
-				individual.fitness = self.evaluateEvolutionaryFitness(individual.chromosome)
+//				individual.fitness = self.evaluateEvolutionaryFitness(individual.chromosome)
 				
 				// Update history with individual's fitness if there's room for another entry
 				if history.count < self.historyLength {
@@ -165,7 +165,7 @@ public class Experiment: GeneticAlgorithmOutput {
 				}
 				
 				// Update the member's fitness to be the historical average
-				individual.fitness = history.reduce(0.0, combine: +) / Double(history.count)
+//				individual.fitness = history.reduce(0.0, combine: +) / Double(history.count)
 			})
 		}
 		
