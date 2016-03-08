@@ -28,3 +28,14 @@ public struct ConcurrentDispatcher {
 	}
 	
 }
+
+public func concurrentlyDispatch(blocks: [dispatch_block_t], priority: dispatch_queue_priority_t) {
+	let queue = dispatch_get_global_queue(priority, 0)
+	let group = dispatch_group_create()
+	
+	for block in blocks {
+		dispatch_group_async(group, queue, block)
+	}
+	
+	dispatch_group_wait(group, DISPATCH_TIME_FOREVER)
+}

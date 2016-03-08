@@ -19,7 +19,15 @@ public struct GeneticAlgorithm {
 	public let onPopulationEvaluated: ((population: Population) -> Void)?
 	
 	public func run(forGenerations numberOfGenerations: Int, populationSize: Int, initialPopulation: Population? = nil) {
-		var population = initialPopulation ?? environment.makePopulation(size: populationSize)
+		var population = initialPopulation ?? makePopulation(size: populationSize)
+		runGenerations(of: &population, numberOfGenerations: numberOfGenerations)
+	}
+	
+	private func makePopulation(size size: Int) -> Population {
+		return environment.makePopulation(size: size)
+	}
+	
+	private func runGenerations(inout of population: Population, numberOfGenerations: Int) {
 		for _ in 0..<numberOfGenerations {
 			runGeneration(of: &population)
 		}
@@ -27,27 +35,43 @@ public struct GeneticAlgorithm {
 	
 	private func runGeneration(inout of population: Population) {
 		evaluateFitness(of: &population)
-		population.members.sortInPlace(>)
-		onPopulationEvaluated?(population: population)
-		population = environment.reproduce(population)
+		commit(&population)
+		reproduce(&population)
 	}
 	
 	private func evaluateFitness(inout of population: Population) {
-		let dispatcher = ConcurrentDispatcher(queuePriority: DISPATCH_QUEUE_PRIORITY_HIGH)
-		let blocks = dispatchBlocks(forEvaluating: &population)
-		dispatcher.concurrentlyDispatch(blocks)
+		let blocks = makeDispatchBlocks(forEvaluating: &population)
+		concurrentlyDispatch(blocks, priority: DISPATCH_QUEUE_PRIORITY_HIGH)
 	}
 	
-	private func dispatchBlocks(inout forEvaluating population: Population) -> [dispatch_block_t] {
-		var blocks: [dispatch_block_t] = []
-		population.visitMembers { member in
-			blocks.append({
-				let chromosome = member.chromosome
-				let fitness = self.environment.fitness(of: chromosome)
-				member.fitness = fitness
-			})
+	private func makeDispatchBlocks(inout forEvaluating population: Population) -> [dispatch_block_t] {
+		return population.indices.map { index -> dispatch_block_t in
+			self.makeBlockToEvaluateFitness(of: &population[index])
 		}
-		return blocks
+	}
+	
+	private func makeBlockToEvaluateFitness(inout of member: Individual) -> dispatch_block_t {
+		return {
+			self.evaluateFitness(of: &member)
+		}
+	}
+	
+	private func evaluateFitness(inout of member: Individual) {
+		let chromosome = member.chromosome
+		member.fitness = fitness(of: chromosome)
+	}
+	
+	private func fitness(of chromosome: Chromosome) -> Double {
+		return environment.fitness(of: chromosome)
+	}
+	
+	private func commit(inout population: Population) {
+		population.members.sortInPlace(>)
+		onPopulationEvaluated?(population: population)
+	}
+	
+	private func reproduce(inout population: Population) {
+		population = environment.reproduce(population)
 	}
 	
 }
