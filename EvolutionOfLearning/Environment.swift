@@ -15,14 +15,30 @@ public protocol EvolutionaryEnvironment {
 	
 	func makePopulation(size size: Int) -> Population
 	
-	func seeding() -> () -> Chromosome
-	
 	func fitness(of chromosome: Chromosome) -> Double
 	
 	func reproduce(population: Population) -> Population
 	
 }
 
-public class Environment {
+public struct Environment: EvolutionaryEnvironment {
+
+	let fitnessAgent: FitnessAgent
+	
+	let reproductionAgent: ReproductionAgent
+	
+	public func makePopulation(size size: Int) -> Population {
+		return Population(size: size, seed: { () -> Individual in
+			Individual(chromosome: self.fitnessAgent.seed())
+		})
+	}
+	
+	public func fitness(of chromosome: Chromosome) -> Double {
+		return fitnessAgent.fitness(of: chromosome)
+	}
+	
+	public func reproduce(population: Population) -> Population {
+		return reproductionAgent.reproduce(population)
+	}
 	
 }

@@ -12,13 +12,20 @@ public protocol FitnessAgent {
 	
 	var tasks: [Task] { get }
 	
-	func seeding() -> () -> GeneticIndividual
+	func seed() -> Chromosome
 	
 	func fitness(of chromosome: Chromosome, on task: Task) -> Double
 	
 }
 
 extension FitnessAgent {
+	
+	public func fitness(of chromosome: Chromosome) -> Double {
+		let totalFitness = tasks.reduce(0.0) { (total, task) -> Double in
+			total + self.fitness(of: chromosome, on: task)
+		}
+		return totalFitness / Double(tasks.count)
+	}
 	
 	public func fitness(of network: FeedForwardNeuralNetwork, on task: Task) -> Double {
 		let error = network.testOnTask(task)
@@ -45,11 +52,8 @@ public struct ChalmersFitnessAgent: FitnessAgent {
 	public let tasks: [Task]
 	
 	// TODO: Test
-	public func seeding() -> () -> GeneticIndividual {
-		return {
-			let chromosome = Chromosome(size: self.learningRuleSize, seed: randomBool)
-			return Individual(chromosome: chromosome)
-		}
+	public func seed() -> Chromosome {
+		return Chromosome(size: self.learningRuleSize, seed: randomBool)
 	}
 	
 	// TODO: Test
@@ -102,12 +106,9 @@ public struct WeightEvolutionFitnessAgent: FitnessAgent {
 	}
 	
 	// TODO: Test
-	public func seeding() -> () -> GeneticIndividual {
+	public func seed() -> Chromosome {
 		let size = geneMap.chromosomeSize
-		return {
-			let chromosome = Chromosome(size: size, seed: randomBool)
-			return Individual(chromosome: chromosome)
-		}
+		return Chromosome(size: size, seed: randomBool)
 	}
 	
 	// TODO: Test
@@ -187,12 +188,9 @@ public struct ExtendedChalmersFitnessAgent: FitnessAgent {
 	}
 	
 	// TODO: Test
-	public func seeding() -> () -> GeneticIndividual {
+	public func seed() -> Chromosome {
 		let size = geneMap.chromosomeSize
-		return {
-			let chromosome = Chromosome(size: size, seed: randomBool)
-			return Individual(chromosome: chromosome)
-		}
+		return Chromosome(size: size, seed: randomBool)
 	}
 	
 	// TODO: Test
