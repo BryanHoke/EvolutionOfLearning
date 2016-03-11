@@ -10,6 +10,6 @@ import Foundation
 
 protocol DataFetcher {
 	
-	
+	func fetchMostFitChromosome() -> Chromosome
 	
 }

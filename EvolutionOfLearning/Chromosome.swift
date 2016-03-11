@@ -84,7 +84,7 @@ extension Chromosome {
 	public mutating func mutateInPlaceWithRate(mutationRate: Double, seed: Int = Int(arc4random())) {
 		var mutationIndices = Set<Int>()
 		srand48(seed)
-		for (index, _) in enumerate() {
+		for index in indices {
 			if drand48() < mutationRate {
 				mutationIndices.insert(index)
 			}

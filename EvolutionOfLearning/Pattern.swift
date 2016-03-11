@@ -10,8 +10,7 @@ import Foundation
 
 public struct Pattern {
 	
-	public static func patternsWithInputVectors(inputVectors: [[Double]], targets: [Double]) -> [Pattern]
-	{
+	public static func patternsWithInputVectors(inputVectors: [[Double]], targets: [Double]) -> [Pattern] {
 		return zip(inputVectors, targets)
 			  .map(Pattern.init)
 	}
