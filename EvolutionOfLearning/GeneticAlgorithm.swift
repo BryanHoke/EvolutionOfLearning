@@ -37,25 +37,8 @@ public struct GeneticAlgorithm {
 	}
 	
 	private func evaluateFitness(inout of population: Population) {
-		let blocks = makeDispatchBlocks(forEvaluating: &population)
-		concurrentlyDispatch(blocks, priority: DISPATCH_QUEUE_PRIORITY_HIGH)
-	}
-	
-	private func makeDispatchBlocks(inout forEvaluating population: Population) -> [dispatch_block_t] {
-		return population.indices.map { index -> dispatch_block_t in
-			self.makeBlockToEvaluateFitness(of: &population[index])
-		}
-	}
-	
-	private func makeBlockToEvaluateFitness(inout of member: Individual) -> dispatch_block_t {
-		return {
-			self.evaluateFitness(of: &member)
-		}
-	}
-	
-	private func evaluateFitness(inout of member: Individual) {
-		let chromosome = member.chromosome
-		member.fitness = fitness(of: chromosome)
+		let evaluator = ConcurrentPopulationEvaluator(fitnessFunc: fitness)
+		evaluator.evaluate(&population)
 	}
 	
 	private func fitness(of chromosome: Chromosome) -> Double {
