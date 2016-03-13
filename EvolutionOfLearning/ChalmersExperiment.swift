@@ -14,6 +14,8 @@ public struct ChalmersExperiment {
 	
 	public var evolutionaryTaskCount: Int
 	
+	public var testTaskCount: Int
+	
 	public func run(forNumberOfTrials numberOfTrials: Int) -> ChalmersExperimentRecord {
 		guard evolutionaryTaskCount > 0 && tasks.count > evolutionaryTaskCount else {
 			preconditionFailure("The number of evolutionary tasks (\(evolutionaryTaskCount) must be less than the total number of tasks (\(tasks.count)")
@@ -26,7 +28,7 @@ public struct ChalmersExperiment {
 			records.append(record)
 		}
 		
-		return ChalmersExperimentRecord(trialRecords: records)
+		return ChalmersExperimentRecord(evolutionaryTaskCount: evolutionaryTaskCount, testTaskCount: testTaskCount, trialRecords: records)
 	}
 	
 	private func runTrial() -> ChalmersTrialRecord {
@@ -35,30 +37,40 @@ public struct ChalmersExperiment {
 	}
 	
 	private func makeTrial() -> ChalmersTrial {
-		
-		let bifurcatedTasks = bifurcate(tasks, evolutionaryTaskCount: evolutionaryTaskCount)
-		return ChalmersTrial(evolutionaryTasks: bifurcatedTasks.evolutionary, testTasks: bifurcatedTasks.test)
+		let selected = selectTasks(from: tasks, evolutionaryTaskCount: evolutionaryTaskCount, testTaskCount: testTaskCount)
+		return ChalmersTrial(
+			evolutionaryTasks: selected.evolutionary,
+			testTasks: selected.test)
 	}
 	
-	private func bifurcate(tasks: [Task], evolutionaryTaskCount count: Int) -> (evolutionary: [Task], test: [Task]) {
+	private func selectTasks(from tasks: [Task], evolutionaryTaskCount: Int, testTaskCount: Int) -> (evolutionary: [Task], test: [Task]) {
 		var tasks = tasks
-		var evolutionaryTasks: [Task] = []
-		
-		for _ in 0..<count {
-			let index = Int(arc4random_uniform(UInt32(tasks.count)))
-			let task = tasks.removeAtIndex(index)
-			evolutionaryTasks.append(task)
-		}
+		let evolutionaryTasks = extractTasks(from: &tasks, count: evolutionaryTaskCount)
+		let testTasks = extractTasks(from: &tasks, count: testTaskCount)
 		
 		assert(evolutionaryTasks.count == evolutionaryTaskCount)
 		assert(tasks.count == self.tasks.count - evolutionaryTaskCount)
 		
-		return (evolutionary: evolutionaryTasks, test: tasks)
+		return (evolutionary: evolutionaryTasks, test: testTasks)
+	}
+	
+	private func extractTasks(inout from tasks: [Task], count: Int) -> [Task] {
+		var extractedTasks: [Task] = []
+		for _ in 0..<count {
+			let index = Int(arc4random_uniform(UInt32(tasks.count)))
+			let task = tasks.removeAtIndex(index)
+			extractedTasks.append(task)
+		}
+		return extractedTasks
 	}
 	
 }
 
 public struct ChalmersExperimentRecord {
+	
+	public var evolutionaryTaskCount: Int
+	
+	public var testTaskCount: Int
 	
 	public var trialRecords: [ChalmersTrialRecord]
 	
