@@ -16,27 +16,29 @@ public struct Evolution {
 		self.populationSize = populationSize
 	}
 	
-	public let numberOfGenerations: Int
+	public var numberOfGenerations: Int
 	
-	public let populationSize: Int
+	public var populationSize: Int
 	
-	public let environment: EvolutionaryEnvironment
+	public var environment: EvolutionaryEnvironment
 	
-	public private(set) var history: [Population] = []
+	public var tasks: [Task] {
+		return environment.tasks
+	}
 	
-	public func run() -> [Population] {
+	public func run() -> EvolutionRecord {
 		var history: [Population] = []
 		let geneticAlgorithm = GeneticAlgorithm(environment: environment, onPopulationEvaluated: { history.append($0) })
 		geneticAlgorithm.run(forNumberOfGenerations: numberOfGenerations)
-		return history
+		return EvolutionRecord(history: history, tasks: tasks)
 	}
 	
 }
 
 public struct EvolutionRecord {
 	
-	let history: [Population]
+	public var history: [Population]
 	
-	let tasks: [Task]
+	public var tasks: [Task]
 	
 }

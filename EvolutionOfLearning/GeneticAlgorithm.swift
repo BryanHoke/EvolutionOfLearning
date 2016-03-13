@@ -14,9 +14,9 @@ public typealias PopulationFitnessFunc = inout Population -> ()
 
 public struct GeneticAlgorithm {
 	
-	public let environment: EvolutionaryEnvironment
+	public var environment: EvolutionaryEnvironment
 	
-	public let onPopulationEvaluated: ((population: Population) -> Void)?
+	public var onPopulationEvaluated: ((population: Population) -> Void)?
 	
 	public func run(forNumberOfGenerations numberOfGenerations: Int) {
 		let initialPopulation = environment.makePopulation()
