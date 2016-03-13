@@ -14,14 +14,14 @@ public protocol ReproductionAgent {
 	
 }
 
-public struct ChalmersReproductionAgent {
+public struct ChalmersReproductionAgent: ReproductionAgent {
 	
-	let elitismCount: Int
-	let mutationRate: Double
-	let crossoverRate: Double
+	public var elitismCount: Int
+	public var mutationRate: Double
+	public var crossoverRate: Double
 	
 	/// - note: Assumes the population is already sorted
-	func reproduce(population: Population) -> Population {
+	public func reproduce(population: Population) -> Population {
 		let newPopulation = nextGenerationPopulation(from: population)
 		assert(newPopulation.count == population.count)
 		return newPopulation
