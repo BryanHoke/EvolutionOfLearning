@@ -16,6 +16,8 @@ public struct ChalmersTrial {
 	
 	public var testTasks: [Task]
 	
+	public var config: ExperimentConfig
+	
 	public func run() -> ChalmersTrialRecord {
 		let evolutionRecord = runEvolution()
 		
@@ -26,9 +28,9 @@ public struct ChalmersTrial {
 	
 	private func runEvolution() -> EvolutionRecord {
 		let fitness = makeFitnessAgent(with: evolutionaryTasks)
-		let reproduction = ChalmersReproductionAgent(elitismCount: 1, mutationRate: 0.01, crossoverRate: 0.8)
-		let environment = Environment(populationSize: 40, fitnessAgent: fitness, reproductionAgent: reproduction)
-		let evolution = Evolution(environment: environment, numberOfGenerations: 1000)
+		let reproduction = makeReproductionAgent()
+		let environment = makeEnvironment(fitness, reproduction: reproduction)
+		let evolution = makeEvolution(environment)
 		return evolution.run()
 	}
 	
@@ -39,7 +41,21 @@ public struct ChalmersTrial {
 	}
 	
 	private func makeFitnessAgent(with tasks: [Task]) -> FitnessAgent {
-		return ChalmersFitnessAgent(learningRuleSize: 35, numberOfTrainingEpochs: 10, tasks: tasks)
+		return ChalmersFitnessAgent(config: config.fitnessConfig, tasks: tasks)
+	}
+	
+	private func makeReproductionAgent() -> ReproductionAgent {
+		return ChalmersReproductionAgent(config: config.geneticAlgorithmConfig)
+	}
+	
+	private func makeEnvironment(fitness: FitnessAgent, reproduction: ReproductionAgent) -> EvolutionaryEnvironment {
+		let populationSize = config.fitnessConfig.populationSize
+		return Environment(populationSize: populationSize, fitnessAgent: fitness, reproductionAgent: reproduction)
+	}
+	
+	private func makeEvolution(environment: EvolutionaryEnvironment) -> Evolution {
+		let generations = config.geneticAlgorithmConfig.numberOfGenerations
+		return Evolution(environment: environment, numberOfGenerations: generations)
 	}
 	
 }

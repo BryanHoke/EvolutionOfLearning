@@ -16,9 +16,19 @@ public protocol ReproductionAgent {
 
 public struct ChalmersReproductionAgent: ReproductionAgent {
 	
-	public var elitismCount: Int
-	public var mutationRate: Double
-	public var crossoverRate: Double
+	public var config: GeneticAlgorithmConfig
+	
+	public var elitismCount: Int {
+		return config.elitismCount
+	}
+	
+	public var mutationRate: Double {
+		return config.mutationRate
+	}
+	
+	public var crossoverRate: Double {
+		return config.crossoverRate
+	}
 	
 	/// - note: Assumes the population is already sorted
 	public func reproduce(population: Population) -> Population {
@@ -31,6 +41,8 @@ public struct ChalmersReproductionAgent: ReproductionAgent {
 		let selectedPopulation = selectPopulation(from: population)
 		return reproducedPopulation(from: selectedPopulation)
 	}
+	
+	// MARK: - Selection
 	
 	private func selectPopulation(from population: Population) -> Population {
 		var selectedPopulation = Population()
@@ -50,6 +62,8 @@ public struct ChalmersReproductionAgent: ReproductionAgent {
 		let selectionSize = population.count - elitismCount
 		return population.rouletteWheelSelection(newPopulationSize: selectionSize)
 	}
+	
+	// MARK: - Reproduction
 	
 	private func reproducedPopulation(from population: Population) -> Population {
 		var newPopulation = crossoverPopulation(from: population)

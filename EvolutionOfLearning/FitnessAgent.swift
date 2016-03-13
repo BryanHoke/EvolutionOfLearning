@@ -37,17 +37,15 @@ extension FitnessAgent {
 
 public struct ChalmersFitnessAgent: FitnessAgent {
 	
-	public init(learningRuleSize: Int, numberOfTrainingEpochs: Int, tasks: [Task]) {
-		self.learningRuleSize = learningRuleSize
-		self.numberOfTrainingEpochs = numberOfTrainingEpochs
-		self.tasks = tasks
+	public var config: FitnessConfig
+	
+	public var learningRuleSize: Int {
+		return config.learningRuleSize
 	}
 	
-	/// Preferred value is `35`.
-	public var learningRuleSize: Int
-	
-	/// Preferred value is `10`.
-	public var numberOfTrainingEpochs: Int
+	public var numberOfTrainingEpochs: Int {
+		return config.numberOfTrainingEpochs
+	}
 	
 	public var tasks: [Task]
 	

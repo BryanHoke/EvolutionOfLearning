@@ -12,13 +12,11 @@ public struct ChalmersExperiment {
 	
 	public var tasks: [Task]
 	
-	public var evolutionaryTaskCount: Int
-	
-	public var testTaskCount: Int
+	public var config: ExperimentConfig
 	
 	public func run(forNumberOfTrials numberOfTrials: Int) -> ChalmersExperimentRecord {
-		guard evolutionaryTaskCount > 0 && tasks.count > evolutionaryTaskCount else {
-			preconditionFailure("The number of evolutionary tasks (\(evolutionaryTaskCount) must be less than the total number of tasks (\(tasks.count)")
+		guard config.evolutionaryTaskCount > 0 && tasks.count > config.evolutionaryTaskCount else {
+			preconditionFailure("The number of evolutionary tasks (\(config.evolutionaryTaskCount) must be less than the total number of tasks (\(tasks.count)")
 		}
 		
 		var records: [ChalmersTrialRecord] = []
@@ -28,7 +26,7 @@ public struct ChalmersExperiment {
 			records.append(record)
 		}
 		
-		return ChalmersExperimentRecord(evolutionaryTaskCount: evolutionaryTaskCount, testTaskCount: testTaskCount, trialRecords: records)
+		return ChalmersExperimentRecord(evolutionaryTaskCount: config.evolutionaryTaskCount, testTaskCount: config.testTaskCount, trialRecords: records)
 	}
 	
 	private func runTrial() -> ChalmersTrialRecord {
@@ -37,10 +35,11 @@ public struct ChalmersExperiment {
 	}
 	
 	private func makeTrial() -> ChalmersTrial {
-		let selected = selectTasks(from: tasks, evolutionaryTaskCount: evolutionaryTaskCount, testTaskCount: testTaskCount)
+		let selected = selectTasks(from: tasks, evolutionaryTaskCount: config.evolutionaryTaskCount, testTaskCount: config.testTaskCount)
 		return ChalmersTrial(
 			evolutionaryTasks: selected.evolutionary,
-			testTasks: selected.test)
+			testTasks: selected.test,
+			config: config)
 	}
 	
 	private func selectTasks(from tasks: [Task], evolutionaryTaskCount: Int, testTaskCount: Int) -> (evolutionary: [Task], test: [Task]) {
