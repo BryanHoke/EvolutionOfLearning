@@ -44,16 +44,16 @@ public struct ChalmersFitnessAgent: FitnessAgent {
 	}
 	
 	/// Preferred value is `35`.
-	public let learningRuleSize: Int
+	public var learningRuleSize: Int
 	
 	/// Preferred value is `10`.
-	public let numberOfTrainingEpochs: Int
+	public var numberOfTrainingEpochs: Int
 	
-	public let tasks: [Task]
+	public var tasks: [Task]
 	
 	// TODO: Test
 	public func seed() -> Chromosome {
-		return Chromosome(size: self.learningRuleSize, seed: randomBool)
+		return Chromosome(size: learningRuleSize, seed: randomBool)
 	}
 	
 	// TODO: Test
