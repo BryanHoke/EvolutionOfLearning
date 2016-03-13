@@ -26,7 +26,7 @@ public struct ChalmersExperiment {
 			records.append(record)
 		}
 		
-		return ChalmersExperimentRecord(evolutionaryTaskCount: config.evolutionaryTaskCount, testTaskCount: config.testTaskCount, trialRecords: records)
+		return ChalmersExperimentRecord(config: config, trialRecords: records)
 	}
 	
 	private func runTrial() -> ChalmersTrialRecord {
@@ -67,9 +67,7 @@ public struct ChalmersExperiment {
 
 public struct ChalmersExperimentRecord {
 	
-	public var evolutionaryTaskCount: Int
-	
-	public var testTaskCount: Int
+	public var config: ExperimentConfig
 	
 	public var trialRecords: [ChalmersTrialRecord]
 	
