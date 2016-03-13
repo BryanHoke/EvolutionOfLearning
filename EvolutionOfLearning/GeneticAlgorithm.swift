@@ -18,16 +18,13 @@ public struct GeneticAlgorithm {
 	
 	public let onPopulationEvaluated: ((population: Population) -> Void)?
 	
-	public func run(forGenerations numberOfGenerations: Int, populationSize: Int, initialPopulation: Population? = nil) {
-		var population = initialPopulation ?? makePopulation(size: populationSize)
-		runGenerations(of: &population, numberOfGenerations: numberOfGenerations)
+	public func run(forGenerations numberOfGenerations: Int) {
+		let initialPopulation = environment.makePopulation()
+		runGenerations(of: initialPopulation, numberOfGenerations: numberOfGenerations)
 	}
 	
-	private func makePopulation(size size: Int) -> Population {
-		return environment.makePopulation(size: size)
-	}
-	
-	private func runGenerations(inout of population: Population, numberOfGenerations: Int) {
+	private func runGenerations(of population: Population, numberOfGenerations: Int) {
+		var population = population
 		for _ in 0..<numberOfGenerations {
 			runGeneration(of: &population)
 		}

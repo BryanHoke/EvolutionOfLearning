@@ -27,7 +27,7 @@ public struct Evolution {
 	public func run() -> [Population] {
 		var history: [Population] = []
 		let geneticAlgorithm = GeneticAlgorithm(environment: environment, onPopulationEvaluated: { history.append($0) })
-		geneticAlgorithm.run(forGenerations: numberOfGenerations, populationSize: populationSize)
+		geneticAlgorithm.run(forGenerations: numberOfGenerations)
 		return history
 	}
 	

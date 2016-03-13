@@ -13,7 +13,7 @@ public typealias TaskFitnessFunc = (Chromosome, Task) -> Double
 
 public protocol EvolutionaryEnvironment {
 	
-	func makePopulation(size size: Int) -> Population
+	func makePopulation() -> Population
 	
 	func fitness(of chromosome: Chromosome) -> Double
 	
@@ -22,13 +22,15 @@ public protocol EvolutionaryEnvironment {
 }
 
 public struct Environment: EvolutionaryEnvironment {
+	
+	let populationSize: Int
 
 	let fitnessAgent: FitnessAgent
 	
 	let reproductionAgent: ReproductionAgent
 	
-	public func makePopulation(size size: Int) -> Population {
-		return Population(size: size, seed: { () -> Individual in
+	public func makePopulation() -> Population {
+		return Population(size: populationSize, seed: { () -> Individual in
 			Individual(chromosome: self.fitnessAgent.seed())
 		})
 	}
