@@ -8,15 +8,7 @@
 
 import Foundation
 
-public struct LearningTestResult {
-	
-	let chromosome: Chromosome
-	
-	let tasks: [Task]
-	
-	let fitness: Double
-	
-}
+
 
 public struct LearningTest {
 	
@@ -24,10 +16,20 @@ public struct LearningTest {
 	
 	let fetcher: DataFetcher
 	
-	func computeTestFitness() -> LearningTestResult {
+	func computeTestFitness() -> LearningTestRecord {
 		let chromosome = fetcher.fetchMostFitChromosome()
 		let fitness = fitnessAgent.fitness(of: chromosome)
-		return LearningTestResult(chromosome: chromosome, tasks: fitnessAgent.tasks, fitness: fitness)
+		return LearningTestRecord(chromosome: chromosome, fitness: fitness, tasks: fitnessAgent.tasks)
 	}
+	
+}
+
+public struct LearningTestRecord {
+	
+	let chromosome: Chromosome
+	
+	let fitness: Double
+	
+	let tasks: [Task]
 	
 }
