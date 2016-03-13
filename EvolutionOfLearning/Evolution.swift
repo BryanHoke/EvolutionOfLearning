@@ -10,15 +10,12 @@ import Foundation
 
 public struct Evolution {
 	
-	public init(environment: EvolutionaryEnvironment, numberOfGenerations: Int, populationSize: Int) {
+	public init(environment: EvolutionaryEnvironment, numberOfGenerations: Int) {
 		self.environment = environment
 		self.numberOfGenerations = numberOfGenerations
-		self.populationSize = populationSize
 	}
 	
 	public var numberOfGenerations: Int
-	
-	public var populationSize: Int
 	
 	public var environment: EvolutionaryEnvironment
 	
