@@ -14,6 +14,8 @@ public struct ExperimentConfig {
 	
 	public var testTaskCount = 10
 	
+	public var environmentConfig = EnvironmentConfig()
+	
 	public var fitnessConfig = FitnessConfig()
 	
 	public var evolutionConfig = EvolutionConfig()
@@ -22,11 +24,15 @@ public struct ExperimentConfig {
 	
 }
 
+public struct EnvironmentConfig {
+	
+	public var populationSize = 40
+	
+}
+
 public struct FitnessConfig {
 	
 	public var learningRuleSize = 35
-	
-	public var populationSize = 40
 	
 	public var numberOfTrainingEpochs = 10
 	
