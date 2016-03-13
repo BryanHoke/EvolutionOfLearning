@@ -18,6 +18,8 @@ public struct ExperimentConfig {
 	
 	public var geneticAlgorithmConfig = GeneticAlgorithmConfig()
 	
+	public var reproductionConfig = ReproductionConfig()
+	
 }
 
 public struct FitnessConfig {
@@ -32,12 +34,16 @@ public struct FitnessConfig {
 
 public struct GeneticAlgorithmConfig {
 	
+	public var numberOfGenerations = 1000
+	
+}
+
+public struct ReproductionConfig {
+	
 	public var elitismCount = 1
 	
 	public var crossoverRate = 0.8
 	
 	public var mutationRate = 0.01
-	
-	public var numberOfGenerations = 1000
 	
 }

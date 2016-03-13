@@ -45,7 +45,7 @@ public struct ChalmersTrial {
 	}
 	
 	private func makeReproductionAgent() -> ReproductionAgent {
-		return ChalmersReproductionAgent(config: config.geneticAlgorithmConfig)
+		return ChalmersReproductionAgent(config: config.reproductionConfig)
 	}
 	
 	private func makeEnvironment(fitness: FitnessAgent, reproduction: ReproductionAgent) -> EvolutionaryEnvironment {

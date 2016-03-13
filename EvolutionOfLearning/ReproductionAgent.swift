@@ -16,7 +16,7 @@ public protocol ReproductionAgent {
 
 public struct ChalmersReproductionAgent: ReproductionAgent {
 	
-	public var config: GeneticAlgorithmConfig
+	public var config: ReproductionConfig
 	
 	public var elitismCount: Int {
 		return config.elitismCount
