@@ -51,17 +51,3 @@ public struct ChalmersTrialRecord {
 	public var learningTestRecord: LearningTestRecord
 	
 }
-
-// TODO: Relocate this when needed
-private func bifurcate(tasks: [Task], evolutionaryTaskCount count: Int) -> (evolutionary: [Task], test: [Task]) {
-	var tasks = tasks
-	var evolutionaryTasks: [Task] = []
-	
-	for _ in 0..<count {
-		let index = Int(arc4random_uniform(UInt32(tasks.count)))
-		let task = tasks.removeAtIndex(index)
-		evolutionaryTasks.append(task)
-	}
-	
-	return (evolutionary: evolutionaryTasks, test: tasks)
-}
