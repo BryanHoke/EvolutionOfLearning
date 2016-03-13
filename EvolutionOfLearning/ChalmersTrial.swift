@@ -54,7 +54,7 @@ public struct ChalmersTrial {
 	}
 	
 	private func makeEvolution(environment: EvolutionaryEnvironment) -> Evolution {
-		let generations = config.geneticAlgorithmConfig.numberOfGenerations
+		let generations = config.evolutionConfig.numberOfGenerations
 		return Evolution(environment: environment, numberOfGenerations: generations)
 	}
 	

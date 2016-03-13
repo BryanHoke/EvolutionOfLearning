@@ -16,7 +16,7 @@ public struct ExperimentConfig {
 	
 	public var fitnessConfig = FitnessConfig()
 	
-	public var geneticAlgorithmConfig = GeneticAlgorithmConfig()
+	public var evolutionConfig = EvolutionConfig()
 	
 	public var reproductionConfig = ReproductionConfig()
 	
@@ -32,7 +32,7 @@ public struct FitnessConfig {
 	
 }
 
-public struct GeneticAlgorithmConfig {
+public struct EvolutionConfig {
 	
 	public var numberOfGenerations = 1000
 	
