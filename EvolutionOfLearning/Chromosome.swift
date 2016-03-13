@@ -8,13 +8,6 @@
 
 import Foundation
 
-public typealias MutationOperator = Chromosome -> Chromosome
-
-public typealias RecombinationOperator = (Chromosome, Chromosome) -> Chromosome
-
-public typealias CrossoverOperator = (Chromosome, Chromosome) -> (Chromosome, Chromosome)
-
-
 public struct Chromosome {
 	
 	public init(genes: [Bool]) {
@@ -155,9 +148,9 @@ extension Chromosome {
 	
 }
 
-// MARK: - Type Methods
+// MARK: - GeneticOperating
 
-extension Chromosome {
+extension Chromosome: GeneticOperating {
 	
 	public static func mutation(mutationRate: Double) -> Chromosome -> Chromosome {
 		return { chromosome in
