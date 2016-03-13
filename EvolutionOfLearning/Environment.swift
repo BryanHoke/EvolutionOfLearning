@@ -25,7 +25,11 @@ public protocol EvolutionaryEnvironment {
 
 public struct Environment: EvolutionaryEnvironment {
 	
-	public var populationSize: Int
+	public var config: EnvironmentConfig
+	
+	public var populationSize: Int {
+		return config.populationSize
+	}
 
 	public var fitnessAgent: FitnessAgent
 	

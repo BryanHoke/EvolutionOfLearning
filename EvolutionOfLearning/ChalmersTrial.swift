@@ -49,8 +49,7 @@ public struct ChalmersTrial {
 	}
 	
 	private func makeEnvironment(fitness: FitnessAgent, reproduction: ReproductionAgent) -> EvolutionaryEnvironment {
-		let populationSize = config.environmentConfig.populationSize
-		return Environment(populationSize: populationSize, fitnessAgent: fitness, reproductionAgent: reproduction)
+		return Environment(config: config.environmentConfig, fitnessAgent: fitness, reproductionAgent: reproduction)
 	}
 	
 	private func makeEvolution(environment: EvolutionaryEnvironment) -> Evolution {
