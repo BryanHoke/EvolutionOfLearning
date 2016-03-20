@@ -67,7 +67,7 @@ extension Population {
 	}
 	
 	/// Returns a `Population` containing the top *elitistCount* members of `self`, as indicated by fitness.
-	public func elitismSelectionWithCount(elitistCount: Int) -> Population {
+	public func elitistSelection(using elitistCount: Int) -> Population {
 		var elitistPopulation = Population()
 		for index in 0..<elitistCount {
 			elitistPopulation.append(self[index])

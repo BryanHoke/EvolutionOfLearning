@@ -55,7 +55,7 @@ public struct ChalmersReproductionAgent: ReproductionAgent {
 	}
 	
 	private func elitistSelection(from population: Population) -> Population {
-		return population.elitismSelectionWithCount(elitismCount)
+		return population.elitistSelection(using: elitismCount)
 	}
 	
 	private func rouletteWheelSelection(from population: Population) -> Population {
