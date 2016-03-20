@@ -15,7 +15,7 @@ public typealias IndividualPair = (Individual, Individual)
 ///
 public protocol GeneticIndividual {
 	
-	var chromosome: Chromosome { get }
+	var chromosome: Chromosome { get set }
 	
 	var fitness: Double { get set }
 	
@@ -63,7 +63,7 @@ public struct Individual: GeneticIndividual {
 	}
 	
 	///
-	public let chromosome: Chromosome
+	public var chromosome: Chromosome
 	
 	///
 	public var fitness: Double = 0
