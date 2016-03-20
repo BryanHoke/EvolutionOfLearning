@@ -32,7 +32,8 @@ public struct GeneticAlgorithm {
 	
 	private func evolveGeneration(inout of population: Population) {
 		evaluateFitness(of: &population)
-		commit(&population)
+		sort(&population)
+		commit(population)
 		reproduce(&population)
 	}
 	
@@ -45,8 +46,11 @@ public struct GeneticAlgorithm {
 		return environment.fitness(of: chromosome)
 	}
 	
-	private func commit(inout population: Population) {
+	private func sort(inout population: Population) {
 		population.members.sortInPlace(>)
+	}
+	
+	private func commit(population: Population) {
 		onPopulationEvaluated?(population: population)
 	}
 	
