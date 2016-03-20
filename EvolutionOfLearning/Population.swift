@@ -48,6 +48,7 @@ extension Population {
 		return members.map { $0.fitness }.reduce(0, combine: +)
 	}
 	
+	/// The average fitness of the members in `self`.
 	public var averageFitness: Double {
 		return totalFitness / Double(count)
 	}
@@ -58,16 +59,14 @@ extension Population {
 
 extension Population {
 	
+	/// Applies a mutating block to each member in `self`.
 	public mutating func visitMembers(using block: (inout member: Individual) -> Void) {
 		for i in indices {
 			block(member: &members[i])
 		}
 	}
 	
-	/// Selects the top *n* members of the population ranked by fitness and returns them in a new population.
-	///
-	/// - parameter elitistCount: The number of most-fit individuals to selected.
-	/// - returns: A new `Population` containing the top *n* fitness-ranked members of `self` (where *n* is equal to `elitistCount`).
+	/// Returns a new `Population` containing the top *elitistCount* members of `self`, as indicated by fitness.
 	public func elitismSelectionWithCount(elitistCount: Int) -> Population {
 		var elitistPopulation = Population()
 		for index in 0..<elitistCount {
@@ -76,7 +75,7 @@ extension Population {
 		return elitistPopulation
 	}
 	
-	/// Creates a new `Population` by applying *crossoverOperator* to each of this `Population`'s `pairs`.
+	/// Returns a new `Population` created by applying *crossoverOperator* to each pair  in `self`.
 	public func reproduceWithCrossover(crossoverOperator: CrossoverOperator) -> Population {
 		var offspringPopulation = Population()
 		
@@ -88,13 +87,13 @@ extension Population {
 		return offspringPopulation
 	}
 
-	/// Creates a new `Population` by applying *mutationOperator* to each of this `Population`'s `members`.
+	/// Returns a new `Population` created by applying *mutationOperator* to each member in `self`.
 	public func reproduceWithMutation(mutationOperator: MutationOperator) -> Population {
 		let mutatedMembers = map { mutate($0, using: mutationOperator) }
 		return Population(members: mutatedMembers)
 	}
 	
-	/// Creates a new `Population` by applying *recombinationOperator* to each of this `Population`'s `pairs`.
+	/// Creates a new `Population` by applying *recombinationOperator* to each pair of members in `self`.
 	public func reproduceWithRecombination(recombinationOperator: RecombinationOperator) -> Population {
 		let recombinedMembers = pairs.map { pair in
 			recombine(pair, using: recombinationOperator)
@@ -103,7 +102,7 @@ extension Population {
 		return Population(members: recombinedMembers)
 	}
 	
-	/// Returns a new `Population` of a given size by selecting individuals from this population using the "roulette wheel" technique, optionally excluding certain members of this population from this process.
+	/// Returns a new `Population` of a given size by selecting individuals from `self` using "roulette wheel" selection, optionally excluding certain members of this population from this process.
 	public func rouletteWheelSelection(newPopulationSize newPopSize: Int? = nil, excludedIndices: Set<Int> = Set<Int>()) -> Population {
 		var includedPopulation = self
 		
@@ -124,7 +123,9 @@ extension Population {
 		return selectedPopulation
 	}
 	
-	/// Selects and returns an individual in this `Population` using the "roulette wheel" technique, which performs selection-with-replacement where the probability of an individual being selected is linearly proportional to its fitness.
+	/// Returns an individual selected from `self` using roulette wheel selection.
+	///
+	/// Roulette wheel selection is a replacing selection where the probability of an individual being selected is linearly proportional to its fitness.
 	public func rouletteWheelSelect() -> Individual {
 		// Seed the random double generator (once)
 		var onceToken: dispatch_once_t = 0
@@ -148,7 +149,7 @@ extension Population {
 		return selectionIndividual
 	}
 	
-	/// Returns a `Population` instance comprised of the members of this population
+	/// Returns a `Population` by selecting the members in `self` at the specified *indices*.
 	public func populationWithSelectionIndices(indices: Set<Int>) -> Population {
 		var selectedPopulation = Population()
 		
@@ -159,7 +160,7 @@ extension Population {
 		return selectedPopulation
 	}
 	
-	/// Returns a `Population` instance comprised of this population's members, excluding the members at the specified indices.
+	/// Returns a `Population` instance comprised of `self`'s `members`, excluding the members at the specified indices.
 	///
 	/// - param indices: The indices of the `Individuals` to exclude from the returned `Population`.
 	public func populationWithExcludedIndices(indices: Set<Int>) -> Population {
@@ -171,7 +172,7 @@ extension Population {
 		return self.populationWithSelectionIndices(selectionIndices)
 	}
 	
-	/// Selects a subset of the population, where all members have an equal chance of being selected.
+	/// Returns a Population containing *count* members uniformly selected from `self`.
 	///
 	/// - parameter count: The number of members to select.
 	public func populationWithUniformSelection(count: Int) -> Population {
@@ -187,6 +188,7 @@ extension Population {
 		return newPopulation
 	}
 	
+	/// Returns a population by partitioning `self` using *brancSelector* and then combining the partitions using *branchCombine*.
 	public func selectionBranch(branchSelector: Population -> Set<Int>, branchCombine: (selected: Population, unselected: Population) -> (Population)) -> Population {
 		let selectionIndices = branchSelector(self)
 		let selectedPopulation = self.populationWithSelectionIndices(selectionIndices)
