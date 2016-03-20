@@ -48,6 +48,12 @@ public func recombine(pair: IndividualPair, using `operator`: RecombinationOpera
 	return offspring
 }
 
+public func clone(individual: Individual) -> Individual {
+	var offspring = Individual(chromosome: individual.chromosome)
+	offspring.inheritParentID(of: individual)
+	return offspring
+}
+
 ///
 public struct Individual: GeneticIndividual {
 	
@@ -70,6 +76,10 @@ public struct Individual: GeneticIndividual {
 	
 	///
 	public private(set) var parentID2: NSUUID?
+	
+	public mutating func inheritParentID(of individual: Individual) {
+		parentID1 = individual.id
+	}
 	
 	public mutating func inhereritParentIDs(of pair: IndividualPair) {
 		parentID1 = pair.0.id
