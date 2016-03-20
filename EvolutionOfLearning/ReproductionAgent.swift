@@ -14,6 +14,9 @@ public protocol ReproductionAgent {
 	
 }
 
+/// Reproduces a `Population` using the methodology of Chalmers's experiment.
+///
+/// Each genome probabilistically makes copies of itself using roulette wheel selection. This yields a new population, `crossoverRate`% of which is subject to two-point crossover, while the remaining members reproduce by cloning. Elitist selection is used for the top `elitismCount` members. In the resulting population, each gene has a `mutationRate`% chance of mutation
 public struct ChalmersReproductionAgent: ReproductionAgent {
 	
 	public var config: ReproductionConfig
@@ -32,30 +35,24 @@ public struct ChalmersReproductionAgent: ReproductionAgent {
 	
 	/// - note: Assumes the population is already sorted
 	public func reproduce(population: Population) -> Population {
-		let newPopulation = nextGenerationPopulation(from: population)
+		let elites = elitistSelection(from: population)
+		
+		let selected = rouletteWheelSelection(from: population)
+		let crossover = crossoverPopulation(from: selected)
+		
+		var newPopulation = elites + crossover
+		mutate(&newPopulation)
+		
 		assert(newPopulation.count == population.count)
 		return newPopulation
 	}
 	
-	private func nextGenerationPopulation(from population: Population) -> Population {
-		let selectedPopulation = selectPopulation(from: population)
-		return reproducedPopulation(from: selectedPopulation)
-	}
-	
 	// MARK: - Selection
 	
-	private func selectPopulation(from population: Population) -> Population {
-		var selectedPopulation = Population()
-		selectedPopulation.members.reserveCapacity(population.count)
-		
-		selectedPopulation += elitistSelection(from: population)
-		selectedPopulation += rouletteWheelSelection(from: population)
-		
-		return selectedPopulation
-	}
-	
 	private func elitistSelection(from population: Population) -> Population {
-		return population.elitistSelection(using: elitismCount)
+		return population
+			.elitistSelection(using: elitismCount)
+			.reproduceWithCloning()
 	}
 	
 	private func rouletteWheelSelection(from population: Population) -> Population {
@@ -65,27 +62,23 @@ public struct ChalmersReproductionAgent: ReproductionAgent {
 	
 	// MARK: - Reproduction
 	
-	private func reproducedPopulation(from population: Population) -> Population {
-		var newPopulation = crossoverPopulation(from: population)
-		newPopulation = mutatedPopulation(from: newPopulation)
-		return newPopulation
-	}
-	
 	private func crossoverPopulation(from population: Population) -> Population {
 		// Individuals are selected for crossover uniformly
-		let crossoverSize = Int(Double(population.count) * crossoverRate)
+		let crossoverSize = Int(Double(population.count + elitismCount) * crossoverRate)
 		let branchSelector = Population.uniformSelectionIndices(crossoverSize)
 		
-		// Perform crossover on portion of population and cloning on the rest
+		// Perform crossover on selected subpopulation and cloning on the rest
 		return population.selectionBranch(branchSelector) {
 			(selected, unselected) -> Population in
 			selected.reproduceWithCrossover(Chromosome.twoPointCrossover)
-				+ unselected
+				+ unselected.reproduceWithCloning()
 		}
 	}
 	
-	private func mutatedPopulation(from population: Population) -> Population {
-		return population.reproduceWithMutation(Chromosome.mutation(mutationRate))
+	private func mutate(inout population: Population) {
+		population.visitMembers { (inout member: Individual) in
+			member.chromosome.mutateInPlaceWithRate(self.mutationRate)
+		}
 	}
 	
 }
