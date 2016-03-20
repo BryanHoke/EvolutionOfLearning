@@ -66,7 +66,7 @@ extension Population {
 		}
 	}
 	
-	/// Returns a new `Population` containing the top *elitistCount* members of `self`, as indicated by fitness.
+	/// Returns a `Population` containing the top *elitistCount* members of `self`, as indicated by fitness.
 	public func elitismSelectionWithCount(elitistCount: Int) -> Population {
 		var elitistPopulation = Population()
 		for index in 0..<elitistCount {
@@ -75,7 +75,7 @@ extension Population {
 		return elitistPopulation
 	}
 	
-	/// Returns a new `Population` created by applying *crossoverOperator* to each pair  in `self`.
+	/// Returns a `Population` created by applying *crossoverOperator* to each pair of members in `self`.
 	public func reproduceWithCrossover(crossoverOperator: CrossoverOperator) -> Population {
 		var offspringPopulation = Population()
 		
@@ -87,19 +87,25 @@ extension Population {
 		return offspringPopulation
 	}
 
-	/// Returns a new `Population` created by applying *mutationOperator* to each member in `self`.
+	/// Returns a `Population` created by applying *mutationOperator* to each member in `self`.
 	public func reproduceWithMutation(mutationOperator: MutationOperator) -> Population {
 		let mutatedMembers = map { mutate($0, using: mutationOperator) }
 		return Population(members: mutatedMembers)
 	}
 	
-	/// Creates a new `Population` by applying *recombinationOperator* to each pair of members in `self`.
+	/// Return a new `Population` created by applying *recombinationOperator* to each pair of members in `self`.
 	public func reproduceWithRecombination(recombinationOperator: RecombinationOperator) -> Population {
 		let recombinedMembers = pairs.map { pair in
 			recombine(pair, using: recombinationOperator)
 		}
 		
 		return Population(members: recombinedMembers)
+	}
+	
+	/// Returnes a `Population` created by cloning the members in `self`.
+	public func reproduceWithCloning() -> Population {
+		let clonedMembers = map(clone)
+		return Population(members: clonedMembers)
 	}
 	
 	/// Returns a new `Population` of a given size by selecting individuals from `self` using "roulette wheel" selection, optionally excluding certain members of this population from this process.
@@ -160,7 +166,7 @@ extension Population {
 		return selectedPopulation
 	}
 	
-	/// Returns a `Population` instance comprised of `self`'s `members`, excluding the members at the specified indices.
+	/// Returns a `Population` by selecting the members in `self` *not* at the specified *indices*.
 	///
 	/// - param indices: The indices of the `Individuals` to exclude from the returned `Population`.
 	public func populationWithExcludedIndices(indices: Set<Int>) -> Population {
