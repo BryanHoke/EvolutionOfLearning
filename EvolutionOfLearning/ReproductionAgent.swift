@@ -76,9 +76,7 @@ public struct ChalmersReproductionAgent: ReproductionAgent {
 	}
 	
 	private func mutate(inout population: Population) {
-		population.visitMembers { (inout member: Individual) in
-			member.chromosome.mutateInPlaceWithRate(self.mutationRate)
-		}
+		population.mutateInPlace(using: mutationRate)
 	}
 	
 }

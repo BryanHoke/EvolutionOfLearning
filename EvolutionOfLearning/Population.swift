@@ -66,6 +66,13 @@ extension Population {
 		}
 	}
 	
+	/// Mutates the members in `self` using a specified *mutationRate*.
+	public mutating func mutateInPlace(using mutationRate: Double) {
+		visitMembers { (inout member: Individual) in
+			member.chromosome.mutateInPlaceWithRate(mutationRate)
+		}
+	}
+	
 	/// Returns a `Population` containing the top *elitistCount* members of `self`, as indicated by fitness.
 	public func elitistSelection(using elitistCount: Int) -> Population {
 		var elitistPopulation = Population()
