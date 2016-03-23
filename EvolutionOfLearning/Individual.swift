@@ -55,7 +55,15 @@ public func clone(individual: Individual) -> Individual {
 }
 
 ///
-public struct Individual: GeneticIndividual {
+public struct Individual: GeneticIndividual, Comparable {
+	
+	public static func crossover(pair: IndividualPair, using `operator`: CrossoverOperator) -> IndividualPair {
+		let offspringChromosomes = `operator`(pair.0.chromosome, pair.1.chromosome)
+		var offspring = (Individual(chromosome: offspringChromosomes.0), Individual(chromosome: offspringChromosomes.1))
+		offspring.0.inhereritParentIDs(of: pair)
+		offspring.1.inhereritParentIDs(of: pair)
+		return offspring
+	}
 	
 	///
 	public init(chromosome: Chromosome) {
@@ -86,11 +94,21 @@ public struct Individual: GeneticIndividual {
 		parentID2 = pair.1.id
 	}
 	
+	public func clone() -> Individual {
+		var offspring = Individual(chromosome: chromosome)
+		offspring.inheritParentID(of: self)
+		return offspring
+	}
+	
 }
 
 
 public func <(left: Individual, right: Individual) -> Bool {
 	return left.fitness < right.fitness
+}
+
+public func ==(left: Individual, right: Individual) -> Bool {
+	return left.fitness == right.fitness
 }
 
 public func >(left: Individual, right: Individual) -> Bool {

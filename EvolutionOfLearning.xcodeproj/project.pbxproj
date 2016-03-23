@@ -97,6 +97,10 @@
 		4AF11C111B4092EB00AED909 /* Population.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF11C101B4092EB00AED909 /* Population.swift */; };
 		4AF11C121B4092EB00AED909 /* Population.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF11C101B4092EB00AED909 /* Population.swift */; };
 		4AF21B101C6B89F200E462D3 /* FitnessAgentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF21B0F1C6B89F200E462D3 /* FitnessAgentTests.swift */; };
+		4AF383231CA25E6E006D13D4 /* PopulationOperating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF383221CA25E6E006D13D4 /* PopulationOperating.swift */; };
+		4AF383241CA25E72006D13D4 /* PopulationOperating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF383221CA25E6E006D13D4 /* PopulationOperating.swift */; };
+		4AF383261CA26237006D13D4 /* PopulationOperator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF383251CA26237006D13D4 /* PopulationOperator.swift */; };
+		4AF383271CA26237006D13D4 /* PopulationOperator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF383251CA26237006D13D4 /* PopulationOperator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -175,6 +179,8 @@
 		4AF11C0C1B3F036C00AED909 /* Individual.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Individual.swift; sourceTree = "<group>"; };
 		4AF11C101B4092EB00AED909 /* Population.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Population.swift; sourceTree = "<group>"; };
 		4AF21B0F1C6B89F200E462D3 /* FitnessAgentTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FitnessAgentTests.swift; sourceTree = "<group>"; };
+		4AF383221CA25E6E006D13D4 /* PopulationOperating.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopulationOperating.swift; sourceTree = "<group>"; };
+		4AF383251CA26237006D13D4 /* PopulationOperator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopulationOperator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -262,6 +268,8 @@
 				4A3C34251C94ED4E00DCE87A /* PopulationEvaluating.swift */,
 				4A3C34281C9603EE00DCE87A /* GeneticOperating.swift */,
 				4AF11C101B4092EB00AED909 /* Population.swift */,
+				4AF383221CA25E6E006D13D4 /* PopulationOperating.swift */,
+				4AF383251CA26237006D13D4 /* PopulationOperator.swift */,
 				4AF11C0C1B3F036C00AED909 /* Individual.swift */,
 				4A50A8331B30F9F10004BC5D /* Chromosome.swift */,
 			);
@@ -506,6 +514,7 @@
 				4A620D181C8D40BB0084B0A2 /* Evolution.swift in Sources */,
 				4A13A0D51B64404D0047E858 /* SupervisedLearningRule.swift in Sources */,
 				4A2EE7A21BEFF467007D17FD /* GlobalFunctions.swift in Sources */,
+				4AF383231CA25E6E006D13D4 /* PopulationOperating.swift in Sources */,
 				4AF11C111B4092EB00AED909 /* Population.swift in Sources */,
 				4A9B76C81B55576800BE653D /* CustomOperators.swift in Sources */,
 				4A7E06961B5C52AD0000E561 /* Environment.swift in Sources */,
@@ -530,6 +539,7 @@
 				4AE6209F1B39A1D60033980F /* GeneticAlgorithm.swift in Sources */,
 				4A7A1DCC1B9FF4AE001F5C18 /* ChalmersExperiment.swift in Sources */,
 				4A0583311C92A19400F3D0E0 /* ExperimentConfig.swift in Sources */,
+				4AF383261CA26237006D13D4 /* PopulationOperator.swift in Sources */,
 				4A1BE8BA1C8FF33900790B3A /* LearningTest.swift in Sources */,
 				4A2EE79F1BEE8DA4007D17FD /* FitnessAgent.swift in Sources */,
 				4A02D6511C7E0A1B004D98DF /* DocumentWindowController.swift in Sources */,
@@ -553,6 +563,7 @@
 				4A2F11641B5DD7530055AFF8 /* DataManager.swift in Sources */,
 				4A7E06971B5C52AD0000E561 /* Environment.swift in Sources */,
 				4AF11C0E1B3F036C00AED909 /* Individual.swift in Sources */,
+				4AF383241CA25E72006D13D4 /* PopulationOperating.swift in Sources */,
 				4AE620A01B39A1D60033980F /* GeneticAlgorithm.swift in Sources */,
 				4AD3F53F1B33097C000E9BA4 /* EvolutionOfLearningGeneticAlgorithmTests.swift in Sources */,
 				4AF11C121B4092EB00AED909 /* Population.swift in Sources */,
@@ -577,6 +588,7 @@
 				4A2EE7A61BEFF4B2007D17FD /* FeedForwardNeuralNetwork.swift in Sources */,
 				4A12524A1BA85EC60096A717 /* ManagedObjects.swift in Sources */,
 				4A0583321C92A19400F3D0E0 /* ExperimentConfig.swift in Sources */,
+				4AF383271CA26237006D13D4 /* PopulationOperator.swift in Sources */,
 				4A05832C1C928C4000F3D0E0 /* GeneMapTests.swift in Sources */,
 				4A447FF61C63A9A100C5BDF0 /* IndexedDictionary.swift in Sources */,
 				4A620D101C8B75030084B0A2 /* TaskParser.swift in Sources */,
