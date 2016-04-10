@@ -41,7 +41,7 @@ public struct ChalmersTrial {
 	}
 	
 	private func makeFitnessAgent(with tasks: [Task]) -> FitnessAgent {
-		return ChalmersFitnessAgent(config: config.fitnessConfig, tasks: tasks)
+		return LearningRuleEvolutionFitnessAgent(config: config.fitnessConfig, tasks: tasks)
 	}
 	
 	private func makeReproductionAgent() -> ReproductionAgent {

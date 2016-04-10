@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct ChalmersFitnessAgent: FitnessAgent {
+public struct LearningRuleEvolutionFitnessAgent: FitnessAgent {
 	
 	public var config: FitnessConfig
 	
