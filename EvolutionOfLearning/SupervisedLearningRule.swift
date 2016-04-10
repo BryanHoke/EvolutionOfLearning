@@ -41,9 +41,7 @@ public struct ChalmersLearningRule: SupervisedLearningRule {
 	
 	public var coefficients: [Double]
 	
-	public var weightLimit: Double {
-		return 20
-	}
+	public let weightLimit = 20.0
 	
 	public subscript(index: Int) -> Double {
 		return self.coefficients[index]
