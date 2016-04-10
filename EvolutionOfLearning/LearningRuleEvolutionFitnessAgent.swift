@@ -39,7 +39,7 @@ public struct LearningRuleEvolutionFitnessAgent: FitnessAgent {
 		return fitness(of: network, on: task)
 	}
 	
-	func makeNetwork(`for` task: Task) -> FeedForwardNeuralNetwork {
+	func makeNetwork(for task: Task) -> FeedForwardNeuralNetwork {
 		return SingleLayerSingleOutputNeuralNetwork(
 			size: task.inputCount + 1,
 			activation: sigmoid(λ: 1))

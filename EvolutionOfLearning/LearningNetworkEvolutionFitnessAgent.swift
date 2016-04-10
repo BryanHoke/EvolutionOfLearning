@@ -72,7 +72,7 @@ public struct LearningNetworkEvolutionFitnessAgent: FitnessAgent {
 		return fitness(of: network, on: task)
 	}
 	
-	func makeNetwork(`for` task: Task, genes: [Bool]) -> FeedForwardNeuralNetwork {
+	func makeNetwork(for task: Task, genes: [Bool]) -> FeedForwardNeuralNetwork {
 		let weights = makeWeights(for: task, genes: genes)
 		return SingleLayerSingleOutputNeuralNetwork(
 			weights: weights,
@@ -80,7 +80,7 @@ public struct LearningNetworkEvolutionFitnessAgent: FitnessAgent {
 	}
 	
 	// TODO: Test
-	func makeWeights(`for` task: Task, genes: [Bool]) -> [Double] {
+	func makeWeights(for task: Task, genes: [Bool]) -> [Double] {
 		let encoding = signedExponentialEncoding(with: exponentShift)
 		return decodeWeights(from: genes,
 		                     bitsPerWeight: bitsPerWeight,

@@ -55,19 +55,19 @@ public struct WeightEvolutionFitnessAgent: FitnessAgent {
 		return fitness(of: network, on: task)
 	}
 	
-	func makeNetwork(`for` task: Task, genes: [Bool]) -> FeedForwardNeuralNetwork {
+	func makeNetwork(for task: Task, genes: [Bool]) -> FeedForwardNeuralNetwork {
 		let weights = makeWeights(for: task, genes: genes)
 		return makeNetwork(for: weights)
 	}
 	
-	func makeNetwork(`for` weights: [Double]) -> FeedForwardNeuralNetwork {
+	func makeNetwork(for weights: [Double]) -> FeedForwardNeuralNetwork {
 		return SingleLayerSingleOutputNeuralNetwork(
 			weights: weights,
 			activation: sigmoid(λ: 1))
 	}
 	
 	// TODO: Test
-	func makeWeights(`for` task: Task, genes: [Bool]) -> [Double] {
+	func makeWeights(for task: Task, genes: [Bool]) -> [Double] {
 		let encoding = signedExponentialEncoding(with: exponentShift)
 		return decodeWeights(from: genes,
 		                     bitsPerWeight: bitsPerWeight,
