@@ -45,7 +45,7 @@ public struct TaskParser {
 			inputs.append(inputVectors)
 			targets.append(targetVectors)
 		}
-		return tasksWith(inputs: inputs, targets: targets)
+		return tasks(inputs: inputs, targets: targets)
 	}
 	
 	private func readInt(from tokens: [String], inout at index: Int) throws -> Int {
@@ -65,7 +65,7 @@ public struct TaskParser {
 	}
 	
 	/// Constructs `Task` values from input and target vectors.
-	public func tasksWith(inputs inputs: [[[Double]]], targets: [[[Double]]]) -> [Task] {
+	public func tasks(inputs inputs: [[[Double]]], targets: [[[Double]]]) -> [Task] {
 		var count = 0
 		var tasks = [Task]()
 		for (i, inputVectors) in inputs.enumerate() {
