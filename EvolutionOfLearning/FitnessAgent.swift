@@ -35,45 +35,6 @@ extension FitnessAgent {
 	
 }
 
-public struct ChalmersFitnessAgent: FitnessAgent {
-	
-	public var config: FitnessConfig
-	
-	public var learningRuleSize: Int {
-		return config.learningRuleSize
-	}
-	
-	public var numberOfTrainingEpochs: Int {
-		return config.numberOfTrainingEpochs
-	}
-	
-	public var tasks: [Task]
-	
-	// TODO: Test
-	public func seed() -> Chromosome {
-		return Chromosome(size: learningRuleSize, seed: randomBool)
-	}
-	
-	// TODO: Test
-	public func fitness(of chromosome: Chromosome, on task: Task) -> Double {
-		var network = makeNetwork(`for`: task)
-		
-		let learningRule = ChalmersLearningRule(
-			bits: chromosome.genes)
-		
-		learningRule.trainNetwork(&network, task: task, numberOfTimes: numberOfTrainingEpochs)
-		
-		return fitness(of: network, on: task)
-	}
-	
-	func makeNetwork(`for` task: Task) -> FeedForwardNeuralNetwork {
-		return SingleLayerSingleOutputNeuralNetwork(
-			size: task.inputCount + 1,
-			activation: sigmoid(λ: 1))
-	}
-	
-}
-
 public struct WeightEvolutionFitnessAgent: FitnessAgent {
 	
 	public init(bitsPerWeight: Int, exponentialCap: Int, tasks: [Task]) {
@@ -99,7 +60,7 @@ public struct WeightEvolutionFitnessAgent: FitnessAgent {
 	
 	private mutating func buildGeneMap() {
 		for task in tasks {
-			geneMap.addMapping(`for`: task)
+			geneMap.addMapping(for: task)
 		}
 	}
 	
@@ -116,14 +77,14 @@ public struct WeightEvolutionFitnessAgent: FitnessAgent {
 		}
 		
 		let genes = Array(chromosome[geneRange])
-		let network = makeNetwork(`for`: task, genes: genes)
+		let network = makeNetwork(for: task, genes: genes)
 		
 		return fitness(of: network, on: task)
 	}
 	
 	func makeNetwork(`for` task: Task, genes: [Bool]) -> FeedForwardNeuralNetwork {
-		let weights = makeWeights(`for`: task, genes: genes)
-		return makeNetwork(`for`: weights)
+		let weights = makeWeights(for: task, genes: genes)
+		return makeNetwork(for: weights)
 	}
 	
 	func makeNetwork(`for` weights: [Double]) -> FeedForwardNeuralNetwork {
@@ -181,7 +142,7 @@ public struct ExtendedChalmersFitnessAgent: FitnessAgent {
 	
 	private mutating func buildGeneMap() {
 		for task in tasks {
-			geneMap.addMapping(`for`: task)
+			geneMap.addMapping(for: task)
 		}
 	}
 	
@@ -198,7 +159,7 @@ public struct ExtendedChalmersFitnessAgent: FitnessAgent {
 		}
 		
 		let genes = Array(chromosome[geneRange])
-		var network = makeNetwork(`for`: task, genes: genes)
+		var network = makeNetwork(for: task, genes: genes)
 		
 		let learningRuleGenes = Array(chromosome[0..<learningRuleSize])
 		let learningRule = ChalmersLearningRule(bits: learningRuleGenes)
@@ -208,11 +169,7 @@ public struct ExtendedChalmersFitnessAgent: FitnessAgent {
 	}
 	
 	func makeNetwork(`for` task: Task, genes: [Bool]) -> FeedForwardNeuralNetwork {
-		let weights = makeWeights(`for`: task, genes: genes)
-		return makeNetwork(`for`: weights)
-	}
-	
-	func makeNetwork(`for` weights: [Double]) -> FeedForwardNeuralNetwork {
+		let weights = makeWeights(for: task, genes: genes)
 		return SingleLayerSingleOutputNeuralNetwork(
 			weights: weights,
 			activation: sigmoid(λ: 1))
