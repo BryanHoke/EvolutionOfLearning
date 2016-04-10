@@ -23,27 +23,22 @@ public struct TaskParser {
 		var targets = [[[Double]]]()
 		var index = 0
 		while index < tokens.count {
-			guard let examplarCount = Int(tokens[index++]),
-				let inputCount = Int(tokens[index++]),
-				let taskCount = Int(tokens[index++])
-				else {
-					throw NSError(domain: "", code: 1, userInfo: ["index": index])
-			}
+			let
+			examplarCount = try readInt(from: tokens, at: &index),
+			inputCount = try readInt(from: tokens, at: &index),
+			taskCount = try readInt(from: tokens, at: &index)
+			
 			var inputVectors = [[Double]]()
 			var targetVectors = [[Double]](count: taskCount, repeatedValue: [Double]())
 			for _ in 0..<examplarCount {
 				var inputVector = [Double]()
 				for _ in 0..<inputCount {
-					guard let value = Double(tokens[index++]) else {
-						throw NSError(domain: "", code: 2, userInfo: ["index": index])
-					}
+					let value = try readDouble(from: tokens, at: &index)
 					inputVector.append(value)
 				}
 				inputVectors.append(inputVector)
 				for i in 0..<taskCount {
-					guard let value = Double(tokens[index++]) else {
-						throw NSError(domain: "", code: 3, userInfo: ["index": index])
-					}
+					let value = try readDouble(from: tokens, at: &index)
 					targetVectors[i].append(value)
 				}
 			}
@@ -51,6 +46,22 @@ public struct TaskParser {
 			targets.append(targetVectors)
 		}
 		return tasksWith(inputs: inputs, targets: targets)
+	}
+	
+	private func readInt(from tokens: [String], inout at index: Int) throws -> Int {
+		guard let intValue = Int(tokens[index]) else {
+			throw NSError(domain: "", code: 1, userInfo: ["index": index])
+		}
+		index += 1
+		return intValue
+	}
+	
+	private func readDouble(from tokens: [String], inout at index: Int) throws -> Double {
+		guard let doubleValue = Double(tokens[index]) else {
+			throw NSError(domain: "", code: 2, userInfo: ["index": index])
+		}
+		index += 1
+		return doubleValue
 	}
 	
 	/// Constructs `Task` values from input and target vectors.
