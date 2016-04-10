@@ -35,22 +35,27 @@ func encodedInt(from bits: [Bool]) -> Int {
 	})
 }
 
+func exponentialTransform(j j: Int, exponentShift: Int) -> Double {
+	return
+		j == 0
+			? 0
+			: pow(2, Double(j + exponentShift))
+}
+
 // TODO: Test
 public func exponentOffset(bitCount count: Int, cap: Int) -> Int {
 	return pow(2, count - 1) - 1 - cap
 }
 
 // TODO: Test
+/// Let j = bits[1:] in base 10. 
+/// 2 ^ (bits - exponentOffset)
 func signedExponentialEncoding(with exponentOffset: Int) -> (bits: [Bool]) -> Double {
 	return { bits -> Double in
-		let base = encodedInt(from: bits)
-		var value = 0.0
-		if base != 0 {
-			value = pow(2.0, Double(base - exponentOffset))
-			let signBit = bits[0]
-			value = signBit ? value : -value
-		}
-		return value
+		let base = encodedInt(from: Array(bits.dropFirst()))
+		let signBit = bits[0]
+		let magnitude = exponentialTransform(j: base, exponentShift: exponentOffset)
+		return magnitude * (signBit ? 1 : -1)
 	}
 }
 
