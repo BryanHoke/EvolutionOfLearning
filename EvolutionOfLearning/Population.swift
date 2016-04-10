@@ -155,7 +155,8 @@ extension Population {
 		var fitnessRatioSum: Double = 0
 		
 		repeat {
-			selectionIndividual = self[selectionIndex++]
+			selectionIndividual = self[selectionIndex]
+			selectionIndex += 1
 			fitnessRatioSum += selectionIndividual.fitness / totalFitness
 		} while fitnessRatioSum < fitnessRatioThreshold
 		
