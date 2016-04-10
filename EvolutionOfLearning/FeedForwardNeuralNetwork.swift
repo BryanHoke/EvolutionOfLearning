@@ -17,7 +17,7 @@ public protocol FeedForwardNeuralNetwork {
 	var weights: [Double] { get set }
 	
 	/// Activates the input units with a vector of input values, which are then fed forward through the weights to activate the output unit and produce an output value.
-	func activateWithInputs(var inputs: [Double]) -> Double
+	func activateWithInputs(inputs: [Double]) -> Double
 	
 	/// Measures the error in the network's response to the pattern inputs compared to the pattern target.
 	func testOnPattern(pattern: Pattern) -> Double
