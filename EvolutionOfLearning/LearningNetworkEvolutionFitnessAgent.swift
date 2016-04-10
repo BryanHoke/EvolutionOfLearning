@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct ExtendedChalmersFitnessAgent: FitnessAgent {
+public struct LearningNetworkEvolutionFitnessAgent: FitnessAgent {
 	
 	public init(bitsPerWeight: Int, exponentialCap: Int, learningRuleSize: Int, numberOfTrainingEpochs: Int, tasks: [Task]) {
 		self.bitsPerWeight = bitsPerWeight
