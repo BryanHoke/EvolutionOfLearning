@@ -19,8 +19,8 @@ public struct TaskParser {
 	
 	/// Constructs `Task` values from `String` tokens of a task representation language.
 	public func tasks(with tokens: [String]) throws -> [Task] {
-		var inputs = [[[Double]]]()
-		var targets = [[[Double]]]()
+		var inputs: [[[Double]]] = []
+		var targets: [[[Double]]] = []
 		var index = 0
 		while index < tokens.count {
 			let
@@ -28,18 +28,19 @@ public struct TaskParser {
 			inputCount = try readInt(from: tokens, at: &index),
 			taskCount = try readInt(from: tokens, at: &index)
 			
-			var inputVectors = [[Double]]()
-			var targetVectors = [[Double]](count: taskCount, repeatedValue: [Double]())
-			for _ in 0..<examplarCount {
-				var inputVector = [Double]()
+			var inputVectors: [[Double]] = .init(count: examplarCount, repeatedValue: [])
+			var targetVectors: [[Double]] = .init(count: taskCount, repeatedValue: [])
+			for examplarIndex in 0..<examplarCount {
+				
+				inputVectors[examplarIndex].reserveCapacity(inputCount)
 				for _ in 0..<inputCount {
 					let value = try readDouble(from: tokens, at: &index)
-					inputVector.append(value)
+					inputVectors[examplarIndex].append(value)
 				}
-				inputVectors.append(inputVector)
-				for i in 0..<taskCount {
+				
+				for taskIndex in 0..<taskCount {
 					let value = try readDouble(from: tokens, at: &index)
-					targetVectors[i].append(value)
+					targetVectors[taskIndex].append(value)
 				}
 			}
 			inputs.append(inputVectors)
@@ -67,7 +68,7 @@ public struct TaskParser {
 	/// Constructs `Task` values from input and target vectors.
 	public func tasks(inputs inputs: [[[Double]]], targets: [[[Double]]]) -> [Task] {
 		var count = 0
-		var tasks = [Task]()
+		var tasks: [Task] = []
 		for (i, inputVectors) in inputs.enumerate() {
 			for j in 0..<targets[i].count {
 				let targetVector = targets[i][j]
