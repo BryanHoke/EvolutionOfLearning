@@ -90,6 +90,8 @@
 		4AD3F53F1B33097C000E9BA4 /* EvolutionOfLearningGeneticAlgorithmTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD3F53E1B33097C000E9BA4 /* EvolutionOfLearningGeneticAlgorithmTests.swift */; };
 		4AD935541CBAFE0A0055B043 /* LearningRuleEvolutionFitnessAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD935531CBAFE0A0055B043 /* LearningRuleEvolutionFitnessAgent.swift */; };
 		4AD935551CBAFE0A0055B043 /* LearningRuleEvolutionFitnessAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD935531CBAFE0A0055B043 /* LearningRuleEvolutionFitnessAgent.swift */; };
+		4AD935571CBAFE880055B043 /* NetworkEvolutionFitnessAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD935561CBAFE880055B043 /* NetworkEvolutionFitnessAgent.swift */; };
+		4AD935581CBAFE880055B043 /* NetworkEvolutionFitnessAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD935561CBAFE880055B043 /* NetworkEvolutionFitnessAgent.swift */; };
 		4AE03EF51B8A4F3A00A94234 /* Environment1.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4AE03EF41B8A4F3A00A94234 /* Environment1.txt */; };
 		4AE6209F1B39A1D60033980F /* GeneticAlgorithm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE6209E1B39A1D60033980F /* GeneticAlgorithm.swift */; };
 		4AE620A01B39A1D60033980F /* GeneticAlgorithm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE6209E1B39A1D60033980F /* GeneticAlgorithm.swift */; };
@@ -176,6 +178,7 @@
 		4AD030F31C803797005266E8 /* GeneMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneMap.swift; sourceTree = "<group>"; };
 		4AD3F53E1B33097C000E9BA4 /* EvolutionOfLearningGeneticAlgorithmTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EvolutionOfLearningGeneticAlgorithmTests.swift; sourceTree = "<group>"; };
 		4AD935531CBAFE0A0055B043 /* LearningRuleEvolutionFitnessAgent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LearningRuleEvolutionFitnessAgent.swift; sourceTree = "<group>"; };
+		4AD935561CBAFE880055B043 /* NetworkEvolutionFitnessAgent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkEvolutionFitnessAgent.swift; sourceTree = "<group>"; };
 		4AE03EF41B8A4F3A00A94234 /* Environment1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Environment1.txt; sourceTree = "<group>"; };
 		4AE6209E1B39A1D60033980F /* GeneticAlgorithm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneticAlgorithm.swift; sourceTree = "<group>"; };
 		4AE99EA41C7A83760096D321 /* NeuralNetworkTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NeuralNetworkTests.swift; sourceTree = "<group>"; };
@@ -254,6 +257,7 @@
 				4A05832D1C9297F000F3D0E0 /* ChalmersTrial.swift */,
 				4A2EE79E1BEE8DA4007D17FD /* FitnessAgent.swift */,
 				4AD935531CBAFE0A0055B043 /* LearningRuleEvolutionFitnessAgent.swift */,
+				4AD935561CBAFE880055B043 /* NetworkEvolutionFitnessAgent.swift */,
 				4A620D141C8BB5610084B0A2 /* ReproductionAgent.swift */,
 				4A1BE8B91C8FF33900790B3A /* LearningTest.swift */,
 				4A7E06981B5C536A0000E561 /* Task.swift */,
@@ -544,6 +548,7 @@
 				4AE6209F1B39A1D60033980F /* GeneticAlgorithm.swift in Sources */,
 				4A7A1DCC1B9FF4AE001F5C18 /* ChalmersExperiment.swift in Sources */,
 				4A0583311C92A19400F3D0E0 /* ExperimentConfig.swift in Sources */,
+				4AD935571CBAFE880055B043 /* NetworkEvolutionFitnessAgent.swift in Sources */,
 				4AF383261CA26237006D13D4 /* PopulationOperator.swift in Sources */,
 				4A1BE8BA1C8FF33900790B3A /* LearningTest.swift in Sources */,
 				4A2EE79F1BEE8DA4007D17FD /* FitnessAgent.swift in Sources */,
@@ -594,6 +599,7 @@
 				4A2EE7A61BEFF4B2007D17FD /* FeedForwardNeuralNetwork.swift in Sources */,
 				4A12524A1BA85EC60096A717 /* ManagedObjects.swift in Sources */,
 				4A0583321C92A19400F3D0E0 /* ExperimentConfig.swift in Sources */,
+				4AD935581CBAFE880055B043 /* NetworkEvolutionFitnessAgent.swift in Sources */,
 				4AF383271CA26237006D13D4 /* PopulationOperator.swift in Sources */,
 				4A05832C1C928C4000F3D0E0 /* GeneMapTests.swift in Sources */,
 				4A447FF61C63A9A100C5BDF0 /* IndexedDictionary.swift in Sources */,
