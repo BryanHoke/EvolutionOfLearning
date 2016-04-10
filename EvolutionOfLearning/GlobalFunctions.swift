@@ -50,10 +50,10 @@ public func exponentOffset(bitCount count: Int, cap: Int) -> Int {
 // TODO: Test
 /// Let j = bits as Int
 /// 2 ^ (j - exponentOffset)
-func exponentialEncoding(with exponentOffset: Int) -> (bits: [Bool]) -> Double {
+func exponentialEncoding(exponentOffset offset: Int) -> (bits: [Bool]) -> Double {
 	return { bits -> Double in
 		let base = encodedInt(from: bits)
-		return exponentialTransform(j: base, exponentShift: exponentOffset)
+		return exponentialTransform(j: base, exponentShift: offset)
 	}
 }
 
@@ -61,10 +61,10 @@ func exponentialEncoding(with exponentOffset: Int) -> (bits: [Bool]) -> Double {
 /// let sign = bits[0] as Bool
 /// let j = bits[1:] as Int
 /// sign * 2 ^ (j - exponentOffset)
-func signedExponentialEncoding(with exponentOffset: Int) -> (bits: [Bool]) -> Double {
+func signedExponentialEncoding(exponentOffset offset: Int) -> (bits: [Bool]) -> Double {
 	return { bits -> Double in
 		let sign = Double(bits[0] ? 1 : -1)
-		let magnitude = exponentialEncoding(with: exponentOffset)(bits: Array(bits.dropFirst()))
+		let magnitude = exponentialEncoding(exponentOffset: offset)(bits: Array(bits.dropFirst()))
 		return sign * magnitude
 	}
 }

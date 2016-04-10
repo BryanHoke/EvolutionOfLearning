@@ -68,7 +68,7 @@ public struct WeightEvolutionFitnessAgent: FitnessAgent {
 	
 	// TODO: Test
 	func makeWeights(for task: Task, genes: [Bool]) -> [Double] {
-		let encoding = signedExponentialEncoding(with: exponentShift)
+		let encoding = signedExponentialEncoding(exponentOffset: exponentShift)
 		return decodeWeights(from: genes,
 		                     bitsPerWeight: bitsPerWeight,
 		                     layerSize: task.inputCount,
