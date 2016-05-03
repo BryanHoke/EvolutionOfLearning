@@ -46,6 +46,7 @@
 		4A42A4751BA9B44500F797BD /* ManagedDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A42A4731BA9B44500F797BD /* ManagedDataManager.swift */; };
 		4A447FF51C63A9A100C5BDF0 /* IndexedDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A447FF41C63A9A000C5BDF0 /* IndexedDictionary.swift */; };
 		4A447FF61C63A9A100C5BDF0 /* IndexedDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A447FF41C63A9A000C5BDF0 /* IndexedDictionary.swift */; };
+		4A495A141CD6FE8900510582 /* ConfigurationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A495A131CD6FE8900510582 /* ConfigurationView.swift */; };
 		4A50A8341B30F9F10004BC5D /* Chromosome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A50A8331B30F9F10004BC5D /* Chromosome.swift */; };
 		4A50A8351B30F9F10004BC5D /* Chromosome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A50A8331B30F9F10004BC5D /* Chromosome.swift */; };
 		4A620D0F1C8B75030084B0A2 /* TaskParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A620D0E1C8B75030084B0A2 /* TaskParser.swift */; };
@@ -146,6 +147,7 @@
 		4A3C34281C9603EE00DCE87A /* GeneticOperating.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneticOperating.swift; sourceTree = "<group>"; };
 		4A42A4731BA9B44500F797BD /* ManagedDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagedDataManager.swift; sourceTree = "<group>"; };
 		4A447FF41C63A9A000C5BDF0 /* IndexedDictionary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IndexedDictionary.swift; sourceTree = "<group>"; };
+		4A495A131CD6FE8900510582 /* ConfigurationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigurationView.swift; sourceTree = "<group>"; };
 		4A50A8331B30F9F10004BC5D /* Chromosome.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Chromosome.swift; sourceTree = "<group>"; };
 		4A620D0E1C8B75030084B0A2 /* TaskParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskParser.swift; sourceTree = "<group>"; };
 		4A620D111C8BB02A0084B0A2 /* ConcurrentDispatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConcurrentDispatcher.swift; sourceTree = "<group>"; };
@@ -222,6 +224,7 @@
 			children = (
 				4A02D6901C7E1358004D98DF /* ConfigurationWindowController.swift */,
 				4A02D6911C7E1358004D98DF /* ConfigurationWindowController.xib */,
+				4A495A131CD6FE8900510582 /* ConfigurationView.swift */,
 			);
 			path = Configuration;
 			sourceTree = "<group>";
@@ -546,6 +549,7 @@
 				4AD030F41C803797005266E8 /* GeneMap.swift in Sources */,
 				4A7FDE441C79592F00E79AB9 /* DataFetcher.swift in Sources */,
 				4A447FF51C63A9A100C5BDF0 /* IndexedDictionary.swift in Sources */,
+				4A495A141CD6FE8900510582 /* ConfigurationView.swift in Sources */,
 				4A825EC61B2D019E00C8CEA3 /* AppDelegate.swift in Sources */,
 				4A2EE7A51BEFF4B2007D17FD /* FeedForwardNeuralNetwork.swift in Sources */,
 				4A8B57A11BDC274F002BABCF /* ExperimentCoordinator.swift in Sources */,
