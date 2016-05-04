@@ -10,9 +10,13 @@ import Cocoa
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
+	
+	var configurationWindowController: ConfigurationWindowController!
 
 	func applicationDidFinishLaunching(aNotification: NSNotification) {
 		// Insert code here to initialize your application
+		configurationWindowController = ConfigurationWindowController(windowNibName: "ConfigurationWindowController")
+		configurationWindowController.window?.makeKeyAndOrderFront(self)
 	}
 
 	func applicationWillTerminate(aNotification: NSNotification) {
