@@ -66,8 +66,8 @@ class Document: NSPersistentDocument {
 //	}
 	
 	override func makeWindowControllers() {
-		let documentController = DocumentWindowController(windowNibName: "Document")
-		addWindowController(documentController)
+//		let documentController = DocumentWindowController(windowNibName: "Document")
+//		addWindowController(documentController)
 	}
 	
 	func writeExperiment() {
