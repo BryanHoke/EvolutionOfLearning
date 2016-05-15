@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ExperimentRunner {
+class ExperimentRunner: ExperimentRunning {
 	
 	var config = ExperimentConfig()
 	
@@ -17,6 +17,15 @@ class ExperimentRunner {
 	let allConditions = ExperimentalCondition.allConditions
 	
 	var numberOfTrials = 10
+	
+	var numberOfGenerations: Int {
+		get {
+			return config.evolutionConfig.numberOfGenerations
+		}
+		set {
+			config.evolutionConfig.numberOfGenerations = newValue
+		}
+	}
 	
 	func runExperiment() {
 		
