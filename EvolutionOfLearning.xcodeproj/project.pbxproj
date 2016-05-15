@@ -40,6 +40,7 @@
 		4A2F11631B5DD7520055AFF8 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A2F11621B5DD7520055AFF8 /* DataManager.swift */; };
 		4A2F11641B5DD7530055AFF8 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A2F11621B5DD7520055AFF8 /* DataManager.swift */; };
 		4A364A771CE900C0009398AF /* TableScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A364A761CE900C0009398AF /* TableScanner.swift */; };
+		4A364A791CE909BF009398AF /* ExperimentInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A364A781CE909BF009398AF /* ExperimentInterface.swift */; };
 		4A3C34261C94ED4E00DCE87A /* PopulationEvaluating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3C34251C94ED4E00DCE87A /* PopulationEvaluating.swift */; };
 		4A3C34271C94ED4E00DCE87A /* PopulationEvaluating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3C34251C94ED4E00DCE87A /* PopulationEvaluating.swift */; };
 		4A3C34291C9603EE00DCE87A /* GeneticOperating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3C34281C9603EE00DCE87A /* GeneticOperating.swift */; };
@@ -149,6 +150,7 @@
 		4A2EE7A41BEFF4B2007D17FD /* FeedForwardNeuralNetwork.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedForwardNeuralNetwork.swift; sourceTree = "<group>"; };
 		4A2F11621B5DD7520055AFF8 /* DataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		4A364A761CE900C0009398AF /* TableScanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableScanner.swift; sourceTree = "<group>"; };
+		4A364A781CE909BF009398AF /* ExperimentInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExperimentInterface.swift; sourceTree = "<group>"; };
 		4A3C34251C94ED4E00DCE87A /* PopulationEvaluating.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopulationEvaluating.swift; sourceTree = "<group>"; };
 		4A3C34281C9603EE00DCE87A /* GeneticOperating.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneticOperating.swift; sourceTree = "<group>"; };
 		4A42A4731BA9B44500F797BD /* ManagedDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagedDataManager.swift; sourceTree = "<group>"; };
@@ -284,6 +286,7 @@
 				4A7E069B1B5C63190000E561 /* Pattern.swift */,
 				4A2F11621B5DD7520055AFF8 /* DataManager.swift */,
 				4A28EBFF1CDFD127001D844F /* ExperimentDriver.swift */,
+				4A364A781CE909BF009398AF /* ExperimentInterface.swift */,
 			);
 			name = Experiments;
 			sourceTree = "<group>";
@@ -561,6 +564,7 @@
 				4AF11C0D1B3F036C00AED909 /* Individual.swift in Sources */,
 				4AD030F41C803797005266E8 /* GeneMap.swift in Sources */,
 				4A7FDE441C79592F00E79AB9 /* DataFetcher.swift in Sources */,
+				4A364A791CE909BF009398AF /* ExperimentInterface.swift in Sources */,
 				4A447FF51C63A9A100C5BDF0 /* IndexedDictionary.swift in Sources */,
 				4A495A141CD6FE8900510582 /* ConfigurationView.swift in Sources */,
 				4A364A771CE900C0009398AF /* TableScanner.swift in Sources */,
