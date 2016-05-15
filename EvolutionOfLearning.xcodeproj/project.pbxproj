@@ -30,6 +30,7 @@
 		4A1BE8BB1C8FF33900790B3A /* LearningTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1BE8B91C8FF33900790B3A /* LearningTest.swift */; };
 		4A1D739D1B54A8C300E788B9 /* ArrayWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1D739C1B54A8C300E788B9 /* ArrayWrapper.swift */; };
 		4A1D739E1B54A8C300E788B9 /* ArrayWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1D739C1B54A8C300E788B9 /* ArrayWrapper.swift */; };
+		4A28EC001CDFD127001D844F /* ExperimentDriver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A28EBFF1CDFD127001D844F /* ExperimentDriver.swift */; };
 		4A2EE79F1BEE8DA4007D17FD /* FitnessAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A2EE79E1BEE8DA4007D17FD /* FitnessAgent.swift */; };
 		4A2EE7A01BEE8DA4007D17FD /* FitnessAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A2EE79E1BEE8DA4007D17FD /* FitnessAgent.swift */; };
 		4A2EE7A21BEFF467007D17FD /* GlobalFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A2EE7A11BEFF466007D17FD /* GlobalFunctions.swift */; };
@@ -38,6 +39,7 @@
 		4A2EE7A61BEFF4B2007D17FD /* FeedForwardNeuralNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A2EE7A41BEFF4B2007D17FD /* FeedForwardNeuralNetwork.swift */; };
 		4A2F11631B5DD7520055AFF8 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A2F11621B5DD7520055AFF8 /* DataManager.swift */; };
 		4A2F11641B5DD7530055AFF8 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A2F11621B5DD7520055AFF8 /* DataManager.swift */; };
+		4A364A771CE900C0009398AF /* TableScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A364A761CE900C0009398AF /* TableScanner.swift */; };
 		4A3C34261C94ED4E00DCE87A /* PopulationEvaluating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3C34251C94ED4E00DCE87A /* PopulationEvaluating.swift */; };
 		4A3C34271C94ED4E00DCE87A /* PopulationEvaluating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3C34251C94ED4E00DCE87A /* PopulationEvaluating.swift */; };
 		4A3C34291C9603EE00DCE87A /* GeneticOperating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3C34281C9603EE00DCE87A /* GeneticOperating.swift */; };
@@ -141,10 +143,12 @@
 		4A13A0D41B64404D0047E858 /* SupervisedLearningRule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SupervisedLearningRule.swift; sourceTree = "<group>"; };
 		4A1BE8B91C8FF33900790B3A /* LearningTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LearningTest.swift; sourceTree = "<group>"; };
 		4A1D739C1B54A8C300E788B9 /* ArrayWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayWrapper.swift; sourceTree = "<group>"; };
+		4A28EBFF1CDFD127001D844F /* ExperimentDriver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExperimentDriver.swift; sourceTree = "<group>"; };
 		4A2EE79E1BEE8DA4007D17FD /* FitnessAgent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FitnessAgent.swift; sourceTree = "<group>"; };
 		4A2EE7A11BEFF466007D17FD /* GlobalFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalFunctions.swift; sourceTree = "<group>"; };
 		4A2EE7A41BEFF4B2007D17FD /* FeedForwardNeuralNetwork.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedForwardNeuralNetwork.swift; sourceTree = "<group>"; };
 		4A2F11621B5DD7520055AFF8 /* DataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
+		4A364A761CE900C0009398AF /* TableScanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableScanner.swift; sourceTree = "<group>"; };
 		4A3C34251C94ED4E00DCE87A /* PopulationEvaluating.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopulationEvaluating.swift; sourceTree = "<group>"; };
 		4A3C34281C9603EE00DCE87A /* GeneticOperating.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneticOperating.swift; sourceTree = "<group>"; };
 		4A42A4731BA9B44500F797BD /* ManagedDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagedDataManager.swift; sourceTree = "<group>"; };
@@ -254,6 +258,7 @@
 				4A2EE7A11BEFF466007D17FD /* GlobalFunctions.swift */,
 				4A447FF41C63A9A000C5BDF0 /* IndexedDictionary.swift */,
 				4A620D111C8BB02A0084B0A2 /* ConcurrentDispatcher.swift */,
+				4A364A761CE900C0009398AF /* TableScanner.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -278,6 +283,7 @@
 				4AD030F31C803797005266E8 /* GeneMap.swift */,
 				4A7E069B1B5C63190000E561 /* Pattern.swift */,
 				4A2F11621B5DD7520055AFF8 /* DataManager.swift */,
+				4A28EBFF1CDFD127001D844F /* ExperimentDriver.swift */,
 			);
 			name = Experiments;
 			sourceTree = "<group>";
@@ -557,6 +563,7 @@
 				4A7FDE441C79592F00E79AB9 /* DataFetcher.swift in Sources */,
 				4A447FF51C63A9A100C5BDF0 /* IndexedDictionary.swift in Sources */,
 				4A495A141CD6FE8900510582 /* ConfigurationView.swift in Sources */,
+				4A364A771CE900C0009398AF /* TableScanner.swift in Sources */,
 				4A825EC61B2D019E00C8CEA3 /* AppDelegate.swift in Sources */,
 				4A2EE7A51BEFF4B2007D17FD /* FeedForwardNeuralNetwork.swift in Sources */,
 				4A8B57A11BDC274F002BABCF /* ExperimentCoordinator.swift in Sources */,
@@ -566,6 +573,7 @@
 				4A0583311C92A19400F3D0E0 /* ExperimentConfig.swift in Sources */,
 				4AD935571CBAFE880055B043 /* NetworkEvolutionFitnessAgent.swift in Sources */,
 				4AF383261CA26237006D13D4 /* PopulationOperator.swift in Sources */,
+				4A28EC001CDFD127001D844F /* ExperimentDriver.swift in Sources */,
 				4A1BE8BA1C8FF33900790B3A /* LearningTest.swift in Sources */,
 				4A2EE79F1BEE8DA4007D17FD /* FitnessAgent.swift in Sources */,
 				4A02D6511C7E0A1B004D98DF /* DocumentWindowController.swift in Sources */,
