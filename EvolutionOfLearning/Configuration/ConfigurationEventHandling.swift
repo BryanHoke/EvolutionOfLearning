@@ -10,7 +10,7 @@ import Foundation
 
 protocol ConfigurationEventHandling: class {
 	
-	func selectedConditionChanged(to condition: String)
+	func selectedConditionIndexChanged(to index: Int)
 	
 	func numberOfGenerationsChanged(to numberOfGenerations: Int)
 	
