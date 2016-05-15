@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class ConfigurationWindowController: NSWindowController {
+class ConfigurationWindowController: NSWindowController, ExperimentInterface {
 	
 	weak var eventHandler: ConfigurationEventHandling?
 
@@ -25,7 +25,7 @@ class ConfigurationWindowController: NSWindowController {
 	}
 	
 	@IBAction func conditionButtonChanged(sender: NSPopUpButton) {
-		eventHandler?.selectedConditionChanged(to: sender.titleOfSelectedItem!)
+		eventHandler?.selectedConditionIndexChanged(to: sender.indexOfSelectedItem)
 	}
 	
 	override func controlTextDidChange(obj: NSNotification) {
@@ -33,13 +33,11 @@ class ConfigurationWindowController: NSWindowController {
 			return
 		}
 		
-		let value = textField.integerValue
-		
 		if textField === generationsField {
-			eventHandler?.numberOfGenerationsChanged(to: value)
+			eventHandler?.numberOfGenerationsChanged(to: numberOfGenerations)
 		}
 		else if textField === trialsField {
-			eventHandler?.numberOfTrialsChanged(to: value)
+			eventHandler?.numberOfTrialsChanged(to: numberOfTrials)
 		}
 	}
 	
@@ -48,5 +46,47 @@ class ConfigurationWindowController: NSWindowController {
 
         // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
     }
-    
+	
+	// MARK: - ExperimentInterface
+	
+	var experimentalConditions: [String] {
+		get {
+			return conditionButton.itemTitles
+		}
+		set {
+			conditionButton.removeAllItems()
+			for condition in newValue {
+				conditionButton.addItemWithTitle(condition)
+			}
+		}
+	}
+	
+	var selectedConditionIndex: Int? {
+		get {
+			let index = conditionButton.indexOfSelectedItem
+			return index >= 0 ? index : nil
+		}
+		set {
+			conditionButton.selectItemAtIndex(newValue ?? -1)
+		}
+	}
+	
+	var numberOfTrials: Int {
+		get {
+			return trialsField.integerValue
+		}
+		set {
+			trialsField.integerValue = newValue
+		}
+	}
+	
+	var numberOfGenerations: Int {
+		get {
+			return generationsField.integerValue
+		}
+		set {
+			generationsField.integerValue = newValue
+		}
+	}
+	
 }
