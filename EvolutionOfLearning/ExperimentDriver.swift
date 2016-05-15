@@ -85,7 +85,7 @@ class ExperimentDriver : ConfigurationEventHandling {
 	}
 	
 	func runButtonPressed() {
-		experimentRunner.runExperiment()
+		
 	}
 	
 }

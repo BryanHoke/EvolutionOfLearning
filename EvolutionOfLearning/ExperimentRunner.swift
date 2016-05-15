@@ -27,7 +27,7 @@ class ExperimentRunner: ExperimentRunning {
 		}
 	}
 	
-	func runExperiment() {
+	func runExperiment(using tasks: [Task]) {
 		
 	}
 	

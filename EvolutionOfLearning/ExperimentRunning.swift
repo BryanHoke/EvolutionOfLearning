@@ -18,6 +18,6 @@ protocol ExperimentRunning {
 	
 	var numberOfGenerations: Int { get set }
 	
-	func runExperiment()
+	func runExperiment(using tasks: [Task])
 	
 }
