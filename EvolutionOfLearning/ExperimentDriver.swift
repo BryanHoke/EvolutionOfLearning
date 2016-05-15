@@ -10,35 +10,74 @@ import Foundation
 
 class ExperimentDriver : ConfigurationEventHandling {
 	
-	var config = ExperimentConfig()
+	init(experimentRunner: ExperimentRunning) {
+		self.experimentRunner = experimentRunner
+	}
 	
-	var condition: ExperimentalCondition = .learningRuleEvolution
+	var experimentRunner: ExperimentRunning
 	
-	let allConditions = ExperimentalCondition.allConditions
+	var selectedConditionName: String {
+		return experimentRunner.condition.name
+	}
 	
-	var numberOfTrials = 10
+	var allConditionNames: [String] {
+		return experimentRunner.allConditions.map { $0.name }
+	}
+	
+	var selectedConditionIndex: Int? {
+		get {
+			return experimentRunner.allConditions.indexOf(experimentRunner.condition)
+		}
+		set {
+			guard let index = newValue else {
+				return
+			}
+			experimentRunner.condition = experimentRunner.allConditions[index]
+		}
+	}
+	
+	var numberOfTrials: Int {
+		get {
+			return experimentRunner.numberOfTrials
+		}
+		set {
+			experimentRunner.numberOfTrials = newValue
+		}
+	}
+	
+	var numberOfGenerations: Int {
+		get {
+			return experimentRunner.numberOfGenerations
+		}
+		set {
+			experimentRunner.numberOfGenerations = newValue
+		}
+	}
 	
 	weak var interface: ExperimentInterface? {
 		didSet {
-			guard let interface = self.interface else {
-				return
-			}
-			interface.experimentalConditions = allConditions.map { $0.name }
-			interface.selectedConditionIndex = allConditions.indexOf(condition)
-			interface.numberOfTrials = numberOfTrials
-			interface.numberOfGenerations = config.evolutionConfig.numberOfGenerations
+			syncInterface()
 		}
 	}
 	
-	func selectedConditionIndexChanged(to index: Int) {
-		guard let newCondition = ExperimentalCondition(rawValue: index) else {
+	private func syncInterface() {
+		guard let interface = self.interface else {
 			return
 		}
-		self.condition = newCondition
+		interface.experimentalConditions = allConditionNames
+		interface.selectedConditionIndex = selectedConditionIndex
+		interface.numberOfTrials = numberOfTrials
+		interface.numberOfGenerations = numberOfGenerations
+	}
+	
+	// MARK: - ConfigurationEventHandling
+	
+	func selectedConditionIndexChanged(to index: Int) {
+		self.selectedConditionIndex = index
 	}
 	
 	func numberOfGenerationsChanged(to numberOfGenerations: Int) {
-		config.evolutionConfig.numberOfGenerations = numberOfGenerations
+		self.numberOfGenerations = numberOfGenerations
 	}
 	
 	func numberOfTrialsChanged(to numberOfTrials: Int) {
@@ -46,7 +85,7 @@ class ExperimentDriver : ConfigurationEventHandling {
 	}
 	
 	func runButtonPressed() {
-		
+		experimentRunner.runExperiment()
 	}
 	
 }
