@@ -54,6 +54,10 @@ class ExperimentDriver : ConfigurationEventHandling {
 		}
 	}
 	
+	var environmentPath: String {
+		return "/Users/bryanhoke/Projects/BDHSoftware/OS X/EvolutionOfLearning/Environment1.txt"
+	}
+	
 	weak var interface: ExperimentInterface? {
 		didSet {
 			syncInterface()
@@ -85,7 +89,19 @@ class ExperimentDriver : ConfigurationEventHandling {
 	}
 	
 	func runButtonPressed() {
-		
+		let tasks = loadTasks()
+		experimentRunner.runExperiment(using: tasks)
+	}
+	
+	private func loadTasks() -> [Task] {
+		let parser = TaskParser()
+		do {
+			return try parser.tasks(withFileAt: environmentPath)
+		}
+		catch let error as NSError {
+			print(error)
+			return []
+		}
 	}
 	
 }
