@@ -8,7 +8,9 @@
 
 import Foundation
 
-class ExperimentRunner: ExperimentRunning {
+class ExperimentRunner : ExperimentRunning {
+	
+	weak var persister: RecordPersisting?
 	
 	var config = ExperimentConfig()
 	
@@ -28,7 +30,16 @@ class ExperimentRunner: ExperimentRunning {
 	}
 	
 	func runExperiment(using tasks: [Task]) {
-		
+		let experiment = makeExperiment(tasks: tasks)
+		let record = experiment.run(forNumberOfTrials: numberOfTrials)
+		persister?.persist(record)
+	}
+	
+	private func makeExperiment(tasks tasks: [Task]) -> Experiment {
+		switch condition {
+		case .learningRuleEvolution:
+			return ChalmersExperiment(tasks: tasks, config: config)
+		}
 	}
 	
 }
