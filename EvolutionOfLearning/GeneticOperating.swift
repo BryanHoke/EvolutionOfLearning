@@ -16,8 +16,8 @@ public typealias CrossoverOperator = (Chromosome, Chromosome) -> (Chromosome, Ch
 
 public protocol GeneticOperating {
 	
-	static func mutation(mutationRate: Double) -> Chromosome -> Chromosome
+	func mutation(mutationRate: Double) -> Chromosome -> Chromosome
 	
-	static func twoPointCrossover(chromosome1: Chromosome, chromosome2: Chromosome) -> (Chromosome, Chromosome)
+	func twoPointCrossover(chromosome1: Chromosome, chromosome2: Chromosome) -> (Chromosome, Chromosome)
 	
 }

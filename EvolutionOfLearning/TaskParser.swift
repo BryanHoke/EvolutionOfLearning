@@ -22,6 +22,7 @@ public struct TaskParser {
 		var inputs: [[[Double]]] = []
 		var targets: [[[Double]]] = []
 		var index = 0
+		
 		while index < tokens.count {
 			let
 			examplarCount = try readInt(from: tokens, at: &index),
@@ -30,6 +31,7 @@ public struct TaskParser {
 			
 			var inputVectors: [[Double]] = .init(count: examplarCount, repeatedValue: [])
 			var targetVectors: [[Double]] = .init(count: taskCount, repeatedValue: [])
+			
 			for examplarIndex in 0..<examplarCount {
 				
 				inputVectors[examplarIndex].reserveCapacity(inputCount)
@@ -43,9 +45,11 @@ public struct TaskParser {
 					targetVectors[taskIndex].append(value)
 				}
 			}
+			
 			inputs.append(inputVectors)
 			targets.append(targetVectors)
 		}
+		
 		return tasks(inputs: inputs, targets: targets)
 	}
 	

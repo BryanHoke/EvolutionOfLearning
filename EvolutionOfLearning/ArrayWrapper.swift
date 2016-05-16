@@ -14,7 +14,7 @@ public protocol ArrayWrapper: RangeReplaceableCollectionType {
 	
 	// MARK: Associated Types
 	
-	typealias Element
+	associatedtype Element
 	
 	var wrappedArray: Array<Element> { get set }
 	

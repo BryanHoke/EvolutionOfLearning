@@ -8,6 +8,23 @@
 
 import Foundation
 
+public enum ExperimentalCondition: Int {
+	
+	case learningRuleEvolution
+	
+	static var allConditions: [ExperimentalCondition] {
+		return [.learningRuleEvolution]
+	}
+	
+	public var name: String {
+		switch self {
+		case .learningRuleEvolution:
+			return "Learning Rule Evolution"
+		}
+	}
+	
+}
+
 public struct ExperimentConfig {
 	
 	public var evolutionaryTaskCount = 20

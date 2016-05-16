@@ -65,3 +65,11 @@ public struct ChalmersTrialRecord {
 	public var learningTestRecord: LearningTestRecord
 	
 }
+
+extension ChalmersTrialRecord : TrialRecord {
+	
+	public var evaluations: [EvaluationRecord] {
+		return [evolutionRecord, learningTestRecord]
+	}
+	
+}

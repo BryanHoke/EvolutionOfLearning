@@ -38,3 +38,13 @@ public struct EvolutionRecord {
 	public var tasks: [Task]
 	
 }
+
+extension EvolutionRecord : EvaluationRecord {
+	
+	public var name: String { return "Evolution" }
+	
+	public var populations: [Population] {
+		return history
+	}
+	
+}

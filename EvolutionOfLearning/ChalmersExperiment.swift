@@ -8,13 +8,13 @@
 
 import Foundation
 
-public struct ChalmersExperiment {
+public struct ChalmersExperiment : Experiment {
 	
 	public var tasks: [Task]
 	
 	public var config: ExperimentConfig
 	
-	public func run(forNumberOfTrials numberOfTrials: Int) -> ChalmersExperimentRecord {
+	public func run(forNumberOfTrials numberOfTrials: Int) -> ExperimentRecord {
 		guard config.evolutionaryTaskCount > 0 && tasks.count > config.evolutionaryTaskCount else {
 			preconditionFailure("The number of evolutionary tasks (\(config.evolutionaryTaskCount) must be less than the total number of tasks (\(tasks.count)")
 		}
@@ -22,16 +22,12 @@ public struct ChalmersExperiment {
 		var records: [ChalmersTrialRecord] = []
 		
 		for _ in 0..<numberOfTrials {
-			let record = runTrial()
+			let trial = makeTrial()
+			let record = trial.run()
 			records.append(record)
 		}
 		
 		return ChalmersExperimentRecord(config: config, trialRecords: records)
-	}
-	
-	private func runTrial() -> ChalmersTrialRecord {
-		let trial = makeTrial()
-		return trial.run()
 	}
 	
 	private func makeTrial() -> ChalmersTrial {
@@ -70,5 +66,13 @@ public struct ChalmersExperimentRecord {
 	public var config: ExperimentConfig
 	
 	public var trialRecords: [ChalmersTrialRecord]
+	
+}
+
+extension ChalmersExperimentRecord : ExperimentRecord {
+	
+	public var trials: [TrialRecord] {
+		return trialRecords.map { $0 as TrialRecord }
+	}
 	
 }

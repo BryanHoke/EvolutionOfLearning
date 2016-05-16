@@ -51,7 +51,8 @@ public class ManagedDataManager: DataManager {
 			entity: historyEntity,
 			insertIntoManagedObjectContext: managedObjectContext)
 		
-		history.trialNumber = trialNumber++
+		history.trialNumber = trialNumber
+		trialNumber += 1
 		
 		experiment.histories.addObject(history)
 		

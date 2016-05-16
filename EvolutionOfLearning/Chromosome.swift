@@ -87,7 +87,7 @@ extension Chromosome {
 	
 	/// Returns the offspring of a two-point crossover operation between this `Chromosome` and a pair `Chromosome`.
 	///
-	/// - note: The number of genes crossed-over is in the range `1..<count`. I.e., the two points may be equal and never span the length of the `Chromosome`.
+	/// - note: The number of genes crossed-over is in the range `1..<count`. I.e., the two points may be equal and will never span the length of the `Chromosome`.
 	public func twoPointCrossoverWithChromosome(pairChromosome: Chromosome) -> (Chromosome, Chromosome) {
 		// Generate a start point in the range 0..<(count - 1)
 		let start = Int(arc4random_uniform(UInt32(count - 1)))
@@ -150,7 +150,7 @@ extension Chromosome {
 
 // MARK: - GeneticOperating
 
-extension Chromosome: GeneticOperating {
+extension Chromosome {
 	
 	public static func mutation(mutationRate: Double) -> Chromosome -> Chromosome {
 		return { chromosome in

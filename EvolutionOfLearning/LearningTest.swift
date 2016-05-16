@@ -46,10 +46,23 @@ public struct LearningTest {
 
 public struct LearningTestRecord {
 	
-	let chromosome: Chromosome
+	public let chromosome: Chromosome
 	
-	let fitness: Double
+	public let fitness: Double
 	
-	let tasks: [Task]
+	public let tasks: [Task]
+	
+}
+
+extension LearningTestRecord : EvaluationRecord {
+	
+	public var name: String { return "Learning Test" }
+	
+	public var populations: [Population] {
+		var individual = Individual(chromosome: chromosome)
+		individual.fitness = fitness
+		let population = Population(members: [individual])
+		return [population]
+	}
 	
 }

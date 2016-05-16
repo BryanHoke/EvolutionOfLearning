@@ -29,31 +29,34 @@ protocol ExperimentOutput {
 
 // MARK: - Experiment
 
-public class Experiment {
+public protocol Experiment {
 	
-	// MARK: - Instance Properties
+	var config: ExperimentConfig { get set }
 	
-	/// The file path from which the `environment` should be loaded at the start of the experiment.
-	var environmentPath: String?
+	func run(forNumberOfTrials numberOfTrials: Int) -> ExperimentRecord
 	
-	let chromosomeSize = 35
+}
+
+public protocol ExperimentRecord {
 	
-	let populationSize = 40
+	var config: ExperimentConfig { get }
 	
-	let elitismCount = 1
+	var trials: [TrialRecord] { get }
 	
-	let crossoverRate = 0.8
+}
+
+public protocol TrialRecord {
 	
-	let mutationRate = 0.01
+	var evaluations: [EvaluationRecord] { get }
 	
-	let numberOfTrainingEpochs = 10
+}
+
+public protocol EvaluationRecord {
 	
-	var taskCount = 30
+	var name: String { get }
 	
-	var numberOfGenerations: Int = 0
+	var populations: [Population] { get }
 	
-	var numberOfTrials: Int = 0
-	
-	var output: ExperimentOutput?
+	var tasks: [Task] { get }
 	
 }
