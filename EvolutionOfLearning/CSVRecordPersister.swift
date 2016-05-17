@@ -10,6 +10,10 @@ import Foundation
 
 class CSVRecordPersister: RecordPersisting {
 	
+	var resultsPath: String {
+		return "/Users/bryanhoke/Projects/BDHSoftware/EvolutionOfLearning/Results/"
+	}
+	
 	func persist(record: ExperimentRecord) {
 		
 	}
