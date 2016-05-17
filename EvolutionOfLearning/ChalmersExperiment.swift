@@ -44,7 +44,7 @@ public struct ChalmersExperiment : Experiment {
 		let testTasks = extractTasks(from: &tasks, count: testTaskCount)
 		
 		assert(evolutionaryTasks.count == evolutionaryTaskCount)
-		assert(tasks.count == self.tasks.count - evolutionaryTaskCount)
+		assert(testTasks.count == testTaskCount)
 		
 		return (evolutionary: evolutionaryTasks, test: testTasks)
 	}
