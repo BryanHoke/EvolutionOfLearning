@@ -55,7 +55,7 @@ class ExperimentDriver : ConfigurationEventHandling {
 	}
 	
 	var environmentPath: String {
-		return "/Users/bryanhoke/Projects/BDHSoftware/OS X/EvolutionOfLearning/Environment1.txt"
+		return "/Users/bryanhoke/Projects/BDHSoftware/OS X/EvolutionOfLearning/Resources/Environment1.txt"
 	}
 	
 	weak var interface: ExperimentInterface? {
