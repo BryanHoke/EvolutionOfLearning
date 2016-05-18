@@ -66,6 +66,7 @@
 		4A620D191C8D40BB0084B0A2 /* Evolution.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A620D171C8D40BB0084B0A2 /* Evolution.swift */; };
 		4A6FA40F1CEBE7DC00FB62D6 /* TextRecordPersister.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A6FA40E1CEBE7DC00FB62D6 /* TextRecordPersister.swift */; };
 		4A6FA4111CEBE94100FB62D6 /* ExperimentRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A6FA4101CEBE94100FB62D6 /* ExperimentRecorder.swift */; };
+		4A6FA4131CEBEE0200FB62D6 /* ConfigFileWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A6FA4121CEBEE0200FB62D6 /* ConfigFileWriter.swift */; };
 		4A7A1DCC1B9FF4AE001F5C18 /* ChalmersExperiment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7A1DCB1B9FF4AE001F5C18 /* ChalmersExperiment.swift */; };
 		4A7A1DCD1B9FF4AE001F5C18 /* ChalmersExperiment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7A1DCB1B9FF4AE001F5C18 /* ChalmersExperiment.swift */; };
 		4A7E06931B5C2FC40000E561 /* Experiment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7E06921B5C2FC40000E561 /* Experiment.swift */; };
@@ -169,6 +170,7 @@
 		4A620D171C8D40BB0084B0A2 /* Evolution.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Evolution.swift; sourceTree = "<group>"; };
 		4A6FA40E1CEBE7DC00FB62D6 /* TextRecordPersister.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextRecordPersister.swift; sourceTree = "<group>"; };
 		4A6FA4101CEBE94100FB62D6 /* ExperimentRecorder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExperimentRecorder.swift; sourceTree = "<group>"; };
+		4A6FA4121CEBEE0200FB62D6 /* ConfigFileWriter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigFileWriter.swift; sourceTree = "<group>"; };
 		4A7A1DCB1B9FF4AE001F5C18 /* ChalmersExperiment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChalmersExperiment.swift; sourceTree = "<group>"; };
 		4A7E06921B5C2FC40000E561 /* Experiment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Experiment.swift; sourceTree = "<group>"; };
 		4A7E06951B5C52AD0000E561 /* Environment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
@@ -299,6 +301,7 @@
 				4A364B021CEA3C44009398AF /* CSVRecordPersister.swift */,
 				4A6FA40E1CEBE7DC00FB62D6 /* TextRecordPersister.swift */,
 				4A6FA4101CEBE94100FB62D6 /* ExperimentRecorder.swift */,
+				4A6FA4121CEBEE0200FB62D6 /* ConfigFileWriter.swift */,
 			);
 			name = Experiments;
 			sourceTree = "<group>";
@@ -580,6 +583,7 @@
 				4A364A791CE909BF009398AF /* ExperimentInterface.swift in Sources */,
 				4A447FF51C63A9A100C5BDF0 /* IndexedDictionary.swift in Sources */,
 				4A495A141CD6FE8900510582 /* ConfigurationView.swift in Sources */,
+				4A6FA4131CEBEE0200FB62D6 /* ConfigFileWriter.swift in Sources */,
 				4A364A771CE900C0009398AF /* TableScanner.swift in Sources */,
 				4A364B001CEA3A48009398AF /* RecordPersisting.swift in Sources */,
 				4A2EE7A51BEFF4B2007D17FD /* FeedForwardNeuralNetwork.swift in Sources */,
