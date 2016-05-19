@@ -10,29 +10,23 @@ import Foundation
 
 struct ConfigFileWriter {
 	
-	var config: ExperimentConfig
-	
-	var directoryPath: String
-	
 	var filename: String {
 		return "Config.txt"
 	}
 	
-	var filepath: String {
-		return directoryPath + filename
-	}
-	
-	func writeConfigFile() {
-		let content = makeConfigFileContent()
+	func write(config: ExperimentConfig, inDirectory directoryPath: String) {
+		let content = makeFileContent(for: config)
+		let path = directoryPath + filename
+		
 		do {
-			try content.writeToFile(filepath, atomically: true, encoding: NSUTF8StringEncoding)
+			try content.writeToFile(path, atomically: true, encoding: NSUTF8StringEncoding)
 		}
 		catch let error as NSError {
 			preconditionFailure("\(error)")
 		}
 	}
 	
-	func makeConfigFileContent() -> String {
+	func makeFileContent(for config: ExperimentConfig) -> String {
 		return "evolutionaryTaskCount: \(config.evolutionaryTaskCount)\n"
 			+ "testTaskCount: \(config.testTaskCount)\n"
 			+ "numberOfGenerations: \(config.evolutionConfig.numberOfGenerations)\n"
