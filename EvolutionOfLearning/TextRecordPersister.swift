@@ -8,14 +8,16 @@
 
 import Foundation
 
-class TextRecordPersister : RecordPersisting {
+struct TextRecordPersister {
 	
-	var resultsPath: String {
-		return "/Users/bryanhoke/Projects/BDHSoftware/EvolutionOfLearning/Results/"
-	}
-	
-	func persist(record: ExperimentRecord) {
+	func persist(record: ExperimentRecord, inDirectory directoryPath: String) {
+		let configWriter = ConfigFileWriter()
+		configWriter.write(record.config, inDirectory: directoryPath)
 		
+		let trialWriter = TrialRecordFileWriter()
+		for (index, trial) in record.trials.enumerate() {
+			trialWriter.persist(trial, withIndex: index, inDirectory: directoryPath)
+		}
 	}
 	
 }
