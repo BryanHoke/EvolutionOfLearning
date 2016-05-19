@@ -8,6 +8,40 @@
 
 import Foundation
 
-final class ConfigFileWriter {
+struct ConfigFileWriter {
+	
+	var config: ExperimentConfig
+	
+	var directoryPath: String
+	
+	var filename: String {
+		return "Config.txt"
+	}
+	
+	var filepath: String {
+		return directoryPath + filename
+	}
+	
+	func writeConfigFile() {
+		let content = makeConfigFileContent()
+		do {
+			try content.writeToFile(filepath, atomically: true, encoding: NSUTF8StringEncoding)
+		}
+		catch let error as NSError {
+			preconditionFailure("\(error)")
+		}
+	}
+	
+	func makeConfigFileContent() -> String {
+		return "evolutionaryTaskCount: \(config.evolutionaryTaskCount)\n"
+			+ "testTaskCount: \(config.testTaskCount)\n"
+			+ "numberOfGenerations: \(config.evolutionConfig.numberOfGenerations)\n"
+			+ "populationSize: \(config.environmentConfig.populationSize)\n"
+			+ "learningRuleSize: \(config.fitnessConfig.learningRuleSize)\n"
+			+ "numberOfTrainingEpochs: \(config.fitnessConfig.numberOfTrainingEpochs)\n"
+			+ "elitismCount: \(config.reproductionConfig.elitismCount)\n"
+			+ "crossoverRate: \(config.reproductionConfig.crossoverRate)\n"
+			+ "mutationRate: \(config.reproductionConfig.mutationRate)"
+	}
 	
 }
