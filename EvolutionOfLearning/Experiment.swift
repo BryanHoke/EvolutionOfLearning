@@ -60,3 +60,27 @@ public protocol EvaluationRecord {
 	var tasks: [Task] { get }
 	
 }
+
+struct ExperimentOverview {
+	
+	var averageFitnessesPerEvaluation: [String: [[Double]]] = [:]
+	
+	var maximumFitnessesPerEvaluation: [String: [[Double]]] = [:]
+	
+	mutating func accumulate(trial: TrialRecord) {
+		for evaluation in trial.evaluations {
+			accumulate(evaluation)
+		}
+	}
+	
+	mutating func accumulate(evaluation: EvaluationRecord) {
+		let key = evaluation.name
+		
+		let averages = evaluation.populations.map { $0.averageFitness }
+		averageFitnessesPerEvaluation[key]?.append(averages)
+		
+		let maximums = evaluation.populations.map { $0[0].fitness }
+		maximumFitnessesPerEvaluation[key]?.append(maximums)
+	}
+	
+}
