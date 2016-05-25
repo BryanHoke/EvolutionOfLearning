@@ -33,7 +33,9 @@ public protocol Experiment {
 	
 	var config: ExperimentConfig { get set }
 	
-	func run(forNumberOfTrials numberOfTrials: Int) -> ExperimentRecord
+//	func run(forNumberOfTrials numberOfTrials: Int) -> ExperimentRecord
+	
+	func run(forNumberOfTrials numberOfTrials: Int, onTrialComplete: (TrialRecord, Int) -> Void)
 	
 }
 
@@ -67,6 +69,49 @@ struct ExperimentOverview {
 	
 	var maximumFitnessesPerEvaluation: [String: [[Double]]] = [:]
 	
+	var keyOrder: [String] = []
+	
+	var meanAverageFitnesses: [[Double]] {
+		var means = [[Double]]()
+		
+		for key in keyOrder {
+			guard let averages = averageFitnessesPerEvaluation[key] else {
+				continue
+			}
+			means.append(self.means(ofValues: averages))
+		}
+		
+		return means
+	}
+	
+	var meanMaximumFitnesses: [[Double]] {
+		var means = [[Double]]()
+		
+		for key in keyOrder {
+			guard let maximums = maximumFitnessesPerEvaluation[key] else {
+				continue
+			}
+			means.append(self.means(ofValues: maximums))
+		}
+		
+		return means
+	}
+	
+	func means(ofValues values: [[Double]]) -> [Double] {
+		var means = [Double]()
+		let count = values.first?.count ?? 0
+		means.reserveCapacity(count)
+		let divisor = Double(values.count)
+		
+		for i in 0..<count {
+			let sum = values.reduce(0) { $0 + $1[i] }
+			let mean = sum / divisor
+			means.append(mean)
+		}
+		
+		return means
+	}
+	
 	mutating func accumulate(trial: TrialRecord) {
 		for evaluation in trial.evaluations {
 			accumulate(evaluation)
@@ -76,11 +121,17 @@ struct ExperimentOverview {
 	mutating func accumulate(evaluation: EvaluationRecord) {
 		let key = evaluation.name
 		
+		if !keyOrder.contains(key) {
+			keyOrder.append(key)
+			averageFitnessesPerEvaluation[key] = []
+			maximumFitnessesPerEvaluation[key] = []
+		}
+		
 		let averages = evaluation.populations.map { $0.averageFitness }
-		averageFitnessesPerEvaluation[key]?.append(averages)
+		averageFitnessesPerEvaluation[key]!.append(averages)
 		
 		let maximums = evaluation.populations.map { $0[0].fitness }
-		maximumFitnessesPerEvaluation[key]?.append(maximums)
+		maximumFitnessesPerEvaluation[key]!.append(maximums)
 	}
 	
 }

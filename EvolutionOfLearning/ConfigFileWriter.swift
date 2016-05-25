@@ -10,13 +10,11 @@ import Foundation
 
 struct ConfigFileWriter {
 	
-	var filename: String {
-		return "Config.txt"
-	}
+	let filename = "Config.txt"
 	
 	func write(config: ExperimentConfig, inDirectory directoryPath: String) {
 		let content = makeFileContent(for: config)
-		let path = directoryPath + filename
+		let path = "\(directoryPath)/\(filename)"
 		
 		do {
 			try content.writeToFile(path, atomically: true, encoding: NSUTF8StringEncoding)

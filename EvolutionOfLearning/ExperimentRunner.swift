@@ -10,7 +10,7 @@ import Foundation
 
 class ExperimentRunner : ExperimentRunning {
 	
-	weak var persister: RecordPersisting?
+	weak var recorder: ExperimentRecorder?
 	
 	var config = ExperimentConfig()
 	
@@ -30,9 +30,16 @@ class ExperimentRunner : ExperimentRunning {
 	}
 	
 	func runExperiment(using tasks: [Task]) {
+		recorder?.createResultsDirectory()
+		recorder?.write(config)
+		
 		let experiment = makeExperiment(tasks: tasks)
-		let record = experiment.run(forNumberOfTrials: numberOfTrials)
-		persister?.persist(record)
+		experiment.run(forNumberOfTrials: numberOfTrials, onTrialComplete: {
+			[unowned self] (record, index) in
+			self.recorder?.write(record, withIndex: index)
+		})
+		
+		recorder?.writeOverview()
 	}
 	
 	private func makeExperiment(tasks tasks: [Task]) -> Experiment {

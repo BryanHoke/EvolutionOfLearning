@@ -18,7 +18,7 @@ struct ExperimentOverviewFileWriter {
 	
 	func persist(overview: ExperimentOverview, inDirectory directoryPath: String) {
 		let content = makeFileContent(for: overview)
-		let path = "\(directoryPath)/\(baseFilename) \(index)\(fileExtension)"
+		let path = "\(directoryPath)/\(baseFilename)\(fileExtension)"
 		do {
 			try content.writeToFile(path, atomically: true, encoding: NSUTF8StringEncoding)
 		}
@@ -30,7 +30,7 @@ struct ExperimentOverviewFileWriter {
 	func makeFileContent(for overview: ExperimentOverview) -> String {
 		let averages = overview.meanAverageFitnesses
 		let maximums = overview.meanMaximumFitnesses
-		return "AVG, MAX\n"
+		return "GEN, AVG, MAX\n"
 			+ makeFileContent(forMeans: (averages: averages, maximums: maximums))
 		
 	}
@@ -49,7 +49,7 @@ struct ExperimentOverviewFileWriter {
 	
 	func makeFileContent(for pair: StatPair) -> String {
 		let count = pair.averages.count
-		return (0..<count).map({ "\(pair.averages[$0]), \(pair.maximums[$0])" }).joinWithSeparator("\n")
+		return (0..<count).map({ "\($0), \(pair.averages[$0]), \(pair.maximums[$0])" }).joinWithSeparator("\n")
 	}
 	
 }

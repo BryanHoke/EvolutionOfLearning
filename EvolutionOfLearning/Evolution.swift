@@ -23,8 +23,11 @@ public struct Evolution {
 	}
 	
 	public func run() -> EvolutionRecord {
+		print("Evolution")
 		var history: [Population] = []
-		let geneticAlgorithm = GeneticAlgorithm(environment: environment, onPopulationEvaluated: { history.append($0) })
+		let geneticAlgorithm = GeneticAlgorithm(environment: environment, onPopulationEvaluated: { population in
+			history.append(population)
+		})
 		geneticAlgorithm.run(forNumberOfGenerations: numberOfGenerations)
 		return EvolutionRecord(history: history, tasks: tasks)
 	}

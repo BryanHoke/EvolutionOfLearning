@@ -13,3 +13,9 @@ protocol RecordPersisting : class {
 	func persist(record: ExperimentRecord)
 	
 }
+
+protocol TrialRecordPersisting : class {
+	
+	func persist(record: TrialRecord)
+	
+}

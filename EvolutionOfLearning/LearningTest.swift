@@ -15,9 +15,11 @@ public struct LearningTest {
 	public var history: [Population]
 	
 	func run() -> LearningTestRecord {
+		print("LearningTest")
 		let mostFitIndividual = findMostFitIndividual()
 		let chromosome = mostFitIndividual.chromosome
 		let fitness = fitnessAgent.fitness(of: chromosome)
+		print(fitness)
 		return LearningTestRecord(chromosome: chromosome, fitness: fitness, tasks: fitnessAgent.tasks)
 	}
 	

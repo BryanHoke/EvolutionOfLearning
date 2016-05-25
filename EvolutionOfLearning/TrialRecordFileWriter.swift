@@ -8,15 +8,13 @@
 
 import Foundation
 
-final class TrialRecordFileWriter {
+struct TrialRecordFileWriter {
 	
-	var baseFilename: String {
-		return "Trial"
-	}
+	let baseFilename = "Trial"
 	
 	func persist(record: TrialRecord, withIndex index: Int, inDirectory directoryPath: String) {
 		let content = makeFileContent(for: record)
-		let path = "\(directoryPath)\(baseFilename)\(index)"
+		let path = "\(directoryPath)/\(baseFilename) \(index).txt"
 		do {
 			try content.writeToFile(path, atomically: true, encoding: NSUTF8StringEncoding)
 		}

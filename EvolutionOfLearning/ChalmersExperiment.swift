@@ -14,20 +14,22 @@ public struct ChalmersExperiment : Experiment {
 	
 	public var config: ExperimentConfig
 	
-	public func run(forNumberOfTrials numberOfTrials: Int) -> ExperimentRecord {
+	public func run(forNumberOfTrials numberOfTrials: Int, onTrialComplete: (TrialRecord, Int) -> Void) {
 		guard config.evolutionaryTaskCount > 0 && tasks.count > config.evolutionaryTaskCount else {
 			preconditionFailure("The number of evolutionary tasks (\(config.evolutionaryTaskCount) must be less than the total number of tasks (\(tasks.count)")
 		}
 		
-		var records: [ChalmersTrialRecord] = []
+//		var records: [ChalmersTrialRecord] = []
 		
-		for _ in 0..<numberOfTrials {
+		for i in 0..<numberOfTrials {
+			print("Trial \(i)")
 			let trial = makeTrial()
 			let record = trial.run()
-			records.append(record)
+			onTrialComplete(record, i)
+//			records.append(record)
 		}
 		
-		return ChalmersExperimentRecord(config: config, trialRecords: records)
+//		return ChalmersExperimentRecord(config: config, trialRecords: records)
 	}
 	
 	private func makeTrial() -> ChalmersTrial {

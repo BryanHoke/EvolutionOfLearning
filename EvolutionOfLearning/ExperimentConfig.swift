@@ -27,7 +27,7 @@ public enum ExperimentalCondition: Int {
 
 public struct ExperimentConfig {
 	
-	public var evolutionaryTaskCount = 20
+	public var evolutionaryTaskCount = 15
 	
 	public var testTaskCount = 10
 	
