@@ -12,14 +12,18 @@ public enum ExperimentalCondition: Int {
 	
 	case learningRuleEvolution
 	
+	case weightEvolution
+	
 	static var allConditions: [ExperimentalCondition] {
-		return [.learningRuleEvolution]
+		return [.learningRuleEvolution, .weightEvolution]
 	}
 	
 	public var name: String {
 		switch self {
 		case .learningRuleEvolution:
 			return "Learning Rule Evolution"
+		case .weightEvolution:
+			return "Weight Evolution"
 		}
 	}
 	
@@ -27,7 +31,7 @@ public enum ExperimentalCondition: Int {
 
 public struct ExperimentConfig {
 	
-	public var evolutionaryTaskCount = 15
+	public var evolutionaryTaskCount = 20
 	
 	public var testTaskCount = 10
 	
