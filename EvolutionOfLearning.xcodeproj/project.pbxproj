@@ -68,6 +68,8 @@
 		4A6FA4111CEBE94100FB62D6 /* ExperimentRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A6FA4101CEBE94100FB62D6 /* ExperimentRecorder.swift */; };
 		4A6FA4131CEBEE0200FB62D6 /* ConfigFileWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A6FA4121CEBEE0200FB62D6 /* ConfigFileWriter.swift */; };
 		4A6FA4CB1CED59E600FB62D6 /* TrialRecordFileWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A6FA4CA1CED59E600FB62D6 /* TrialRecordFileWriter.swift */; };
+		4A7802FD1CF7F47D002DADA4 /* WeightEvolutionExperiment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7802FC1CF7F47D002DADA4 /* WeightEvolutionExperiment.swift */; };
+		4A7802FF1CF7F4F4002DADA4 /* WeightEvolutionTrial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7802FE1CF7F4F4002DADA4 /* WeightEvolutionTrial.swift */; };
 		4A7A1DCC1B9FF4AE001F5C18 /* ChalmersExperiment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7A1DCB1B9FF4AE001F5C18 /* ChalmersExperiment.swift */; };
 		4A7A1DCD1B9FF4AE001F5C18 /* ChalmersExperiment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7A1DCB1B9FF4AE001F5C18 /* ChalmersExperiment.swift */; };
 		4A7E06931B5C2FC40000E561 /* Experiment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7E06921B5C2FC40000E561 /* Experiment.swift */; };
@@ -175,6 +177,8 @@
 		4A6FA4101CEBE94100FB62D6 /* ExperimentRecorder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExperimentRecorder.swift; sourceTree = "<group>"; };
 		4A6FA4121CEBEE0200FB62D6 /* ConfigFileWriter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigFileWriter.swift; sourceTree = "<group>"; };
 		4A6FA4CA1CED59E600FB62D6 /* TrialRecordFileWriter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrialRecordFileWriter.swift; sourceTree = "<group>"; };
+		4A7802FC1CF7F47D002DADA4 /* WeightEvolutionExperiment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeightEvolutionExperiment.swift; sourceTree = "<group>"; };
+		4A7802FE1CF7F4F4002DADA4 /* WeightEvolutionTrial.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeightEvolutionTrial.swift; sourceTree = "<group>"; };
 		4A7A1DCB1B9FF4AE001F5C18 /* ChalmersExperiment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChalmersExperiment.swift; sourceTree = "<group>"; };
 		4A7E06921B5C2FC40000E561 /* Experiment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Experiment.swift; sourceTree = "<group>"; };
 		4A7E06951B5C52AD0000E561 /* Environment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
@@ -284,10 +288,12 @@
 			children = (
 				4A7E06921B5C2FC40000E561 /* Experiment.swift */,
 				4A7A1DCB1B9FF4AE001F5C18 /* ChalmersExperiment.swift */,
+				4A7802FC1CF7F47D002DADA4 /* WeightEvolutionExperiment.swift */,
 				4A0583301C92A19400F3D0E0 /* ExperimentConfig.swift */,
 				4A620D171C8D40BB0084B0A2 /* Evolution.swift */,
 				4A7E06951B5C52AD0000E561 /* Environment.swift */,
 				4A05832D1C9297F000F3D0E0 /* ChalmersTrial.swift */,
+				4A7802FE1CF7F4F4002DADA4 /* WeightEvolutionTrial.swift */,
 				4A2EE79E1BEE8DA4007D17FD /* FitnessAgent.swift */,
 				4AD935531CBAFE0A0055B043 /* LearningRuleEvolutionFitnessAgent.swift */,
 				4AD935561CBAFE880055B043 /* NetworkEvolutionFitnessAgent.swift */,
@@ -576,6 +582,7 @@
 				4AD935541CBAFE0A0055B043 /* LearningRuleEvolutionFitnessAgent.swift in Sources */,
 				4AF383231CA25E6E006D13D4 /* PopulationOperating.swift in Sources */,
 				4AF11C111B4092EB00AED909 /* Population.swift in Sources */,
+				4A7802FD1CF7F47D002DADA4 /* WeightEvolutionExperiment.swift in Sources */,
 				4A9B76C81B55576800BE653D /* CustomOperators.swift in Sources */,
 				4A7E06961B5C52AD0000E561 /* Environment.swift in Sources */,
 				4A825ECE1B2D019E00C8CEA3 /* Document.xcdatamodeld in Sources */,
@@ -596,6 +603,7 @@
 				4A447FF51C63A9A100C5BDF0 /* IndexedDictionary.swift in Sources */,
 				4A495A141CD6FE8900510582 /* ConfigurationView.swift in Sources */,
 				4A6FA4131CEBEE0200FB62D6 /* ConfigFileWriter.swift in Sources */,
+				4A7802FF1CF7F4F4002DADA4 /* WeightEvolutionTrial.swift in Sources */,
 				4A364A771CE900C0009398AF /* TableScanner.swift in Sources */,
 				4A364B001CEA3A48009398AF /* RecordPersisting.swift in Sources */,
 				4A2EE7A51BEFF4B2007D17FD /* FeedForwardNeuralNetwork.swift in Sources */,

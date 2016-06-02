@@ -28,6 +28,10 @@ class ConfigurationWindowController: NSWindowController, ExperimentInterface {
 	
 	@IBOutlet weak var maxTasksStepper: NSStepper!
 	
+	@IBOutlet weak var tasksFormatter: NSNumberFormatter!
+	
+	@IBOutlet weak var maxTasksFormatter: NSNumberFormatter!
+	
 	@IBAction func runButtonClicked(sender: NSButton) {
 		eventHandler?.runButtonPressed()
 	}
@@ -46,6 +50,12 @@ class ConfigurationWindowController: NSWindowController, ExperimentInterface {
 		}
 		else if textField === trialsField {
 			eventHandler?.numberOfTrialsChanged(to: numberOfTrials)
+		}
+		else if textField === tasksField {
+			eventHandler?.numberOfTasksChanged(to: numberOfTasks)
+		}
+		else if textField === maxTasksField {
+			eventHandler?.maxNumberOfTasksChanged(to: maxNumberOfTasks)
 		}
 	}
 	
@@ -91,21 +101,36 @@ class ConfigurationWindowController: NSWindowController, ExperimentInterface {
 	}
 	
 	var numberOfTrials: Int {
-		get {
-			return trialsField.integerValue
-		}
-		set {
-			trialsField.integerValue = newValue
-		}
+		get { return trialsField.integerValue }
+		set { trialsField.integerValue = newValue }
 	}
 	
 	var numberOfGenerations: Int {
-		get {
-			return generationsField.integerValue
-		}
+		get { return generationsField.integerValue }
+		set { generationsField.integerValue = newValue }
+	}
+	
+	var numberOfTasks: Int {
+		get { return tasksField.integerValue }
 		set {
-			generationsField.integerValue = newValue
+			tasksField.integerValue = newValue
+			maxTasksFormatter.minimum = newValue
 		}
+	}
+	
+	var numberOfTasksUpperBound: Int? {
+		get { return tasksFormatter.maximum?.integerValue }
+		set { tasksFormatter.maximum = newValue }
+	}
+	
+	var maxNumberOfTasks: Int {
+		get { return maxTasksField.integerValue }
+		set { maxTasksField.integerValue = newValue }
+	}
+	
+	var maxNumberOfTasksLowerBound: Int? {
+		get { return maxTasksFormatter.minimum?.integerValue }
+		set { maxTasksFormatter.minimum = newValue }
 	}
 	
 }

@@ -19,12 +19,14 @@ public protocol ExperimentType {
 
 protocol ExperimentOutput {
 	
-	func experimentDidBeginNewTrial(experiment: Experiment)
+	associatedtype ExperimentType : Experiment
 	
-	func experiment(experiment: Experiment,
+	func experimentDidBeginNewTrial(experiment: ExperimentType)
+	
+	func experiment(experiment: ExperimentType,
 		didEvaluatePopulation pop: Population)
 	
-	func experimentDidComplete(experiment: Experiment)
+	func experimentDidComplete(experiment: ExperimentType)
 }
 
 // MARK: - Experiment

@@ -8,13 +8,12 @@
 
 import Foundation
 
-public struct WeightEvolutionFitnessAgent: FitnessAgent {
+public struct NetworkEvolutionFitnessAgent: FitnessAgent {
 	
-	public init(bitsPerWeight: Int, exponentialCap: Int, tasks: [Task]) {
+	public init(bitsPerWeight: Int, exponentShift: Int, tasks: [Task]) {
 		self.bitsPerWeight = bitsPerWeight
-		self.exponentialCap = exponentialCap
+		self.exponentShift = exponentShift
 		self.tasks = tasks
-		self.exponentShift = exponentOffset(bitCount: bitsPerWeight, cap: exponentialCap)
 		geneMap = GeneMap(bitsPerWeight: bitsPerWeight, offset: 0)
 		buildGeneMap()
 	}
@@ -23,11 +22,9 @@ public struct WeightEvolutionFitnessAgent: FitnessAgent {
 	public let bitsPerWeight: Int
 	
 	/// Preferred value is `4`.
-	public let exponentialCap: Int
+	private let exponentShift: Int
 	
 	public let tasks: [Task]
-	
-	private let exponentShift: Int
 	
 	private var geneMap: GeneMap
 	

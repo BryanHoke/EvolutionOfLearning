@@ -8,22 +8,28 @@
 
 import Foundation
 
+public protocol OutputStringConvertible {
+	
+	var outputDescription: String { get }
+	
+}
+
 public enum ExperimentalCondition: Int {
 	
 	case learningRuleEvolution
 	
-	case weightEvolution
+	case networkEvolution
 	
 	static var allConditions: [ExperimentalCondition] {
-		return [.learningRuleEvolution, .weightEvolution]
+		return [.learningRuleEvolution, .networkEvolution]
 	}
 	
 	public var name: String {
 		switch self {
 		case .learningRuleEvolution:
 			return "Learning Rule Evolution"
-		case .weightEvolution:
-			return "Weight Evolution"
+		case .networkEvolution:
+			return "Network Evolution"
 		}
 	}
 	
@@ -45,23 +51,88 @@ public struct ExperimentConfig {
 	
 }
 
+extension ExperimentConfig : OutputStringConvertible {
+	
+	public var outputDescription: String {
+		return ([
+			"evolutionaryTaskCount: \(evolutionaryTaskCount)",
+			"testTaskCount: \(testTaskCount)"
+			]
+			+ ([
+				evolutionConfig,
+				environmentConfig,
+				fitnessConfig,
+				reproductionConfig
+				] as [OutputStringConvertible])
+				.map({ $0.outputDescription }))
+			.joinWithSeparator("\n")
+	}
+	
+}
+
 public struct EnvironmentConfig {
 	
 	public var populationSize = 40
 	
 }
 
+extension EnvironmentConfig : OutputStringConvertible {
+	
+	public var outputDescription: String {
+		return "populationSize: \(populationSize)"
+	}
+	
+}
+
 public struct FitnessConfig {
+	
+	public var usesLearningRuleEvolution = true
 	
 	public var learningRuleSize = 35
 	
 	public var numberOfTrainingEpochs = 10
+	
+	public var usesNetworkEvolution = true
+	
+	public var bitsPerWeight = 3
+	
+	public var encodingExponentShift = -3
+	
+}
+
+extension FitnessConfig : OutputStringConvertible {
+	
+	public var outputDescription: String {
+		return
+			((usesLearningRuleEvolution ?
+				[
+					"learningRuleSize: \(learningRuleSize)",
+					"numberOfTrainingEpochs: \(numberOfTrainingEpochs)"
+				]
+				: [])
+				+
+				(usesNetworkEvolution ?
+					[
+						"bitsPerWeight: \(bitsPerWeight)",
+						"encodingExponentShift: \(encodingExponentShift)"
+					]
+					: [])
+				).joinWithSeparator("\n")
+	}
 	
 }
 
 public struct EvolutionConfig {
 	
 	public var numberOfGenerations = 1000
+	
+}
+
+extension EvolutionConfig : OutputStringConvertible {
+	
+	public var outputDescription: String {
+		return "numberOfGenerations: \(numberOfGenerations)"
+	}
 	
 }
 
@@ -72,5 +143,17 @@ public struct ReproductionConfig {
 	public var crossoverRate = 0.8
 	
 	public var mutationRate = 0.01
+	
+}
+
+extension ReproductionConfig : OutputStringConvertible {
+	
+	public var outputDescription: String {
+		return [
+			"elitismCount: \(elitismCount)",
+			"crossoverRate: \(crossoverRate)",
+			"mutationRate: \(mutationRate)"
+		].joinWithSeparator("\n")
+	}
 	
 }

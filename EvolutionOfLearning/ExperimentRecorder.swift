@@ -10,7 +10,49 @@ import Foundation
 
 final class ExperimentRecorder {
 	
-	init() {
+	init() {}
+	
+	let resultsBasePath = "/Users/bryanhoke/Projects/BDHSoftware/OS X/EvolutionOfLearning/Results/"
+	
+	var resultsDirectory: String?
+	
+	var overview = ExperimentOverview()
+	
+	func createResultsDirectory() {
+		makeResultsDirectory()
+		do {
+			try NSFileManager.defaultManager().createDirectoryAtPath(resultsDirectory!, withIntermediateDirectories: false, attributes: nil)
+		}
+		catch let error as NSError {
+			print(error)
+			preconditionFailure()
+		}
+	}
+	
+	func write(config: ExperimentConfig) {
+		guard let resultsDirectory = self.resultsDirectory else {
+			preconditionFailure()
+		}
+		ConfigFileWriter().write(config, inDirectory: resultsDirectory)
+	}
+	
+	func write(trial: TrialRecord, withIndex index: Int) {
+		guard let resultsDirectory = self.resultsDirectory else {
+			preconditionFailure()
+		}
+		overview.accumulate(trial)
+		TrialRecordFileWriter().persist(trial, withIndex: index, inDirectory: resultsDirectory)
+		TrialStatisticsFileWriter().persist(trial, withIndex: index, inDirectory: resultsDirectory)
+	}
+	
+	func writeOverview() {
+		guard let resultsDirectory = self.resultsDirectory else {
+			preconditionFailure()
+		}
+		ExperimentOverviewFileWriter().persist(overview, inDirectory: resultsDirectory)
+	}
+	
+	func makeResultsDirectory() {
 		var index = 0
 		var path = ""
 		let fileManager = NSFileManager()
@@ -23,45 +65,6 @@ final class ExperimentRecorder {
 		}
 		
 		resultsDirectory = path
-	}
-	
-	let resultsBasePath = "/Users/bryanhoke/Projects/BDHSoftware/OS X/EvolutionOfLearning/Results/"
-	
-	let resultsDirectory: String
-	
-	var overview = ExperimentOverview()
-	
-	func createResultsDirectory() {
-		do {
-			try NSFileManager.defaultManager().createDirectoryAtPath(resultsDirectory, withIntermediateDirectories: false, attributes: nil)
-		}
-		catch let error as NSError {
-			print(error)
-			preconditionFailure()
-		}
-	}
-	
-	func write(config: ExperimentConfig) {
-		ConfigFileWriter().write(config, inDirectory: resultsDirectory)
-	}
-	
-	func write(trial: TrialRecord, withIndex index: Int) {
-		overview.accumulate(trial)
-		TrialRecordFileWriter().persist(trial, withIndex: index, inDirectory: resultsDirectory)
-		TrialStatisticsFileWriter().persist(trial, withIndex: index, inDirectory: resultsDirectory)
-	}
-	
-	func writeOverview() {
-		ExperimentOverviewFileWriter().persist(overview, inDirectory: resultsDirectory)
-	}
-	
-	func makeResultsDirectory() {
-		do {
-		try NSFileManager.defaultManager().createDirectoryAtPath(resultsDirectory, withIntermediateDirectories: false, attributes: nil)
-		}
-		catch let error as NSError {
-			preconditionFailure("Could not create results directory: \(error)")
-		}
 	}
 	
 }

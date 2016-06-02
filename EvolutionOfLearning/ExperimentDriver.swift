@@ -37,22 +37,20 @@ class ExperimentDriver : ConfigurationEventHandling {
 	}
 	
 	var numberOfTrials: Int {
-		get {
-			return experimentRunner.numberOfTrials
-		}
-		set {
-			experimentRunner.numberOfTrials = newValue
-		}
+		get { return experimentRunner.numberOfTrials }
+		set { experimentRunner.numberOfTrials = newValue }
 	}
 	
 	var numberOfGenerations: Int {
-		get {
-			return experimentRunner.numberOfGenerations
-		}
-		set {
-			experimentRunner.numberOfGenerations = newValue
-		}
+		get { return experimentRunner.numberOfGenerations }
+		set { experimentRunner.numberOfGenerations = newValue }
 	}
+	
+	var numberOfTasks = 20
+	
+	let numberOfTasksUpperBound = 20
+	
+	var maxNumberOfTasks = 20
 	
 	var environmentPath: String {
 		return "/Users/bryanhoke/Projects/BDHSoftware/OS X/EvolutionOfLearning/Resources/Environment1.txt"
@@ -72,6 +70,9 @@ class ExperimentDriver : ConfigurationEventHandling {
 		interface.selectedConditionIndex = selectedConditionIndex
 		interface.numberOfTrials = numberOfTrials
 		interface.numberOfGenerations = numberOfGenerations
+		interface.numberOfTasks = numberOfTasks
+		
+		interface.maxNumberOfTasks = maxNumberOfTasks
 	}
 	
 	// MARK: - ConfigurationEventHandling
@@ -88,9 +89,26 @@ class ExperimentDriver : ConfigurationEventHandling {
 		self.numberOfTrials = numberOfTrials
 	}
 	
+	func numberOfTasksChanged(to numberOfTasks: Int) {
+		self.numberOfTasks = min(numberOfTasks, numberOfTasksUpperBound)
+		if numberOfTasks > self.numberOfTasks {
+			interface?.numberOfTasks = self.numberOfTasks
+		}
+		maxNumberOfTasks = max(maxNumberOfTasks, self.numberOfTasks)
+		interface?.maxNumberOfTasks = maxNumberOfTasks
+		interface?.maxNumberOfTasksLowerBound = self.numberOfTasks
+	}
+	
+	func maxNumberOfTasksChanged(to maxNumberOfTasks: Int) {
+		self.maxNumberOfTasks = maxNumberOfTasks
+	}
+	
 	func runButtonPressed() {
 		let tasks = loadTasks()
-		experimentRunner.runExperiment(using: tasks)
+		for n in numberOfTasks...maxNumberOfTasks {
+			experimentRunner.numberOfTasks = n
+			experimentRunner.runExperiment(using: tasks)
+		}
 	}
 	
 	private func loadTasks() -> [Task] {

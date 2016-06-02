@@ -21,12 +21,13 @@ class ExperimentRunner : ExperimentRunning {
 	var numberOfTrials = 10
 	
 	var numberOfGenerations: Int {
-		get {
-			return config.evolutionConfig.numberOfGenerations
-		}
-		set {
-			config.evolutionConfig.numberOfGenerations = newValue
-		}
+		get { return config.evolutionConfig.numberOfGenerations }
+		set { config.evolutionConfig.numberOfGenerations = newValue }
+	}
+	
+	var numberOfTasks: Int {
+		get { return config.evolutionaryTaskCount }
+		set { config.evolutionaryTaskCount = newValue }
 	}
 	
 	func runExperiment(using tasks: [Task]) {
@@ -46,6 +47,8 @@ class ExperimentRunner : ExperimentRunning {
 		switch condition {
 		case .learningRuleEvolution:
 			return ChalmersExperiment(tasks: tasks, config: config)
+		case .networkEvolution:
+			return NetworkEvolutionExperiment(tasks: tasks, config: config)
 		}
 	}
 	

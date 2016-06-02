@@ -18,4 +18,12 @@ protocol ExperimentInterface : class {
 	
 	var numberOfGenerations: Int { get set }
 	
+	var numberOfTasks: Int { get set }
+	
+	var numberOfTasksUpperBound: Int? { get set }
+	
+	var maxNumberOfTasks: Int { get set }
+	
+	var maxNumberOfTasksLowerBound: Int? { get set }
+	
 }

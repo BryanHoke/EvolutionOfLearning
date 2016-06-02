@@ -16,6 +16,10 @@ protocol ConfigurationEventHandling: class {
 	
 	func numberOfTrialsChanged(to numberOfTrials: Int)
 	
+	func numberOfTasksChanged(to numberOfTasks: Int)
+	
+	func maxNumberOfTasksChanged(to maxNumberOfTasks: Int)
+	
 	func runButtonPressed()
 	
 }

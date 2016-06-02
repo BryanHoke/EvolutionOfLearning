@@ -11,9 +11,11 @@
                 <outlet property="conditionButton" destination="hv3-JZ-9iY" id="XkL-qz-d7e"/>
                 <outlet property="generationsField" destination="dIC-2P-fpl" id="jI4-TB-jfb"/>
                 <outlet property="maxTasksField" destination="aNc-lT-eAO" id="ZiQ-ID-Qzc"/>
+                <outlet property="maxTasksFormatter" destination="Zjh-oR-qeN" id="7tv-Va-OPl"/>
                 <outlet property="maxTasksStepper" destination="pjH-kt-4BD" id="j6b-wc-ktZ"/>
                 <outlet property="runButton" destination="o8B-p1-xbj" id="q82-BZ-Xop"/>
                 <outlet property="tasksField" destination="fO1-5X-vyb" id="c4E-mo-gev"/>
+                <outlet property="tasksFormatter" destination="j9c-dB-xe1" id="sof-Iq-8fW"/>
                 <outlet property="tasksStepper" destination="lsn-yb-rOq" id="8T4-m9-hCH"/>
                 <outlet property="trialsField" destination="sGg-Bk-h1t" id="IPz-9O-TMP"/>
                 <outlet property="window" destination="F0z-JX-Cv5" id="gIp-Ho-8D9"/>
@@ -25,7 +27,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="240" width="431" height="322"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="900"/>
             <view key="contentView" id="se5-gp-TjO">
                 <rect key="frame" x="0.0" y="0.0" width="431" height="322"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -37,7 +39,7 @@
                         <rect key="frame" x="127" y="76" width="178" height="170"/>
                         <subviews>
                             <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hv3-JZ-9iY">
-                                <rect key="frame" x="52" y="146" width="76" height="26"/>
+                                <rect key="frame" x="51" y="146" width="76" height="26"/>
                                 <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="6O8-nA-Dkq" id="y5m-cR-30R">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="menu"/>
@@ -161,12 +163,14 @@
                                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="6so-Vw-NpR">
                                                     <numberFormatter key="formatter" formatterBehavior="default10_4" usesGroupingSeparator="NO" groupingSize="0" minimumIntegerDigits="0" maximumIntegerDigits="42" id="j9c-dB-xe1">
                                                         <real key="minimum" value="1"/>
-                                                        <real key="maximum" value="20"/>
                                                     </numberFormatter>
                                                     <font key="font" metaFont="system"/>
                                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
+                                                <connections>
+                                                    <outlet property="delegate" destination="-2" id="VPc-4p-Mqf"/>
+                                                </connections>
                                             </textField>
                                             <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lsn-yb-rOq">
                                                 <rect key="frame" x="88" y="-3" width="19" height="27"/>
@@ -203,12 +207,14 @@
                                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="F75-9e-FAX">
                                                     <numberFormatter key="formatter" formatterBehavior="default10_4" usesGroupingSeparator="NO" groupingSize="0" minimumIntegerDigits="0" maximumIntegerDigits="42" id="Zjh-oR-qeN">
                                                         <real key="minimum" value="1"/>
-                                                        <real key="maximum" value="20"/>
                                                     </numberFormatter>
                                                     <font key="font" metaFont="system"/>
                                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
+                                                <connections>
+                                                    <outlet property="delegate" destination="-2" id="BMq-I8-Uq0"/>
+                                                </connections>
                                             </textField>
                                             <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="pjH-kt-4BD">
                                                 <rect key="frame" x="117" y="-3" width="19" height="27"/>
