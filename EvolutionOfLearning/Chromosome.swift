@@ -18,7 +18,7 @@ public protocol Chromosome : CollectionType {
 	
 	static func twoPointCrossover(chromosome1: Self, chromosome2: Self) -> (Self, Self)
 	
-	var genes: [Bool] { get set }
+	var genes: [Bool] { get }
 	
 	init(size: Int, seed: () -> Bool)
 	
