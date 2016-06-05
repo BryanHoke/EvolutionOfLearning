@@ -8,7 +8,7 @@
 
 import Foundation
 
-public protocol Chromosome : CollectionType {
+public protocol Chromosome {
 	
 	static func twoPointCrossover(chromosome1: Self, chromosome2: Self) -> (Self, Self)
 	
