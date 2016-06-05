@@ -10,18 +10,16 @@ import Foundation
 
 public protocol Chromosome : CollectionType {
 	
-	/// Mutates a `Chromosome` with a given mutation rate and random seed.
-	///
-	/// - parameter mutationRate: A real-valued number between 0 and 1 (inclusive) which determines the probability of a given gene being mutated.
-	/// - parameter seed: A random seed for a function that generates a real-valued number between 0 and 1 (inclusive).
-	static func mutate(inout chromosome: Self, withRate mutationRate: Double)
-	
 	static func twoPointCrossover(chromosome1: Self, chromosome2: Self) -> (Self, Self)
 	
 	var genes: [Bool] { get }
 	
 	init(size: Int, seed: () -> Bool)
 	
+	/// Mutates `self` with a given mutation rate and random seed.
+	///
+	/// - parameter mutationRate: A real-valued number between 0 and 1 (inclusive) which determines the probability of a given gene being mutated.
+	/// - parameter seed: A random seed for a function that generates a real-valued number between 0 and 1 (inclusive).
 	mutating func mutate(withRate mutationRate: Double)
 	
 	subscript(index: Int) -> Bool { get set }
