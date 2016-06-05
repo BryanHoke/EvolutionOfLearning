@@ -8,31 +8,28 @@
 
 import Foundation
 
-public struct ChalmersExperiment : Experiment {
+public struct ChalmersExperiment<IndividualType : Individual> : Experiment {
+	
+	public typealias Record = AnyTrialRecord<IndividualType>
 	
 	public var tasks: [Task]
 	
 	public var config: ExperimentConfig
 	
-	public func run(forNumberOfTrials numberOfTrials: Int, onTrialComplete: (TrialRecord, Int) -> Void) {
+	public func run(forNumberOfTrials numberOfTrials: Int, onTrialComplete: (Record, Int) -> Void) {
 		guard config.evolutionaryTaskCount > 0 && tasks.count > config.evolutionaryTaskCount else {
 			preconditionFailure("The number of evolutionary tasks (\(config.evolutionaryTaskCount) must be less than the total number of tasks (\(tasks.count)")
 		}
 		
-//		var records: [ChalmersTrialRecord] = []
-		
 		for i in 0..<numberOfTrials {
 			print("Trial \(i)")
 			let trial = makeTrial()
-			let record = trial.run()
+			let record = AnyTrialRecord(trial.run())
 			onTrialComplete(record, i)
-//			records.append(record)
 		}
-		
-//		return ChalmersExperimentRecord(config: config, trialRecords: records)
 	}
 	
-	private func makeTrial() -> ChalmersTrial {
+	private func makeTrial() -> ChalmersTrial<IndividualType> {
 		let selected = selectTasks(from: tasks, evolutionaryTaskCount: config.evolutionaryTaskCount, testTaskCount: config.testTaskCount)
 		return ChalmersTrial(
 			evolutionaryTasks: selected.evolutionary,
@@ -63,18 +60,20 @@ public struct ChalmersExperiment : Experiment {
 	
 }
 
-public struct ChalmersExperimentRecord {
+public struct ChalmersExperimentRecord<Record : TrialRecord> {
+	
+	public typealias IndividualType = Record.IndividualType
 	
 	public var config: ExperimentConfig
 	
-	public var trialRecords: [ChalmersTrialRecord]
+	public var trialRecords: [Record]
 	
 }
 
 extension ChalmersExperimentRecord : ExperimentRecord {
 	
-	public var trials: [TrialRecord] {
-		return trialRecords.map { $0 as TrialRecord }
+	public var trials: [Record] {
+		return trialRecords.map { $0 as Record }
 	}
 	
 }

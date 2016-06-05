@@ -8,9 +8,11 @@
 
 import Foundation
 
-class ExperimentRunner : ExperimentRunning {
+class ExperimentRunner<IndividualType : Individual> : ExperimentRunning {
 	
-	weak var recorder: ExperimentRecorder?
+	typealias Record = AnyTrialRecord<IndividualType>
+	
+	weak var recorder: ExperimentRecorder<Record>?
 	
 	var config = ExperimentConfig()
 	
@@ -43,12 +45,12 @@ class ExperimentRunner : ExperimentRunning {
 		recorder?.writeOverview()
 	}
 	
-	private func makeExperiment(tasks tasks: [Task]) -> Experiment {
+	private func makeExperiment(tasks tasks: [Task]) -> AnyExperiment<Record> {
 		switch condition {
 		case .learningRuleEvolution:
-			return ChalmersExperiment(tasks: tasks, config: config)
+			return AnyExperiment(ChalmersExperiment(tasks: tasks, config: config))
 		case .networkEvolution:
-			return NetworkEvolutionExperiment(tasks: tasks, config: config)
+			return AnyExperiment(NetworkEvolutionExperiment(tasks: tasks, config: config))
 		}
 	}
 	

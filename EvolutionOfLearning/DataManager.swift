@@ -10,14 +10,16 @@ import Foundation
 
 
 ///
-public protocol DataManager: class {
+public protocol DataManager : class {
+	
+	associatedtype ExperimentType : Experiment
 	
 	///
 	func beginNewTrial()
 	
 	///
-	func beginRecordingExperiment(experiment: Experiment)
+	func beginRecordingExperiment(experiment: ExperimentType)
 	
 	///
-	func recordPopulation(population: Population)
+	func recordPopulation(population: Population<ExperimentType.Record.IndividualType>)
 }

@@ -8,21 +8,23 @@
 
 import Foundation
 
-public struct NetworkEvolutionExperiment : Experiment {
+public struct NetworkEvolutionExperiment<IndividualType : Individual> : Experiment {
+	
+	public typealias Record = AnyTrialRecord<IndividualType>
 	
 	public var tasks: [Task]
 	
 	public var config: ExperimentConfig
 	
-	public func run(forNumberOfTrials numberOfTrials: Int, onTrialComplete: (TrialRecord, Int) -> Void) {
+	public func run(forNumberOfTrials numberOfTrials: Int, onTrialComplete: (Record, Int) -> Void) {
 		for i in 0..<numberOfTrials {
 			let trial = makeTrial()
-			let record = trial.run()
+			let record = AnyTrialRecord(trial.run())
 			onTrialComplete(record, i)
 		}
 	}
 	
-	private func makeTrial() -> NetworkEvolutionTrial {
+	private func makeTrial() -> NetworkEvolutionTrial<IndividualType> {
 		let selectedTasks = selectTasks(from: tasks, count: config.evolutionaryTaskCount)
 		return NetworkEvolutionTrial(tasks: selectedTasks, config: config)
 	}

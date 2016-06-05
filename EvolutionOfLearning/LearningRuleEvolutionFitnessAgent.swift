@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct LearningRuleEvolutionFitnessAgent: FitnessAgent {
+public struct LearningRuleEvolutionFitnessAgent<ChromosomeType : Chromosome> : FitnessAgent {
 	
 	public var config: FitnessConfig
 	
@@ -23,12 +23,12 @@ public struct LearningRuleEvolutionFitnessAgent: FitnessAgent {
 	public var tasks: [Task]
 	
 	// TODO: Test
-	public func seed() -> Chromosome {
-		return Chromosome(size: learningRuleSize, seed: randomBool)
+	public func seed() -> ChromosomeType {
+		return ChromosomeType.init(size: learningRuleSize, seed: randomBool)
 	}
 	
 	// TODO: Test
-	public func fitness(of chromosome: Chromosome, on task: Task) -> Double {
+	public func fitness(of chromosome: ChromosomeType, on task: Task) -> Double {
 		var network = makeNetwork(for: task)
 		
 		let learningRule = ChalmersLearningRule(

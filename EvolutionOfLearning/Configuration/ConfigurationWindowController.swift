@@ -10,6 +10,10 @@ import Cocoa
 
 class ConfigurationWindowController: NSWindowController, ExperimentInterface {
 	
+	typealias IndividualType = IdentifiedIndividual<BasicChromosome>
+	
+	typealias Record = AnyTrialRecord<IndividualType>
+	
 	weak var eventHandler: ConfigurationEventHandling?
 
 	@IBOutlet weak var conditionButton: NSPopUpButton!
@@ -70,9 +74,9 @@ class ConfigurationWindowController: NSWindowController, ExperimentInterface {
 		driver.interface = self
     }
 	
-	let runner = ExperimentRunner()
+	let runner = ExperimentRunner<IndividualType>()
 	
-	let recorder = ExperimentRecorder()
+	let recorder = ExperimentRecorder<Record>()
 	
 	var driver: ExperimentDriver?
 	

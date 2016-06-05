@@ -8,64 +8,108 @@
 
 import Foundation
 
-// MARK: - ExperimentType Protocol
-
-public protocol ExperimentType {
-	
-	
-}
-
 // MARK: - Experiment Output Protocol
 
-protocol ExperimentOutput {
-	
-	associatedtype ExperimentType : Experiment
-	
-	func experimentDidBeginNewTrial(experiment: ExperimentType)
-	
-	func experiment(experiment: ExperimentType,
-		didEvaluatePopulation pop: Population)
-	
-	func experimentDidComplete(experiment: ExperimentType)
-}
+//protocol ExperimentOutput {
+//	
+//	associatedtype IndividualType : Individual
+//	
+//	func experimentDidBeginNewTrial(experiment: Experiment)
+//	
+//	func experiment(experiment: Experiment,
+//		didEvaluatePopulation pop: Population<IndividualType>)
+//	
+//	func experimentDidComplete(experiment: Experiment)
+//}
 
 // MARK: - Experiment
 
 public protocol Experiment {
 	
+	associatedtype Record : TrialRecord
+	
 	var config: ExperimentConfig { get set }
 	
-//	func run(forNumberOfTrials numberOfTrials: Int) -> ExperimentRecord
+	func run(forNumberOfTrials numberOfTrials: Int, onTrialComplete: (Record, Int) -> Void)
 	
-	func run(forNumberOfTrials numberOfTrials: Int, onTrialComplete: (TrialRecord, Int) -> Void)
+}
+
+public struct AnyExperiment<Record : TrialRecord> : Experiment {
+	
+	public var config: ExperimentConfig
+	
+	private let _run: (numberOfTrials: Int, onTrialComplete: (Record, Int) -> Void) -> Void
+	
+	public init<ExperimentType : Experiment where ExperimentType.Record == Record>(_ experiment: ExperimentType) {
+		config = experiment.config
+		_run = experiment.run(forNumberOfTrials:onTrialComplete:)
+	}
+	
+	public func run(forNumberOfTrials numberOfTrials: Int, onTrialComplete: (Record, Int) -> Void) {
+		_run(numberOfTrials: numberOfTrials, onTrialComplete: onTrialComplete)
+	}
 	
 }
 
 public protocol ExperimentRecord {
 	
+	associatedtype Record : TrialRecord
+	
 	var config: ExperimentConfig { get }
 	
-	var trials: [TrialRecord] { get }
+	var trials: [Record] { get }
 	
 }
 
 public protocol TrialRecord {
 	
-	var evaluations: [EvaluationRecord] { get }
+	associatedtype IndividualType : Individual
+	
+	var evaluations: [AnyEvaluationRecord<IndividualType>] { get }
+	
+}
+
+public struct AnyTrialRecord<IndividualType : Individual> : TrialRecord {
+	
+	public let evaluations: [AnyEvaluationRecord<IndividualType>]
+	
+	public init<Record : TrialRecord where Record.IndividualType == IndividualType>(_ record: Record) {
+		evaluations = record.evaluations
+	}
 	
 }
 
 public protocol EvaluationRecord {
 	
+	associatedtype IndividualType : Individual
+	
 	var name: String { get }
 	
-	var populations: [Population] { get }
+	var populations: [Population<IndividualType>] { get }
 	
 	var tasks: [Task] { get }
 	
 }
 
-struct ExperimentOverview {
+public struct AnyEvaluationRecord<IndividualType : Individual> : EvaluationRecord {
+	
+	public typealias PopulationType = Population<IndividualType>
+	
+	public let name: String
+	
+	public let populations: [PopulationType]
+	
+	public let tasks: [Task]
+	
+	public init<RecordType : EvaluationRecord where RecordType.IndividualType == IndividualType>(_ record: RecordType) {
+		name = record.name
+		populations = record.populations
+		tasks = record.tasks
+	}
+	
+}
+
+struct ExperimentOverview<Record : TrialRecord> {
 	
 	var averageFitnessesPerEvaluation: [String: [[Double]]] = [:]
 	
@@ -114,13 +158,13 @@ struct ExperimentOverview {
 		return means
 	}
 	
-	mutating func accumulate(trial: TrialRecord) {
+	mutating func accumulate(trial: Record) {
 		for evaluation in trial.evaluations {
 			accumulate(evaluation)
 		}
 	}
 	
-	mutating func accumulate(evaluation: EvaluationRecord) {
+	mutating func accumulate<Record : EvaluationRecord>(evaluation: Record) {
 		let key = evaluation.name
 		
 		if !keyOrder.contains(key) {

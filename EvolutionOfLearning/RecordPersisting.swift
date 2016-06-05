@@ -10,12 +10,16 @@ import Foundation
 
 protocol RecordPersisting : class {
 	
-	func persist(record: ExperimentRecord)
+	associatedtype Record : ExperimentRecord
+	
+	func persist(record: Record)
 	
 }
 
 protocol TrialRecordPersisting : class {
 	
-	func persist(record: TrialRecord)
+	associatedtype Record : TrialRecord
+	
+	func persist(record: Record)
 	
 }

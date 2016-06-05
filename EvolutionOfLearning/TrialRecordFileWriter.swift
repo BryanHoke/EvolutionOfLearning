@@ -8,11 +8,15 @@
 
 import Foundation
 
-struct TrialRecordFileWriter {
+struct TrialRecordFileWriter<Record : TrialRecord> {
+	
+	typealias IndividualType = Record.IndividualType
+	
+	typealias PopulationType = Population<IndividualType>
 	
 	let baseFilename = "Trial"
 	
-	func persist(record: TrialRecord, withIndex index: Int, inDirectory directoryPath: String) {
+	func persist(record: Record, withIndex index: Int, inDirectory directoryPath: String) {
 		let content = makeFileContent(for: record)
 		let path = "\(directoryPath)/\(baseFilename) \(index).txt"
 		do {
@@ -23,11 +27,11 @@ struct TrialRecordFileWriter {
 		}
 	}
 	
-	func makeFileContent(for record: TrialRecord) -> String {
+	func makeFileContent(for record: Record) -> String {
 		return record.evaluations.map(makeFileContent(for:)).joinWithSeparator("\n\n")
 	}
 	
-	func makeFileContent(for evaluation: EvaluationRecord) -> String {
+	func makeFileContent(for evaluation: AnyEvaluationRecord<IndividualType>) -> String {
 		return "\(evaluation.name)\n"
 		+ "Tasks: \(makeFileContent(for: evaluation.tasks))\n\n"
 		+ makeFileContent(for: evaluation.populations)
@@ -37,17 +41,17 @@ struct TrialRecordFileWriter {
 		return "Tasks: " + tasks.map({ "\($0.id)" }).joinWithSeparator(" ")
 	}
 	
-	func makeFileContent(for populations: [Population]) -> String {
+	func makeFileContent(for populations: [PopulationType]) -> String {
 		return populations.enumerate().map({
 			"Population \($0.0)\n\(self.makeFileContent(for: $0.1))"
 		}).joinWithSeparator("\n\n")
 	}
 	
-	func makeFileContent(for population: Population) -> String {
+	func makeFileContent(for population: PopulationType) -> String {
 		return population.members.map(makeFileContent(for:)).joinWithSeparator("\n")
 	}
 	
-	func makeFileContent(for individual: Individual) -> String {
+	func makeFileContent(for individual: IndividualType) -> String {
 		return "\(individual.fitness) \(individual.chromosome.stringValue)"
 	}
 	

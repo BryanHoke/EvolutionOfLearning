@@ -8,13 +8,17 @@
 
 import Foundation
 
-public struct LearningTest {
+public struct LearningTest<IndividualType : Individual> {
 	
-	public var fitnessAgent: FitnessAgent
+	public typealias PopulationType = Population<IndividualType>
 	
-	public var history: [Population]
+	public typealias ChromosomeType = IndividualType.ChromosomeType
 	
-	func run() -> LearningTestRecord {
+	public var fitnessAgent: AnyFitnessAgent<ChromosomeType>
+	
+	public var history: [PopulationType]
+	
+	func run() -> LearningTestRecord<IndividualType> {
 		print("LearningTest")
 		let mostFitIndividual = findMostFitIndividual()
 		let chromosome = mostFitIndividual.chromosome
@@ -24,11 +28,11 @@ public struct LearningTest {
 	}
 	
 	/// - note: Assumes `Population`s in `history` are sorted by `fitness`.
-	public func findMostFitIndividual() -> Individual {
+	public func findMostFitIndividual() -> IndividualType {
 		guard !history.isEmpty else {
 			preconditionFailure("History must not be empty")
 		}
-		var mostFitIndividual: Individual?
+		var mostFitIndividual: IndividualType?
 		for population in history {
 			guard let mostFitMember = population.first else {
 				preconditionFailure("No population should be empty")
@@ -46,9 +50,9 @@ public struct LearningTest {
 	
 }
 
-public struct LearningTestRecord {
+public struct LearningTestRecord<IndividualType : Individual> {
 	
-	public let chromosome: Chromosome
+	public let chromosome: IndividualType.ChromosomeType
 	
 	public let fitness: Double
 	
@@ -60,8 +64,8 @@ extension LearningTestRecord : EvaluationRecord {
 	
 	public var name: String { return "Learning Test" }
 	
-	public var populations: [Population] {
-		var individual = Individual(chromosome: chromosome)
+	public var populations: [Population<IndividualType>] {
+		var individual = IndividualType.init(chromosome: chromosome)
 		individual.fitness = fitness
 		let population = Population(members: [individual])
 		return [population]

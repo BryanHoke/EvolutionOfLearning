@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class ExperimentRecorder {
+final class ExperimentRecorder<Record : TrialRecord> {
 	
 	init() {}
 	
@@ -16,7 +16,7 @@ final class ExperimentRecorder {
 	
 	var resultsDirectory: String?
 	
-	var overview = ExperimentOverview()
+	var overview = ExperimentOverview<Record>()
 	
 	func createResultsDirectory() {
 		makeResultsDirectory()
@@ -36,7 +36,7 @@ final class ExperimentRecorder {
 		ConfigFileWriter().write(config, inDirectory: resultsDirectory)
 	}
 	
-	func write(trial: TrialRecord, withIndex index: Int) {
+	func write(trial: Record, withIndex index: Int) {
 		guard let resultsDirectory = self.resultsDirectory else {
 			preconditionFailure()
 		}

@@ -8,18 +8,24 @@
 
 import Foundation
 
-public struct NetworkEvolutionTrial {
+public struct NetworkEvolutionTrial<IndividualType : Individual> {
+	
+	public typealias EvolutionRecordType = EvolutionRecord<IndividualType>
+	
+	public typealias PopulationType = Population<IndividualType>
+	
+	public typealias ChromosomeType = IndividualType.ChromosomeType
 	
 	public var tasks: [Task]
 	
 	public var config: ExperimentConfig
 	
-	public func run() -> NetworkEvolutionTrialRecord {
+	public func run() -> NetworkEvolutionTrialRecord<IndividualType> {
 		let evolutionRecord = runEvolution()
 		return NetworkEvolutionTrialRecord(evolutionRecord: evolutionRecord)
 	}
 	
-	private func runEvolution() -> EvolutionRecord {
+	private func runEvolution() -> EvolutionRecord<IndividualType> {
 		let fitness = makeFitnessAgent(with: tasks)
 		let reproduction = makeReproductionAgent()
 		let environment = makeEnvironment(fitness, reproduction: reproduction)
@@ -27,35 +33,35 @@ public struct NetworkEvolutionTrial {
 		return evolution.run()
 	}
 	
-	private func makeFitnessAgent(with tasks: [Task]) -> FitnessAgent {
+	private func makeFitnessAgent(with tasks: [Task]) -> AnyFitnessAgent<ChromosomeType> {
 		let fitnessConfig = config.fitnessConfig
-		return NetworkEvolutionFitnessAgent(bitsPerWeight: fitnessConfig.bitsPerWeight, exponentShift: fitnessConfig.encodingExponentShift, tasks: tasks)
+		return AnyFitnessAgent(NetworkEvolutionFitnessAgent(bitsPerWeight: fitnessConfig.bitsPerWeight, exponentShift: fitnessConfig.encodingExponentShift, tasks: tasks))
 	}
 	
-	private func makeReproductionAgent() -> ReproductionAgent {
-		return ChalmersReproductionAgent(config: config.reproductionConfig)
+	private func makeReproductionAgent() -> AnyReproductionAgent<IndividualType> {
+		return AnyReproductionAgent(ChalmersReproductionAgent(config: config.reproductionConfig))
 	}
 	
-	private func makeEnvironment(fitness: FitnessAgent, reproduction: ReproductionAgent) -> EvolutionaryEnvironment {
-		return Environment(config: config.environmentConfig, fitnessAgent: fitness, reproductionAgent: reproduction)
+	private func makeEnvironment(fitness: AnyFitnessAgent<ChromosomeType>, reproduction: AnyReproductionAgent<IndividualType>) -> EvolutionaryEnvironment<IndividualType> {
+		return EvolutionaryEnvironment(config: config.environmentConfig, fitnessAgent: fitness, reproductionAgent: reproduction)
 	}
 	
-	private func makeEvolution(environment: EvolutionaryEnvironment) -> Evolution {
+	private func makeEvolution<EnvironmentType : Environment>(environment: EnvironmentType) -> Evolution<EnvironmentType> {
 		return Evolution(config: config.evolutionConfig, environment: environment)
 	}
 	
 }
 
-public struct NetworkEvolutionTrialRecord {
+public struct NetworkEvolutionTrialRecord<IndividualType : Individual> {
 	
-	public var evolutionRecord: EvolutionRecord
+	public var evolutionRecord: EvolutionRecord<IndividualType>
 	
 }
 
 extension NetworkEvolutionTrialRecord : TrialRecord {
 	
-	public var evaluations: [EvaluationRecord] {
-		return [evolutionRecord]
+	public var evaluations: [AnyEvaluationRecord<IndividualType>] {
+		return [AnyEvaluationRecord(evolutionRecord)]
 	}
 	
 }

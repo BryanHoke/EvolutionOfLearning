@@ -10,16 +10,18 @@ import Foundation
 
 public protocol PopulationOperating {
 	
-	func elitistSelection(from population: Population, taking count: Int) -> Population
+	associatedtype Member : Individual
 	
-	func rouletteWheelSelection(from population: Population, taking count: Int) -> Population
+	func elitistSelection(from population: Population<Member>, taking count: Int) -> Population<Member>
 	
-	func uniformSelection(from population: Population, taking count: Int) -> Population
+	func rouletteWheelSelection(from population: Population<Member>, taking count: Int) -> Population<Member>
 	
-	func mutate(inout population: Population, rate: Double)
+	func uniformSelection(from population: Population<Member>, taking count: Int) -> Population<Member>
 	
-	func clone(population: Population) -> Population
+	func mutate(inout population: Population<Member>, rate: Double)
 	
-	func crossover(population: Population, using crossoverOperator: CrossoverOperator) -> Population
+	func clone(population: Population<Member>) -> Population<Member>
+	
+	func crossover(population: Population<Member>, using crossoverOperator: (Member.ChromosomeType, Member.ChromosomeType) -> (Member.ChromosomeType, Member.ChromosomeType)) -> Population<Member>
 	
 }

@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct LearningNetworkEvolutionFitnessAgent: FitnessAgent {
+public struct LearningNetworkEvolutionFitnessAgent<ChromosomeType : Chromosome> : FitnessAgent {
 	
 	public init(bitsPerWeight: Int, exponentialCap: Int, learningRuleSize: Int, numberOfTrainingEpochs: Int, tasks: [Task]) {
 		self.bitsPerWeight = bitsPerWeight
@@ -51,13 +51,13 @@ public struct LearningNetworkEvolutionFitnessAgent: FitnessAgent {
 	}
 	
 	// TODO: Test
-	public func seed() -> Chromosome {
+	public func seed() -> ChromosomeType {
 		let size = geneMap.chromosomeSize
-		return Chromosome(size: size, seed: randomBool)
+		return ChromosomeType.init(size: size, seed: randomBool)
 	}
 	
 	// TODO: Test
-	public func fitness(of chromosome: Chromosome, on task: Task) -> Double {
+	public func fitness(of chromosome: ChromosomeType, on task: Task) -> Double {
 		guard let geneRange = geneMap.geneRange(of: task) else {
 			return 0
 		}

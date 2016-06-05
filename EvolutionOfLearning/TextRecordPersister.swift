@@ -8,13 +8,13 @@
 
 import Foundation
 
-struct TextRecordPersister {
+struct TextRecordPersister<Record : ExperimentRecord> {
 	
-	func persist(record: ExperimentRecord, inDirectory directoryPath: String) {
+	func persist(record: Record, inDirectory directoryPath: String) {
 		let configWriter = ConfigFileWriter()
 		configWriter.write(record.config, inDirectory: directoryPath)
 		
-		let trialWriter = TrialRecordFileWriter()
+		let trialWriter = TrialRecordFileWriter<Record.Record>()
 		for (index, trial) in record.trials.enumerate() {
 			trialWriter.persist(trial, withIndex: index, inDirectory: directoryPath)
 		}

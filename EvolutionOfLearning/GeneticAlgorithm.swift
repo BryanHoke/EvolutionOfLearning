@@ -8,53 +8,57 @@
 
 import Foundation
 
-public typealias FitnessFunc = Chromosome -> Double
+//public typealias FitnessFunc = Chromosome -> Double
 
-public typealias PopulationFitnessFunc = inout Population -> ()
+//public typealias PopulationFitnessFunc = (inout Population) -> ()
 
-public struct GeneticAlgorithm {
+public struct GeneticAlgorithm<EnvironmentType : Environment> {
 	
-	public var environment: EvolutionaryEnvironment
+	public typealias IndividualType = EnvironmentType.IndividualType
 	
-	public var onPopulationEvaluated: ((population: Population) -> Void)?
+	public typealias PopulationType = Population<IndividualType>
+	
+	public var environment: EnvironmentType
+	
+	public var onPopulationEvaluated: ((population: PopulationType) -> Void)?
 	
 	public func run(forNumberOfGenerations numberOfGenerations: Int) {
 		let initialPopulation = environment.makePopulation()
 		evolve(initialPopulation, forNumberOfGenerations: numberOfGenerations)
 	}
 	
-	private func evolve(population: Population, forNumberOfGenerations numberOfGenerations: Int) {
+	private func evolve(population: PopulationType, forNumberOfGenerations numberOfGenerations: Int) {
 		var population = population
 		for _ in 0..<numberOfGenerations {
 			evolveGeneration(of: &population)
 		}
 	}
 	
-	private func evolveGeneration(inout of population: Population) {
+	private func evolveGeneration(inout of population: PopulationType) {
 		evaluateFitness(of: &population)
 		sort(&population)
 		commit(population)
 		reproduce(&population)
 	}
 	
-	private func evaluateFitness(inout of population: Population) {
-		let evaluator = ConcurrentPopulationEvaluator(fitnessFunc: fitness)
+	private func evaluateFitness(inout of population: PopulationType) {
+		let evaluator = ConcurrentPopulationEvaluator<IndividualType>(fitnessFunc: fitness)
 		evaluator.evaluate(&population)
 	}
 	
-	private func fitness(of chromosome: Chromosome) -> Double {
+	private func fitness(of chromosome: IndividualType.ChromosomeType) -> Double {
 		return environment.fitness(of: chromosome)
 	}
 	
-	private func sort(inout population: Population) {
+	private func sort(inout population: PopulationType) {
 		population.members.sortInPlace(>)
 	}
 	
-	private func commit(population: Population) {
+	private func commit(population: PopulationType) {
 		onPopulationEvaluated?(population: population)
 	}
 	
-	private func reproduce(inout population: Population) {
+	private func reproduce(inout population: PopulationType) {
 		population = environment.reproduce(population)
 	}
 	

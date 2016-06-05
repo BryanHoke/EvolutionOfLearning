@@ -10,13 +10,15 @@ import Foundation
 
 typealias StatPair = (averages: [Double], maximums: [Double])
 
-struct ExperimentOverviewFileWriter {
+struct ExperimentOverviewFileWriter<Record : TrialRecord> {
+	
+	typealias Overview = ExperimentOverview<Record>
 	
 	let baseFilename = "Overview"
 	
 	let fileExtension = ".csv"
 	
-	func persist(overview: ExperimentOverview, inDirectory directoryPath: String) {
+	func persist(overview: Overview, inDirectory directoryPath: String) {
 		let content = makeFileContent(for: overview)
 		let path = "\(directoryPath)/\(baseFilename)\(fileExtension)"
 		do {
@@ -27,7 +29,7 @@ struct ExperimentOverviewFileWriter {
 		}
 	}
 	
-	func makeFileContent(for overview: ExperimentOverview) -> String {
+	func makeFileContent(for overview: Overview) -> String {
 		let averages = overview.meanAverageFitnesses
 		let maximums = overview.meanMaximumFitnesses
 		return "GEN, AVG, MAX\n"
