@@ -51,6 +51,8 @@
 		4A3C342A1C9603EE00DCE87A /* GeneticOperating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3C34281C9603EE00DCE87A /* GeneticOperating.swift */; };
 		4A411DBE1D033D9700074A58 /* BasicChromosome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A411DBD1D033D9700074A58 /* BasicChromosome.swift */; };
 		4A411DBF1D033D9700074A58 /* BasicChromosome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A411DBD1D033D9700074A58 /* BasicChromosome.swift */; };
+		4A411DC11D04B8A300074A58 /* IdentifiedIndividual.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A411DC01D04B8A300074A58 /* IdentifiedIndividual.swift */; };
+		4A411DC21D04B8A300074A58 /* IdentifiedIndividual.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A411DC01D04B8A300074A58 /* IdentifiedIndividual.swift */; };
 		4A447FF51C63A9A100C5BDF0 /* IndexedDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A447FF41C63A9A000C5BDF0 /* IndexedDictionary.swift */; };
 		4A447FF61C63A9A100C5BDF0 /* IndexedDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A447FF41C63A9A000C5BDF0 /* IndexedDictionary.swift */; };
 		4A495A141CD6FE8900510582 /* ConfigurationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A495A131CD6FE8900510582 /* ConfigurationView.swift */; };
@@ -166,6 +168,7 @@
 		4A3C34251C94ED4E00DCE87A /* PopulationEvaluating.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopulationEvaluating.swift; sourceTree = "<group>"; };
 		4A3C34281C9603EE00DCE87A /* GeneticOperating.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneticOperating.swift; sourceTree = "<group>"; };
 		4A411DBD1D033D9700074A58 /* BasicChromosome.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicChromosome.swift; sourceTree = "<group>"; };
+		4A411DC01D04B8A300074A58 /* IdentifiedIndividual.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IdentifiedIndividual.swift; sourceTree = "<group>"; };
 		4A42A4731BA9B44500F797BD /* ManagedDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagedDataManager.swift; sourceTree = "<group>"; };
 		4A447FF41C63A9A000C5BDF0 /* IndexedDictionary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IndexedDictionary.swift; sourceTree = "<group>"; };
 		4A495A131CD6FE8900510582 /* ConfigurationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigurationView.swift; sourceTree = "<group>"; };
@@ -334,6 +337,7 @@
 				4AF383221CA25E6E006D13D4 /* PopulationOperating.swift */,
 				4AF383251CA26237006D13D4 /* PopulationOperator.swift */,
 				4AF11C0C1B3F036C00AED909 /* Individual.swift */,
+				4A411DC01D04B8A300074A58 /* IdentifiedIndividual.swift */,
 				4A50A8331B30F9F10004BC5D /* Chromosome.swift */,
 				4A411DBD1D033D9700074A58 /* BasicChromosome.swift */,
 			);
@@ -620,6 +624,7 @@
 				4A0583311C92A19400F3D0E0 /* ExperimentConfig.swift in Sources */,
 				4AD935571CBAFE880055B043 /* NetworkEvolutionFitnessAgent.swift in Sources */,
 				4AF383261CA26237006D13D4 /* PopulationOperator.swift in Sources */,
+				4A411DC11D04B8A300074A58 /* IdentifiedIndividual.swift in Sources */,
 				4A28EC001CDFD127001D844F /* ExperimentDriver.swift in Sources */,
 				4A1BE8BA1C8FF33900790B3A /* LearningTest.swift in Sources */,
 				4A2EE79F1BEE8DA4007D17FD /* FitnessAgent.swift in Sources */,
@@ -674,6 +679,7 @@
 				4AF383271CA26237006D13D4 /* PopulationOperator.swift in Sources */,
 				4A05832C1C928C4000F3D0E0 /* GeneMapTests.swift in Sources */,
 				4A447FF61C63A9A100C5BDF0 /* IndexedDictionary.swift in Sources */,
+				4A411DC21D04B8A300074A58 /* IdentifiedIndividual.swift in Sources */,
 				4A620D101C8B75030084B0A2 /* TaskParser.swift in Sources */,
 				4A02D6551C7E0EFB004D98DF /* ControlEventHandler.swift in Sources */,
 				4A825EFC1B2D057B00C8CEA3 /* SingleLayerNeuralNetwork.swift in Sources */,
