@@ -10,7 +10,7 @@ import XCTest
 
 class EvolutionOfLearningGeneticAlgorithmTests: XCTestCase {
 	
-	let tChromosome1: Chromosome = "00000"
+	let tChromosome1: BasicChromosome = "00000"
 //	let tChromosome1: Chromosome = "01010010100101001010101001010010100101"
 //	let tChromosome2: Chromosome = "01010010100101010010101001010100101010"
 
@@ -46,7 +46,7 @@ class EvolutionOfLearningGeneticAlgorithmTests: XCTestCase {
 	func testChromosomeMutation() {
 		var testChromosome1 = tChromosome1, testGenes = testChromosome1.genes
 		let seed = 0, mutationRate = 0.5
-		testChromosome1.mutateInPlaceWithRate(mutationRate, seed: seed)
+		testChromosome1.mutate(withRate: mutationRate, usingSeed: seed)
 		srand48(seed)
 		let testGenesMutated1 = testGenes.map { (drand48() < mutationRate) ? !$0 : $0 }
 		XCTAssert(testChromosome1.genes == testGenesMutated1,

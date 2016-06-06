@@ -30,8 +30,8 @@ class GeneMapTests: XCTestCase {
 		let task2 = Task(id: 2, patterns: patterns2)
 		
 		var geneMap = GeneMap(bitsPerWeight: 4, offset: 8)
-		geneMap.addMapping(`for`: task1)
-		geneMap.addMapping(`for`: task2)
+		geneMap.addMapping(for: task1)
+		geneMap.addMapping(for: task2)
 		
 		let range1 = geneMap.geneRange(of: task1)
 		XCTAssert(range1 == 8..<20, "Incorrect geneRange for task1: \(range1)")
