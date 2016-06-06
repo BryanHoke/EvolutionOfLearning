@@ -16,6 +16,8 @@ public protocol Chromosome {
 	
 	init(size: Int, seed: () -> Bool)
 	
+	init(segmentSizes: [Int], seed: () -> Bool)
+	
 	/// Mutates `self` with a given mutation rate and random seed.
 	///
 	/// - parameter mutationRate: A real-valued number between 0 and 1 (inclusive) which determines the probability of a given gene being mutated.

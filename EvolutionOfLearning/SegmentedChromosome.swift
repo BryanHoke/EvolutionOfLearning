@@ -48,8 +48,11 @@ public struct SegmentedChromosome : Chromosome {
 	}
 	
 	public init(size: Int, seed: () -> Bool) {
-		let segment = (0..<size).map { _ in seed() }
-		segments = [segment]
+		self.init(segmentSizes: [size], seed: seed)
+	}
+	
+	public init(segmentSizes: [Int], seed: () -> Bool) {
+		segments = segmentSizes.map { (0..<$0).map { _ in seed() } }
 	}
 	
 	public mutating func mutate(withRate mutationRate: Double) {

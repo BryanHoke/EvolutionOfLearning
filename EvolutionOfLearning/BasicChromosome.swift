@@ -17,9 +17,12 @@ public struct BasicChromosome : Chromosome {
 	}
 	
 	public init(size: Int, seed: () -> Bool) {
-		genes = (0..<size).map { _ in
-			seed()
-		}
+		genes = (0..<size).map { _ in seed() }
+	}
+	
+	public init(segmentSizes: [Int], seed: () -> Bool) {
+		let size = segmentSizes.reduce(0, combine: +)
+		self.init(size: size, seed: seed)
 	}
 	
 }
