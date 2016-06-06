@@ -14,6 +14,10 @@ struct IndexedDictionary<Key: Hashable, Value> {
 	
 	private var indexedKeys: [Key] = []
 	
+	var count: Int {
+		return dictionary.count
+	}
+	
 	var lastKey: Key? {
 		return indexedKeys.last
 	}
