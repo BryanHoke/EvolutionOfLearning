@@ -9,7 +9,7 @@
 import Foundation
 
 /// A `Chromosome` where crossover operates at the level of whole "segments" of genes.
-public struct SegmentedChromosome : Chromosome {
+public struct SegmentedChromosome : Chromosome, ArrayLiteralConvertible {
 	
 	public static func twoPointCrossover(chromosome1: SegmentedChromosome, chromosome2: SegmentedChromosome) -> (SegmentedChromosome, SegmentedChromosome) {
 		return twoPointCrossover(chromosome1, chromosome2: chromosome2, seed: { Int(arc4random()) })
@@ -55,6 +55,10 @@ public struct SegmentedChromosome : Chromosome {
 		segments = segmentSizes.map { (0..<$0).map { _ in seed() } }
 	}
 	
+	public init(arrayLiteral elements: [Bool]...) {
+		segments = elements
+	}
+	
 	public mutating func mutate(withRate mutationRate: Double) {
 		mutate(withRate: mutationRate, seed: { drand48() })
 	}
@@ -95,4 +99,12 @@ public struct SegmentedChromosome : Chromosome {
 		}
 	}
 	
+}
+
+public prefix func !(chromosome: SegmentedChromosome) -> SegmentedChromosome {
+	var newChromosome = chromosome
+	for (index, gene) in newChromosome.genes.enumerate() {
+		newChromosome[index] = !gene
+	}
+	return newChromosome
 }
