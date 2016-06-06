@@ -33,6 +33,8 @@ class ExperimentRunner<IndividualType : Individual> : ExperimentRunning {
 	}
 	
 	func runExperiment(using tasks: [Task]) {
+		srand48(Int(arc4random()))
+		
 		recorder?.createResultsDirectory()
 		recorder?.write(config)
 		
