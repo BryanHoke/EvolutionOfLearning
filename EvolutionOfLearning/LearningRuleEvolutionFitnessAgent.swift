@@ -24,7 +24,8 @@ public struct LearningRuleEvolutionFitnessAgent<ChromosomeType : Chromosome> : F
 	
 	// TODO: Test
 	public func seed() -> ChromosomeType {
-		return ChromosomeType.init(size: learningRuleSize, seed: randomBool)
+		let sizes = [5] + [Int](count: 10, repeatedValue: 3)
+		return ChromosomeType.init(segmentSizes: sizes, seed: randomBool)
 	}
 	
 	// TODO: Test
