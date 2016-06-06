@@ -269,8 +269,8 @@ public func ==(lhs: BasicChromosome, rhs: BasicChromosome) -> Bool {
 
 public prefix func !(chromosome: BasicChromosome) -> BasicChromosome {
 	var newChromosome = chromosome
-	for (i, _) in newChromosome.enumerate() {
-		newChromosome.genes[i] = !newChromosome.genes[i]
+	for (i, gene) in newChromosome.enumerate() {
+		newChromosome.genes[i] = !gene
 	}
 	return newChromosome
 }
