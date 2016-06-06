@@ -10,7 +10,7 @@ import Cocoa
 
 class ConfigurationWindowController: NSWindowController, ExperimentInterface {
 	
-	typealias IndividualType = IdentifiedIndividual<BasicChromosome>
+	typealias IndividualType = BasicIndividual<SegmentedChromosome>
 	
 	typealias Record = AnyTrialRecord<IndividualType>
 	
