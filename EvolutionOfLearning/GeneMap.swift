@@ -27,6 +27,10 @@ public struct GeneMap {
 	
 	var mapping = IndexedDictionary<Int, Range<Int>>()
 	
+	var count: Int {
+		return mapping.count
+	}
+	
 	public mutating func addMapping(`for` task: Task) {
 		let index = task.id
 		let start = chromosomeSize
