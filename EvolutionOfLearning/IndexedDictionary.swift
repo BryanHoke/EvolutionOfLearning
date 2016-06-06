@@ -14,10 +14,6 @@ struct IndexedDictionary<Key: Hashable, Value> {
 	
 	private var indexedKeys: [Key] = []
 	
-	var count: Int {
-		return dictionary.count
-	}
-	
 	var lastKey: Key? {
 		return indexedKeys.last
 	}
@@ -61,6 +57,40 @@ struct IndexedDictionary<Key: Hashable, Value> {
 		dictionary.removeAll(keepCapacity: keepCapacity)
 	}
 	
+}
+
+extension IndexedDictionary : CollectionType {
+	
+	typealias Element = (Key, Value)
+	
+	typealias Index = DictionaryIndex<Key, Value>
+	
+	typealias Generator = IndexedDictionaryGenerator<Key, Value>
+	
+	var count: Int {
+		return dictionary.count
+	}
+
+	var endIndex: Index {
+		guard let lastKey = indexedKeys.last else {
+			return dictionary.endIndex
+		}
+		
+		return dictionary.indexForKey(lastKey)!
+	}
+	
+	var startIndex: Index {
+		guard let firstKey = indexedKeys.first else {
+			return dictionary.startIndex
+		}
+		
+		return dictionary.indexForKey(firstKey)!
+	}
+	
+	func generate() -> Generator {
+		return IndexedDictionaryGenerator(self)
+	}
+	
 	subscript(key: Key) -> Value? {
 		get {
 			return dictionary[key]
@@ -71,6 +101,34 @@ struct IndexedDictionary<Key: Hashable, Value> {
 				indexedKeys.append(key)
 			}
 		}
+	}
+	
+	subscript(index: DictionaryIndex<Key, Value>) -> (Key, Value) {
+		return dictionary[index]
+	}
+	
+}
+
+struct IndexedDictionaryGenerator<Key : Hashable, Value> : GeneratorType {
+	
+	typealias Element = (Key, Value)
+	
+	private let indexedDictionary: IndexedDictionary<Key, Value>
+	
+	private var currentIndex = 0
+	
+	init(_ indexedDictionary: IndexedDictionary<Key, Value>) {
+		self.indexedDictionary = indexedDictionary
+	}
+	
+	mutating func next() -> Element? {
+		guard currentIndex < indexedDictionary.indexedKeys.count else {
+			return nil
+		}
+		
+		let key = indexedDictionary.indexedKeys[currentIndex]
+		
+		return (key, indexedDictionary[key]!)
 	}
 	
 }
