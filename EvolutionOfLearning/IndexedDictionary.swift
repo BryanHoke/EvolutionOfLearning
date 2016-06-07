@@ -25,7 +25,7 @@ struct IndexedDictionary<Key: Hashable, Value> {
 		return dictionary[lastKey]
 	}
 	
-	func valueAt(index: Int) -> Value? {
+	func value(at index: Int) -> Value? {
 		let key = indexedKeys[index]
 		return dictionary[key]
 	}
@@ -38,7 +38,7 @@ struct IndexedDictionary<Key: Hashable, Value> {
 		guard prevIndex >= 0 else {
 			return nil
 		}
-		return valueAt(prevIndex)
+		return value(at: prevIndex)
 	}
 	
 	func nextValueForKey(key: Key) -> Value? {
@@ -49,7 +49,7 @@ struct IndexedDictionary<Key: Hashable, Value> {
 		guard nextIndex < indexedKeys.count else {
 			return nil
 		}
-		return valueAt(nextIndex)
+		return value(at: nextIndex)
 	}
 	
 	mutating func removeAll(keepCapacity keepCapacity: Bool = true) {
