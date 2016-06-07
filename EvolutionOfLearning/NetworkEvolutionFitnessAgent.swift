@@ -36,8 +36,10 @@ public struct NetworkEvolutionFitnessAgent<ChromosomeType : Chromosome> : Fitnes
 	
 	// TODO: Test
 	public func seed() -> ChromosomeType {
-		let size = geneMap.chromosomeSize
-		return ChromosomeType.init(size: size, seed: randomBool)
+		let sizes = geneMap.mapping.map { (mapping: (index: Int, range: Range<Int>)) -> Int in
+			mapping.range.count
+		}
+		return ChromosomeType.init(segmentSizes: sizes, seed: randomBool)
 	}
 	
 	// TODO: Test
