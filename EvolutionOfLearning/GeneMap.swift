@@ -25,7 +25,7 @@ public struct GeneMap {
 		return mapping.lastValue?.endIndex ?? offset
 	}
 	
-	var mapping = IndexedDictionary<Int, Range<Int>>()
+	var mapping = OrderedDictionary<Int, Range<Int>>()
 	
 	var count: Int {
 		return mapping.count

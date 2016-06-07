@@ -8,14 +8,14 @@
 
 import Foundation
 
-struct IndexedDictionary<Key: Hashable, Value> {
+struct OrderedDictionary<Key: Hashable, Value> {
 	
 	private var dictionary: [Key: Value] = [:]
 	
-	private var indexedKeys: [Key] = []
+	private var orderedKeys: [Key] = []
 	
 	var lastKey: Key? {
-		return indexedKeys.last
+		return orderedKeys.last
 	}
 	
 	var lastValue: Value? {
@@ -26,12 +26,12 @@ struct IndexedDictionary<Key: Hashable, Value> {
 	}
 	
 	func value(at index: Int) -> Value? {
-		let key = indexedKeys[index]
+		let key = orderedKeys[index]
 		return dictionary[key]
 	}
 	
 	func previousValueForKey(key: Key) -> Value? {
-		guard let index = indexedKeys.indexOf(key) else {
+		guard let index = orderedKeys.indexOf(key) else {
 			return nil
 		}
 		let prevIndex = index - 1
@@ -42,37 +42,37 @@ struct IndexedDictionary<Key: Hashable, Value> {
 	}
 	
 	func nextValueForKey(key: Key) -> Value? {
-		guard let index = indexedKeys.indexOf(key) else {
+		guard let index = orderedKeys.indexOf(key) else {
 			return nil
 		}
 		let nextIndex = index + 1
-		guard nextIndex < indexedKeys.count else {
+		guard nextIndex < orderedKeys.count else {
 			return nil
 		}
 		return value(at: nextIndex)
 	}
 	
 	mutating func removeAll(keepCapacity keepCapacity: Bool = true) {
-		indexedKeys.removeAll(keepCapacity: keepCapacity)
+		orderedKeys.removeAll(keepCapacity: keepCapacity)
 		dictionary.removeAll(keepCapacity: keepCapacity)
 	}
 	
 }
 
-extension IndexedDictionary : CollectionType {
+extension OrderedDictionary : CollectionType {
 	
 	typealias Element = (Key, Value)
 	
 	typealias Index = DictionaryIndex<Key, Value>
 	
-	typealias Generator = IndexedDictionaryGenerator<Key, Value>
+	typealias Generator = OrderedDictionaryGenerator<Key, Value>
 	
 	var count: Int {
 		return dictionary.count
 	}
 
 	var endIndex: Index {
-		guard let lastKey = indexedKeys.last else {
+		guard let lastKey = orderedKeys.last else {
 			return dictionary.endIndex
 		}
 		
@@ -80,7 +80,7 @@ extension IndexedDictionary : CollectionType {
 	}
 	
 	var startIndex: Index {
-		guard let firstKey = indexedKeys.first else {
+		guard let firstKey = orderedKeys.first else {
 			return dictionary.startIndex
 		}
 		
@@ -88,7 +88,7 @@ extension IndexedDictionary : CollectionType {
 	}
 	
 	func generate() -> Generator {
-		return IndexedDictionaryGenerator(self)
+		return OrderedDictionaryGenerator(self)
 	}
 	
 	subscript(key: Key) -> Value? {
@@ -97,8 +97,8 @@ extension IndexedDictionary : CollectionType {
 		}
 		set(newValue) {
 			dictionary[key] = newValue
-			if !indexedKeys.contains(key) {
-				indexedKeys.append(key)
+			if !orderedKeys.contains(key) {
+				orderedKeys.append(key)
 			}
 		}
 	}
@@ -109,26 +109,26 @@ extension IndexedDictionary : CollectionType {
 	
 }
 
-struct IndexedDictionaryGenerator<Key : Hashable, Value> : GeneratorType {
+struct OrderedDictionaryGenerator<Key : Hashable, Value> : GeneratorType {
 	
 	typealias Element = (Key, Value)
 	
-	private let indexedDictionary: IndexedDictionary<Key, Value>
+	private let orderedDictionary: OrderedDictionary<Key, Value>
 	
 	private var currentIndex = 0
 	
-	init(_ indexedDictionary: IndexedDictionary<Key, Value>) {
-		self.indexedDictionary = indexedDictionary
+	init(_ indexedDictionary: OrderedDictionary<Key, Value>) {
+		self.orderedDictionary = indexedDictionary
 	}
 	
 	mutating func next() -> Element? {
-		guard currentIndex < indexedDictionary.indexedKeys.count else {
+		guard currentIndex < orderedDictionary.orderedKeys.count else {
 			return nil
 		}
 		
-		let key = indexedDictionary.indexedKeys[currentIndex]
+		let key = orderedDictionary.orderedKeys[currentIndex]
 		
-		return (key, indexedDictionary[key]!)
+		return (key, orderedDictionary[key]!)
 	}
 	
 }
