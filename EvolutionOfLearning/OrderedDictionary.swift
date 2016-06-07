@@ -133,6 +133,8 @@ struct OrderedDictionaryGenerator<Key : Hashable, Value> : GeneratorType {
 			return nil
 		}
 		
+		defer { currentIndex += 1 }
+		
 		let key = orderedDictionary.orderedKeys[currentIndex]
 		
 		return (key, orderedDictionary[key]!)
