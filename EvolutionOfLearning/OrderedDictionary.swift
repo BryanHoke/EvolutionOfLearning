@@ -10,9 +10,9 @@ import Foundation
 
 struct OrderedDictionary<Key: Hashable, Value> : DictionaryLiteralConvertible {
 	
-	private var dictionary: [Key: Value] = [:]
+	private(set) var dictionary: [Key: Value] = [:]
 	
-	private var orderedKeys: [Key] = []
+	private(set) var orderedKeys: [Key] = []
 	
 	init(dictionaryLiteral elements: (Key, Value)...) {
 		for (key, value) in elements {
