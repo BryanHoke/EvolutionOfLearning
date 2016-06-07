@@ -8,11 +8,18 @@
 
 import Foundation
 
-struct OrderedDictionary<Key: Hashable, Value> {
+struct OrderedDictionary<Key: Hashable, Value> : DictionaryLiteralConvertible {
 	
 	private var dictionary: [Key: Value] = [:]
 	
 	private var orderedKeys: [Key] = []
+	
+	init(dictionaryLiteral elements: (Key, Value)...) {
+		for (key, value) in elements {
+			orderedKeys.append(key)
+			dictionary[key] = value
+		}
+	}
 	
 	var lastKey: Key? {
 		return orderedKeys.last
