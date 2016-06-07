@@ -1,5 +1,5 @@
 //
-//  IndexedDictionary.swift
+//  OrderedDictionary.swift
 //  EvolutionOfLearning
 //
 //  Created by Bryan Hoke on 2/4/16.
