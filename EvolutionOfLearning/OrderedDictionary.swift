@@ -70,7 +70,7 @@ extension OrderedDictionary : CollectionType {
 	
 	typealias Element = (Key, Value)
 	
-	typealias Index = DictionaryIndex<Key, Value>
+	typealias Index = Int
 	
 	typealias Generator = OrderedDictionaryGenerator<Key, Value>
 	
@@ -79,19 +79,14 @@ extension OrderedDictionary : CollectionType {
 	}
 
 	var endIndex: Index {
-		guard let lastKey = orderedKeys.last else {
-			return dictionary.endIndex
-		}
-		
-		return dictionary.indexForKey(lastKey)!
+		return orderedKeys.count
 	}
 	
 	var startIndex: Index {
-		guard let firstKey = orderedKeys.first else {
-			return dictionary.startIndex
+		guard !orderedKeys.isEmpty else {
+			preconditionFailure("An empty collection has no startIndex.")
 		}
-		
-		return dictionary.indexForKey(firstKey)!
+		return 0
 	}
 	
 	func generate() -> Generator {
@@ -110,8 +105,9 @@ extension OrderedDictionary : CollectionType {
 		}
 	}
 	
-	subscript(index: DictionaryIndex<Key, Value>) -> (Key, Value) {
-		return dictionary[index]
+	subscript(index: Index) -> (Key, Value) {
+		let key = orderedKeys[index]
+		return (key, dictionary[key]!)
 	}
 	
 }
