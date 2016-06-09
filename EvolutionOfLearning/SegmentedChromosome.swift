@@ -18,13 +18,22 @@ public struct SegmentedChromosome : Chromosome, ArrayLiteralConvertible {
 	public static func twoPointCrossover(chromosome1: SegmentedChromosome, chromosome2: SegmentedChromosome, seed: () -> Int) -> (SegmentedChromosome, SegmentedChromosome) {
 		let segmentCount = min(chromosome1.segmentCount, chromosome2.segmentCount)
 		
-		// start ∈ 0..<(segmentCount - 1)
-		let start = seed() % (segmentCount - 1)
-		assert((0..<(segmentCount - 1)).contains(start))
+		let start: Int, end: Int
 		
-		// end ∈ (start + 1)..<segmentCount
-		let end = start + seed() % (segmentCount - start)
-		assert(((start + 1)..<segmentCount).contains(end))
+		if segmentCount == 1 {
+			start = 0
+			end = 0
+		}
+		else {
+			// start ∈ 0..<(segmentCount - 1)
+			start = seed() % (segmentCount - 1)
+			assert((0..<(segmentCount - 1)).contains(start))
+			
+			// end ∈ (start + 1)..<segmentCount
+			let endRangeStart = start + 1
+			end = endRangeStart + seed() % (segmentCount - endRangeStart)
+			assert((endRangeStart..<segmentCount).contains(end))
+		}
 		
 		var offspring = (chromosome1, chromosome2)
 		
