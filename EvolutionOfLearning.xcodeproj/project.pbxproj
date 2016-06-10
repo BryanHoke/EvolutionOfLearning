@@ -13,7 +13,6 @@
 		4A02D6551C7E0EFB004D98DF /* ControlEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A02D6531C7E0EFB004D98DF /* ControlEventHandler.swift */; };
 		4A02D6561C7E0EFB004D98DF /* ControlEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A02D6531C7E0EFB004D98DF /* ControlEventHandler.swift */; };
 		4A02D6921C7E1358004D98DF /* ConfigurationWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A02D6901C7E1358004D98DF /* ConfigurationWindowController.swift */; };
-		4A02D6931C7E1358004D98DF /* ConfigurationWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A02D6901C7E1358004D98DF /* ConfigurationWindowController.swift */; };
 		4A02D6941C7E1358004D98DF /* ConfigurationWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A02D6911C7E1358004D98DF /* ConfigurationWindowController.xib */; };
 		4A02D6951C7E1358004D98DF /* ConfigurationWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A02D6911C7E1358004D98DF /* ConfigurationWindowController.xib */; };
 		4A05832C1C928C4000F3D0E0 /* GeneMapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A05832B1C928C4000F3D0E0 /* GeneMapTests.swift */; };
@@ -715,7 +714,6 @@
 			files = (
 				4A02D6561C7E0EFB004D98DF /* ControlEventHandler.swift in Sources */,
 				4A02D6521C7E0A1B004D98DF /* DocumentWindowController.swift in Sources */,
-				4A02D6931C7E1358004D98DF /* ConfigurationWindowController.swift in Sources */,
 				4A825EE91B2D019E00C8CEA3 /* EvolutionOfLearningUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
