@@ -62,6 +62,14 @@ public struct SingleLayerSingleOutputNeuralNetwork: FeedForwardNeuralNetwork {
 	
 }
 
+extension SingleLayerSingleOutputNeuralNetwork : CustomStringConvertible {
+	
+	public var description: String {
+		return weights.map({ "\($0)" }).joinWithSeparator(" ")
+	}
+	
+}
+
 /// A single-layer, feed-forward neural network with multiple input units but only a single output unit.
 public final class SingleLayerSingleOutputFFNN: FeedForwardNeuralNetwork {
 	

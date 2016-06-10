@@ -38,3 +38,12 @@ extension Task {
 	}
 	
 }
+
+extension Task : CustomStringConvertible {
+	
+	public var description: String {
+		return patterns.map({ $0.description }).joinWithSeparator("\n")
+	}
+	
+}
+

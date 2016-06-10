@@ -20,3 +20,12 @@ public struct Pattern {
 	public var target: Double
 	
 }
+
+extension Pattern : CustomStringConvertible {
+	
+	public var description: String {
+		return inputs.map({ "\(Int($0))" }).joinWithSeparator(" ")
+		+ " : \(Int(target))"
+	}
+	
+}
