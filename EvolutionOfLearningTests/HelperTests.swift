@@ -56,5 +56,15 @@ class HelperTests: XCTestCase {
 		value = encoding11(bits: bits)
 		XCTAssertEqual(value, 0)
 	}
+	
+	func testDecodeWeights() {
+		let bits: [Bool] = [1, 1, 1, 0, 0, 1, 1, 1, 0]
+		let bitsPerWeight = 3
+		let layerSize = 3
+		let encoding = signedExponentialEncoding(exponentOffset: -1)
+		
+		let weights = decodeWeights(from: bits, bitsPerWeight: bitsPerWeight, layerSize: layerSize, encoding: encoding)
+		XCTAssertEqual(weights, [4, -1, 2])
+	}
 
 }
