@@ -36,5 +36,25 @@ class HelperTests: XCTestCase {
 		XCTAssertEqual(encodedInt(from: [false, false, false]), 0)
 		XCTAssertEqual(encodedInt(from: [true, false, true, true]), 11)
 	}
+	
+	func testSignedExponentialEncoding() {
+		let encoding11 = signedExponentialEncoding(exponentOffset: -11)
+		
+		var bits: [Bool] = [1, 1, 1, 1, 1]
+		var value = encoding11(bits: bits)
+		XCTAssertEqual(value, 16)
+		
+		bits[0] = 0
+		value = encoding11(bits: bits)
+		XCTAssertEqual(value, -16)
+		
+		bits = [1, 0, 0, 0, 1]
+		value = encoding11(bits: bits)
+		XCTAssertEqual(value, 0.0009765625)
+		
+		bits = [1, 0, 0, 0, 0]
+		value = encoding11(bits: bits)
+		XCTAssertEqual(value, 0)
+	}
 
 }
