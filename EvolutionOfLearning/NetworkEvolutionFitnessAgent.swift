@@ -70,7 +70,7 @@ public struct NetworkEvolutionFitnessAgent<ChromosomeType : Chromosome> : Fitnes
 		let encoding = signedExponentialEncoding(exponentOffset: exponentShift)
 		return decodeWeights(from: genes,
 		                     bitsPerWeight: bitsPerWeight,
-		                     layerSize: task.inputCount,
+		                     layerSize: task.inputCount + 1,
 		                     encoding: encoding)
 	}
 	
