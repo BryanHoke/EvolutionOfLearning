@@ -94,9 +94,9 @@ public struct FitnessConfig {
 	
 	public var usesNetworkEvolution = true
 	
-	public var bitsPerWeight = 3
+	public var bitsPerWeight = 4
 	
-	public var encodingExponentShift = -3
+	public var encodingExponentShift = -2
 	
 }
 
