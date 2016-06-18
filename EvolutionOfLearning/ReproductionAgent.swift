@@ -102,3 +102,72 @@ public struct ChalmersReproductionAgent<IndividualType : Individual> : Reproduct
 	}
 	
 }
+
+/// The same as `ChalmersReproductionAgent` except that the elite `Individual`s are copied into the next generation *without* any mutation.
+public struct ElitistReproductionAgent<IndividualType : Individual> : ReproductionAgent {
+	
+	public typealias PopulationType = Population<IndividualType>
+	
+	public typealias ChromosomeType = IndividualType.ChromosomeType
+	
+	public var config: ReproductionConfig
+	
+	public var elitismCount: Int {
+		return config.elitismCount
+	}
+	
+	public var mutationRate: Double {
+		return config.mutationRate
+	}
+	
+	public var crossoverRate: Double {
+		return config.crossoverRate
+	}
+	
+	/// - note: Assumes the population is already sorted
+	public func reproduce(population: PopulationType) -> PopulationType {
+		let elites = elitistSelection(from: population)
+		
+		let selected = rouletteWheelSelection(from: population)
+		var crossover = crossoverPopulation(from: selected)
+		mutate(&crossover)
+		
+		let newPopulation = elites + crossover
+		
+		assert(newPopulation.count == population.count)
+		return newPopulation
+	}
+	
+	// MARK: - Selection
+	
+	private func elitistSelection(from population: PopulationType) -> PopulationType {
+		return population
+			.elitistSelection(using: elitismCount)
+			.reproduceWithCloning()
+	}
+	
+	private func rouletteWheelSelection(from population: PopulationType) -> PopulationType {
+		let selectionSize = population.count - elitismCount
+		return population.rouletteWheelSelection(newPopulationSize: selectionSize)
+	}
+	
+	// MARK: - Reproduction
+	
+	private func crossoverPopulation(from population: PopulationType) -> PopulationType {
+		// Individuals are selected for crossover uniformly
+		let crossoverSize = Int(Double(population.count + elitismCount) * crossoverRate)
+		let branchSelector = PopulationType.uniformSelectionIndices(crossoverSize)
+		
+		// Perform crossover on selected subpopulation and cloning on the rest
+		return population.selectionBranch(branchSelector) {
+			(selected: PopulationType, unselected: PopulationType) -> PopulationType in
+			selected.reproduceWithCrossover(ChromosomeType.twoPointCrossover)
+				+ unselected.reproduceWithCloning()
+		}
+	}
+	
+	private func mutate(inout population: PopulationType) {
+		population.mutateInPlace(using: mutationRate)
+	}
+	
+}
