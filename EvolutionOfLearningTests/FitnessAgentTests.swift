@@ -24,7 +24,7 @@ class FitnessAgentTests: XCTestCase {
 
 }
 
-class WeightEvolutionFitnessAgentTests: XCTestCase {
+class NetworkEvolutionFitnessAgentTests: XCTestCase {
 	
 	override func setUp() {
 		super.setUp()
