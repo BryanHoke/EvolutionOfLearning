@@ -39,10 +39,14 @@ class HelperTests: XCTestCase {
 	
 	func testSignedExponentialEncoding() {
 		let encoding11 = signedExponentialEncoding(exponentOffset: -11)
+		let encoding10 = signedExponentialEncoding(exponentOffset: -10)
 		
 		var bits: [Bool] = [1, 1, 1, 1, 1]
 		var value = encoding11(bits: bits)
 		XCTAssertEqual(value, 16)
+		
+		value = encoding10(bits: bits)
+		XCTAssertEqual(value, 32)
 		
 		bits[0] = 0
 		value = encoding11(bits: bits)
