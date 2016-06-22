@@ -56,10 +56,6 @@ public struct NetworkEvolutionFitnessAgent<ChromosomeType : Chromosome> : Fitnes
 	
 	func makeNetwork(for task: Task, genes: [Bool]) -> FeedForwardNeuralNetwork {
 		let weights = makeWeights(for: task, genes: genes)
-		return makeNetwork(for: weights)
-	}
-	
-	func makeNetwork(for weights: [Double]) -> FeedForwardNeuralNetwork {
 		return SingleLayerSingleOutputNeuralNetwork(
 			weights: weights,
 			activation: sigmoid(λ: 1))
