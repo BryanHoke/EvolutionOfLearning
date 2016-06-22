@@ -10,37 +10,25 @@ import Foundation
 
 public struct LearningNetworkEvolutionFitnessAgent<ChromosomeType : Chromosome> : FitnessAgent {
 	
-	public init(bitsPerWeight: Int, exponentialCap: Int, learningRuleSize: Int, numberOfTrainingEpochs: Int, tasks: [Task]) {
+	public init(bitsPerWeight: Int, exponentShift: Int, learningRuleSize: Int, numberOfTrainingEpochs: Int, tasks: [Task]) {
 		self.bitsPerWeight = bitsPerWeight
-		self.exponentialCap = exponentialCap
+		self.exponentShift = exponentShift
 		self.learningRuleSize = learningRuleSize
 		self.numberOfTrainingEpochs = numberOfTrainingEpochs
 		self.tasks = tasks
-		self.exponentShift = exponentOffset(bitCount: bitsPerWeight, cap: exponentialCap)
 		geneMap = GeneMap(bitsPerWeight: bitsPerWeight, offset: learningRuleSize)
 		buildGeneMap()
 	}
 	
-	/// Preferred value is `3`.
 	public let bitsPerWeight: Int
 	
-	/// Preferred value is `4`.
-	public let exponentialCap: Int
+	public let exponentShift: Int
 	
-	/// Preferred value is `35`.
 	public let learningRuleSize: Int
 	
-	/// Preferred value is `10`.
 	public let numberOfTrainingEpochs: Int
 	
 	public let tasks: [Task]
-	
-	private let exponentShift: Int
-	
-	// TODO: Test
-	private func computeExponentShift() -> Int {
-		return pow(2, bitsPerWeight - 1) - 1 - exponentialCap
-	}
 	
 	private var geneMap: GeneMap
 	
@@ -52,8 +40,10 @@ public struct LearningNetworkEvolutionFitnessAgent<ChromosomeType : Chromosome> 
 	
 	// TODO: Test
 	public func seed() -> ChromosomeType {
-		let size = geneMap.chromosomeSize
-		return ChromosomeType.init(size: size, seed: randomBool)
+		let sizes = [learningRuleSize] + geneMap.mapping.map { (mapping: (index: Int, range: Range<Int>)) -> Int in
+			mapping.range.count
+		}
+		return ChromosomeType.init(segmentSizes: sizes, seed: randomBool)
 	}
 	
 	// TODO: Test
@@ -84,7 +74,7 @@ public struct LearningNetworkEvolutionFitnessAgent<ChromosomeType : Chromosome> 
 		let encoding = signedExponentialEncoding(exponentOffset: exponentShift)
 		return decodeWeights(from: genes,
 		                     bitsPerWeight: bitsPerWeight,
-		                     layerSize: task.inputCount,
+		                     layerSize: task.inputCount + 1,
 		                     encoding: encoding)
 	}
 	
