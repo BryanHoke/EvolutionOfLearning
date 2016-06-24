@@ -10,28 +10,28 @@ import Foundation
 
 public protocol SupervisedLearningRule {
 
-	func trainNetwork(inout network: FeedForwardNeuralNetwork,
-		withPattern pattern: Pattern)
+	func train(inout network: FeedForwardNeuralNetwork,
+		on pattern: Pattern)
 	
-	func trainNetwork(inout network: FeedForwardNeuralNetwork,
-		task: Task)
+	func train(inout network: FeedForwardNeuralNetwork,
+		on task: Task)
 	
-	func trainNetwork(inout network: FeedForwardNeuralNetwork,
-		task: Task,
+	func train(inout network: FeedForwardNeuralNetwork,
+		on task: Task,
 		numberOfTimes: Int)
 }
 
 public extension SupervisedLearningRule {
 	
-	func trainNetwork(inout network: FeedForwardNeuralNetwork, task: Task) {
+	func train(inout network: FeedForwardNeuralNetwork, on task: Task) {
 		for pattern in task.patterns {
-			trainNetwork(&network, withPattern: pattern)
+			train(&network, on: pattern)
 		}
 	}
 	
-	func trainNetwork(inout network: FeedForwardNeuralNetwork, task: Task, numberOfTimes: Int) {
+	func train(inout network: FeedForwardNeuralNetwork, on task: Task, numberOfTimes: Int) {
 		for _ in 0..<numberOfTimes {
-			trainNetwork(&network, task: task)
+			train(&network, on: task)
 		}
 	}
 	
@@ -82,7 +82,7 @@ public struct ChalmersLearningRule: SupervisedLearningRule {
 		self.init(coefficients: coefficients)
 	}
 	
-	public func trainNetwork(inout network: FeedForwardNeuralNetwork, withPattern pattern: Pattern) {
+	public func train(inout network: FeedForwardNeuralNetwork, on pattern: Pattern) {
 		let output = network.activateWithInputs(pattern.inputs)
 		for i in 0...pattern.inputs.count {
 			let input = i < pattern.inputs.count ? pattern.inputs[i] : network.bias

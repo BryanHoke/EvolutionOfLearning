@@ -35,7 +35,7 @@ public struct LearningRuleEvolutionFitnessAgent<ChromosomeType : Chromosome> : F
 		let learningRule = ChalmersLearningRule(
 			bits: chromosome.genes)
 		
-		learningRule.trainNetwork(&network, task: task, numberOfTimes: numberOfTrainingEpochs)
+		learningRule.train(&network, on: task, numberOfTimes: numberOfTrainingEpochs)
 		
 		return fitness(of: network, on: task)
 	}

@@ -151,7 +151,7 @@ class EvolutionOfLearningTests: XCTestCase {
 		
 		let error1 = network.testOnTask(task) / Double(task.patterns.count)
 		
-		rule.trainNetwork(&network, task: task, numberOfTimes: 10)
+		rule.train(&network, on: task, numberOfTimes: 10)
 		
 		let error2 = network.testOnTask(task) / Double(task.patterns.count)
 		
@@ -171,7 +171,7 @@ class EvolutionOfLearningTests: XCTestCase {
 			var network = SingleLayerSingleOutputNeuralNetwork(
 				size: task.inputCount + 1,
 				activation: sigmoid(λ: 1)) as FeedForwardNeuralNetwork
-			rule.trainNetwork(&network, task: task, numberOfTimes: 100)
+			rule.train(&network, on: task, numberOfTimes: 100)
 			print(network)
 			let fitness = 1 - network.testOnTask(task) / Double(task.patterns.count)
 			print(fitness)
@@ -265,7 +265,7 @@ class EvolutionOfLearningTests: XCTestCase {
 		
 		var network = SingleLayerSingleOutputNeuralNetwork(weights: weights, activation: sigmoid(λ: 1)) as FeedForwardNeuralNetwork
 		
-		rule.trainNetwork(&network, task: task, numberOfTimes: 10)
+		rule.train(&network, on: task, numberOfTimes: 10)
 		
 		let fitness = 1 - network.testOnTask(task) / Double(task.patterns.count)
 		
