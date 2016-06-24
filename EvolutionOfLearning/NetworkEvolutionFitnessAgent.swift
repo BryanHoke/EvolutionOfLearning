@@ -10,19 +10,22 @@ import Foundation
 
 public struct NetworkEvolutionFitnessAgent<ChromosomeType : Chromosome> : FitnessAgent {
 	
-	public init(bitsPerWeight: Int, exponentShift: Int, tasks: [Task]) {
-		self.bitsPerWeight = bitsPerWeight
-		self.exponentShift = exponentShift
+	public init(config: FitnessConfig, tasks: [Task]) {
+		self.config = config
 		self.tasks = tasks
-		geneMap = GeneMap(bitsPerWeight: bitsPerWeight, offset: 0)
+		geneMap = GeneMap(bitsPerWeight: config.bitsPerWeight, offset: config.learningRuleSize)
 		buildGeneMap()
 	}
 	
-	/// Preferred value is `3`.
-	public let bitsPerWeight: Int
+	public let config: FitnessConfig
 	
-	/// Preferred value is `4`.
-	private let exponentShift: Int
+	public var bitsPerWeight: Int {
+		return config.bitsPerWeight
+	}
+	
+	public var exponentShift: Int {
+		return config.encodingExponentShift
+	}
 	
 	public let tasks: [Task]
 	

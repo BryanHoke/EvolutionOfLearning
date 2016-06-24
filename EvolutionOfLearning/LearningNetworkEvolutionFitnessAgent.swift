@@ -10,23 +10,30 @@ import Foundation
 
 public struct LearningNetworkEvolutionFitnessAgent<ChromosomeType : Chromosome> : FitnessAgent {
 	
-	public init(bitsPerWeight: Int, exponentShift: Int, learningRuleSize: Int, numberOfTrainingEpochs: Int, tasks: [Task]) {
-		self.bitsPerWeight = bitsPerWeight
-		self.exponentShift = exponentShift
-		self.learningRuleSize = learningRuleSize
-		self.numberOfTrainingEpochs = numberOfTrainingEpochs
+	public init(config: FitnessConfig, tasks: [Task]) {
+		self.config = config
 		self.tasks = tasks
-		geneMap = GeneMap(bitsPerWeight: bitsPerWeight, offset: learningRuleSize)
+		geneMap = GeneMap(bitsPerWeight: config.bitsPerWeight, offset: config.learningRuleSize)
 		buildGeneMap()
 	}
 	
-	public let bitsPerWeight: Int
+	public let config: FitnessConfig
 	
-	public let exponentShift: Int
+	public var bitsPerWeight: Int {
+		return config.bitsPerWeight
+	}
 	
-	public let learningRuleSize: Int
+	public var exponentShift: Int {
+		return config.encodingExponentShift
+	}
 	
-	public let numberOfTrainingEpochs: Int
+	public var learningRuleSize: Int {
+		return config.learningRuleSize
+	}
+	
+	public var numberOfTrainingEpochs: Int {
+		return config.numberOfTrainingEpochs
+	}
 	
 	public let tasks: [Task]
 	
