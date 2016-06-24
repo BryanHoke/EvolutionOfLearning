@@ -98,6 +98,8 @@ public struct FitnessConfig {
 	
 	public var encodingExponentShift = -2
 	
+	public var trainingCountsTowardFitness = false
+	
 }
 
 extension FitnessConfig : OutputStringConvertible {
