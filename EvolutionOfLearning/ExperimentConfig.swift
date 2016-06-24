@@ -109,7 +109,8 @@ extension FitnessConfig : OutputStringConvertible {
 			((usesLearningRuleEvolution ?
 				[
 					"learningRuleSize: \(learningRuleSize)",
-					"numberOfTrainingEpochs: \(numberOfTrainingEpochs)"
+					"numberOfTrainingEpochs: \(numberOfTrainingEpochs)",
+					"trainingCountsTowardFitness: \(trainingCountsTowardFitness)"
 				]
 				: [])
 				+
