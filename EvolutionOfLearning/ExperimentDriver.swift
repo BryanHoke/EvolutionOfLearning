@@ -90,13 +90,7 @@ class ExperimentDriver : ConfigurationEventHandling {
 	}
 	
 	func numberOfTasksChanged(to numberOfTasks: Int) {
-		self.numberOfTasks = min(numberOfTasks, numberOfTasksUpperBound)
-		if numberOfTasks > self.numberOfTasks {
-			interface?.numberOfTasks = self.numberOfTasks
-		}
-		maxNumberOfTasks = max(maxNumberOfTasks, self.numberOfTasks)
-		interface?.maxNumberOfTasks = maxNumberOfTasks
-		interface?.maxNumberOfTasksLowerBound = self.numberOfTasks
+		self.numberOfTasks = numberOfTasks
 	}
 	
 	func maxNumberOfTasksChanged(to maxNumberOfTasks: Int) {

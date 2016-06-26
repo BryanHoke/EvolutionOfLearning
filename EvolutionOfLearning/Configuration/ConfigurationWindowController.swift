@@ -118,7 +118,6 @@ class ConfigurationWindowController: NSWindowController, ExperimentInterface {
 		get { return tasksField.integerValue }
 		set {
 			tasksField.integerValue = newValue
-			maxTasksFormatter.minimum = newValue
 		}
 	}
 	
