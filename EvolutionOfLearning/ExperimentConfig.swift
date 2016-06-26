@@ -151,6 +151,9 @@ public struct ReproductionConfig {
 	
 	public var mutationRate = 0.01
 	
+	/// Whether mutation should apply to the individuals chosen by elitist selection.
+	public var mutatesEliteIndividuals = true
+	
 }
 
 extension ReproductionConfig : OutputStringConvertible {
@@ -159,7 +162,8 @@ extension ReproductionConfig : OutputStringConvertible {
 		return [
 			"elitismCount: \(elitismCount)",
 			"crossoverRate: \(crossoverRate)",
-			"mutationRate: \(mutationRate)"
+			"mutationRate: \(mutationRate)",
+			"mutatesEliteIndividuals: \(mutatesEliteIndividuals)"
 		].joinWithSeparator("\n")
 	}
 	
