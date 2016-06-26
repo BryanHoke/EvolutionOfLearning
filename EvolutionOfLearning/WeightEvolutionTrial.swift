@@ -35,7 +35,7 @@ public struct NetworkEvolutionTrial<IndividualType : Individual> {
 	
 	private func makeFitnessAgent(with tasks: [Task]) -> AnyFitnessAgent<ChromosomeType> {
 		let fitnessConfig = config.fitnessConfig
-		return AnyFitnessAgent(NetworkEvolutionFitnessAgent(bitsPerWeight: fitnessConfig.bitsPerWeight, exponentShift: fitnessConfig.encodingExponentShift, tasks: tasks))
+		return AnyFitnessAgent(NetworkEvolutionFitnessAgent(config: fitnessConfig, tasks: tasks))
 	}
 	
 	private func makeReproductionAgent() -> AnyReproductionAgent<IndividualType> {
