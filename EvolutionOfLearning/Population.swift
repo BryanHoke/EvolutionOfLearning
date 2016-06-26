@@ -91,7 +91,7 @@ extension Population {
 		}
 	}
 	
-	/// Returns a new population containing the members of this population mutated with a specified rate.
+	/// Returns a `Population` containing the members of `self` mutated with a rate given by `mutationRate`.
 	public func mutated(withRate mutationRate: Double) -> PopulationType {
 		var population = self
 		population.visitMembers { (member) in

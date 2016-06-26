@@ -88,20 +88,32 @@ extension EnvironmentConfig : OutputStringConvertible {
 	
 }
 
+/// The parameters used for fitness evaluation.
 public struct FitnessConfig {
 	
+	/// Whether learning rules are evolved.
 	public var usesLearningRuleEvolution = true
 	
+	/// The number of genes used to encode the learning rule.
+	///
+	/// Has no effect if `usesLearningRuleEvolution == false`.
 	public var learningRuleSize = 35
 	
+	/// The number of times to train each network before evaluating its fitness.
+	///
+	/// Has no effect if `usesLearningRuleEvolution == false`.
 	public var numberOfTrainingEpochs = 10
 	
+	/// Whether networks are evolved.
 	public var usesNetworkEvolution = true
 	
+	/// The number of genes used to encode each network weight.
 	public var bitsPerWeight = 4
 	
+	/// Shifts the exponent used to decode weights from genes.
 	public var encodingExponentShift = -2
 	
+	/// Whether network performance during training counts toward fitness.
 	public var trainingCountsTowardFitness = false
 	
 }
@@ -143,12 +155,16 @@ extension EvolutionConfig : OutputStringConvertible {
 	
 }
 
+/// The parameters used for reproduction.
 public struct ReproductionConfig {
 	
+	/// The number of individuals to select using elitist selection.
 	public var elitismCount = 1
 	
+	/// The proportion of the population that should be reproduced using crossover.
 	public var crossoverRate = 0.8
 	
+	/// The frequency with which individual genes should be mutated.
 	public var mutationRate = 0.01
 	
 	/// Whether mutation should apply to the individuals chosen by elitist selection.
