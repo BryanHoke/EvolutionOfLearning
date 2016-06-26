@@ -20,8 +20,10 @@ public enum ExperimentalCondition: Int {
 	
 	case networkEvolution
 	
+	case learningNetworkEvolution
+	
 	static var allConditions: [ExperimentalCondition] {
-		return [.learningRuleEvolution, .networkEvolution]
+		return [.learningRuleEvolution, .networkEvolution, .learningNetworkEvolution]
 	}
 	
 	public var name: String {
@@ -30,6 +32,8 @@ public enum ExperimentalCondition: Int {
 			return "Learning Rule Evolution"
 		case .networkEvolution:
 			return "Network Evolution"
+		case .learningNetworkEvolution:
+			return "Learing Network Evolution"
 		}
 	}
 	

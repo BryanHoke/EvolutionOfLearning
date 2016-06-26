@@ -41,6 +41,8 @@ class ExperimentRunner<IndividualType : Individual> : ExperimentRunning {
 		case .networkEvolution:
 			config.fitnessConfig.learningRuleSize = 0
 			config.fitnessConfig.numberOfTrainingEpochs = 0
+		case .learningNetworkEvolution:
+			config.fitnessConfig.trainingCountsTowardFitness = true
 		}
 		return config
 	}
@@ -68,6 +70,8 @@ class ExperimentRunner<IndividualType : Individual> : ExperimentRunning {
 			return AnyExperiment(ChalmersExperiment(tasks: tasks, config: config))
 		case .networkEvolution:
 			return AnyExperiment(NetworkEvolutionExperiment(tasks: tasks, config: config))
+		case .learningNetworkEvolution:
+			return AnyExperiment(LearningNetworkEvolutionExperiment(tasks: tasks, config: config))
 		}
 	}
 	
