@@ -91,6 +91,15 @@ extension Population {
 		}
 	}
 	
+	/// Returns a new population containing the members of this population mutated with a specified rate.
+	public func mutated(withRate mutationRate: Double) -> PopulationType {
+		var population = self
+		population.visitMembers { (member) in
+			member.chromosome.mutate(withRate: mutationRate)
+		}
+		return population
+	}
+	
 	/// Returns a `Population` containing the top *elitistCount* members of `self`, as indicated by fitness.
 	public func elitistSelection(using elitistCount: Int) -> PopulationType {
 		var elitistPopulation = Population()
