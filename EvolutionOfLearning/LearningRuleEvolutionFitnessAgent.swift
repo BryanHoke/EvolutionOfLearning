@@ -35,9 +35,20 @@ public struct LearningRuleEvolutionFitnessAgent<ChromosomeType : Chromosome> : F
 		let learningRule = ChalmersLearningRule(
 			bits: chromosome.genes)
 		
-		learningRule.train(&network, on: task, numberOfTimes: numberOfTrainingEpochs)
+		var fitness = 0.0
+		var denominator = 1
 		
-		return fitness(of: network, on: task)
+		for _ in 0..<numberOfTrainingEpochs {
+			if config.trainingCountsTowardFitness {
+				fitness += self.fitness(of: network, on: task)
+				denominator += 1
+			}
+			learningRule.train(&network, on: task)
+		}
+		
+		fitness += self.fitness(of: network, on: task)
+		fitness /= Double(denominator)
+		return fitness
 	}
 	
 	func makeNetwork(for task: Task) -> FeedForwardNeuralNetwork {
