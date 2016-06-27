@@ -40,13 +40,13 @@ public struct LearningRuleEvolutionFitnessAgent<ChromosomeType : Chromosome> : F
 		
 		for _ in 0..<numberOfTrainingEpochs {
 			if config.trainingCountsTowardFitness {
-				fitness += self.fitness(of: network, on: task)
+				fitness += accuracy(of: network, on: task)
 				denominator += 1
 			}
 			learningRule.train(&network, on: task)
 		}
 		
-		fitness += self.fitness(of: network, on: task)
+		fitness += accuracy(of: network, on: task)
 		fitness /= Double(denominator)
 		return fitness
 	}

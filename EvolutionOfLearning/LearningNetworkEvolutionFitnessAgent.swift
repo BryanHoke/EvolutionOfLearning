@@ -70,7 +70,7 @@ public struct LearningNetworkEvolutionFitnessAgent<ChromosomeType : Chromosome> 
 		
 		if config.trainingCountsTowardFitness {
 			for _ in 0..<numberOfTrainingEpochs {
-				fitness += self.fitness(of: network, on: task)
+				fitness += accuracy(of: network, on: task)
 				learningRule.train(&network, on: task)
 			}
 			denominator += numberOfTrainingEpochs
@@ -78,7 +78,7 @@ public struct LearningNetworkEvolutionFitnessAgent<ChromosomeType : Chromosome> 
 			learningRule.train(&network, on: task, numberOfTimes: numberOfTrainingEpochs)
 		}
 		
-		fitness += self.fitness(of: network, on: task)
+		fitness += accuracy(of: network, on: task)
 		fitness /= Double(denominator)
 		return fitness
 	}

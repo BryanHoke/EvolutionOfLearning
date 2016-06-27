@@ -54,7 +54,7 @@ public struct NetworkEvolutionFitnessAgent<ChromosomeType : Chromosome> : Fitnes
 		let genes = Array(chromosome[geneRange])
 		let network = makeNetwork(for: task, genes: genes)
 		
-		return fitness(of: network, on: task)
+		return accuracy(of: network, on: task)
 	}
 	
 	func makeNetwork(for task: Task, genes: [Bool]) -> FeedForwardNeuralNetwork {

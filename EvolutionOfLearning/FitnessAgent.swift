@@ -29,7 +29,7 @@ extension FitnessAgent {
 		return totalFitness / Double(tasks.count)
 	}
 	
-	public func fitness(of network: FeedForwardNeuralNetwork, on task: Task) -> Double {
+	public func accuracy(of network: FeedForwardNeuralNetwork, on task: Task) -> Double {
 		let error = network.testOnTask(task)
 		let meanError = error / Double(task.patterns.count)
 		return 1.0 - meanError
