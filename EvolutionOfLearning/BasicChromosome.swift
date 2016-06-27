@@ -274,3 +274,7 @@ public prefix func !(chromosome: BasicChromosome) -> BasicChromosome {
 	}
 	return newChromosome
 }
+
+public func +(lhs: BasicChromosome, rhs: BasicChromosome) -> BasicChromosome {
+	return BasicChromosome(genes: lhs.genes + rhs.genes)
+}

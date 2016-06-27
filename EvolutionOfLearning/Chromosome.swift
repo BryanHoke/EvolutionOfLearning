@@ -28,6 +28,8 @@ public protocol Chromosome {
 	
 	subscript(subRange: Range<Int>) -> ArraySlice<Bool> { get set }
 	
+	func +(lhs: Self, rhs: Self) -> Self
+	
 }
 
 // MARK: - Computed Properties

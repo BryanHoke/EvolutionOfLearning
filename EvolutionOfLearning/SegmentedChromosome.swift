@@ -51,6 +51,10 @@ public struct SegmentedChromosome : Chromosome, ArrayLiteralConvertible {
 		self.init(segmentSizes: [size], seed: seed)
 	}
 	
+	public init(segments: [[Bool]]) {
+		self.segments = segments
+	}
+	
 	public init(segmentSizes: [Int], seed: () -> Bool) {
 		segments = segmentSizes.map { (0..<$0).map { _ in seed() } }
 	}
@@ -107,4 +111,8 @@ public prefix func !(chromosome: SegmentedChromosome) -> SegmentedChromosome {
 		newChromosome[index] = !gene
 	}
 	return newChromosome
+}
+
+public func +(lhs: SegmentedChromosome, rhs: SegmentedChromosome) -> SegmentedChromosome {
+	return SegmentedChromosome(segments: lhs.segments + rhs.segments)
 }

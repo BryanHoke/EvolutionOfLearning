@@ -80,5 +80,10 @@ class SegmentedChromosomeTests: XCTestCase {
 	func testNegation() {
 		XCTAssertEqual((!chromosome1).segments, [[1, 0], [1, 0]])
 	}
+	
+	func testAddition() {
+		let chromosome = chromosome1 + chromosome2
+		XCTAssertEqual(chromosome.segments, [[0, 1], [0, 1], [1, 0], [1, 0]])
+	}
 
 }
