@@ -36,13 +36,14 @@ class ExperimentRunner<IndividualType : Individual> : ExperimentRunning {
 		var config = self.config
 		switch condition {
 		case .learningRuleEvolution:
-			config.fitnessConfig.bitsPerWeight = 0
-			config.fitnessConfig.encodingExponentShift = 0
+			config.fitnessConfig.usesLearningRuleEvolution = true
+			config.fitnessConfig.usesNetworkEvolution = false
 		case .networkEvolution:
-			config.fitnessConfig.learningRuleSize = 0
-			config.fitnessConfig.numberOfTrainingEpochs = 0
+			config.fitnessConfig.usesLearningRuleEvolution = false
+			config.fitnessConfig.usesNetworkEvolution = true
 		case .learningNetworkEvolution:
-			config.fitnessConfig.trainingCountsTowardFitness = true
+			config.fitnessConfig.usesLearningRuleEvolution = true
+			config.fitnessConfig.usesNetworkEvolution = true
 		}
 		return config
 	}
