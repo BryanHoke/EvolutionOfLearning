@@ -33,7 +33,7 @@ public enum ExperimentalCondition: Int {
 		case .networkEvolution:
 			return "Network Evolution"
 		case .learningNetworkEvolution:
-			return "Learing Network Evolution"
+			return "Learning Network Evolution"
 		}
 	}
 	
