@@ -137,11 +137,6 @@ class ConfigurationWindowController: NSWindowController, ExperimentInterface {
 		set { maxTasksField.integerValue = newValue }
 	}
 	
-	var maxNumberOfTasksLowerBound: Int? {
-		get { return maxTasksFormatter.minimum?.integerValue }
-		set { maxTasksFormatter.minimum = newValue }
-	}
-	
 	var fitnessIncludesTraining: Bool {
 		get { return fitnessIncludesTrainingSwitch.state == NSOnState }
 		set { fitnessIncludesTrainingSwitch.state = newValue ? NSOnState : NSOffState }

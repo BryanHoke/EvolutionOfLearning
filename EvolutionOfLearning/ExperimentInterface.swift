@@ -24,7 +24,5 @@ protocol ExperimentInterface : class {
 	
 	var maxNumberOfTasks: Int { get set }
 	
-	var maxNumberOfTasksLowerBound: Int? { get set }
-	
 	var fitnessIncludesTraining: Bool { get set }
 }
