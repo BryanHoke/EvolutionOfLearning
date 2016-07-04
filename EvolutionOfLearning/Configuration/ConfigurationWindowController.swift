@@ -125,7 +125,10 @@ class ConfigurationWindowController: NSWindowController, ExperimentInterface {
 	
 	var numberOfTasksUpperBound: Int? {
 		get { return tasksFormatter.maximum?.integerValue }
-		set { tasksFormatter.maximum = newValue }
+		set {
+			tasksFormatter.maximum = newValue
+			maxTasksFormatter.maximum = newValue
+		}
 	}
 	
 	var maxNumberOfTasks: Int {

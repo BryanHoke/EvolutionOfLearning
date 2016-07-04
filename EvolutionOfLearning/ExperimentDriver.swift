@@ -76,6 +76,7 @@ class ExperimentDriver : ConfigurationEventHandling {
 		interface.numberOfGenerations = numberOfGenerations
 		interface.numberOfTasks = numberOfTasks
 		interface.maxNumberOfTasks = maxNumberOfTasks
+		interface.numberOfTasksUpperBound = numberOfTasksUpperBound
 		interface.fitnessIncludesTraining = fitnessIncludesTraining
 	}
 	
