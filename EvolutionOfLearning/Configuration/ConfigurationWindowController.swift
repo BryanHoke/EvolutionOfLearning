@@ -36,12 +36,18 @@ class ConfigurationWindowController: NSWindowController, ExperimentInterface {
 	
 	@IBOutlet weak var maxTasksFormatter: NSNumberFormatter!
 	
+	@IBOutlet weak var fitnessIncludesTrainingSwitch: NSButton!
+	
 	@IBAction func runButtonClicked(sender: NSButton) {
 		eventHandler?.runButtonPressed()
 	}
 	
 	@IBAction func conditionButtonChanged(sender: NSPopUpButton) {
 		eventHandler?.selectedConditionIndexChanged(to: sender.indexOfSelectedItem)
+	}
+	
+	@IBAction func fitnessIncludesTrainingSwitchChanged(sender: NSButton) {
+		eventHandler?.fitnessIncludesTrainingChanged(to: sender.state == NSOnState)
 	}
 	
 	override func controlTextDidChange(obj: NSNotification) {
@@ -136,4 +142,8 @@ class ConfigurationWindowController: NSWindowController, ExperimentInterface {
 		set { maxTasksFormatter.minimum = newValue }
 	}
 	
+	var fitnessIncludesTraining: Bool {
+		get { return fitnessIncludesTrainingSwitch.state == NSOnState }
+		set { fitnessIncludesTrainingSwitch.state = newValue ? NSOnState : NSOffState }
+	}
 }

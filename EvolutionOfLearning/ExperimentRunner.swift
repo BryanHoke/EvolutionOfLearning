@@ -32,6 +32,11 @@ class ExperimentRunner<IndividualType : Individual> : ExperimentRunning {
 		set { config.evolutionaryTaskCount = newValue }
 	}
 	
+	var fitnessIncludesTraining: Bool {
+		get { return config.fitnessConfig.trainingCountsTowardFitness }
+		set { config.fitnessConfig.trainingCountsTowardFitness = newValue }
+	}
+	
 	private var configForWriting: ExperimentConfig {
 		var config = self.config
 		switch condition {
@@ -62,8 +67,6 @@ class ExperimentRunner<IndividualType : Individual> : ExperimentRunning {
 		
 		recorder?.writeOverview()
 	}
-	
-	
 	
 	private func makeExperiment(tasks tasks: [Task]) -> AnyExperiment<Record> {
 		switch condition {

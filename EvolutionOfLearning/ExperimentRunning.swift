@@ -20,6 +20,8 @@ protocol ExperimentRunning {
 	
 	var numberOfTasks: Int { get set }
 	
+	var fitnessIncludesTraining: Bool { get set }
+	
 	func runExperiment(using tasks: [Task])
 	
 }

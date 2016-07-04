@@ -9,6 +9,7 @@
         <customObject id="-2" userLabel="File's Owner" customClass="ConfigurationWindowController" customModule="EvolutionOfLearning" customModuleProvider="target">
             <connections>
                 <outlet property="conditionButton" destination="hv3-JZ-9iY" id="XkL-qz-d7e"/>
+                <outlet property="fitnessIncludesTrainingSwitch" destination="YBE-xY-vbb" id="NmR-65-veF"/>
                 <outlet property="generationsField" destination="dIC-2P-fpl" id="jI4-TB-jfb"/>
                 <outlet property="maxTasksField" destination="aNc-lT-eAO" id="ZiQ-ID-Qzc"/>
                 <outlet property="maxTasksFormatter" destination="Zjh-oR-qeN" id="7tv-Va-OPl"/>
@@ -31,13 +32,13 @@
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
                     <progressIndicator hidden="YES" wantsLayer="YES" maxValue="100" style="bar" translatesAutoresizingMaskIntoConstraints="NO" id="TOx-SZ-d5L">
-                        <rect key="frame" x="95" y="51" width="241" height="20"/>
+                        <rect key="frame" x="95" y="36" width="241" height="20"/>
                     </progressIndicator>
                     <stackView distribution="fillEqually" orientation="vertical" alignment="centerX" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BbI-Yj-Ciw">
-                        <rect key="frame" x="127" y="78" width="178" height="167"/>
+                        <rect key="frame" x="127" y="63" width="178" height="196"/>
                         <subviews>
                             <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hv3-JZ-9iY">
-                                <rect key="frame" x="52" y="143" width="76" height="26"/>
+                                <rect key="frame" x="51" y="172" width="76" height="26"/>
                                 <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="6O8-nA-Dkq" id="y5m-cR-30R">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="menu"/>
@@ -54,7 +55,7 @@
                                 </connections>
                             </popUpButton>
                             <stackView distribution="fill" orientation="vertical" alignment="trailing" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="u0o-h3-aPd">
-                                <rect key="frame" x="0.0" y="86" width="178" height="52"/>
+                                <rect key="frame" x="0.0" y="115" width="178" height="52"/>
                                 <subviews>
                                     <stackView distribution="fill" orientation="horizontal" alignment="top" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zhS-Hn-hLl">
                                         <rect key="frame" x="0.0" y="30" width="178" height="22"/>
@@ -140,9 +141,9 @@
                                 </customSpacing>
                             </stackView>
                             <stackView distribution="fill" orientation="vertical" alignment="trailing" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kA9-yy-AHj">
-                                <rect key="frame" x="0.0" y="29" width="178" height="49"/>
+                                <rect key="frame" x="0.0" y="58" width="178" height="49"/>
                                 <subviews>
-                                    <stackView autoresizesSubviews="NO" distribution="fill" orientation="horizontal" alignment="top" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" misplaced="YES" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="D9B-bG-Jba">
+                                    <stackView autoresizesSubviews="NO" distribution="fill" orientation="horizontal" alignment="top" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="D9B-bG-Jba">
                                         <rect key="frame" x="95" y="27" width="83" height="22"/>
                                         <subviews>
                                             <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Tjq-5n-JS8">
@@ -228,6 +229,16 @@
                                     <real value="3.4028234663852886e+38"/>
                                 </customSpacing>
                             </stackView>
+                            <button translatesAutoresizingMaskIntoConstraints="NO" id="YBE-xY-vbb">
+                                <rect key="frame" x="4" y="27" width="169" height="25"/>
+                                <buttonCell key="cell" type="check" title="Fitness includes training" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="tnD-EK-nSq">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="fitnessIncludesTrainingSwitchChanged:" target="-2" id="LqE-41-g5R"/>
+                                </connections>
+                            </button>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="o8B-p1-xbj">
                                 <rect key="frame" x="21" y="-7" width="136" height="32"/>
                                 <buttonCell key="cell" type="push" title="Run Experiment" bezelStyle="rounded" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Ekc-Sq-dw1">
@@ -252,8 +263,10 @@
                             <integer value="1000"/>
                             <integer value="1000"/>
                             <integer value="1000"/>
+                            <integer value="1000"/>
                         </visibilityPriorities>
                         <customSpacing>
+                            <real value="3.4028234663852886e+38"/>
                             <real value="3.4028234663852886e+38"/>
                             <real value="3.4028234663852886e+38"/>
                             <real value="3.4028234663852886e+38"/>

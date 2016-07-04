@@ -114,7 +114,7 @@ public struct FitnessConfig {
 	public var encodingExponentShift = -2
 	
 	/// Whether network performance during training counts toward fitness.
-	public var trainingCountsTowardFitness = false
+	public var trainingCountsTowardFitness = true
 	
 }
 

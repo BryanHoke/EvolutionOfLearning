@@ -20,6 +20,8 @@ protocol ConfigurationEventHandling: class {
 	
 	func maxNumberOfTasksChanged(to maxNumberOfTasks: Int)
 	
+	func fitnessIncludesTrainingChanged(to newValue: Bool)
+	
 	func runButtonPressed()
 	
 }

@@ -45,6 +45,11 @@ class ExperimentDriver : ConfigurationEventHandling {
 		get { return experimentRunner.numberOfGenerations }
 		set { experimentRunner.numberOfGenerations = newValue }
 	}
+
+	var fitnessIncludesTraining: Bool {
+		get { return experimentRunner.fitnessIncludesTraining }
+		set { experimentRunner.fitnessIncludesTraining = newValue }
+	}
 	
 	var numberOfTasks = 20
 	
@@ -63,16 +68,15 @@ class ExperimentDriver : ConfigurationEventHandling {
 	}
 	
 	private func syncInterface() {
-		guard let interface = self.interface else {
-			return
-		}
+		guard let interface = self.interface else { return }
+
 		interface.experimentalConditions = allConditionNames
 		interface.selectedConditionIndex = selectedConditionIndex
 		interface.numberOfTrials = numberOfTrials
 		interface.numberOfGenerations = numberOfGenerations
 		interface.numberOfTasks = numberOfTasks
-		
 		interface.maxNumberOfTasks = maxNumberOfTasks
+		interface.fitnessIncludesTraining = fitnessIncludesTraining
 	}
 	
 	// MARK: - ConfigurationEventHandling
@@ -95,6 +99,10 @@ class ExperimentDriver : ConfigurationEventHandling {
 	
 	func maxNumberOfTasksChanged(to maxNumberOfTasks: Int) {
 		self.maxNumberOfTasks = maxNumberOfTasks
+	}
+	
+	func fitnessIncludesTrainingChanged(to newValue: Bool) {
+		fitnessIncludesTraining = newValue
 	}
 	
 	func runButtonPressed() {
