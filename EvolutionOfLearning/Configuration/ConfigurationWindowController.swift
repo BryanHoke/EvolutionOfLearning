@@ -28,10 +28,6 @@ class ConfigurationWindowController: NSWindowController, ExperimentInterface {
 	
 	@IBOutlet weak var maxTasksField: NSTextField!
 	
-	@IBOutlet weak var tasksStepper: NSStepper!
-	
-	@IBOutlet weak var maxTasksStepper: NSStepper!
-	
 	@IBOutlet weak var tasksFormatter: NSNumberFormatter!
 	
 	@IBOutlet weak var maxTasksFormatter: NSNumberFormatter!
