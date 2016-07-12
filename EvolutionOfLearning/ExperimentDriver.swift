@@ -8,50 +8,54 @@
 
 import Foundation
 
-class ExperimentDriver : ConfigurationEventHandling {
+class ExperimentDriver<IndividualType : Individual> {
+
+	typealias Record = AnyTrialRecord<IndividualType>
 	
-	init(experimentRunner: ExperimentRunning) {
-		self.experimentRunner = experimentRunner
+	weak var recorder: ExperimentRecorder<Record>?
+	
+	var config = ExperimentConfig()
+	
+	var condition = ExperimentalCondition.learningRuleEvolution
+	
+	let allConditions = ExperimentalCondition.allConditions
+	
+	var numberOfTrials = 10
+	
+	var numberOfGenerations: Int {
+		get { return config.evolutionConfig.numberOfGenerations }
+		set { config.evolutionConfig.numberOfGenerations = newValue }
 	}
 	
-	var experimentRunner: ExperimentRunning
+	var numberOfTasks: Int {
+		get { return config.evolutionaryTaskCount }
+		set { config.evolutionaryTaskCount = newValue }
+	}
+	
+	var fitnessIncludesTraining: Bool {
+		get { return config.fitnessConfig.trainingCountsTowardFitness }
+		set { config.fitnessConfig.trainingCountsTowardFitness = newValue }
+	}
 	
 	var selectedConditionName: String {
-		return experimentRunner.condition.name
+		return condition.name
 	}
 	
 	var allConditionNames: [String] {
-		return experimentRunner.allConditions.map { $0.name }
+		return allConditions.map { $0.name }
 	}
 	
 	var selectedConditionIndex: Int? {
 		get {
-			return experimentRunner.allConditions.indexOf(experimentRunner.condition)
+			return allConditions.indexOf(condition)
 		}
 		set {
 			guard let index = newValue else {
 				return
 			}
-			experimentRunner.condition = experimentRunner.allConditions[index]
+			condition = allConditions[index]
 		}
 	}
-	
-	var numberOfTrials: Int {
-		get { return experimentRunner.numberOfTrials }
-		set { experimentRunner.numberOfTrials = newValue }
-	}
-	
-	var numberOfGenerations: Int {
-		get { return experimentRunner.numberOfGenerations }
-		set { experimentRunner.numberOfGenerations = newValue }
-	}
-
-	var fitnessIncludesTraining: Bool {
-		get { return experimentRunner.fitnessIncludesTraining }
-		set { experimentRunner.fitnessIncludesTraining = newValue }
-	}
-	
-	var numberOfTasks = 20
 	
 	let numberOfTasksUpperBound = 20
 	
@@ -80,7 +84,62 @@ class ExperimentDriver : ConfigurationEventHandling {
 		interface.fitnessIncludesTraining = fitnessIncludesTraining
 	}
 	
-	// MARK: - ConfigurationEventHandling
+	func runExperiments() {
+		let tasks = loadTasks()
+		var config = self.config
+		
+		for n in numberOfTasks...maxNumberOfTasks {
+			config.evolutionaryTaskCount = n
+			runExperiment(using: tasks, with: config)
+		}
+	}
+	
+	func runExperiment(using tasks: [Task], with config: ExperimentConfig) {
+		srand48(Int(arc4random()))
+		
+		recorder?.createResultsDirectory()
+		recorder?.write(makeConfigForWriting(from: config))
+		
+		let experiment = makeExperiment(tasks: tasks, config: config)
+		experiment.run(forNumberOfTrials: numberOfTrials, onTrialComplete: {
+			[unowned self] (record, index) in
+			self.recorder?.write(record, withIndex: index)
+			})
+		
+		recorder?.writeOverview()
+	}
+	
+	private func makeConfigForWriting(from original: ExperimentConfig) -> ExperimentConfig {
+		var config = original
+		switch condition {
+		case .learningRuleEvolution:
+			config.fitnessConfig.usesLearningRuleEvolution = true
+			config.fitnessConfig.usesNetworkEvolution = false
+		case .networkEvolution:
+			config.fitnessConfig.usesLearningRuleEvolution = false
+			config.fitnessConfig.usesNetworkEvolution = true
+		case .learningNetworkEvolution:
+			config.fitnessConfig.usesLearningRuleEvolution = true
+			config.fitnessConfig.usesNetworkEvolution = true
+		}
+		return config
+	}
+	
+	private func makeExperiment(tasks tasks: [Task], config: ExperimentConfig) -> AnyExperiment<Record> {
+		switch condition {
+		case .learningRuleEvolution:
+			return AnyExperiment(ChalmersExperiment(tasks: tasks, config: config))
+		case .networkEvolution:
+			return AnyExperiment(NetworkEvolutionExperiment(tasks: tasks, config: config))
+		case .learningNetworkEvolution:
+			return AnyExperiment(LearningNetworkEvolutionExperiment(tasks: tasks, config: config))
+		}
+	}
+}
+
+// MARK: - ConfigurationEventHandling
+
+extension ExperimentDriver : ConfigurationEventHandling {
 	
 	func selectedConditionIndexChanged(to index: Int) {
 		self.selectedConditionIndex = index
@@ -107,11 +166,7 @@ class ExperimentDriver : ConfigurationEventHandling {
 	}
 	
 	func runButtonPressed() {
-		let tasks = loadTasks()
-		for n in numberOfTasks...maxNumberOfTasks {
-			experimentRunner.numberOfTasks = n
-			experimentRunner.runExperiment(using: tasks)
-		}
+		runExperiments()
 	}
 	
 	private func loadTasks() -> [Task] {
@@ -124,5 +179,4 @@ class ExperimentDriver : ConfigurationEventHandling {
 			return []
 		}
 	}
-	
 }
