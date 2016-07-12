@@ -69,18 +69,14 @@ class ConfigurationWindowController: NSWindowController, ExperimentInterface {
         super.windowDidLoad()
 
         // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
-		runner.recorder = recorder
-		let driver = ExperimentDriver(experimentRunner: runner)
-		self.driver = driver
+		driver.recorder = recorder
 		eventHandler = driver
 		driver.interface = self
     }
 	
-	let runner = ExperimentRunner<IndividualType>()
+	let driver = ExperimentDriver<IndividualType>()
 	
 	let recorder = ExperimentRecorder<Record>()
-	
-	var driver: ExperimentDriver?
 	
 	// MARK: - ExperimentInterface
 	
