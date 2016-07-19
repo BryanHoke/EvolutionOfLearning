@@ -31,40 +31,27 @@ public struct LearningNetworkEvolutionTrial<IndividualType : Individual> {
 	}
 	
 	private func runEvolution() -> EvolutionRecordType {
-		let fitness = makeEvolutionFitnessAgent(with: evolutionaryTasks)
-		let reproduction = makeReproductionAgent()
-		let environment = makeEnvironment(fitness, reproduction: reproduction)
-		let evolution = makeEvolution(environment)
+		let fitness = AnyFitnessAgent<ChromosomeType>(LearningNetworkEvolutionFitnessAgent(config: config.fitnessConfig, tasks: evolutionaryTasks))
+		
+		let reproduction = AnyReproductionAgent(ChalmersReproductionAgent<IndividualType>(config: config.reproductionConfig))
+		
+		let environment = EvolutionaryEnvironment(config: config.environmentConfig, fitnessAgent: fitness, reproductionAgent: reproduction)
+		
+		let evolution = Evolution(config: config.evolutionConfig, environment: environment)
+		
 		return evolution.run()
 	}
 	
 	private func runLearningTest(with history: [PopulationType]) -> LearningTestRecord<IndividualType> {
-		let fitness = makeLearningTestFitnessAgent(with: testTasks)
+		let fitness = AnyFitnessAgent<ChromosomeType>(LearningRuleEvolutionFitnessAgent(config: config.fitnessConfig, tasks: testTasks))
+		
 		let learningTest = LearningTest(fitnessAgent: fitness, history: history)
+		
 		return learningTest.run()
 	}
-	
-	private func makeEvolutionFitnessAgent(with tasks: [Task]) -> AnyFitnessAgent<ChromosomeType> {
-		return AnyFitnessAgent(LearningNetworkEvolutionFitnessAgent(config: config.fitnessConfig, tasks: tasks))
-	}
-	
-	private func makeLearningTestFitnessAgent(with tasks: [Task]) -> AnyFitnessAgent<ChromosomeType> {
-		return AnyFitnessAgent(LearningRuleEvolutionFitnessAgent(config: config.fitnessConfig, tasks: tasks))
-	}
-	
-	private func makeReproductionAgent() -> AnyReproductionAgent<IndividualType> {
-		return AnyReproductionAgent(ChalmersReproductionAgent<IndividualType>(config: config.reproductionConfig))
-	}
-	
-	private func makeEnvironment(fitness: AnyFitnessAgent<ChromosomeType>, reproduction: AnyReproductionAgent<IndividualType>) -> EvolutionaryEnvironment<IndividualType> {
-		return EvolutionaryEnvironment(config: config.environmentConfig, fitnessAgent: fitness, reproductionAgent: reproduction)
-	}
-	
-	private func makeEvolution<EnvironmentType : Environment>(environment: EnvironmentType) -> Evolution<EnvironmentType> {
-		return Evolution(config: config.evolutionConfig, environment: environment)
-	}
-	
 }
+
+// MARK: - LearningNetworkEvolutionTrialRecord
 
 public struct LearningNetworkEvolutionTrialRecord<IndividualType : Individual> {
 	
