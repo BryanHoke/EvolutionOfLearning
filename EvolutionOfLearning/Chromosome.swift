@@ -24,6 +24,9 @@ public protocol Chromosome {
 	/// - parameter seed: A random seed for a function that generates a real-valued number between 0 and 1 (inclusive).
 	mutating func mutate(withRate mutationRate: Double)
 	
+	/// Removes the specified number of genes from the beginning of the chromosome.
+	mutating func removeFirst(n: Int)
+	
 	subscript(index: Int) -> Bool { get set }
 	
 	subscript(subRange: Range<Int>) -> ArraySlice<Bool> { get set }

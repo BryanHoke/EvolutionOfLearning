@@ -86,4 +86,9 @@ class SegmentedChromosomeTests: XCTestCase {
 		XCTAssertEqual(chromosome.segments, [[0, 1], [0, 1], [1, 0], [1, 0]])
 	}
 
+	func testRemoveFirstN() {
+		var chromosome = chromosome1
+		chromosome.removeFirst(3)
+		XCTAssertEqual(chromosome.segments, [[1]])
+	}
 }

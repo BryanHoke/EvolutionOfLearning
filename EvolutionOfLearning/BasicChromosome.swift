@@ -219,6 +219,10 @@ extension BasicChromosome : CollectionType {
 		return BasicChromosome.Generator(genes)
 	}
 	
+	public mutating func removeFirst(n: Int) {
+		genes.removeFirst(n)
+	}
+	
 	public subscript(index: Int) -> Bool {
 		get {
 			return genes[index]

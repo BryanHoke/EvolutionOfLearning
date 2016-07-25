@@ -75,6 +75,20 @@ public struct SegmentedChromosome : Chromosome, ArrayLiteralConvertible {
 		}
 	}
 	
+	public mutating func removeFirst(n: Int) {
+		for _ in 0..<n {
+			guard var firstSegment = segments.first else { break }
+			
+			firstSegment.removeFirst()
+			
+			if firstSegment.isEmpty {
+				segments.removeFirst()
+			} else {
+				segments[0] = firstSegment
+			}
+		}
+	}
+	
 	public subscript(index: Int) -> Bool {
 		get {
 			return genes[index]
