@@ -69,5 +69,32 @@ extension LearningNetworkEvolutionTrialRecord : TrialRecord {
 			AnyEvaluationRecord(learningTestRecord)
 		]
 	}
+}
+
+// MARK: -  ChromosomeTestRecord
+
+/// A record of the evaluation of a single chromosome.
+public struct ChromosomeTestRecord<IndividualType : Individual> {
 	
+	/// The chromosome that was evaluated.
+	public let chromosome: IndividualType.ChromosomeType
+	
+	/// The evaluated fitness of the chromosome.
+	public let fitness: Double
+	
+	/// The tasks on which the chromosome was evaluated.
+	public let tasks: [Task]
+	
+	/// The name of the evaluation condition.
+	public let name: String
+}
+
+extension ChromosomeTestRecord : EvaluationRecord {
+
+	public var populations: [Population<IndividualType>] {
+		var individual = IndividualType.init(chromosome: chromosome)
+		individual.fitness = fitness
+		let population = Population(members: [individual])
+		return [population]
+	}
 }
