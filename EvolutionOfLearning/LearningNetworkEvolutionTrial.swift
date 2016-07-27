@@ -22,12 +22,16 @@ public struct LearningNetworkEvolutionTrial<IndividualType : Individual> {
 	
 	public var config: ExperimentConfig
 	
-	public func run() -> ChalmersTrialRecord<IndividualType> {
+	public func run() -> LearningNetworkEvolutionTrialRecord<IndividualType> {
 		let evolutionRecord = runEvolution()
 		
-		let testRecord = runLearningTest(with: evolutionRecord.history)
+		let bestChromosome = findMostFitIndividual(in: evolutionRecord.history).chromosome
 		
-		return ChalmersTrialRecord(evolutionRecord: evolutionRecord, learningTestRecord: testRecord)
+		let learningTestRecord = runLearningTest(using: bestChromosome)
+		
+		let networkTestRecord = runNetworkTest(using: bestChromosome)
+		
+		return LearningNetworkEvolutionTrialRecord(evolutionRecord: evolutionRecord, learningTestRecord: learningTestRecord, networkTestRecord: networkTestRecord)
 	}
 	
 	private func runEvolution() -> EvolutionRecordType {
@@ -42,12 +46,49 @@ public struct LearningNetworkEvolutionTrial<IndividualType : Individual> {
 		return evolution.run()
 	}
 	
-	private func runLearningTest(with history: [PopulationType]) -> LearningTestRecord<IndividualType> {
-		let fitness = AnyFitnessAgent<ChromosomeType>(LearningRuleEvolutionFitnessAgent(config: config.fitnessConfig, tasks: testTasks))
+	private func runLearningTest(using chromosome: ChromosomeType) -> ChromosomeTestRecord<IndividualType> {
+		let agent = AnyFitnessAgent<ChromosomeType>(LearningRuleEvolutionFitnessAgent(config: config.fitnessConfig, tasks: testTasks))
+		let fitness = agent.fitness(of: chromosome)
+		let record = ChromosomeTestRecord<IndividualType>(chromosome: chromosome, fitness: fitness, tasks: testTasks, name: "Learning Test")
+		return record
+	}
+	
+	private func runNetworkTest(using chromosome: ChromosomeType) -> ChromosomeTestRecord<IndividualType> {
+		let agent = AnyFitnessAgent<ChromosomeType>(NetworkEvolutionFitnessAgent(config: config.fitnessConfig, tasks: evolutionaryTasks))
+		var chromosome = chromosome
+		chromosome.removeFirst(config.fitnessConfig.learningRuleSize)
+		let fitness = agent.fitness(of: chromosome)
+		let record = ChromosomeTestRecord<IndividualType>(chromosome: chromosome, fitness: fitness, tasks: evolutionaryTasks, name: "Network Test")
+		return record
+	}
+}
+
+extension LearningNetworkEvolutionTrial {
+	
+	/// - note: Assumes that the populations in `history` are sorted by fitness.
+	private func findMostFitIndividual(in history: [PopulationType]) -> IndividualType {
+		guard !history.isEmpty else {
+			preconditionFailure("History must not be empty")
+		}
 		
-		let learningTest = LearningTest(fitnessAgent: fitness, history: history)
+		var mostFitIndividual: IndividualType?
 		
-		return learningTest.run()
+		for population in history {
+			guard let mostFitMember = population.first else {
+				preconditionFailure("No population should be empty")
+			}
+			
+			guard let currentMostFitIndividual = mostFitIndividual else {
+				mostFitIndividual = mostFitMember
+				continue
+			}
+			
+			if mostFitMember.fitness > currentMostFitIndividual.fitness {
+				mostFitIndividual = mostFitMember
+			}
+		}
+		
+		return mostFitIndividual!
 	}
 }
 
@@ -57,8 +98,9 @@ public struct LearningNetworkEvolutionTrialRecord<IndividualType : Individual> {
 	
 	public var evolutionRecord: EvolutionRecord<IndividualType>
 	
-	public var learningTestRecord: LearningTestRecord<IndividualType>
+	public var learningTestRecord: ChromosomeTestRecord<IndividualType>
 	
+	public var networkTestRecord: ChromosomeTestRecord<IndividualType>
 }
 
 extension LearningNetworkEvolutionTrialRecord : TrialRecord {
@@ -66,7 +108,8 @@ extension LearningNetworkEvolutionTrialRecord : TrialRecord {
 	public var evaluations: [AnyEvaluationRecord<IndividualType>] {
 		return [
 			AnyEvaluationRecord(evolutionRecord),
-			AnyEvaluationRecord(learningTestRecord)
+			AnyEvaluationRecord(learningTestRecord),
+			AnyEvaluationRecord(networkTestRecord)
 		]
 	}
 }
