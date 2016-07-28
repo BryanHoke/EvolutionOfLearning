@@ -55,8 +55,6 @@ public struct LearningNetworkEvolutionTrial<IndividualType : Individual> {
 	
 	private func runNetworkTest(using chromosome: ChromosomeType) -> ChromosomeTestRecord<IndividualType> {
 		let agent = AnyFitnessAgent<ChromosomeType>(NetworkEvolutionFitnessAgent(config: config.fitnessConfig, tasks: evolutionaryTasks))
-		var chromosome = chromosome
-		chromosome.removeFirst(config.fitnessConfig.learningRuleSize)
 		let fitness = agent.fitness(of: chromosome)
 		let record = ChromosomeTestRecord<IndividualType>(chromosome: chromosome, fitness: fitness, tasks: evolutionaryTasks, name: "Network Test")
 		return record
