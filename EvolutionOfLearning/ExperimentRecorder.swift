@@ -20,6 +20,9 @@ final class ExperimentRecorder<Record : TrialRecord> {
 	
 	func createResultsDirectory() {
 		makeResultsDirectory()
+		
+		overview = ExperimentOverview<Record>()
+		
 		do {
 			try NSFileManager.defaultManager().createDirectoryAtPath(resultsDirectory!, withIntermediateDirectories: false, attributes: nil)
 		}
