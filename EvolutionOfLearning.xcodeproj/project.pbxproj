@@ -118,6 +118,9 @@
 		4AD9355A1CBAFF9F0055B043 /* LearningNetworkEvolutionFitnessAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD935591CBAFF9F0055B043 /* LearningNetworkEvolutionFitnessAgent.swift */; };
 		4AD9355B1CBAFF9F0055B043 /* LearningNetworkEvolutionFitnessAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD935591CBAFF9F0055B043 /* LearningNetworkEvolutionFitnessAgent.swift */; };
 		4AE03EF51B8A4F3A00A94234 /* Environment1.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4AE03EF41B8A4F3A00A94234 /* Environment1.txt */; };
+		4AE298B61D5A43E900B88F8B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE298B51D5A43E900B88F8B /* AppDelegate.swift */; };
+		4AE298B81D5A43E900B88F8B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4AE298B71D5A43E900B88F8B /* Assets.xcassets */; };
+		4AE298BB1D5A43E900B88F8B /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4AE298B91D5A43E900B88F8B /* MainMenu.xib */; };
 		4AE6209F1B39A1D60033980F /* GeneticAlgorithm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE6209E1B39A1D60033980F /* GeneticAlgorithm.swift */; };
 		4AE620A01B39A1D60033980F /* GeneticAlgorithm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE6209E1B39A1D60033980F /* GeneticAlgorithm.swift */; };
 		4AE99EA51C7A83770096D321 /* NeuralNetworkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE99EA41C7A83760096D321 /* NeuralNetworkTests.swift */; };
@@ -232,6 +235,11 @@
 		4AD935561CBAFE880055B043 /* NetworkEvolutionFitnessAgent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkEvolutionFitnessAgent.swift; sourceTree = "<group>"; };
 		4AD935591CBAFF9F0055B043 /* LearningNetworkEvolutionFitnessAgent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LearningNetworkEvolutionFitnessAgent.swift; sourceTree = "<group>"; };
 		4AE03EF41B8A4F3A00A94234 /* Environment1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Environment1.txt; sourceTree = "<group>"; };
+		4AE298B31D5A43E900B88F8B /* DataAnalysis.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DataAnalysis.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4AE298B51D5A43E900B88F8B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		4AE298B71D5A43E900B88F8B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		4AE298BA1D5A43E900B88F8B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		4AE298BC1D5A43E900B88F8B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4AE6209E1B39A1D60033980F /* GeneticAlgorithm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneticAlgorithm.swift; sourceTree = "<group>"; };
 		4AE99EA41C7A83760096D321 /* NeuralNetworkTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NeuralNetworkTests.swift; sourceTree = "<group>"; };
 		4AF11C0C1B3F036C00AED909 /* Individual.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Individual.swift; sourceTree = "<group>"; };
@@ -257,6 +265,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		4A825EE11B2D019E00C8CEA3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4AE298B01D5A43E900B88F8B /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -297,7 +312,6 @@
 				4A2EE7A11BEFF466007D17FD /* GlobalFunctions.swift */,
 				4A447FF41C63A9A000C5BDF0 /* OrderedDictionary.swift */,
 				4A620D111C8BB02A0084B0A2 /* ConcurrentDispatcher.swift */,
-				4A364A761CE900C0009398AF /* TableScanner.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -368,6 +382,7 @@
 				4A825EDC1B2D019E00C8CEA3 /* EvolutionOfLearningTests */,
 				4A825EE71B2D019E00C8CEA3 /* EvolutionOfLearningUITests */,
 				4AE03EF31B8A4EDA00A94234 /* Resources */,
+				4AE298B41D5A43E900B88F8B /* DataAnalysis */,
 				4A825EC31B2D019E00C8CEA3 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -378,6 +393,7 @@
 				4A825EC21B2D019E00C8CEA3 /* EvolutionOfLearning.app */,
 				4A825ED91B2D019E00C8CEA3 /* EvolutionOfLearningTests.xctest */,
 				4A825EE41B2D019E00C8CEA3 /* EvolutionOfLearningUITests.xctest */,
+				4AE298B31D5A43E900B88F8B /* DataAnalysis.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -458,6 +474,18 @@
 			path = EvolutionOfLearning;
 			sourceTree = "<group>";
 		};
+		4AE298B41D5A43E900B88F8B /* DataAnalysis */ = {
+			isa = PBXGroup;
+			children = (
+				4AE298B51D5A43E900B88F8B /* AppDelegate.swift */,
+				4A364A761CE900C0009398AF /* TableScanner.swift */,
+				4AE298B71D5A43E900B88F8B /* Assets.xcassets */,
+				4AE298B91D5A43E900B88F8B /* MainMenu.xib */,
+				4AE298BC1D5A43E900B88F8B /* Info.plist */,
+			);
+			path = DataAnalysis;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -514,13 +542,30 @@
 			productReference = 4A825EE41B2D019E00C8CEA3 /* EvolutionOfLearningUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		4AE298B21D5A43E900B88F8B /* DataAnalysis */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4AE298BF1D5A43E900B88F8B /* Build configuration list for PBXNativeTarget "DataAnalysis" */;
+			buildPhases = (
+				4AE298AF1D5A43E900B88F8B /* Sources */,
+				4AE298B01D5A43E900B88F8B /* Frameworks */,
+				4AE298B11D5A43E900B88F8B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DataAnalysis;
+			productName = DataAnalysis;
+			productReference = 4AE298B31D5A43E900B88F8B /* DataAnalysis.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		4A825EBA1B2D019E00C8CEA3 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0700;
+				LastSwiftUpdateCheck = 0730;
 				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "Bryan Hoke";
 				TargetAttributes = {
@@ -534,6 +579,9 @@
 					4A825EE31B2D019E00C8CEA3 = {
 						CreatedOnToolsVersion = 7.0;
 						TestTargetID = 4A825EC11B2D019E00C8CEA3;
+					};
+					4AE298B21D5A43E900B88F8B = {
+						CreatedOnToolsVersion = 7.3.1;
 					};
 				};
 			};
@@ -553,6 +601,7 @@
 				4A825EC11B2D019E00C8CEA3 /* EvolutionOfLearning */,
 				4A825ED81B2D019E00C8CEA3 /* EvolutionOfLearningTests */,
 				4A825EE31B2D019E00C8CEA3 /* EvolutionOfLearningUITests */,
+				4AE298B21D5A43E900B88F8B /* DataAnalysis */,
 			);
 		};
 /* End PBXProject section */
@@ -582,6 +631,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				4A02D6951C7E1358004D98DF /* ConfigurationWindowController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4AE298B11D5A43E900B88F8B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4AE298B81D5A43E900B88F8B /* Assets.xcassets in Resources */,
+				4AE298BB1D5A43E900B88F8B /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -726,6 +784,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		4AE298AF1D5A43E900B88F8B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4AE298B61D5A43E900B88F8B /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -754,6 +820,14 @@
 			isa = PBXVariantGroup;
 			children = (
 				4A825ED21B2D019E00C8CEA3 /* Base */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+		4AE298B91D5A43E900B88F8B /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4AE298BA1D5A43E900B88F8B /* Base */,
 			);
 			name = MainMenu.xib;
 			sourceTree = "<group>";
@@ -919,6 +993,32 @@
 			};
 			name = Release;
 		};
+		4AE298BD1D5A43E900B88F8B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_NONNULL = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = DataAnalysis/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = NextThought.DataAnalysis;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		4AE298BE1D5A43E900B88F8B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_NONNULL = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = DataAnalysis/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = NextThought.DataAnalysis;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -957,6 +1057,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		4AE298BF1D5A43E900B88F8B /* Build configuration list for PBXNativeTarget "DataAnalysis" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4AE298BD1D5A43E900B88F8B /* Debug */,
+				4AE298BE1D5A43E900B88F8B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 
