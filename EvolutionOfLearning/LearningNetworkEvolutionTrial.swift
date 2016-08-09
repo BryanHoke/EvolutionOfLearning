@@ -22,16 +22,33 @@ public struct LearningNetworkEvolutionTrial<IndividualType : Individual> {
 	
 	public var config: ExperimentConfig
 	
-	public func run() -> LearningNetworkEvolutionTrialRecord<IndividualType> {
+	public func run() -> ComposedTrialRecord<IndividualType> {
+		var evaluations: [AnyEvaluationRecord<IndividualType>] = []
+		evaluations.reserveCapacity(8)
+		
 		let evolutionRecord = runEvolution()
+		evaluations.append(AnyEvaluationRecord(evolutionRecord))
 		
 		let bestChromosome = findMostFitIndividual(in: evolutionRecord.history).chromosome
 		
-		let learningTestRecord = runLearningTest(using: bestChromosome)
+		for useNurturing in [false, true] {
+			let fitnessTestRecord = runFitnessTest(using: bestChromosome, nurturingCondition: useNurturing)
+			
+			let learningTestRecord = runLearningTest(using: bestChromosome, nurturingCondition: useNurturing)
+			
+			let generalizationTestRecord = runGeneralizationTest(using: bestChromosome, nurturingCondition: useNurturing)
+			
+			evaluations += [
+				AnyEvaluationRecord(fitnessTestRecord),
+				AnyEvaluationRecord(learningTestRecord),
+				AnyEvaluationRecord(generalizationTestRecord)
+			]
+		}
 		
 		let networkTestRecord = runNetworkTest(using: bestChromosome)
+		evaluations.append(AnyEvaluationRecord(networkTestRecord))
 		
-		return LearningNetworkEvolutionTrialRecord(evolutionRecord: evolutionRecord, learningTestRecord: learningTestRecord, networkTestRecord: networkTestRecord)
+		return ComposedTrialRecord(evaluations: evaluations)
 	}
 	
 	private func runEvolution() -> EvolutionRecordType {
@@ -46,10 +63,39 @@ public struct LearningNetworkEvolutionTrial<IndividualType : Individual> {
 		return evolution.run()
 	}
 	
-	private func runLearningTest(using chromosome: ChromosomeType) -> ChromosomeTestRecord<IndividualType> {
-		let agent = AnyFitnessAgent<ChromosomeType>(LearningRuleEvolutionFitnessAgent(config: config.fitnessConfig, tasks: testTasks))
+	private func runFitnessTest(using chromosome: ChromosomeType, nurturingCondition: Bool) -> ChromosomeTestRecord<IndividualType> {
+		let fitnessConfig = self.fitnessConfig(forNurturingCondition: nurturingCondition)
+		
+		let agent = AnyFitnessAgent<ChromosomeType>(LearningNetworkEvolutionFitnessAgent(config: fitnessConfig, tasks: evolutionaryTasks))
+		
 		let fitness = agent.fitness(of: chromosome)
-		let record = ChromosomeTestRecord<IndividualType>(chromosome: chromosome, fitness: fitness, tasks: testTasks, name: "Learning Test")
+		let recordPrefix = namePrefix(forNurturingCondition: nurturingCondition)
+
+		let record = ChromosomeTestRecord<IndividualType>(chromosome: chromosome, fitness: fitness, tasks: testTasks, name: "\(recordPrefix) Fitness Test")
+		return record
+	}
+	
+	private func runLearningTest(using chromosome: ChromosomeType, nurturingCondition: Bool) -> ChromosomeTestRecord<IndividualType> {
+		let fitnessConfig = self.fitnessConfig(forNurturingCondition: nurturingCondition)
+		
+		let agent = AnyFitnessAgent<ChromosomeType>(LearningRuleEvolutionFitnessAgent(config: fitnessConfig, tasks: evolutionaryTasks))
+		
+		let fitness = agent.fitness(of: chromosome)
+		let recordPrefix = namePrefix(forNurturingCondition: nurturingCondition)
+		
+		let record = ChromosomeTestRecord<IndividualType>(chromosome: chromosome, fitness: fitness, tasks: testTasks, name: "\(recordPrefix) Learning Test")
+		return record
+	}
+	
+	private func runGeneralizationTest(using chromosome: ChromosomeType, nurturingCondition: Bool) -> ChromosomeTestRecord<IndividualType> {
+		let fitnessConfig = self.fitnessConfig(forNurturingCondition: nurturingCondition)
+		
+		let agent = AnyFitnessAgent<ChromosomeType>(LearningRuleEvolutionFitnessAgent(config: fitnessConfig, tasks: testTasks))
+		
+		let fitness = agent.fitness(of: chromosome)
+		let recordPrefix = namePrefix(forNurturingCondition: nurturingCondition)
+		
+		let record = ChromosomeTestRecord<IndividualType>(chromosome: chromosome, fitness: fitness, tasks: testTasks, name: "\(recordPrefix) Generalization Test")
 		return record
 	}
 	
@@ -58,6 +104,16 @@ public struct LearningNetworkEvolutionTrial<IndividualType : Individual> {
 		let fitness = agent.fitness(of: chromosome)
 		let record = ChromosomeTestRecord<IndividualType>(chromosome: chromosome, fitness: fitness, tasks: evolutionaryTasks, name: "Network Test")
 		return record
+	}
+	
+	private func fitnessConfig(forNurturingCondition nurturingCondition: Bool) -> FitnessConfig {
+		var fitnessConfig = config.fitnessConfig
+		fitnessConfig.trainingCountsTowardFitness = !nurturingCondition
+		return fitnessConfig
+	}
+	
+	private func namePrefix(forNurturingCondition nurturingCondition: Bool) -> String {
+		return nurturingCondition ? "Nurturing" : "Non-Nurturing"
 	}
 }
 
