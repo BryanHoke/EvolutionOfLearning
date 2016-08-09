@@ -79,6 +79,11 @@ public struct AnyTrialRecord<IndividualType : Individual> : TrialRecord {
 	
 }
 
+public struct ComposedTrialRecord<IndividualType : Individual> : TrialRecord {
+	
+	public var evaluations: [AnyEvaluationRecord<IndividualType>] = []
+}
+
 public protocol EvaluationRecord {
 	
 	associatedtype IndividualType : Individual
