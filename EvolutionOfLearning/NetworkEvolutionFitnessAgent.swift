@@ -13,7 +13,7 @@ public struct NetworkEvolutionFitnessAgent<ChromosomeType : Chromosome> : Fitnes
 	public init(config: FitnessConfig, tasks: [Task]) {
 		self.config = config
 		self.tasks = tasks
-		geneMap = GeneMap(bitsPerWeight: config.bitsPerWeight, offset: config.learningRuleSize)
+		geneMap = GeneMap(bitsPerWeight: config.bitsPerWeight, offset: 0)
 		buildGeneMap()
 	}
 	
