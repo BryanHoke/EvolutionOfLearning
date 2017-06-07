@@ -8,9 +8,18 @@
 
 import Foundation
 
-final class DataSetRecorder {
+/// A type that writes data sets to files.
+protocol DataSetRecorder : class {
 	
-	static let shared = DataSetRecorder()
+	static var shared: Self { get }
+	
+	func write(dataSet: DataSet, toDirectoryAtPath path: String) throws
+}
+
+/// Writes data sets to files, where the data set values are organized into rows.
+final class RowwiseDataSetRecorder : DataSetRecorder {
+	
+	static let shared = RowwiseDataSetRecorder()
 	
 	func write(dataSet: DataSet, toDirectoryAtPath path: String) throws {
 		for (category, values) in dataSet.valuesPerCategory {
@@ -46,5 +55,46 @@ final class DataSetRecorder {
 		}
 		
 		return content
+	}
+}
+
+/// Writes data sets to files, where the data set values are organized into columns.
+final class ColumnwiseDataSetRecorder : DataSetRecorder {
+	
+	static let shared = ColumnwiseDataSetRecorder()
+	
+	func write(dataSet: DataSet, toDirectoryAtPath path: String) throws {
+		for (category, values) in dataSet.valuesPerCategory {
+			try writeValues(values, forCategory: category, toDirectoryAtPath: path)
+		}
+	}
+	
+	private func writeValues(values: [[Double]], forCategory category: String, toDirectoryAtPath path: String) throws {
+		let filePath = path + "\(category).csv"
+		let fileContent = makeFileContent(values: values)
+		try fileContent.writeToFile(filePath, atomically: true, encoding: NSUTF8StringEncoding)
+	}
+	
+	private func makeFileContent(values values: [[Double]]) -> String {
+		guard !values.isEmpty else {
+			return ""
+		}
+		
+		var headerRowContent = "Generation"
+		var contentRows = [String]()
+		
+		for i in 0..<values[0].count {
+			contentRows.append("\(i)")
+		}
+		
+		for (columnIndex, columnValues) in values.enumerate() {
+			headerRowContent += ", \(columnIndex + 1) Evolutionary Tasks"
+			
+			for (rowIndex, value) in columnValues.enumerate() {
+				contentRows[rowIndex] += ", \(value)"
+			}
+		}
+		
+		return ([headerRowContent] + contentRows).joinWithSeparator("\n")
 	}
 }

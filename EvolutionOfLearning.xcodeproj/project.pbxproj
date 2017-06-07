@@ -36,6 +36,9 @@
 		4A2EE7A61BEFF4B2007D17FD /* FeedForwardNeuralNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A2EE7A41BEFF4B2007D17FD /* FeedForwardNeuralNetwork.swift */; };
 		4A2F11631B5DD7520055AFF8 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A2F11621B5DD7520055AFF8 /* DataManager.swift */; };
 		4A2F11641B5DD7530055AFF8 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A2F11621B5DD7520055AFF8 /* DataManager.swift */; };
+		4A304D731D5D174B004C4EE8 /* DataSetScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A304D721D5D174B004C4EE8 /* DataSetScanner.swift */; };
+		4A304D751D5D392A004C4EE8 /* DataSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A304D741D5D392A004C4EE8 /* DataSet.swift */; };
+		4A304D771D62760C004C4EE8 /* DataSetRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A304D761D62760C004C4EE8 /* DataSetRecorder.swift */; };
 		4A364A771CE900C0009398AF /* TableScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A364A761CE900C0009398AF /* TableScanner.swift */; };
 		4A364A791CE909BF009398AF /* ExperimentInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A364A781CE909BF009398AF /* ExperimentInterface.swift */; };
 		4A364A7B1CE911D1009398AF /* ExperimentRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A364A7A1CE911D1009398AF /* ExperimentRunner.swift */; };
@@ -121,6 +124,9 @@
 		4AE298B61D5A43E900B88F8B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE298B51D5A43E900B88F8B /* AppDelegate.swift */; };
 		4AE298B81D5A43E900B88F8B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4AE298B71D5A43E900B88F8B /* Assets.xcassets */; };
 		4AE298BB1D5A43E900B88F8B /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4AE298B91D5A43E900B88F8B /* MainMenu.xib */; };
+		4AE298CF1D5B9C6A00B88F8B /* TrialScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE298CE1D5B9C6A00B88F8B /* TrialScanner.swift */; };
+		4AE298D11D5BB7F600B88F8B /* ExperimentOverview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE298D01D5BB7F600B88F8B /* ExperimentOverview.swift */; };
+		4AE298E11D5BE2B200B88F8B /* ExperimentScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE298E01D5BE2B200B88F8B /* ExperimentScanner.swift */; };
 		4AE6209F1B39A1D60033980F /* GeneticAlgorithm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE6209E1B39A1D60033980F /* GeneticAlgorithm.swift */; };
 		4AE620A01B39A1D60033980F /* GeneticAlgorithm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE6209E1B39A1D60033980F /* GeneticAlgorithm.swift */; };
 		4AE99EA51C7A83770096D321 /* NeuralNetworkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE99EA41C7A83760096D321 /* NeuralNetworkTests.swift */; };
@@ -169,6 +175,9 @@
 		4A2EE7A11BEFF466007D17FD /* GlobalFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalFunctions.swift; sourceTree = "<group>"; };
 		4A2EE7A41BEFF4B2007D17FD /* FeedForwardNeuralNetwork.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedForwardNeuralNetwork.swift; sourceTree = "<group>"; };
 		4A2F11621B5DD7520055AFF8 /* DataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
+		4A304D721D5D174B004C4EE8 /* DataSetScanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataSetScanner.swift; sourceTree = "<group>"; };
+		4A304D741D5D392A004C4EE8 /* DataSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataSet.swift; sourceTree = "<group>"; };
+		4A304D761D62760C004C4EE8 /* DataSetRecorder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataSetRecorder.swift; sourceTree = "<group>"; };
 		4A364A761CE900C0009398AF /* TableScanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableScanner.swift; sourceTree = "<group>"; };
 		4A364A781CE909BF009398AF /* ExperimentInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExperimentInterface.swift; sourceTree = "<group>"; };
 		4A364A7A1CE911D1009398AF /* ExperimentRunner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExperimentRunner.swift; sourceTree = "<group>"; };
@@ -240,6 +249,9 @@
 		4AE298B71D5A43E900B88F8B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4AE298BA1D5A43E900B88F8B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		4AE298BC1D5A43E900B88F8B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4AE298CE1D5B9C6A00B88F8B /* TrialScanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrialScanner.swift; sourceTree = "<group>"; };
+		4AE298D01D5BB7F600B88F8B /* ExperimentOverview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExperimentOverview.swift; sourceTree = "<group>"; };
+		4AE298E01D5BE2B200B88F8B /* ExperimentScanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExperimentScanner.swift; sourceTree = "<group>"; };
 		4AE6209E1B39A1D60033980F /* GeneticAlgorithm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneticAlgorithm.swift; sourceTree = "<group>"; };
 		4AE99EA41C7A83760096D321 /* NeuralNetworkTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NeuralNetworkTests.swift; sourceTree = "<group>"; };
 		4AF11C0C1B3F036C00AED909 /* Individual.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Individual.swift; sourceTree = "<group>"; };
@@ -479,6 +491,12 @@
 			children = (
 				4AE298B51D5A43E900B88F8B /* AppDelegate.swift */,
 				4A364A761CE900C0009398AF /* TableScanner.swift */,
+				4AE298CE1D5B9C6A00B88F8B /* TrialScanner.swift */,
+				4AE298E01D5BE2B200B88F8B /* ExperimentScanner.swift */,
+				4AE298D01D5BB7F600B88F8B /* ExperimentOverview.swift */,
+				4A304D721D5D174B004C4EE8 /* DataSetScanner.swift */,
+				4A304D741D5D392A004C4EE8 /* DataSet.swift */,
+				4A304D761D62760C004C4EE8 /* DataSetRecorder.swift */,
 				4AE298B71D5A43E900B88F8B /* Assets.xcassets */,
 				4AE298B91D5A43E900B88F8B /* MainMenu.xib */,
 				4AE298BC1D5A43E900B88F8B /* Info.plist */,
@@ -571,17 +589,21 @@
 				TargetAttributes = {
 					4A825EC11B2D019E00C8CEA3 = {
 						CreatedOnToolsVersion = 7.0;
+						LastSwiftMigration = 0800;
 					};
 					4A825ED81B2D019E00C8CEA3 = {
 						CreatedOnToolsVersion = 7.0;
+						LastSwiftMigration = 0800;
 						TestTargetID = 4A825EC11B2D019E00C8CEA3;
 					};
 					4A825EE31B2D019E00C8CEA3 = {
 						CreatedOnToolsVersion = 7.0;
+						LastSwiftMigration = 0800;
 						TestTargetID = 4A825EC11B2D019E00C8CEA3;
 					};
 					4AE298B21D5A43E900B88F8B = {
 						CreatedOnToolsVersion = 7.3.1;
+						LastSwiftMigration = 0800;
 					};
 				};
 			};
@@ -788,7 +810,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4A304D751D5D392A004C4EE8 /* DataSet.swift in Sources */,
 				4AE298B61D5A43E900B88F8B /* AppDelegate.swift in Sources */,
+				4AE298E11D5BE2B200B88F8B /* ExperimentScanner.swift in Sources */,
+				4AE298CF1D5B9C6A00B88F8B /* TrialScanner.swift in Sources */,
+				4A304D731D5D174B004C4EE8 /* DataSetScanner.swift in Sources */,
+				4AE298D11D5BB7F600B88F8B /* ExperimentOverview.swift in Sources */,
+				4A304D771D62760C004C4EE8 /* DataSetRecorder.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -924,6 +952,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = BryanHoke.EvolutionOfLearning;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 2.3;
 			};
 			name = Debug;
 		};
@@ -937,6 +966,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = BryanHoke.EvolutionOfLearning;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 2.3;
 			};
 			name = Release;
 		};
@@ -949,6 +979,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = BryanHoke.EvolutionOfLearningTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 2.3;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EvolutionOfLearning.app/Contents/MacOS/EvolutionOfLearning";
 			};
 			name = Debug;
@@ -963,6 +994,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = BryanHoke.EvolutionOfLearningTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 2.3;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EvolutionOfLearning.app/Contents/MacOS/EvolutionOfLearning";
 			};
 			name = Release;
@@ -975,6 +1007,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = BryanHoke.EvolutionOfLearningUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 2.3;
 				TEST_TARGET_NAME = EvolutionOfLearning;
 				USES_XCTRUNNER = YES;
 			};
@@ -988,6 +1021,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = BryanHoke.EvolutionOfLearningUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 2.3;
 				TEST_TARGET_NAME = EvolutionOfLearning;
 				USES_XCTRUNNER = YES;
 			};
@@ -1003,6 +1037,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = NextThought.DataAnalysis;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 2.3;
 			};
 			name = Debug;
 		};
@@ -1016,6 +1051,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = NextThought.DataAnalysis;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 2.3;
 			};
 			name = Release;
 		};
@@ -1065,6 +1101,7 @@
 				4AE298BE1D5A43E900B88F8B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
