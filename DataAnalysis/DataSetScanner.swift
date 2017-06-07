@@ -28,10 +28,11 @@ final class DataSetScanner {
 		let urls = try scanExperimentURLs(fromDirectoryAtPath: path)
 		var overviews = [ExperimentOverview]()
 		overviews.reserveCapacity(urls.count)
-		for url in urls {
+		for (index, url) in urls.enumerate() {
+			print("Scanning overview \(index)")
 			let overview = try ExperimentScanner.shared.scanExperimentOverview(fromDirectoryAt: url)
 			overviews.append(overview)
-			print("Overview scanned")
+			print("Overview \(index) scanned")
 		}
 		return overviews
 		//		return try urls.map { try ExperimentScanner.shared.scanExperimentOverview(fromDirectoryAt: $0) }
