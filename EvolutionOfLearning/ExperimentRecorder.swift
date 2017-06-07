@@ -8,11 +8,14 @@
 
 import Foundation
 
+private let localResultsBasePath = "/Users/bryanhoke/Projects/BDHSoftware/OS X/EvolutionOfLearning/Results/"
+private let externalResultsBasePath = "/Volumes/Seagate Blue/Thesis/Results/"
+
 final class ExperimentRecorder<Record : TrialRecord> {
 	
 	init() {}
 	
-	let resultsBasePath = "/Users/bryanhoke/Projects/BDHSoftware/OS X/EvolutionOfLearning/Results/"
+	let resultsBasePath = localResultsBasePath
 	
 	var resultsDirectory: String?
 	
