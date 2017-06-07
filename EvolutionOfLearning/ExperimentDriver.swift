@@ -88,9 +88,13 @@ class ExperimentDriver<IndividualType : Individual> {
 		let tasks = loadTasks()
 		var config = self.config
 		
-		for n in numberOfTasks...maxNumberOfTasks {
-			config.evolutionaryTaskCount = n
-			runExperiment(using: tasks, with: config)
+		for trainingCountsTowardFitness in [false, true] {
+			config.fitnessConfig.trainingCountsTowardFitness = trainingCountsTowardFitness
+			
+			for n in numberOfTasks...maxNumberOfTasks {
+				config.evolutionaryTaskCount = n
+				runExperiment(using: tasks, with: config)
+			}
 		}
 	}
 	
@@ -104,7 +108,7 @@ class ExperimentDriver<IndividualType : Individual> {
 		experiment.run(forNumberOfTrials: numberOfTrials, onTrialComplete: {
 			[unowned self] (record, index) in
 			self.recorder?.write(record, withIndex: index)
-			})
+		})
 		
 		recorder?.writeOverview()
 	}
