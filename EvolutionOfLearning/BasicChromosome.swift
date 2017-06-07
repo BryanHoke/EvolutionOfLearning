@@ -123,12 +123,12 @@ extension BasicChromosome {
 	///
 	/// - note: The number of genes crossed-over is in the range `1..<count`. I.e., the two points may be equal and never span the length of the `Chromosome`.
 	public func twoPointCrossoverWithChromosome(pairChromosome: BasicChromosome, seed: UInt32) -> (BasicChromosome, BasicChromosome) {
-		srand(seed)
+//		srand(seed)
 		// Generate a start locus in the range 0..<(count - 1)
-		let start = Int(rand()) % (count - 1)
+		let start = Int(arc4random()) % (count - 1)
 		
 		let end = twoPointCrossoverEndLocusForStartLocus(start, randomGenerator: { (rangeSpan: UInt32) -> Int in
-			return Int(rand()) % Int(rangeSpan)
+			return Int(arc4random()) % Int(rangeSpan)
 		})
 		
 		return twoPointCrossoverWithChromosome(pairChromosome, range: start...end)
