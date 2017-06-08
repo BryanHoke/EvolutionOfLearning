@@ -37,13 +37,13 @@ struct ExperimentOverview {
 		return means
 	}
 	
-	mutating func accumulate(trial: Trial) {
+	mutating func accumulate(_ trial: Trial) {
 		for (name, values) in trial {
 			accumulate((name: name, values: values))
 		}
 	}
 	
-	mutating func accumulate(record: Record) {
+	mutating func accumulate(_ record: Record) {
 		let key = record.name
 		
 		var values = valuesPerTrial[key] ?? []

@@ -13,7 +13,7 @@ protocol DataSetRecorder : class {
 	
 	static var shared: Self { get }
 	
-	func write(dataSet: DataSet, toDirectoryAtPath path: String) throws
+	func write(_ dataSet: DataSet, toDirectoryAtPath path: String) throws
 }
 
 /// Writes data sets to files, where the data set values are organized into rows.
@@ -21,19 +21,19 @@ final class RowwiseDataSetRecorder : DataSetRecorder {
 	
 	static let shared = RowwiseDataSetRecorder()
 	
-	func write(dataSet: DataSet, toDirectoryAtPath path: String) throws {
+	func write(_ dataSet: DataSet, toDirectoryAtPath path: String) throws {
 		for (category, values) in dataSet.valuesPerCategory {
 			try writeValues(values, forCategory: category, toDirectoryAtPath: path)
 		}
 	}
 	
-	private func writeValues(values: [[Double]], forCategory category: String, toDirectoryAtPath path: String) throws {
+	fileprivate func writeValues(_ values: [[Double]], forCategory category: String, toDirectoryAtPath path: String) throws {
 		let filePath = path + "\(category).csv"
 		let fileContent = makeFileContent(values: values)
-		try fileContent.writeToFile(filePath, atomically: true, encoding: NSUTF8StringEncoding)
+		try fileContent.write(toFile: filePath, atomically: true, encoding: String.Encoding.utf8)
 	}
 	
-	private func makeFileContent(values values: [[Double]]) -> String {
+	fileprivate func makeFileContent(values: [[Double]]) -> String {
 		guard !values.isEmpty else { return "" }
 		
 		var content = "# Evolutionary Tasks"
@@ -44,7 +44,7 @@ final class RowwiseDataSetRecorder : DataSetRecorder {
 		
 		content += "\n"
 		
-		for (index, list) in values.enumerate() {
+		for (index, list) in values.enumerated() {
 			content += "\(index)"
 			
 			for value in list {
@@ -63,19 +63,19 @@ final class ColumnwiseDataSetRecorder : DataSetRecorder {
 	
 	static let shared = ColumnwiseDataSetRecorder()
 	
-	func write(dataSet: DataSet, toDirectoryAtPath path: String) throws {
+	func write(_ dataSet: DataSet, toDirectoryAtPath path: String) throws {
 		for (category, values) in dataSet.valuesPerCategory {
 			try writeValues(values, forCategory: category, toDirectoryAtPath: path)
 		}
 	}
 	
-	private func writeValues(values: [[Double]], forCategory category: String, toDirectoryAtPath path: String) throws {
+	fileprivate func writeValues(_ values: [[Double]], forCategory category: String, toDirectoryAtPath path: String) throws {
 		let filePath = path + "\(category).csv"
 		let fileContent = makeFileContent(values: values)
-		try fileContent.writeToFile(filePath, atomically: true, encoding: NSUTF8StringEncoding)
+		try fileContent.write(toFile: filePath, atomically: true, encoding: String.Encoding.utf8)
 	}
 	
-	private func makeFileContent(values values: [[Double]]) -> String {
+	fileprivate func makeFileContent(values: [[Double]]) -> String {
 		guard !values.isEmpty else {
 			return ""
 		}
@@ -87,14 +87,14 @@ final class ColumnwiseDataSetRecorder : DataSetRecorder {
 			contentRows.append("\(i)")
 		}
 		
-		for (columnIndex, columnValues) in values.enumerate() {
+		for (columnIndex, columnValues) in values.enumerated() {
 			headerRowContent += ", \(columnIndex + 1) Evolutionary Tasks"
 			
-			for (rowIndex, value) in columnValues.enumerate() {
+			for (rowIndex, value) in columnValues.enumerated() {
 				contentRows[rowIndex] += ", \(value)"
 			}
 		}
 		
-		return ([headerRowContent] + contentRows).joinWithSeparator("\n")
+		return ([headerRowContent] + contentRows).joined(separator: "\n")
 	}
 }

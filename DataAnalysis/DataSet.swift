@@ -12,17 +12,17 @@ struct DataSet {
 	
 	var valuesPerCategory: [String: [[Double]]] = [:]
 	
-	mutating func accumulate(overview: ExperimentOverview) {
+	mutating func accumulate(_ overview: ExperimentOverview) {
 		accumulate(overview.trialAverage)
 	}
 	
-	mutating func accumulate(trial: Trial) {
+	mutating func accumulate(_ trial: Trial) {
 		for (name, values) in trial {
 			accumulate(name: name, values: values)
 		}
 	}
 	
-	mutating func accumulate(name name: String, values: [Double]) {
+	mutating func accumulate(name: String, values: [Double]) {
 		var valueList = valuesPerCategory[name] ?? []
 		valueList.append(values)
 		valuesPerCategory[name] = valueList

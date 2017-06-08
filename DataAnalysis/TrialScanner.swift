@@ -16,11 +16,11 @@ final class TrialScanner {
 	static let shared = TrialScanner()
 	
 	func scanTrial(fromFileAtPath path: String) throws -> Trial {
-		let content = try NSString(contentsOfFile: path, encoding: NSUTF8StringEncoding)
+		let content = try String(contentsOfFile: path, encoding: String.Encoding.utf8)
 		
 		var trial = Trial()
 		
-		var lines: [String] = content.componentsSeparatedByCharactersInSet(.newlineCharacterSet())
+		var lines: [String] = content.components(separatedBy: .newlines)
 		
 		while true {
 			parseRecord(from: &lines, into: &trial)
@@ -38,7 +38,7 @@ final class TrialScanner {
 	func parseRecords(from content: String) -> Trial {
 		var trial = Trial()
 		
-		var lines: [String] = content.componentsSeparatedByCharactersInSet(.newlineCharacterSet())
+		var lines: [String] = content.components(separatedBy: .newlines)
 		
 		while true {
 			parseRecord(from: &lines, into: &trial)
@@ -51,7 +51,7 @@ final class TrialScanner {
 		return trial
 	}
 	
-	func parseRecord(inout from lines: [String], inout into trial: Trial) {
+	func parseRecord(from lines: inout [String], into trial: inout Trial) {
 		let name = lines.removeFirst()
 		
 		stripSection(from: &lines)
@@ -63,11 +63,11 @@ final class TrialScanner {
 		trial[name] = values
 	}
 	
-	func parsePopulationValues(inout from lines: [String]) -> [Double] {
+	func parsePopulationValues(from lines: inout [String]) -> [Double] {
 		var values = [Double]()
 		
 		while true {
-			if let first = lines.first where !first.hasPrefix("Population") {
+			if let first = lines.first, !first.hasPrefix("Population") {
 				break
 			}
 			
@@ -88,10 +88,10 @@ final class TrialScanner {
 		return values
 	}
 	
-	func parsePopulationValue(inout from lines: [String]) -> Double? {
+	func parsePopulationValue(from lines: inout [String]) -> Double? {
 		let line = lines.removeFirst()
 		
-		let tokens = line.componentsSeparatedByString(" ")
+		let tokens = line.components(separatedBy: " ")
 		
 		if let token = tokens.first, let value = Double(token) {
 			return value
@@ -101,7 +101,7 @@ final class TrialScanner {
 	}
 	
 	/// Removes elements from the beginning of `lines` until an empty string is removed or `lines` is empty.
-	private func stripSection(inout from lines: [String]) {
+	fileprivate func stripSection(from lines: inout [String]) {
 		guard !lines.isEmpty else { return }
 		
 		while true {

@@ -17,7 +17,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 	@IBOutlet weak var window: NSWindow!
 
 
-	func applicationDidFinishLaunching(aNotification: NSNotification) {
+	func applicationDidFinishLaunching(_ aNotification: Notification) {
 		// Insert code here to initialize your application
 		
 		let dataSetDirectory = localBasePath + "Results/Set 14/"
@@ -38,7 +38,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 //		try! TrialScanner.shared.scanTrial(fromFileAtPath: trialPath)
 	}
 
-	func applicationWillTerminate(aNotification: NSNotification) {
+	func applicationWillTerminate(_ aNotification: Notification) {
 		// Insert code here to tear down your application
 	}
 

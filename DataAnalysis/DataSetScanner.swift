@@ -24,11 +24,11 @@ final class DataSetScanner {
 		return dataSet
 	}
 	
-	private func scanOverviews(fromDirectoryAtPath path: String) throws -> [ExperimentOverview] {
+	fileprivate func scanOverviews(fromDirectoryAtPath path: String) throws -> [ExperimentOverview] {
 		let urls = try scanExperimentURLs(fromDirectoryAtPath: path)
 		var overviews = [ExperimentOverview]()
 		overviews.reserveCapacity(urls.count)
-		for (index, url) in urls.enumerate() {
+		for (index, url) in urls.enumerated() {
 			print("Scanning overview \(index)")
 			let overview = try ExperimentScanner.shared.scanExperimentOverview(fromDirectoryAt: url)
 			overviews.append(overview)
@@ -38,10 +38,10 @@ final class DataSetScanner {
 		//		return try urls.map { try ExperimentScanner.shared.scanExperimentOverview(fromDirectoryAt: $0) }
 	}
 	
-	private func scanExperimentURLs(fromDirectoryAtPath path: String) throws -> [NSURL] {
-		let url = NSURL(fileURLWithPath: path, isDirectory: true)
-		let fileManager = NSFileManager()
-		let directoryContents = try fileManager.contentsOfDirectoryAtURL(url, includingPropertiesForKeys: [NSURLNameKey], options: [])
-		return directoryContents.filter { $0.lastPathComponent?.hasPrefix("Experiment") ?? false }
+	fileprivate func scanExperimentURLs(fromDirectoryAtPath path: String) throws -> [URL] {
+		let url = URL(fileURLWithPath: path, isDirectory: true)
+		let fileManager = FileManager()
+		let directoryContents = try fileManager.contentsOfDirectory(at: url, includingPropertiesForKeys: [URLResourceKey.nameKey], options: [])
+		return directoryContents.filter { $0.lastPathComponent.hasPrefix("Experiment") }
 	}
 }
