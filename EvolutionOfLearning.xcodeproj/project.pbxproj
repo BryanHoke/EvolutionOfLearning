@@ -120,6 +120,7 @@
 		4AD935581CBAFE880055B043 /* NetworkEvolutionFitnessAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD935561CBAFE880055B043 /* NetworkEvolutionFitnessAgent.swift */; };
 		4AD9355A1CBAFF9F0055B043 /* LearningNetworkEvolutionFitnessAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD935591CBAFF9F0055B043 /* LearningNetworkEvolutionFitnessAgent.swift */; };
 		4AD9355B1CBAFF9F0055B043 /* LearningNetworkEvolutionFitnessAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD935591CBAFF9F0055B043 /* LearningNetworkEvolutionFitnessAgent.swift */; };
+		4ADB352C1EE9C0DA0020304E /* Table.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ADB352B1EE9C0DA0020304E /* Table.swift */; };
 		4AE03EF51B8A4F3A00A94234 /* Environment1.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4AE03EF41B8A4F3A00A94234 /* Environment1.txt */; };
 		4AE298B61D5A43E900B88F8B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE298B51D5A43E900B88F8B /* AppDelegate.swift */; };
 		4AE298B81D5A43E900B88F8B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4AE298B71D5A43E900B88F8B /* Assets.xcassets */; };
@@ -243,6 +244,7 @@
 		4AD935531CBAFE0A0055B043 /* LearningRuleEvolutionFitnessAgent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LearningRuleEvolutionFitnessAgent.swift; sourceTree = "<group>"; };
 		4AD935561CBAFE880055B043 /* NetworkEvolutionFitnessAgent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkEvolutionFitnessAgent.swift; sourceTree = "<group>"; };
 		4AD935591CBAFF9F0055B043 /* LearningNetworkEvolutionFitnessAgent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LearningNetworkEvolutionFitnessAgent.swift; sourceTree = "<group>"; };
+		4ADB352B1EE9C0DA0020304E /* Table.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Table.swift; sourceTree = "<group>"; };
 		4AE03EF41B8A4F3A00A94234 /* Environment1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Environment1.txt; sourceTree = "<group>"; };
 		4AE298B31D5A43E900B88F8B /* DataAnalysis.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DataAnalysis.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4AE298B51D5A43E900B88F8B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -491,6 +493,7 @@
 			children = (
 				4AE298B51D5A43E900B88F8B /* AppDelegate.swift */,
 				4A364A761CE900C0009398AF /* TableScanner.swift */,
+				4ADB352B1EE9C0DA0020304E /* Table.swift */,
 				4AE298CE1D5B9C6A00B88F8B /* TrialScanner.swift */,
 				4AE298E01D5BE2B200B88F8B /* ExperimentScanner.swift */,
 				4AE298D01D5BB7F600B88F8B /* ExperimentOverview.swift */,
@@ -816,6 +819,7 @@
 				4AE298CF1D5B9C6A00B88F8B /* TrialScanner.swift in Sources */,
 				4A304D731D5D174B004C4EE8 /* DataSetScanner.swift in Sources */,
 				4AE298D11D5BB7F600B88F8B /* ExperimentOverview.swift in Sources */,
+				4ADB352C1EE9C0DA0020304E /* Table.swift in Sources */,
 				4A304D771D62760C004C4EE8 /* DataSetRecorder.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
