@@ -8,6 +8,11 @@
 
 import Cocoa
 
+/// The index of the result set to analyze.
+private let setIndex = 12
+/// Whether average values will be written (as opposed to raw values).
+private let shouldWriteAverages = false
+
 private let externalBasePath = "/Volumes/Seagate Blue/Thesis/"
 private let localBasePath = "/Users/bryanhoke/Projects/BDHSoftware/OS X/EvolutionOfLearning/"
 
@@ -20,7 +25,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 	func applicationDidFinishLaunching(_ aNotification: Notification) {
 		// Insert code here to initialize your application
 		
-		let dataSetDirectory = localBasePath + "Results/Set 14/"
+		let dataSetDirectory = externalBasePath + "Results/Set \(setIndex)/"
 		
 		do {
 			let dataSet = try DataSetScanner.shared.scanDataSet(fromDirectoryAtPath: dataSetDirectory)
