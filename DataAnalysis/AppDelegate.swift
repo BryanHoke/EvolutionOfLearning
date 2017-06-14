@@ -24,7 +24,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 		
 		do {
 			let dataSet = try DataSetScanner.shared.scanDataSet(fromDirectoryAtPath: dataSetDirectory)
-			try ColumnwiseDataSetRecorder.shared.write(dataSet, toDirectoryAtPath: dataSetDirectory)
+			try DataSetRecorder.columnwise.write(dataSet, toDirectoryAtPath: dataSetDirectory)
 		}
 		catch let error as NSError {
 			print(error)
