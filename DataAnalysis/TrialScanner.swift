@@ -15,6 +15,49 @@ final class TrialScanner {
 	
 	static let shared = TrialScanner()
 	
+	// MARK: Scanning TrialRecords
+	
+	func scanTrialRecord(fromFileAtPath path: String) throws -> TrialRecord {
+		let content = try String(contentsOfFile: path, encoding: .utf8)
+		var lines: [String] = content.components(separatedBy: .newlines)
+		return parseTrialRecord(from: &lines)
+	}
+	
+	func parseTrialRecord(from lines: inout [String]) -> TrialRecord {
+		var trial = TrialRecord()
+		while !lines.isEmpty {
+			parseTestRecord(from: &lines, into: &trial)
+		}
+		return trial
+	}
+	
+	private func parseTestRecord(from lines: inout [String], into trial: inout TrialRecord) {
+		let name = lines.removeFirst()
+		
+		// Remove task list and blank line
+		stripSection(from: &lines)
+		guard !lines.isEmpty else { return }
+		
+		let values = parsePopulationValues(from: &lines)
+		
+		guard let category = Category(rawValue: name) else {
+			print("Unrecognized category \"\(name)\" encountered.")
+			return
+		}
+		
+		let record: TestRecord
+		switch category {
+		case .evolution:
+			record = .sequence(values)
+		default:
+			record = .value(values[0])
+		}
+		
+		trial.recordsByCategory[category] = record
+	}
+	
+	// MARK: Scanning Dictionaries
+	
 	func scanTrial(fromFileAtPath path: String) throws -> Trial {
 		let content = try String(contentsOfFile: path, encoding: String.Encoding.utf8)
 		
@@ -31,8 +74,6 @@ final class TrialScanner {
 		}
 		
 		return trial
-		
-//		return parseRecords(from: content as String)
 	}
 	
 	func parseRecords(from content: String) -> Trial {
@@ -51,9 +92,10 @@ final class TrialScanner {
 		return trial
 	}
 	
-	func parseRecord(from lines: inout [String], into trial: inout Trial) {
+	private func parseRecord(from lines: inout [String], into trial: inout Trial) {
 		let name = lines.removeFirst()
 		
+		// Remove task list and blank line
 		stripSection(from: &lines)
 		
 		guard !lines.isEmpty else { return }
@@ -63,10 +105,13 @@ final class TrialScanner {
 		trial[name] = values
 	}
 	
+	// MARK: Helpers
+	
 	func parsePopulationValues(from lines: inout [String]) -> [Double] {
 		var values = [Double]()
 		
-		while true {
+		while !lines.isEmpty {
+			// Break if this isn't population data
 			if let first = lines.first, !first.hasPrefix("Population") {
 				break
 			}
@@ -79,10 +124,6 @@ final class TrialScanner {
 			}
 			
 			stripSection(from: &lines)
-			
-			if lines.isEmpty {
-				break
-			}
 		}
 		
 		return values
@@ -102,12 +143,9 @@ final class TrialScanner {
 	
 	/// Removes elements from the beginning of `lines` until an empty string is removed or `lines` is empty.
 	fileprivate func stripSection(from lines: inout [String]) {
-		guard !lines.isEmpty else { return }
-		
-		while true {
+		while !lines.isEmpty {
 			let removed = lines.removeFirst()
-			
-			if removed.isEmpty || lines.isEmpty {
+			if removed.isEmpty {
 				break
 			}
 		}
