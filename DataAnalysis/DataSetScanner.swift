@@ -12,13 +12,41 @@ final class DataSetScanner {
 	
 	static let shared = DataSetScanner()
 	
-	func scanDataSet(fromDirectoryAtPath path: String) throws -> DataSet {
+	// MARK: Scanning DataSetRecords
+	
+	func scanDataSetRecord(fromDirectoryAtPath path: String) throws -> DataSetRecord {
+		let experiments = try scanExperiments(fromDirectoryAtPath: path)
+		let dataSet = DataSetRecord(experiments: experiments)
+		return dataSet
+	}
+	
+	fileprivate func scanExperiments(fromDirectoryAtPath path: String) throws -> [ExperimentRecord] {
+		let urls = try scanExperimentURLs(fromDirectoryAtPath: path)
+		var experiments = [ExperimentRecord]()
+		experiments.reserveCapacity(urls.count)
+		for (index, url) in urls.enumerated() {
+			print("Scanning experiment \(index)")
+			let experiment = try ExperimentScanner.shared.scanExperimentRecord(fromDirectoryAt: url)
+			experiments.append(experiment)
+			print("Experiment \(index) scanned")
+		}
+		return experiments
+	}
+	
+	// MARK: Scanning DataSets
+	
+	func scanDataSet(fromDirectoryAtPath path: String, shouldWriteAverages: Bool = false) throws -> DataSet {
 		let overviews = try scanOverviews(fromDirectoryAtPath: path)
 		
 		var dataSet = DataSet()
 		
 		for overview in overviews {
-			dataSet.accumulate(overview)
+			if shouldWriteAverages {
+				dataSet.accumulate(overview.trialAverage)
+			}
+			else {
+				dataSet.accumulate(overview)
+			}
 		}
 		
 		return dataSet
@@ -35,9 +63,11 @@ final class DataSetScanner {
 			print("Overview \(index) scanned")
 		}
 		return overviews
-		//		return try urls.map { try ExperimentScanner.shared.scanExperimentOverview(fromDirectoryAt: $0) }
 	}
 	
+	// MARK: Helpers
+	
+	/// Returns the URLs of all the experiment directories contained in the directory at the given path.
 	fileprivate func scanExperimentURLs(fromDirectoryAtPath path: String) throws -> [URL] {
 		let url = URL(fileURLWithPath: path, isDirectory: true)
 		let fileManager = FileManager()
