@@ -16,6 +16,10 @@ private let shouldWriteAverages = false
 private let externalBasePath = "/Volumes/Seagate Blue/Thesis/"
 private let localBasePath = "/Users/bryanhoke/Projects/BDHSoftware/OS X/EvolutionOfLearning/"
 
+private func isTesting() -> Bool {
+	return ProcessInfo.processInfo.environment["XCInjectBundleInto"] != nil
+}
+
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
 
@@ -24,6 +28,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
 	func applicationDidFinishLaunching(_ aNotification: Notification) {
 		// Insert code here to initialize your application
+		
+		guard !isTesting() else {
+			return
+		}
 		
 		let dataSetDirectory = externalBasePath + "Results/Set \(setIndex)/"
 		
