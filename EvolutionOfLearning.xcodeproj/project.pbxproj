@@ -40,7 +40,6 @@
 		4A304D731D5D174B004C4EE8 /* DataSetScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A304D721D5D174B004C4EE8 /* DataSetScanner.swift */; };
 		4A304D751D5D392A004C4EE8 /* DataSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A304D741D5D392A004C4EE8 /* DataSet.swift */; };
 		4A304D771D62760C004C4EE8 /* DataSetRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A304D761D62760C004C4EE8 /* DataSetRecorder.swift */; };
-		4A364A771CE900C0009398AF /* TableScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A364A761CE900C0009398AF /* TableScanner.swift */; };
 		4A364A791CE909BF009398AF /* ExperimentInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A364A781CE909BF009398AF /* ExperimentInterface.swift */; };
 		4A364A7B1CE911D1009398AF /* ExperimentRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A364A7A1CE911D1009398AF /* ExperimentRunner.swift */; };
 		4A364A7D1CE91342009398AF /* ExperimentRunning.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A364A7C1CE91342009398AF /* ExperimentRunning.swift */; };
@@ -144,6 +143,7 @@
 		4AF383241CA25E72006D13D4 /* PopulationOperating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF383221CA25E6E006D13D4 /* PopulationOperating.swift */; };
 		4AF383261CA26237006D13D4 /* PopulationOperator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF383251CA26237006D13D4 /* PopulationOperator.swift */; };
 		4AF383271CA26237006D13D4 /* PopulationOperator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF383251CA26237006D13D4 /* PopulationOperator.swift */; };
+		4AFE7CE51F0D47CF0091CBD5 /* TableScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A364A761CE900C0009398AF /* TableScanner.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -796,7 +796,6 @@
 				4A495A141CD6FE8900510582 /* ConfigurationView.swift in Sources */,
 				4A6FA4131CEBEE0200FB62D6 /* ConfigFileWriter.swift in Sources */,
 				4A7802FF1CF7F4F4002DADA4 /* WeightEvolutionTrial.swift in Sources */,
-				4A364A771CE900C0009398AF /* TableScanner.swift in Sources */,
 				4A364B001CEA3A48009398AF /* RecordPersisting.swift in Sources */,
 				4A2EE7A51BEFF4B2007D17FD /* FeedForwardNeuralNetwork.swift in Sources */,
 				4A7E06931B5C2FC40000E561 /* Experiment.swift in Sources */,
@@ -901,6 +900,7 @@
 				4AE298D11D5BB7F600B88F8B /* ExperimentOverview.swift in Sources */,
 				4ADB352C1EE9C0DA0020304E /* Table.swift in Sources */,
 				4A304D771D62760C004C4EE8 /* DataSetRecorder.swift in Sources */,
+				4AFE7CE51F0D47CF0091CBD5 /* TableScanner.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
