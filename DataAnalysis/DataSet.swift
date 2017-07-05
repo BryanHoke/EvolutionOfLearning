@@ -8,12 +8,16 @@
 
 import Foundation
 
-struct DataSet {
+protocol DataSet {
+	var valuesPerCategory: [Category: [[Double]]] { get }
+}
+
+struct DataSetOverview : DataSet {
 	
-	var valuesPerCategory: [String: [[Double]]] = [:]
+	var valuesPerCategory: [Category: [[Double]]] = [:]
 	
 	mutating func accumulate(_ overview: ExperimentOverview) {
-		accumulate(overview.trialAverage)
+		
 	}
 	
 	mutating func accumulate(_ trial: Trial) {
@@ -23,8 +27,11 @@ struct DataSet {
 	}
 	
 	mutating func accumulate(name: String, values: [Double]) {
-		var valueList = valuesPerCategory[name] ?? []
+		guard let category = Category(rawValue: name) else {
+			return
+		}
+		var valueList = valuesPerCategory[category] ?? []
 		valueList.append(values)
-		valuesPerCategory[name] = valueList
+		valuesPerCategory[category] = valueList
 	}
 }

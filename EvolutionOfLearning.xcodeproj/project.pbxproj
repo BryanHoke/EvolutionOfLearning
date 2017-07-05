@@ -79,6 +79,7 @@
 		4A620D191C8D40BB0084B0A2 /* Evolution.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A620D171C8D40BB0084B0A2 /* Evolution.swift */; };
 		4A67DF561EF05437003508FB /* Records.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A67DF551EF05437003508FB /* Records.swift */; };
 		4A67DF581EF0A1EE003508FB /* OutputFormatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A67DF571EF0A1EE003508FB /* OutputFormatting.swift */; };
+		4A67DF601EF30D06003508FB /* DataAnalysisTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A67DF5F1EF30D06003508FB /* DataAnalysisTests.swift */; };
 		4A6FA40F1CEBE7DC00FB62D6 /* TextRecordPersister.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A6FA40E1CEBE7DC00FB62D6 /* TextRecordPersister.swift */; };
 		4A6FA4111CEBE94100FB62D6 /* ExperimentRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A6FA4101CEBE94100FB62D6 /* ExperimentRecorder.swift */; };
 		4A6FA4131CEBEE0200FB62D6 /* ConfigFileWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A6FA4121CEBEE0200FB62D6 /* ConfigFileWriter.swift */; };
@@ -146,6 +147,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		4A67DF621EF30D06003508FB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4A825EBA1B2D019E00C8CEA3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4AE298B21D5A43E900B88F8B;
+			remoteInfo = DataAnalysis;
+		};
 		4A825EDA1B2D019E00C8CEA3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 4A825EBA1B2D019E00C8CEA3 /* Project object */;
@@ -209,6 +217,9 @@
 		4A620D171C8D40BB0084B0A2 /* Evolution.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Evolution.swift; sourceTree = "<group>"; };
 		4A67DF551EF05437003508FB /* Records.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Records.swift; sourceTree = "<group>"; };
 		4A67DF571EF0A1EE003508FB /* OutputFormatting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OutputFormatting.swift; sourceTree = "<group>"; };
+		4A67DF5D1EF30D05003508FB /* DataAnalysisTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DataAnalysisTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		4A67DF5F1EF30D06003508FB /* DataAnalysisTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataAnalysisTests.swift; sourceTree = "<group>"; };
+		4A67DF611EF30D06003508FB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4A6FA40E1CEBE7DC00FB62D6 /* TextRecordPersister.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextRecordPersister.swift; sourceTree = "<group>"; };
 		4A6FA4101CEBE94100FB62D6 /* ExperimentRecorder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExperimentRecorder.swift; sourceTree = "<group>"; };
 		4A6FA4121CEBEE0200FB62D6 /* ConfigFileWriter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigFileWriter.swift; sourceTree = "<group>"; };
@@ -270,6 +281,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		4A67DF5A1EF30D05003508FB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4A825EBF1B2D019E00C8CEA3 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -395,6 +413,15 @@
 			name = "Genetic algorithms";
 			sourceTree = "<group>";
 		};
+		4A67DF5E1EF30D06003508FB /* DataAnalysisTests */ = {
+			isa = PBXGroup;
+			children = (
+				4A67DF5F1EF30D06003508FB /* DataAnalysisTests.swift */,
+				4A67DF611EF30D06003508FB /* Info.plist */,
+			);
+			path = DataAnalysisTests;
+			sourceTree = "<group>";
+		};
 		4A825EB91B2D019E00C8CEA3 = {
 			isa = PBXGroup;
 			children = (
@@ -403,6 +430,7 @@
 				4A825EE71B2D019E00C8CEA3 /* EvolutionOfLearningUITests */,
 				4AE03EF31B8A4EDA00A94234 /* Resources */,
 				4AE298B41D5A43E900B88F8B /* DataAnalysis */,
+				4A67DF5E1EF30D06003508FB /* DataAnalysisTests */,
 				4A825EC31B2D019E00C8CEA3 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -414,6 +442,7 @@
 				4A825ED91B2D019E00C8CEA3 /* EvolutionOfLearningTests.xctest */,
 				4A825EE41B2D019E00C8CEA3 /* EvolutionOfLearningUITests.xctest */,
 				4AE298B31D5A43E900B88F8B /* DataAnalysis.app */,
+				4A67DF5D1EF30D05003508FB /* DataAnalysisTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -519,6 +548,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		4A67DF5C1EF30D05003508FB /* DataAnalysisTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4A67DF641EF30D06003508FB /* Build configuration list for PBXNativeTarget "DataAnalysisTests" */;
+			buildPhases = (
+				4A67DF591EF30D05003508FB /* Sources */,
+				4A67DF5A1EF30D05003508FB /* Frameworks */,
+				4A67DF5B1EF30D05003508FB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				4A67DF631EF30D06003508FB /* PBXTargetDependency */,
+			);
+			name = DataAnalysisTests;
+			productName = DataAnalysisTests;
+			productReference = 4A67DF5D1EF30D05003508FB /* DataAnalysisTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		4A825EC11B2D019E00C8CEA3 /* EvolutionOfLearning */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4A825EED1B2D019E00C8CEA3 /* Build configuration list for PBXNativeTarget "EvolutionOfLearning" */;
@@ -595,10 +642,15 @@
 		4A825EBA1B2D019E00C8CEA3 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0730;
+				LastSwiftUpdateCheck = 0830;
 				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "Bryan Hoke";
 				TargetAttributes = {
+					4A67DF5C1EF30D05003508FB = {
+						CreatedOnToolsVersion = 8.3.1;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 4AE298B21D5A43E900B88F8B;
+					};
 					4A825EC11B2D019E00C8CEA3 = {
 						CreatedOnToolsVersion = 7.0;
 						LastSwiftMigration = 0800;
@@ -636,11 +688,19 @@
 				4A825ED81B2D019E00C8CEA3 /* EvolutionOfLearningTests */,
 				4A825EE31B2D019E00C8CEA3 /* EvolutionOfLearningUITests */,
 				4AE298B21D5A43E900B88F8B /* DataAnalysis */,
+				4A67DF5C1EF30D05003508FB /* DataAnalysisTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		4A67DF5B1EF30D05003508FB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4A825EC01B2D019E00C8CEA3 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -680,6 +740,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		4A67DF591EF30D05003508FB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4A67DF601EF30D06003508FB /* DataAnalysisTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4A825EBE1B2D019E00C8CEA3 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -839,6 +907,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		4A67DF631EF30D06003508FB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4AE298B21D5A43E900B88F8B /* DataAnalysis */;
+			targetProxy = 4A67DF621EF30D06003508FB /* PBXContainerItemProxy */;
+		};
 		4A825EDB1B2D019E00C8CEA3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 4A825EC11B2D019E00C8CEA3 /* EvolutionOfLearning */;
@@ -879,6 +952,48 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		4A67DF651EF30D06003508FB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = DataAnalysisTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				PRODUCT_BUNDLE_IDENTIFIER = BryanHoke.DataAnalysisTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DataAnalysis.app/Contents/MacOS/DataAnalysis";
+			};
+			name = Debug;
+		};
+		4A67DF661EF30D06003508FB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = DataAnalysisTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				PRODUCT_BUNDLE_IDENTIFIER = BryanHoke.DataAnalysisTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DataAnalysis.app/Contents/MacOS/DataAnalysis";
+			};
+			name = Release;
+		};
 		4A825EEB1B2D019E00C8CEA3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1074,6 +1189,14 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		4A67DF641EF30D06003508FB /* Build configuration list for PBXNativeTarget "DataAnalysisTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4A67DF651EF30D06003508FB /* Debug */,
+				4A67DF661EF30D06003508FB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		4A825EBD1B2D019E00C8CEA3 /* Build configuration list for PBXProject "EvolutionOfLearning" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

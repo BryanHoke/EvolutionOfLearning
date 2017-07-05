@@ -9,7 +9,7 @@
 import Cocoa
 
 /// The index of the result set to analyze.
-private let setIndex = 12
+private let setIndex = 14
 /// Whether average values will be written (as opposed to raw values).
 private let shouldWriteAverages = false
 
@@ -36,7 +36,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 		let dataSetDirectory = externalBasePath + "Results/Set \(setIndex)/"
 		
 		do {
-			let dataSet = try DataSetScanner.shared.scanDataSet(fromDirectoryAtPath: dataSetDirectory)
+			let dataSet: DataSet
+			if shouldWriteAverages {
+				dataSet = try DataSetScanner.shared.scanDataSet(fromDirectoryAtPath: dataSetDirectory)
+			}
+			else {
+				dataSet = try DataSetScanner.shared.scanDataSetRecord(fromDirectoryAtPath: dataSetDirectory)
+			}
 			try DataSetRecorder.columnwise.write(dataSet, toDirectoryAtPath: dataSetDirectory)
 		}
 		catch let error as NSError {

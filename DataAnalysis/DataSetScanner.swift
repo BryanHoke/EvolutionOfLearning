@@ -38,7 +38,7 @@ final class DataSetScanner {
 	func scanDataSet(fromDirectoryAtPath path: String, shouldWriteAverages: Bool = false) throws -> DataSet {
 		let overviews = try scanOverviews(fromDirectoryAtPath: path)
 		
-		var dataSet = DataSet()
+		var dataSet = DataSetOverview()
 		
 		for overview in overviews {
 			if shouldWriteAverages {

@@ -8,6 +8,8 @@
 
 import Foundation
 
+typealias StringTable = Table<String>
+
 final class TableScanner {
 	
 	static let sharedScanner = TableScanner()

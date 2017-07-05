@@ -23,6 +23,7 @@ enum Category : String {
 		]
 	}
 	case evolution = "Evolution"
+	case learningTest = "Learning Test"
 	case networkTest = "Network Test"
 	case nonNurturingFitnessTest = "Non-Nurturing Fitness Test"
 	case nonNurturingGeneralizationTest = "Non-Nurturing Generalization Test"

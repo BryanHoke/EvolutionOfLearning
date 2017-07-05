@@ -32,7 +32,7 @@ final class DataSetRecorder : DataSetRecording {
 	
 	func write(_ dataSet: DataSet, toDirectoryAtPath path: String) throws {
 		for (category, values) in dataSet.valuesPerCategory {
-			try writeValues(values, forCategory: category, toDirectoryAtPath: path)
+			try writeValues(values, forCategory: category.rawValue, toDirectoryAtPath: path)
 		}
 	}
 	
