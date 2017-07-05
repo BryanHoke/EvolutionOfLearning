@@ -33,7 +33,8 @@ open class ConcurrentPopulationEvaluator<IndividualType : Individual> : Populati
 	open func evaluate(_ population: inout PopulationType) {
 		fitnesses = Array<Double>(repeating: 0, count: population.count)
 		let blocks = makeDispatchBlocks(forEvaluating: &population)
-		concurrentlyDispatch(blocks, priority: DispatchQueue.GlobalQueuePriority.high)
+        // Use .userInitiated for speed; assumption is that a power supply is connected
+		concurrentlyDispatch(blocks, qos: .userInitiated)
 		for (index, fitness) in fitnesses.enumerated() {
 			population[index].fitness = fitness
 		}

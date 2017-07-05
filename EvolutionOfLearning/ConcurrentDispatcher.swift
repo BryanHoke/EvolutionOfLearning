@@ -10,14 +10,14 @@ import Foundation
 
 public struct ConcurrentDispatcher {
 	
-	public init(queuePriority: dispatch_queue_priority_t) {
-		self.queuePriority = queuePriority
+	public init(qos: DispatchQoS.QoSClass) {
+		self.qos = qos
 	}
 	
-	public let queuePriority: dispatch_queue_priority_t
+	public let qos: DispatchQoS.QoSClass
 	
 	public func concurrentlyDispatch(_ blocks: [()->()]) {
-		let queue = DispatchQueue.global(priority: queuePriority)
+		let queue = DispatchQueue.global(qos: qos)
 		let group = DispatchGroup()
 		
 		for block in blocks {
@@ -29,8 +29,8 @@ public struct ConcurrentDispatcher {
 	
 }
 
-public func concurrentlyDispatch(_ blocks: [()->()], priority: dispatch_queue_priority_t) {
-	let queue = DispatchQueue.global(priority: priority)
+public func concurrentlyDispatch(_ blocks: [()->()], qos: DispatchQoS.QoSClass) {
+	let queue = DispatchQueue.global(qos: qos)
 	let group = DispatchGroup()
 	
 	for block in blocks {
