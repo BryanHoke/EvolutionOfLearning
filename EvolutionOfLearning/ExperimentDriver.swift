@@ -47,7 +47,7 @@ class ExperimentDriver<IndividualType : Individual> {
 	
 	var selectedConditionIndex: Int? {
 		get {
-			return allConditions.indexOf(condition)
+			return allConditions.index(of: condition)
 		}
 		set {
 			guard let index = newValue else {
@@ -71,7 +71,7 @@ class ExperimentDriver<IndividualType : Individual> {
 		}
 	}
 	
-	private func syncInterface() {
+	fileprivate func syncInterface() {
 		guard let interface = self.interface else { return }
 
 		interface.experimentalConditions = allConditionNames
@@ -113,7 +113,7 @@ class ExperimentDriver<IndividualType : Individual> {
 		recorder?.writeOverview()
 	}
 	
-	private func makeConfigForWriting(from original: ExperimentConfig) -> ExperimentConfig {
+	fileprivate func makeConfigForWriting(from original: ExperimentConfig) -> ExperimentConfig {
 		var config = original
 		switch condition {
 		case .learningRuleEvolution:
@@ -129,7 +129,7 @@ class ExperimentDriver<IndividualType : Individual> {
 		return config
 	}
 	
-	private func makeExperiment(tasks tasks: [Task], config: ExperimentConfig) -> AnyExperiment<Record> {
+	fileprivate func makeExperiment(tasks: [Task], config: ExperimentConfig) -> AnyExperiment<Record> {
 		switch condition {
 		case .learningRuleEvolution:
 			return AnyExperiment(ChalmersExperiment(tasks: tasks, config: config))
@@ -173,7 +173,7 @@ extension ExperimentDriver : ConfigurationEventHandling {
 		runExperiments()
 	}
 	
-	private func loadTasks() -> [Task] {
+	fileprivate func loadTasks() -> [Task] {
 		let parser = TaskParser()
 		do {
 			return try parser.tasks(withFileAt: environmentPath)

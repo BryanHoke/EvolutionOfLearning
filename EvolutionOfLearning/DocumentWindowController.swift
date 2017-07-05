@@ -16,13 +16,13 @@ class DocumentWindowController: NSWindowController {
 	
 	@IBOutlet weak var trialsTextField: NSTextField!
 	
-	@IBAction func runButtonClicked(sender: NSButton) {
+	@IBAction func runButtonClicked(_ sender: NSButton) {
 		eventHandler?.runButtonClicked()
 	}
 	
 	var eventHandler: ControlEventHandler?
 	
-	override func controlTextDidChange(obj: NSNotification) {
+	override func controlTextDidChange(_ obj: Notification) {
 		guard let textField = obj.object as? NSTextField else {
 			return
 		}

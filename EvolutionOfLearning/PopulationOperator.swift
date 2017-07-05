@@ -10,6 +10,10 @@ import Foundation
 
 public struct PopulationOperator<Member : Individual> : PopulationOperating {
 	
+	private lazy var __once: () = { () -> Void in
+			srand48(Int(arc4random()))
+		}()
+	
 	public typealias PopulationType = Population<Member>
 	
 	public typealias ChromosomeType = Member.ChromosomeType
@@ -17,7 +21,7 @@ public struct PopulationOperator<Member : Individual> : PopulationOperating {
 	public typealias CrossoverOperator = (ChromosomeType, ChromosomeType) -> (ChromosomeType, ChromosomeType)
 	
 	public func elitistSelection(from population: PopulationType, taking count: Int) -> PopulationType {
-		return PopulationType(members: Array(population.members.sort(<)[0..<count]))
+		return PopulationType(members: Array(population.members.sorted(by: <)[0..<count]))
 	}
 	
 	public func rouletteWheelSelection(from population: PopulationType, taking count: Int) -> PopulationType {
@@ -26,10 +30,8 @@ public struct PopulationOperator<Member : Individual> : PopulationOperating {
 	}
 	
 	public func rouletteWheelSelection(from population: PopulationType) -> Member {
-		var onceToken: dispatch_once_t = 0
-		dispatch_once(&onceToken) { () -> Void in
-			srand48(Int(arc4random()))
-		}
+		var onceToken: Int = 0
+		_ = self.__once
 		
 		let fitnessRatioThreshold = drand48()
 		
@@ -51,23 +53,23 @@ public struct PopulationOperator<Member : Individual> : PopulationOperating {
 		var members = population.members
 		let newMembers: [Member] = (0..<count).map { i in
 			let index = Int(arc4random_uniform(UInt32(count - i)))
-			return members.removeAtIndex(index)
+			return members.remove(at: index)
 		}
 		return PopulationType(members: newMembers)
 	}
 	
-	public func mutate(inout population: PopulationType, rate: Double) {
-		population.visitMembers { (inout member: Member) in
+	public func mutate(_ population: inout PopulationType, rate: Double) {
+		population.visitMembers { (member: inout Member) in
 			member.chromosome.mutate(withRate: rate)
 		}
 	}
 	
-	public func clone(population: PopulationType) -> PopulationType {
+	public func clone(_ population: PopulationType) -> PopulationType {
 		let newMembers = population.map { $0.clone() }
 		return PopulationType(members: newMembers)
 	}
 	
-	public func crossover(population: PopulationType, using crossoverOperator: CrossoverOperator) -> PopulationType {
+	public func crossover(_ population: PopulationType, using crossoverOperator: CrossoverOperator) -> PopulationType {
 		var newMembers: [Member] = []
 		newMembers.reserveCapacity(population.count)
 		

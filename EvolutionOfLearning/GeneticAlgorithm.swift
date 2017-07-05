@@ -20,45 +20,45 @@ public struct GeneticAlgorithm<EnvironmentType : Environment> {
 	
 	public var environment: EnvironmentType
 	
-	public var onPopulationEvaluated: ((population: PopulationType) -> Void)?
+	public var onPopulationEvaluated: ((_ population: PopulationType) -> Void)?
 	
 	public func run(forNumberOfGenerations numberOfGenerations: Int) {
 		let initialPopulation = environment.makePopulation()
 		evolve(initialPopulation, forNumberOfGenerations: numberOfGenerations)
 	}
 	
-	private func evolve(population: PopulationType, forNumberOfGenerations numberOfGenerations: Int) {
+	fileprivate func evolve(_ population: PopulationType, forNumberOfGenerations numberOfGenerations: Int) {
 		var population = population
 		for _ in 0..<numberOfGenerations {
 			evolveGeneration(of: &population)
 		}
 	}
 	
-	private func evolveGeneration(inout of population: PopulationType) {
+	fileprivate func evolveGeneration(of population: inout PopulationType) {
 		evaluateFitness(of: &population)
 		sort(&population)
 		commit(population)
 		reproduce(&population)
 	}
 	
-	private func evaluateFitness(inout of population: PopulationType) {
+	fileprivate func evaluateFitness(of population: inout PopulationType) {
 		let evaluator = ConcurrentPopulationEvaluator<IndividualType>(fitnessFunc: fitness)
 		evaluator.evaluate(&population)
 	}
 	
-	private func fitness(of chromosome: IndividualType.ChromosomeType) -> Double {
+	fileprivate func fitness(of chromosome: IndividualType.ChromosomeType) -> Double {
 		return environment.fitness(of: chromosome)
 	}
 	
-	private func sort(inout population: PopulationType) {
-		population.members.sortInPlace(>)
+	fileprivate func sort(_ population: inout PopulationType) {
+		population.members.sort(by: >)
 	}
 	
-	private func commit(population: PopulationType) {
-		onPopulationEvaluated?(population: population)
+	fileprivate func commit(_ population: PopulationType) {
+		onPopulationEvaluated?(population)
 	}
 	
-	private func reproduce(inout population: PopulationType) {
+	fileprivate func reproduce(_ population: inout PopulationType) {
 		population = environment.reproduce(population)
 	}
 	

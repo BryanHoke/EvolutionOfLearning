@@ -38,15 +38,15 @@ public struct AnyExperiment<Record : TrialRecord> : Experiment {
 	
 	public var config: ExperimentConfig
 	
-	private let _run: (numberOfTrials: Int, onTrialComplete: (Record, Int) -> Void) -> Void
+	fileprivate let _run: (_ numberOfTrials: Int, _ onTrialComplete: (Record, Int) -> Void) -> Void
 	
-	public init<ExperimentType : Experiment where ExperimentType.Record == Record>(_ experiment: ExperimentType) {
+	public init<ExperimentType : Experiment>(_ experiment: ExperimentType) where ExperimentType.Record == Record {
 		config = experiment.config
 		_run = experiment.run(forNumberOfTrials:onTrialComplete:)
 	}
 	
 	public func run(forNumberOfTrials numberOfTrials: Int, onTrialComplete: (Record, Int) -> Void) {
-		_run(numberOfTrials: numberOfTrials, onTrialComplete: onTrialComplete)
+		_run(numberOfTrials, onTrialComplete)
 	}
 	
 }
@@ -73,7 +73,7 @@ public struct AnyTrialRecord<IndividualType : Individual> : TrialRecord {
 	
 	public let evaluations: [AnyEvaluationRecord<IndividualType>]
 	
-	public init<Record : TrialRecord where Record.IndividualType == IndividualType>(_ record: Record) {
+	public init<Record : TrialRecord>(_ record: Record) where Record.IndividualType == IndividualType {
 		evaluations = record.evaluations
 	}
 	
@@ -106,7 +106,7 @@ public struct AnyEvaluationRecord<IndividualType : Individual> : EvaluationRecor
 	
 	public let tasks: [Task]
 	
-	public init<RecordType : EvaluationRecord where RecordType.IndividualType == IndividualType>(_ record: RecordType) {
+	public init<RecordType : EvaluationRecord>(_ record: RecordType) where RecordType.IndividualType == IndividualType {
 		name = record.name
 		populations = record.populations
 		tasks = record.tasks
@@ -163,13 +163,13 @@ struct ExperimentOverview<Record : TrialRecord> {
 		return means
 	}
 	
-	mutating func accumulate(trial: Record) {
+	mutating func accumulate(_ trial: Record) {
 		for evaluation in trial.evaluations {
 			accumulate(evaluation)
 		}
 	}
 	
-	mutating func accumulate<Record : EvaluationRecord>(evaluation: Record) {
+	mutating func accumulate<Record : EvaluationRecord>(_ evaluation: Record) {
 		let key = evaluation.name
 		
 		if !keyOrder.contains(key) {

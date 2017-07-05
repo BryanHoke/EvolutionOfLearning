@@ -41,11 +41,11 @@ public struct AnyFitnessAgent<ChromosomeType : Chromosome> : FitnessAgent {
 	
 	public let tasks: [Task]
 	
-	private let _seed: () -> ChromosomeType
+	fileprivate let _seed: () -> ChromosomeType
 	
-	private let _fitness: (ChromosomeType, Task) -> Double
+	fileprivate let _fitness: (ChromosomeType, Task) -> Double
 	
-	public init<Agent : FitnessAgent where Agent.ChromosomeType == ChromosomeType>(_ agent: Agent) {
+	public init<Agent : FitnessAgent>(_ agent: Agent) where Agent.ChromosomeType == ChromosomeType {
 		tasks = agent.tasks
 		_seed = agent.seed
 		_fitness = agent.fitness(of:on:)

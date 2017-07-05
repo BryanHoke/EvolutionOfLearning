@@ -13,7 +13,7 @@ import Accelerate
 public struct SingleLayerSingleOutputNeuralNetwork: FeedForwardNeuralNetwork {
 	
 	/// Constructs a network with a number of weights to create, an `ActivationFunc`, and a weight generator `func`.
-	public init(size: Int, activation: ActivationFunc, weightGenerator: () -> Double = randomDouble) {
+	public init(size: Int, activation: @escaping ActivationFunc, weightGenerator: () -> Double = randomDouble) {
 		for _ in 0..<size {
 			weights.append(weightGenerator())
 		}
@@ -21,7 +21,7 @@ public struct SingleLayerSingleOutputNeuralNetwork: FeedForwardNeuralNetwork {
 	}
 	
 	/// Constructs a network with weights and an `ActivationFunc`.
-	public init(weights: [Double], activation: ActivationFunc) {
+	public init(weights: [Double], activation: @escaping ActivationFunc) {
 		self.weights = weights
 		self.activation = activation
 	}
@@ -44,7 +44,7 @@ public struct SingleLayerSingleOutputNeuralNetwork: FeedForwardNeuralNetwork {
 	public var weights = [Double]()
 	
 	/// Activates the network's input units with a vector of input values, which are then fed forward through the weights to activate the output unit and compute an output value.
-	public func activateWithInputs(inputs: [Double]) -> Double {
+	public func activateWithInputs(_ inputs: [Double]) -> Double {
 		let inputs = inputs + [bias]
 		let output = activation(cblas_ddot(Int32(count), weights, 1, inputs, 1))
 		return output
@@ -65,7 +65,7 @@ public struct SingleLayerSingleOutputNeuralNetwork: FeedForwardNeuralNetwork {
 extension SingleLayerSingleOutputNeuralNetwork : CustomStringConvertible {
 	
 	public var description: String {
-		return weights.map({ "\($0)" }).joinWithSeparator(" ")
+		return weights.map({ "\($0)" }).joined(separator: " ")
 	}
 	
 }
@@ -73,14 +73,14 @@ extension SingleLayerSingleOutputNeuralNetwork : CustomStringConvertible {
 /// A single-layer, feed-forward neural network with multiple input units but only a single output unit.
 public final class SingleLayerSingleOutputFFNN: FeedForwardNeuralNetwork {
 	
-	public init(size: Int, activation: ActivationFunc, weightGenerator: () -> Double = randomDouble) {
+	public init(size: Int, activation: @escaping ActivationFunc, weightGenerator: () -> Double = randomDouble) {
 		for _ in 0..<size {
 			weights.append(weightGenerator())
 		}
 		self.activation = activation
 	}
 	
-	public init(weights: [Double], activation: ActivationFunc) {
+	public init(weights: [Double], activation: @escaping ActivationFunc) {
 		self.weights = weights
 		self.activation = activation
 	}
@@ -101,7 +101,7 @@ public final class SingleLayerSingleOutputFFNN: FeedForwardNeuralNetwork {
 	/// weights[ i ] = weight from neuron i to output neuron
 	public var weights = [Double]()
 	
-	public func activateWithInputs(inputs: [Double]) -> Double {
+	public func activateWithInputs(_ inputs: [Double]) -> Double {
 		let inputs = inputs + [bias]
 		let output = activation(cblas_ddot(Int32(weights.count), weights, 1, inputs, 1))
 		return output
@@ -121,7 +121,7 @@ public final class SingleLayerSingleOutputFFNN: FeedForwardNeuralNetwork {
 /// A single-layer, feed-forward neural network with multiple input units and multiple output units.
 public struct SingleLayerNeuralNetwork {
 	
-	public init(inputSize: Int, outputSize: Int, activation: ActivationFunc, weightGenerator: () -> Double = randomDouble) {
+	public init(inputSize: Int, outputSize: Int, activation: @escaping ActivationFunc, weightGenerator: () -> Double = randomDouble) {
 		for _ in 0..<outputSize {
 			var weights_i = [Double]()
 			for _ in 0..<inputSize {
@@ -132,7 +132,7 @@ public struct SingleLayerNeuralNetwork {
 		self.activation = activation
 	}
 	
-	public init(weights: [[Double]], activation: ActivationFunc) {
+	public init(weights: [[Double]], activation: @escaping ActivationFunc) {
 		self.weights = weights
 		self.activation = activation
 	}
@@ -143,7 +143,7 @@ public struct SingleLayerNeuralNetwork {
 	/// weights[ i ][ j ] = weight from neuron j to neuron i
 	public var weights = [[Double]]()
 	
-	public func activateWithInputs(inputs: [Double]) -> [Double] {
+	public func activateWithInputs(_ inputs: [Double]) -> [Double] {
 		let inputs = inputs + [-1]
 		let outputs = weights.map { weights_i in
 			cblas_ddot(Int32(weights_i.count), weights_i, 1, inputs, 1)

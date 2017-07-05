@@ -19,21 +19,21 @@ public struct BasicIndividual<ChromosomeType : Chromosome> : Individual {
 	
 	public typealias RecombinationOperator = (ChromosomeType, ChromosomeType) -> ChromosomeType
 	
-	public static func clone(individual: BasicIndividual) -> BasicIndividual {
+	public static func clone(_ individual: BasicIndividual) -> BasicIndividual {
 		return individual
 	}
 	
-	public static func crossover(pair: IndividualPair, using operator: CrossoverOperator) -> IndividualPair {
+	public static func crossover(_ pair: IndividualPair, using operator: CrossoverOperator) -> IndividualPair {
 		let offspringChromosomes = `operator`(pair.0.chromosome, pair.1.chromosome)
 		return (BasicIndividual<ChromosomeType>(chromosome: offspringChromosomes.0), BasicIndividual<ChromosomeType>(chromosome: offspringChromosomes.1))
 	}
 	
-	public static func mutate(individual: BasicIndividual, using operator: MutationOperator) -> BasicIndividual {
+	public static func mutate(_ individual: BasicIndividual, using operator: MutationOperator) -> BasicIndividual {
 		let offspringChromosome = `operator`(individual.chromosome)
 		return BasicIndividual<ChromosomeType>(chromosome: offspringChromosome)
 	}
 	
-	public static func recombine(pair: IndividualPair, using operator: RecombinationOperator) -> BasicIndividual {
+	public static func recombine(_ pair: IndividualPair, using operator: RecombinationOperator) -> BasicIndividual {
 		let offspringChromosome = `operator`(pair.0.chromosome, pair.1.chromosome)
 		return BasicIndividual(chromosome: offspringChromosome)
 	}

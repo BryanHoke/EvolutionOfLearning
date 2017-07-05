@@ -10,12 +10,12 @@ import Foundation
 
 struct TextRecordPersister<Record : ExperimentRecord> {
 	
-	func persist(record: Record, inDirectory directoryPath: String) {
+	func persist(_ record: Record, inDirectory directoryPath: String) {
 		let configWriter = ConfigFileWriter()
 		configWriter.write(record.config, inDirectory: directoryPath)
 		
 		let trialWriter = TrialRecordFileWriter<Record.Record>()
-		for (index, trial) in record.trials.enumerate() {
+		for (index, trial) in record.trials.enumerated() {
 			trialWriter.persist(trial, withIndex: index, inDirectory: directoryPath)
 		}
 	}

@@ -10,26 +10,26 @@ import Foundation
 
 public protocol SupervisedLearningRule {
 
-	func train(inout network: FeedForwardNeuralNetwork,
+	func train(_ network: inout FeedForwardNeuralNetwork,
 		on pattern: Pattern)
 	
-	func train(inout network: FeedForwardNeuralNetwork,
+	func train(_ network: inout FeedForwardNeuralNetwork,
 		on task: Task)
 	
-	func train(inout network: FeedForwardNeuralNetwork,
+	func train(_ network: inout FeedForwardNeuralNetwork,
 		on task: Task,
 		numberOfTimes: Int)
 }
 
 public extension SupervisedLearningRule {
 	
-	func train(inout network: FeedForwardNeuralNetwork, on task: Task) {
+	func train(_ network: inout FeedForwardNeuralNetwork, on task: Task) {
 		for pattern in task.patterns {
 			train(&network, on: pattern)
 		}
 	}
 	
-	func train(inout network: FeedForwardNeuralNetwork, on task: Task, numberOfTimes: Int) {
+	func train(_ network: inout FeedForwardNeuralNetwork, on task: Task, numberOfTimes: Int) {
 		for _ in 0..<numberOfTimes {
 			train(&network, on: task)
 		}
@@ -82,7 +82,7 @@ public struct ChalmersLearningRule: SupervisedLearningRule {
 		self.init(coefficients: coefficients)
 	}
 	
-	public func train(inout network: FeedForwardNeuralNetwork, on pattern: Pattern) {
+	public func train(_ network: inout FeedForwardNeuralNetwork, on pattern: Pattern) {
 		let output = network.activateWithInputs(pattern.inputs)
 		for i in 0...pattern.inputs.count {
 			let input = i < pattern.inputs.count ? pattern.inputs[i] : network.bias
@@ -96,7 +96,7 @@ public struct ChalmersLearningRule: SupervisedLearningRule {
 		}
 	}
 	
-	public func weightDelta(weight weight: Double, input: Double, output: Double, target: Double) -> Double {
+	public func weightDelta(weight: Double, input: Double, output: Double, target: Double) -> Double {
 		var delta: Double = 0
 		delta += self[1] * weight
 		delta += self[2] * input

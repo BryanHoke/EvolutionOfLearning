@@ -10,7 +10,7 @@ import Foundation
 
 // MARK: - ArrayWrapper
 
-public protocol ArrayWrapper: RangeReplaceableCollectionType {
+public protocol ArrayWrapper: RangeReplaceableCollection {
 	
 	// MARK: Associated Types
 	
@@ -28,13 +28,13 @@ public protocol ArrayWrapper: RangeReplaceableCollectionType {
 	
 	// MARK: Instance Methods
 	
-	mutating func append(newElement: Element)
+	mutating func append(_ newElement: Element)
 	
-	mutating func extend(newElements: [Element])
+	mutating func extend(_ newElements: [Element])
 	
-	func generate() -> IndexingGenerator<Self>
+	func generate() -> IndexingIterator<Self>
 	
-	mutating func insert(newElement: Element, atIndex i: Int)
+	mutating func insert(_ newElement: Element, atIndex i: Int)
 	
 	mutating func removeLast() -> Element
 	
@@ -70,28 +70,28 @@ extension ArrayWrapper {
 		}
 	}
 	
-	mutating func append(newElement: Element) {
+	mutating func append(_ newElement: Element) {
 		wrappedArray.append(newElement)
 	}
 	
-	public mutating func extend(newElements: [Element]) {
-		wrappedArray.appendContentsOf(newElements)
+	public mutating func extend(_ newElements: [Element]) {
+		wrappedArray.append(contentsOf: newElements)
 	}
 	
-	public func generate() -> IndexingGenerator<[Element]> {
-		return wrappedArray.generate()
+	public func generate() -> IndexingIterator<[Element]> {
+		return wrappedArray.makeIterator()
 	}
 	
-	public mutating func insert(newElement: Element, atIndex i: Int) {
-		wrappedArray.insert(newElement, atIndex: i)
+	public mutating func insert(_ newElement: Element, atIndex i: Int) {
+		wrappedArray.insert(newElement, at: i)
 	}
 	
-	public mutating func removeAll(keepCapacity keepCapacity: Bool) {
-		wrappedArray.removeAll(keepCapacity: keepCapacity)
+	public mutating func removeAll(keepCapacity: Bool) {
+		wrappedArray.removeAll(keepingCapacity: keepCapacity)
 	}
 	
-	public mutating func removeAtIndex(i: Int) -> Element {
-		return wrappedArray.removeAtIndex(i)
+	public mutating func removeAtIndex(_ i: Int) -> Element {
+		return wrappedArray.remove(at: i)
 	}
 	
 //	public mutating func removeL

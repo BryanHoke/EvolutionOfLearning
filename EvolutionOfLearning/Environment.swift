@@ -21,7 +21,7 @@ public protocol Environment {
 	
 	func fitness(of chromosome: IndividualType.ChromosomeType) -> Double
 	
-	func reproduce(population: Population<IndividualType>) -> Population<IndividualType>
+	func reproduce(_ population: Population<IndividualType>) -> Population<IndividualType>
 	
 }
 
@@ -31,13 +31,13 @@ public struct AnyEnvironment<IndividualType : Individual> : Environment {
 	
 	public var tasks: [Task]
 	
-	private let _makePopulation: () -> PopulationType
+	fileprivate let _makePopulation: () -> PopulationType
 	
-	private let _fitness: (IndividualType.ChromosomeType) -> Double
+	fileprivate let _fitness: (IndividualType.ChromosomeType) -> Double
 	
-	private let _reproduce: (PopulationType) -> PopulationType
+	fileprivate let _reproduce: (PopulationType) -> PopulationType
 	
-	public init<EnvironmentType : Environment where EnvironmentType.IndividualType == IndividualType>(environment: EnvironmentType) {
+	public init<EnvironmentType : Environment>(environment: EnvironmentType) where EnvironmentType.IndividualType == IndividualType {
 		tasks = environment.tasks
 		_makePopulation = environment.makePopulation
 		_fitness = environment.fitness(of:)
@@ -52,7 +52,7 @@ public struct AnyEnvironment<IndividualType : Individual> : Environment {
 		return _fitness(chromosome)
 	}
 	
-	public func reproduce(population: Population<IndividualType>) -> Population<IndividualType> {
+	public func reproduce(_ population: Population<IndividualType>) -> Population<IndividualType> {
 		return _reproduce(population)
 	}
 	
@@ -86,7 +86,7 @@ public struct EvolutionaryEnvironment<IndividualType : Individual> : Environment
 		return fitnessAgent.fitness(of: chromosome)
 	}
 	
-	public func reproduce(population: Population<IndividualType>) -> Population<IndividualType> {
+	public func reproduce(_ population: Population<IndividualType>) -> Population<IndividualType> {
 		return reproductionAgent.reproduce(population)
 	}
 	

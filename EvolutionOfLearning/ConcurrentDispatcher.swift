@@ -16,26 +16,26 @@ public struct ConcurrentDispatcher {
 	
 	public let queuePriority: dispatch_queue_priority_t
 	
-	public func concurrentlyDispatch(blocks: [dispatch_block_t]) {
-		let queue = dispatch_get_global_queue(queuePriority, 0)
-		let group = dispatch_group_create()
+	public func concurrentlyDispatch(_ blocks: [()->()]) {
+		let queue = DispatchQueue.global(priority: queuePriority)
+		let group = DispatchGroup()
 		
 		for block in blocks {
-			dispatch_group_async(group, queue, block)
+			queue.async(group: group, execute: block)
 		}
 		
-		dispatch_group_wait(group, DISPATCH_TIME_FOREVER)
+		group.wait(timeout: DispatchTime.distantFuture)
 	}
 	
 }
 
-public func concurrentlyDispatch(blocks: [dispatch_block_t], priority: dispatch_queue_priority_t) {
-	let queue = dispatch_get_global_queue(priority, 0)
-	let group = dispatch_group_create()
+public func concurrentlyDispatch(_ blocks: [()->()], priority: dispatch_queue_priority_t) {
+	let queue = DispatchQueue.global(priority: priority)
+	let group = DispatchGroup()
 	
 	for block in blocks {
-		dispatch_group_async(group, queue, block)
+		queue.async(group: group, execute: block)
 	}
 	
-	dispatch_group_wait(group, DISPATCH_TIME_FOREVER)
+	group.wait(timeout: DispatchTime.distantFuture)
 }

@@ -8,15 +8,15 @@
 
 import Foundation
 
-public typealias ActivationFunc = Double -> Double
+public typealias ActivationFunc = (Double) -> Double
 
-public func sigmoid(λ λ: Double) -> ActivationFunc {
+public func sigmoid(λ: Double) -> ActivationFunc {
 	return { x in
 		1 / (1 + exp(-λ * x))
 	}
 }
 
-public func pow(base: Int, _ exponent: Int) -> Int {
+public func pow(_ base: Int, _ exponent: Int) -> Int {
 	return Int(pow(Double(base), Double(exponent)))
 }
 
@@ -30,12 +30,12 @@ public func randomDouble() -> Double {
 }
 
 func encodedInt(from bits: [Bool]) -> Int {
-	return bits.reverse().enumerate().reduce(0, combine: { (sum, pair: (i: Int, bit: Bool)) -> Int in
+	return bits.reversed().enumerated().reduce(0, { (sum, pair: (i: Int, bit: Bool)) -> Int in
 		sum + (pair.bit ? pow(2, pair.i) : 0)
 	})
 }
 
-func exponentialTransform(j j: Int, exponentShift: Int) -> Double {
+func exponentialTransform(j: Int, exponentShift: Int) -> Double {
 	return
 		j == 0
 			? 0
@@ -50,7 +50,7 @@ public func exponentOffset(bitCount count: Int, cap: Int) -> Int {
 // TODO: Test
 /// Let j = bits as Int
 /// 2 ^ (j - exponentOffset)
-func exponentialEncoding(exponentOffset offset: Int) -> (bits: [Bool]) -> Double {
+func exponentialEncoding(exponentOffset offset: Int) -> (_ bits: [Bool]) -> Double {
 	return { bits -> Double in
 		let base = encodedInt(from: bits)
 		return exponentialTransform(j: base, exponentShift: offset)
@@ -61,16 +61,16 @@ func exponentialEncoding(exponentOffset offset: Int) -> (bits: [Bool]) -> Double
 /// let sign = bits[0] as Bool
 /// let j = bits[1:] as Int
 /// sign * 2 ^ (j - exponentOffset)
-func signedExponentialEncoding(exponentOffset offset: Int) -> (bits: [Bool]) -> Double {
+func signedExponentialEncoding(exponentOffset offset: Int) -> (_ bits: [Bool]) -> Double {
 	return { bits -> Double in
 		let sign = Double(bits[0] ? 1 : -1)
-		let magnitude = exponentialEncoding(exponentOffset: offset)(bits: Array(bits.dropFirst()))
+		let magnitude = exponentialEncoding(exponentOffset: offset)(Array(bits.dropFirst()))
 		return sign * magnitude
 	}
 }
 
 // TODO: Test
-func decodeWeights(from bits: [Bool], bitsPerWeight: Int, layerSize: Int, encoding: [Bool] -> Double) -> [Double] {
+func decodeWeights(from bits: [Bool], bitsPerWeight: Int, layerSize: Int, encoding: ([Bool]) -> Double) -> [Double] {
 	var weights: [Double] = []
 	for i in 0..<layerSize {
 		let start = i * bitsPerWeight,

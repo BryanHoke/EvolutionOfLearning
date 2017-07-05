@@ -19,13 +19,13 @@ public protocol Individual : Comparable {
 	
 	init(chromosome: ChromosomeType)
 	
-	static func clone(individual: Self) -> Self
+	static func clone(_ individual: Self) -> Self
 	
-	static func crossover(pair: (Self, Self), using operator: (ChromosomeType, ChromosomeType) -> (ChromosomeType, ChromosomeType)) -> (Self, Self)
+	static func crossover(_ pair: (Self, Self), using operator: (ChromosomeType, ChromosomeType) -> (ChromosomeType, ChromosomeType)) -> (Self, Self)
 	
-	static func mutate(individual: Self, using operator: (ChromosomeType) -> ChromosomeType) -> Self
+	static func mutate(_ individual: Self, using operator: (ChromosomeType) -> ChromosomeType) -> Self
 	
-	static func recombine(pair: (Self, Self), using operator: (ChromosomeType, ChromosomeType) -> ChromosomeType) -> Self
+	static func recombine(_ pair: (Self, Self), using operator: (ChromosomeType, ChromosomeType) -> ChromosomeType) -> Self
 	
 	func clone() -> Self
 	

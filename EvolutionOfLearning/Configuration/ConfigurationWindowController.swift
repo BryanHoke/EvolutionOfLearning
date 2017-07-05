@@ -28,25 +28,25 @@ class ConfigurationWindowController: NSWindowController, ExperimentInterface {
 	
 	@IBOutlet weak var maxTasksField: NSTextField!
 	
-	@IBOutlet weak var tasksFormatter: NSNumberFormatter!
+	@IBOutlet weak var tasksFormatter: NumberFormatter!
 	
-	@IBOutlet weak var maxTasksFormatter: NSNumberFormatter!
+	@IBOutlet weak var maxTasksFormatter: NumberFormatter!
 	
 	@IBOutlet weak var fitnessIncludesTrainingSwitch: NSButton!
 	
-	@IBAction func runButtonClicked(sender: NSButton) {
+	@IBAction func runButtonClicked(_ sender: NSButton) {
 		eventHandler?.runButtonPressed()
 	}
 	
-	@IBAction func conditionButtonChanged(sender: NSPopUpButton) {
+	@IBAction func conditionButtonChanged(_ sender: NSPopUpButton) {
 		eventHandler?.selectedConditionIndexChanged(to: sender.indexOfSelectedItem)
 	}
 	
-	@IBAction func fitnessIncludesTrainingSwitchChanged(sender: NSButton) {
+	@IBAction func fitnessIncludesTrainingSwitchChanged(_ sender: NSButton) {
 		eventHandler?.fitnessIncludesTrainingChanged(to: sender.state == NSOnState)
 	}
 	
-	override func controlTextDidChange(obj: NSNotification) {
+	override func controlTextDidChange(_ obj: Notification) {
 		guard let textField = obj.object as? NSTextField else {
 			return
 		}
@@ -87,7 +87,7 @@ class ConfigurationWindowController: NSWindowController, ExperimentInterface {
 		set {
 			conditionButton.removeAllItems()
 			for condition in newValue {
-				conditionButton.addItemWithTitle(condition)
+				conditionButton.addItem(withTitle: condition)
 			}
 		}
 	}
@@ -98,7 +98,7 @@ class ConfigurationWindowController: NSWindowController, ExperimentInterface {
 			return index >= 0 ? index : nil
 		}
 		set {
-			conditionButton.selectItemAtIndex(newValue ?? -1)
+			conditionButton.selectItem(at: newValue ?? -1)
 		}
 	}
 	
@@ -120,10 +120,10 @@ class ConfigurationWindowController: NSWindowController, ExperimentInterface {
 	}
 	
 	var numberOfTasksUpperBound: Int? {
-		get { return tasksFormatter.maximum?.integerValue }
+		get { return tasksFormatter.maximum?.intValue }
 		set {
-			tasksFormatter.maximum = newValue
-			maxTasksFormatter.maximum = newValue
+			tasksFormatter.maximum = newValue as! NSNumber
+			maxTasksFormatter.maximum = newValue as! NSNumber
 		}
 	}
 	

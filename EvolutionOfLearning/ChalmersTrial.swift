@@ -8,7 +8,7 @@
 
 import Foundation
 
-public typealias FitnessAgentFactory = (tasks: [Task]) -> FitnessAgent
+public typealias FitnessAgentFactory = (_ tasks: [Task]) -> FitnessAgent
 
 public struct ChalmersTrial<IndividualType : Individual> {
 	
@@ -32,7 +32,7 @@ public struct ChalmersTrial<IndividualType : Individual> {
 		return ChalmersTrialRecord(evolutionRecord: evolutionRecord, learningTestRecord: testRecord)
 	}
 	
-	private func runEvolution() -> EvolutionRecordType {
+	fileprivate func runEvolution() -> EvolutionRecordType {
 		let fitness = makeFitnessAgent(with: evolutionaryTasks)
 		let reproduction = makeReproductionAgent()
 		let environment = makeEnvironment(fitness, reproduction: reproduction)
@@ -40,25 +40,25 @@ public struct ChalmersTrial<IndividualType : Individual> {
 		return evolution.run()
 	}
 	
-	private func runLearningTest(with history: [PopulationType]) -> LearningTestRecord<IndividualType> {
+	fileprivate func runLearningTest(with history: [PopulationType]) -> LearningTestRecord<IndividualType> {
 		let fitness = makeFitnessAgent(with: testTasks)
 		let learningTest = LearningTest(fitnessAgent: fitness, history: history)
 		return learningTest.run()
 	}
 	
-	private func makeFitnessAgent(with tasks: [Task]) -> AnyFitnessAgent<ChromosomeType> {
+	fileprivate func makeFitnessAgent(with tasks: [Task]) -> AnyFitnessAgent<ChromosomeType> {
 		return AnyFitnessAgent(LearningRuleEvolutionFitnessAgent(config: config.fitnessConfig, tasks: tasks))
 	}
 	
-	private func makeReproductionAgent() -> AnyReproductionAgent<IndividualType> {
+	fileprivate func makeReproductionAgent() -> AnyReproductionAgent<IndividualType> {
 		return AnyReproductionAgent(ChalmersReproductionAgent<IndividualType>(config: config.reproductionConfig))
 	}
 	
-	private func makeEnvironment(fitness: AnyFitnessAgent<ChromosomeType>, reproduction: AnyReproductionAgent<IndividualType>) -> EvolutionaryEnvironment<IndividualType> {
+	fileprivate func makeEnvironment(_ fitness: AnyFitnessAgent<ChromosomeType>, reproduction: AnyReproductionAgent<IndividualType>) -> EvolutionaryEnvironment<IndividualType> {
 		return EvolutionaryEnvironment(config: config.environmentConfig, fitnessAgent: fitness, reproductionAgent: reproduction)
 	}
 	
-	private func makeEvolution<EnvironmentType : Environment>(environment: EnvironmentType) -> Evolution<EnvironmentType> {
+	fileprivate func makeEvolution<EnvironmentType : Environment>(_ environment: EnvironmentType) -> Evolution<EnvironmentType> {
 		return Evolution(config: config.evolutionConfig, environment: environment)
 	}
 	

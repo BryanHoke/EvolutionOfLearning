@@ -37,7 +37,7 @@ class ExperimentRunner<IndividualType : Individual> : ExperimentRunning {
 		set { config.fitnessConfig.trainingCountsTowardFitness = newValue }
 	}
 	
-	private var configForWriting: ExperimentConfig {
+	fileprivate var configForWriting: ExperimentConfig {
 		var config = self.config
 		switch condition {
 		case .learningRuleEvolution:
@@ -68,7 +68,7 @@ class ExperimentRunner<IndividualType : Individual> : ExperimentRunning {
 		recorder?.writeOverview()
 	}
 	
-	private func makeExperiment(tasks tasks: [Task]) -> AnyExperiment<Record> {
+	fileprivate func makeExperiment(tasks: [Task]) -> AnyExperiment<Record> {
 		switch condition {
 		case .learningRuleEvolution:
 			return AnyExperiment(ChalmersExperiment(tasks: tasks, config: config))

@@ -12,7 +12,7 @@ protocol RecordPersisting : class {
 	
 	associatedtype Record : ExperimentRecord
 	
-	func persist(record: Record)
+	func persist(_ record: Record)
 	
 }
 
@@ -20,6 +20,6 @@ protocol TrialRecordPersisting : class {
 	
 	associatedtype Record : TrialRecord
 	
-	func persist(record: Record)
+	func persist(_ record: Record)
 	
 }

@@ -10,7 +10,7 @@ import Foundation
 import Darwin
 
 /// An ordered collection of `Individual`s.
-public struct Population<Member : Individual> : ArrayLiteralConvertible {
+public struct Population<Member : Individual> : ExpressibleByArrayLiteral {
 	
 	public typealias PopulationType = Population<Member>
 	
@@ -56,14 +56,13 @@ extension Population {
 	///
 	/// - Note: The implementation currently assumes that the population contains an even number of members.
 	public var pairs: [MemberPair] {
-		return 0
-			.stride(through: count - 1, by: 2)
+		return stride(from: 0, through: count - 1, by: 2)
 			.map { (self[$0], self[$0 + 1]) }
 	}
 	
 	/// The total fitness of all `Individual`s in the population.
 	public var totalFitness: Double {
-		return members.map { $0.fitness }.reduce(0, combine: +)
+		return members.map { $0.fitness }.reduce(0, +)
 	}
 	
 	/// The average fitness of the members in `self`.
@@ -78,15 +77,15 @@ extension Population {
 extension Population {
 	
 	/// Applies a mutating block to each member in `self`.
-	public mutating func visitMembers(using block: (inout member: Member) -> Void) {
+	public mutating func visitMembers(using block: (_ member: inout Member) -> Void) {
 		for i in indices {
-			block(member: &members[i])
+			block(&members[i])
 		}
 	}
 	
 	/// Mutates the members in `self` using a specified *mutationRate*.
 	public mutating func mutateInPlace(using mutationRate: Double) {
-		visitMembers { (inout member: Member) in
+		visitMembers { (member: inout Member) in
 			member.chromosome.mutate(withRate: mutationRate)
 		}
 	}
@@ -110,7 +109,7 @@ extension Population {
 	}
 	
 	/// Returns a `Population` created by applying *crossoverOperator* to each pair of members in `self`.
-	public func reproduceWithCrossover(crossoverOperator: CrossoverOperator) -> PopulationType {
+	public func reproduceWithCrossover(_ crossoverOperator: CrossoverOperator) -> PopulationType {
 		var offspringPopulation = PopulationType()
 		
 		for pair in pairs {
@@ -122,13 +121,13 @@ extension Population {
 	}
 
 	/// Returns a `Population` created by applying *mutationOperator* to each member in `self`.
-	public func reproduceWithMutation(mutationOperator: MutationOperator) -> PopulationType {
+	public func reproduceWithMutation(_ mutationOperator: @escaping MutationOperator) -> PopulationType {
 		let mutatedMembers = map { Member.mutate($0, using: mutationOperator) }
 		return Population(members: mutatedMembers)
 	}
 	
 	/// Return a new `Population` created by applying *recombinationOperator* to each pair of members in `self`.
-	public func reproduceWithRecombination(recombinationOperator: RecombinationOperator) -> PopulationType {
+	public func reproduceWithRecombination(_ recombinationOperator: @escaping RecombinationOperator) -> PopulationType {
 		let recombinedMembers = pairs.map { pair in
 			Member.recombine(pair, using: recombinationOperator)
 		}
@@ -148,7 +147,7 @@ extension Population {
 		
 		// Filter out excluded members (if any)
 		for excludedIndex in excludedIndices {
-			includedPopulation.members.removeAtIndex(excludedIndex)
+			includedPopulation.members.remove(at: excludedIndex)
 		}
 		
 		// Select new members
@@ -168,7 +167,7 @@ extension Population {
 	/// Roulette wheel selection is a replacing selection where the probability of an individual being selected is linearly proportional to its fitness.
 	public func rouletteWheelSelect() -> Member {
 		// Seed the random double generator (once)
-		var onceToken: dispatch_once_t = 0
+		var onceToken: Int = 0
 		dispatch_once(&onceToken) { () -> Void in
 			srand48(Int(arc4random()))
 		}
@@ -191,7 +190,7 @@ extension Population {
 	}
 	
 	/// Returns a `Population` by selecting the members in `self` at the specified *indices*.
-	public func populationWithSelectionIndices(indices: Set<Int>) -> PopulationType {
+	public func populationWithSelectionIndices(_ indices: Set<Int>) -> PopulationType {
 		var selectedPopulation = PopulationType()
 		
 		for index in indices {
@@ -204,37 +203,37 @@ extension Population {
 	/// Returns a `Population` by selecting the members in `self` *not* at the specified *indices*.
 	///
 	/// - param indices: The indices of the `Individuals` to exclude from the returned `Population`.
-	public func populationWithExcludedIndices(indices: Set<Int>) -> PopulationType {
+	public func populationWithExcludedIndices(_ indices: Set<Int>) -> PopulationType {
 		var allIndices = Set<Int>()
 		for i in 0..<count {
 			allIndices.insert(i)
 		}
-		let selectionIndices = allIndices.subtract(indices)
+		let selectionIndices = allIndices.subtracting(indices)
 		return self.populationWithSelectionIndices(selectionIndices)
 	}
 	
 	/// Returns a Population containing *count* members uniformly selected from `self`.
 	///
 	/// - parameter count: The number of members to select.
-	public func populationWithUniformSelection(count: Int) -> PopulationType {
+	public func populationWithUniformSelection(_ count: Int) -> PopulationType {
 		var newPopulation = PopulationType()
 		var pool = self
 		let newPopulationSize = min(count, pool.count)
 		
 		for i in 0..<newPopulationSize {
 			let index = Int(arc4random_uniform(UInt32(newPopulationSize - i)))
-			newPopulation.append(pool.members.removeAtIndex(index))
+			newPopulation.append(pool.members.remove(at: index))
 		}
 		
 		return newPopulation
 	}
 	
 	/// Returns a population by partitioning `self` using *branchSelector* and then combining the partitions using *branchCombine*.
-	public func selectionBranch(branchSelector: (PopulationType) -> Set<Int>, branchCombine: (selected: PopulationType, unselected: PopulationType) -> (PopulationType)) -> PopulationType {
+	public func selectionBranch(_ branchSelector: (PopulationType) -> Set<Int>, branchCombine: (_ selected: PopulationType, _ unselected: PopulationType) -> (PopulationType)) -> PopulationType {
 		let selectionIndices = branchSelector(self)
 		let selectedPopulation = self.populationWithSelectionIndices(selectionIndices)
 		let unselectedPopulation = self.populationWithExcludedIndices(selectionIndices)
-		return branchCombine(selected: selectedPopulation, unselected: unselectedPopulation)
+		return branchCombine(selectedPopulation, unselectedPopulation)
 	}
 }
 
@@ -242,14 +241,14 @@ extension Population {
 
 extension Population {
 	
-	public static func uniformSelection(count: Int) -> PopulationType -> PopulationType {
+	public static func uniformSelection(_ count: Int) -> (PopulationType) -> PopulationType {
 		return { population in
 			let selectionIndices = uniformSelectionIndices(count)(population)
 			return population.populationWithSelectionIndices(selectionIndices)
 		}
 	}
 	
-	public static func uniformSelectionIndices(count: Int) -> PopulationType -> Set<Int> {
+	public static func uniformSelectionIndices(_ count: Int) -> (PopulationType) -> Set<Int> {
 		return { population in
 			var selectedIndices = Set<Int>()
 			var pool = (0..<population.count).map { $0 }
@@ -257,7 +256,7 @@ extension Population {
 			
 			for i in 0..<selectionCount {
 				let index = Int(arc4random_uniform(UInt32(selectionCount - i)))
-				selectedIndices.insert(pool.removeAtIndex(index))
+				selectedIndices.insert(pool.remove(at: index))
 			}
 			
 			return selectedIndices
@@ -268,13 +267,13 @@ extension Population {
 
 // MARK: - CollectionType
 
-extension Population : CollectionType {
+extension Population : Collection {
 	
 	public typealias Element = Member
 	
 	public typealias Index = Int
 	
-	public typealias Generator = IndexingGenerator<[Member]>
+	public typealias Iterator = IndexingIterator<[Member]>
 	
 	public var count: Int {
 		return members.count
@@ -292,19 +291,19 @@ extension Population : CollectionType {
 		return members.startIndex
 	}
 	
-	public mutating func append(newElement: Member) {
+	public mutating func append(_ newElement: Member) {
 		members.append(newElement)
 	}
 	
-	public mutating func extend(newElements: [Member]) {
-		members.appendContentsOf(newElements)
+	public mutating func extend(_ newElements: [Member]) {
+		members.append(contentsOf: newElements)
 	}
 	
-	public func generate() -> IndexingGenerator<[Member]> {
-		return members.generate()
+	public func makeIterator() -> IndexingIterator<[Member]> {
+		return members.makeIterator()
 	}
 	
-	public mutating func reserveCapacity(n: Int) {
+	public mutating func reserveCapacity(_ n: Int) {
 		members.reserveCapacity(n)
 	}
 	
@@ -331,10 +330,10 @@ public func +<Member : Individual>(lhs: Population<Member>, rhs: [Member]) -> Po
 	return newPopulation
 }
 
-public func +=<Member : Individual>(inout lhs: Population<Member>, rhs: Population<Member>) {
+public func +=<Member : Individual>(lhs: inout Population<Member>, rhs: Population<Member>) {
 	lhs.members += rhs.members
 }
 
-public func +=<Member : Individual>(inout lhs: Population<Member>, rhs: [Member]) {
+public func +=<Member : Individual>(lhs: inout Population<Member>, rhs: [Member]) {
 	lhs.members += rhs
 }

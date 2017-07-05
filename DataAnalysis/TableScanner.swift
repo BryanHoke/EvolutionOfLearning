@@ -17,12 +17,12 @@ final class TableScanner {
 	func scanTable(fromFileAtPath path: String) throws -> [[String]] {
 		var table = [[String]]()
 		
-		let fileContent = try NSString(contentsOfFile: path, encoding: NSUTF8StringEncoding)
+		let fileContent = try NSString(contentsOfFile: path, encoding: String.Encoding.utf8.rawValue)
 		
-		let lines: [String] = fileContent.componentsSeparatedByCharactersInSet(.newlineCharacterSet())
+		let lines: [String] = fileContent.components(separatedBy: .newlines)
 		
 		for line in lines {
-			let tokens: [String] = line.componentsSeparatedByString(",")
+			let tokens: [String] = line.components(separatedBy: ",")
 			table.append(tokens)
 		}
 		
@@ -30,13 +30,13 @@ final class TableScanner {
 	}
 	
 	func scanValues(fromFilesAtPaths paths: [String], rowIndices: [Int], columnIndices: [Int]) throws -> [[[String]]] {
-		var values: [[[String]]] = .init(count: columnIndices.count, repeatedValue: .init(count: rowIndices.count, repeatedValue: []))
+		var values: [[[String]]] = .init(repeating: .init(repeating: [], count: rowIndices.count), count: columnIndices.count)
 		
 		for path in paths {
 			let table = try scanTable(fromFileAtPath: path)
 			
-			for (i, row) in rowIndices.enumerate() {
-				for (j, col) in columnIndices.enumerate() {
+			for (i, row) in rowIndices.enumerated() {
+				for (j, col) in columnIndices.enumerated() {
 					values[i][j].append(table[row][col])
 				}
 			}

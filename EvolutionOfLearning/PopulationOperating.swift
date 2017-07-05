@@ -18,10 +18,10 @@ public protocol PopulationOperating {
 	
 	func uniformSelection(from population: Population<Member>, taking count: Int) -> Population<Member>
 	
-	func mutate(inout population: Population<Member>, rate: Double)
+	func mutate(_ population: inout Population<Member>, rate: Double)
 	
-	func clone(population: Population<Member>) -> Population<Member>
+	func clone(_ population: Population<Member>) -> Population<Member>
 	
-	func crossover(population: Population<Member>, using crossoverOperator: (Member.ChromosomeType, Member.ChromosomeType) -> (Member.ChromosomeType, Member.ChromosomeType)) -> Population<Member>
+	func crossover(_ population: Population<Member>, using crossoverOperator: (Member.ChromosomeType, Member.ChromosomeType) -> (Member.ChromosomeType, Member.ChromosomeType)) -> Population<Member>
 	
 }

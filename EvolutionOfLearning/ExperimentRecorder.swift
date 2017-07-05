@@ -27,7 +27,7 @@ final class ExperimentRecorder<Record : TrialRecord> {
 		overview = ExperimentOverview<Record>()
 		
 		do {
-			try NSFileManager.defaultManager().createDirectoryAtPath(resultsDirectory!, withIntermediateDirectories: false, attributes: nil)
+			try FileManager.default.createDirectory(atPath: resultsDirectory!, withIntermediateDirectories: false, attributes: nil)
 		}
 		catch let error as NSError {
 			print(error)
@@ -35,14 +35,14 @@ final class ExperimentRecorder<Record : TrialRecord> {
 		}
 	}
 	
-	func write(config: ExperimentConfig) {
+	func write(_ config: ExperimentConfig) {
 		guard let resultsDirectory = self.resultsDirectory else {
 			preconditionFailure()
 		}
 		ConfigFileWriter().write(config, inDirectory: resultsDirectory)
 	}
 	
-	func write(trial: Record, withIndex index: Int) {
+	func write(_ trial: Record, withIndex index: Int) {
 		guard let resultsDirectory = self.resultsDirectory else {
 			preconditionFailure()
 		}
@@ -61,12 +61,12 @@ final class ExperimentRecorder<Record : TrialRecord> {
 	func makeResultsDirectory() {
 		var index = 0
 		var path = ""
-		let fileManager = NSFileManager()
+		let fileManager = FileManager()
 		var shouldUsePath = false
 		
 		while !shouldUsePath {
 			path = resultsBasePath + "Experiment \(index)"
-			shouldUsePath = !fileManager.fileExistsAtPath(path)
+			shouldUsePath = !fileManager.fileExists(atPath: path)
 			index += 1
 		}
 		

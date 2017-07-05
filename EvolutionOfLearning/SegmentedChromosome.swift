@@ -9,13 +9,13 @@
 import Foundation
 
 /// A `Chromosome` where crossover operates at the level of whole "segments" of genes.
-public struct SegmentedChromosome : Chromosome, ArrayLiteralConvertible {
+public struct SegmentedChromosome : Chromosome, ExpressibleByArrayLiteral {
 	
-	public static func twoPointCrossover(chromosome1: SegmentedChromosome, chromosome2: SegmentedChromosome) -> (SegmentedChromosome, SegmentedChromosome) {
+	public static func twoPointCrossover(_ chromosome1: SegmentedChromosome, chromosome2: SegmentedChromosome) -> (SegmentedChromosome, SegmentedChromosome) {
 		return twoPointCrossover(chromosome1, chromosome2: chromosome2, seed: { Int(arc4random()) })
 	}
 	
-	public static func twoPointCrossover(chromosome1: SegmentedChromosome, chromosome2: SegmentedChromosome, seed: () -> Int) -> (SegmentedChromosome, SegmentedChromosome) {
+	public static func twoPointCrossover(_ chromosome1: SegmentedChromosome, chromosome2: SegmentedChromosome, seed: () -> Int) -> (SegmentedChromosome, SegmentedChromosome) {
 		let segmentCount = min(chromosome1.segmentCount, chromosome2.segmentCount)
 		
 		// start ∈ [0, segmentCount)
@@ -75,7 +75,7 @@ public struct SegmentedChromosome : Chromosome, ArrayLiteralConvertible {
 		}
 	}
 	
-	public mutating func removeFirst(n: Int) {
+	public mutating func removeFirst(_ n: Int) {
 		for _ in 0..<n {
 			guard var firstSegment = segments.first else { break }
 			
@@ -95,7 +95,7 @@ public struct SegmentedChromosome : Chromosome, ArrayLiteralConvertible {
 		}
 		set {
 			var index = index
-			for (i, segment) in segments.enumerate() {
+			for (i, segment) in segments.enumerated() {
 				if index < segment.count {
 					segments[i][index] = newValue
 					return
@@ -121,7 +121,7 @@ public struct SegmentedChromosome : Chromosome, ArrayLiteralConvertible {
 
 public prefix func !(chromosome: SegmentedChromosome) -> SegmentedChromosome {
 	var newChromosome = chromosome
-	for (index, gene) in newChromosome.genes.enumerate() {
+	for (index, gene) in newChromosome.genes.enumerated() {
 		newChromosome[index] = !gene
 	}
 	return newChromosome

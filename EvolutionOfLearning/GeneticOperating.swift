@@ -8,7 +8,7 @@
 
 import Foundation
 
-public typealias MutationOperator = Chromosome -> Chromosome
+public typealias MutationOperator = (Chromosome) -> Chromosome
 
 public typealias RecombinationOperator = (Chromosome, Chromosome) -> Chromosome
 
@@ -18,8 +18,8 @@ public protocol GeneticOperating {
 	
 	associatedtype ChromosomeType : Chromosome
 	
-	func mutation(mutationRate: Double) -> ChromosomeType -> ChromosomeType
+	func mutation(_ mutationRate: Double) -> (ChromosomeType) -> ChromosomeType
 	
-	func twoPointCrossover(chromosome1: ChromosomeType, chromosome2: ChromosomeType) -> (ChromosomeType, ChromosomeType)
+	func twoPointCrossover(_ chromosome1: ChromosomeType, chromosome2: ChromosomeType) -> (ChromosomeType, ChromosomeType)
 	
 }

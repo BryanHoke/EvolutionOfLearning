@@ -16,11 +16,11 @@ struct TrialRecordFileWriter<Record : TrialRecord> {
 	
 	let baseFilename = "Trial"
 	
-	func persist(record: Record, withIndex index: Int, inDirectory directoryPath: String) {
+	func persist(_ record: Record, withIndex index: Int, inDirectory directoryPath: String) {
 		let content = makeFileContent(for: record)
 		let path = "\(directoryPath)/\(baseFilename) \(index).txt"
 		do {
-			try content.writeToFile(path, atomically: true, encoding: NSUTF8StringEncoding)
+			try content.write(toFile: path, atomically: true, encoding: String.Encoding.utf8)
 		}
 		catch let error as NSError {
 			preconditionFailure("\(error)")
@@ -28,7 +28,7 @@ struct TrialRecordFileWriter<Record : TrialRecord> {
 	}
 	
 	func makeFileContent(for record: Record) -> String {
-		return record.evaluations.map(makeFileContent(for:)).joinWithSeparator("\n\n")
+		return record.evaluations.map(makeFileContent(for:)).joined(separator: "\n\n")
 	}
 	
 	func makeFileContent(for evaluation: AnyEvaluationRecord<IndividualType>) -> String {
@@ -38,17 +38,17 @@ struct TrialRecordFileWriter<Record : TrialRecord> {
 	}
 	
 	func makeFileContent(for tasks: [Task]) -> String {
-		return "Tasks: " + tasks.map({ "\($0.id)" }).joinWithSeparator(" ")
+		return "Tasks: " + tasks.map({ "\($0.id)" }).joined(separator: " ")
 	}
 	
 	func makeFileContent(for populations: [PopulationType]) -> String {
-		return populations.enumerate().map({
+		return populations.enumerated().map({
 			"Population \($0.0)\n\(self.makeFileContent(for: $0.1))"
-		}).joinWithSeparator("\n\n")
+		}).joined(separator: "\n\n")
 	}
 	
 	func makeFileContent(for population: PopulationType) -> String {
-		return population.members.map(makeFileContent(for:)).joinWithSeparator("\n")
+		return population.members.map(makeFileContent(for:)).joined(separator: "\n")
 	}
 	
 	func makeFileContent(for individual: IndividualType) -> String {

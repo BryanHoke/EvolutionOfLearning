@@ -69,7 +69,7 @@ extension ExperimentConfig : OutputStringConvertible {
 				reproductionConfig
 				] as [OutputStringConvertible])
 				.map({ $0.outputDescription }))
-			.joinWithSeparator("\n")
+			.joined(separator: "\n")
 	}
 	
 }
@@ -136,7 +136,7 @@ extension FitnessConfig : OutputStringConvertible {
 						"encodingExponentShift: \(encodingExponentShift)"
 					]
 					: [])
-				).joinWithSeparator("\n")
+				).joined(separator: "\n")
 	}
 	
 }
@@ -180,7 +180,7 @@ extension ReproductionConfig : OutputStringConvertible {
 			"crossoverRate: \(crossoverRate)",
 			"mutationRate: \(mutationRate)",
 			"mutatesEliteIndividuals: \(mutatesEliteIndividuals)"
-		].joinWithSeparator("\n")
+		].joined(separator: "\n")
 	}
 	
 }

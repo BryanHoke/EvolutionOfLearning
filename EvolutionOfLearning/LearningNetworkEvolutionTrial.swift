@@ -51,7 +51,7 @@ public struct LearningNetworkEvolutionTrial<IndividualType : Individual> {
 		return ComposedTrialRecord(evaluations: evaluations)
 	}
 	
-	private func runEvolution() -> EvolutionRecordType {
+	fileprivate func runEvolution() -> EvolutionRecordType {
 		let fitness = AnyFitnessAgent<ChromosomeType>(LearningNetworkEvolutionFitnessAgent(config: config.fitnessConfig, tasks: evolutionaryTasks))
 		
 		let reproduction = AnyReproductionAgent(ChalmersReproductionAgent<IndividualType>(config: config.reproductionConfig))
@@ -63,7 +63,7 @@ public struct LearningNetworkEvolutionTrial<IndividualType : Individual> {
 		return evolution.run()
 	}
 	
-	private func runFitnessTest(using chromosome: ChromosomeType, nurturingCondition: Bool) -> ChromosomeTestRecord<IndividualType> {
+	fileprivate func runFitnessTest(using chromosome: ChromosomeType, nurturingCondition: Bool) -> ChromosomeTestRecord<IndividualType> {
 		let fitnessConfig = self.fitnessConfig(forNurturingCondition: nurturingCondition)
 		
 		let agent = AnyFitnessAgent<ChromosomeType>(LearningNetworkEvolutionFitnessAgent(config: fitnessConfig, tasks: evolutionaryTasks))
@@ -75,7 +75,7 @@ public struct LearningNetworkEvolutionTrial<IndividualType : Individual> {
 		return record
 	}
 	
-	private func runLearningTest(using chromosome: ChromosomeType, nurturingCondition: Bool) -> ChromosomeTestRecord<IndividualType> {
+	fileprivate func runLearningTest(using chromosome: ChromosomeType, nurturingCondition: Bool) -> ChromosomeTestRecord<IndividualType> {
 		let fitnessConfig = self.fitnessConfig(forNurturingCondition: nurturingCondition)
 		
 		let agent = AnyFitnessAgent<ChromosomeType>(LearningRuleEvolutionFitnessAgent(config: fitnessConfig, tasks: evolutionaryTasks))
@@ -87,7 +87,7 @@ public struct LearningNetworkEvolutionTrial<IndividualType : Individual> {
 		return record
 	}
 	
-	private func runGeneralizationTest(using chromosome: ChromosomeType, nurturingCondition: Bool) -> ChromosomeTestRecord<IndividualType> {
+	fileprivate func runGeneralizationTest(using chromosome: ChromosomeType, nurturingCondition: Bool) -> ChromosomeTestRecord<IndividualType> {
 		let fitnessConfig = self.fitnessConfig(forNurturingCondition: nurturingCondition)
 		
 		let agent = AnyFitnessAgent<ChromosomeType>(LearningRuleEvolutionFitnessAgent(config: fitnessConfig, tasks: testTasks))
@@ -99,20 +99,20 @@ public struct LearningNetworkEvolutionTrial<IndividualType : Individual> {
 		return record
 	}
 	
-	private func runNetworkTest(using chromosome: ChromosomeType) -> ChromosomeTestRecord<IndividualType> {
+	fileprivate func runNetworkTest(using chromosome: ChromosomeType) -> ChromosomeTestRecord<IndividualType> {
 		let agent = AnyFitnessAgent<ChromosomeType>(NetworkEvolutionFitnessAgent(config: config.fitnessConfig, tasks: evolutionaryTasks))
 		let fitness = agent.fitness(of: chromosome)
 		let record = ChromosomeTestRecord<IndividualType>(chromosome: chromosome, fitness: fitness, tasks: evolutionaryTasks, name: "Network Test")
 		return record
 	}
 	
-	private func fitnessConfig(forNurturingCondition nurturingCondition: Bool) -> FitnessConfig {
+	fileprivate func fitnessConfig(forNurturingCondition nurturingCondition: Bool) -> FitnessConfig {
 		var fitnessConfig = config.fitnessConfig
 		fitnessConfig.trainingCountsTowardFitness = !nurturingCondition
 		return fitnessConfig
 	}
 	
-	private func namePrefix(forNurturingCondition nurturingCondition: Bool) -> String {
+	fileprivate func namePrefix(forNurturingCondition nurturingCondition: Bool) -> String {
 		return nurturingCondition ? "Nurturing" : "Non-Nurturing"
 	}
 }
@@ -120,7 +120,7 @@ public struct LearningNetworkEvolutionTrial<IndividualType : Individual> {
 extension LearningNetworkEvolutionTrial {
 	
 	/// - note: Assumes that the populations in `history` are sorted by fitness.
-	private func findMostFitIndividual(in history: [PopulationType]) -> IndividualType {
+	fileprivate func findMostFitIndividual(in history: [PopulationType]) -> IndividualType {
 		guard !history.isEmpty else {
 			preconditionFailure("History must not be empty")
 		}

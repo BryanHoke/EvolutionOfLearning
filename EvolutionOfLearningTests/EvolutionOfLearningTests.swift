@@ -16,9 +16,9 @@ class EvolutionOfLearningTests: XCTestCase {
 	
 	let activation = sigmoid(λ: 1.0)
 	
-	var randomInputSeed: NSData {
+	var randomInputSeed: Data {
 		let seed = "input"
-		return seed.dataUsingEncoding(seed.fastestEncoding)!
+		return seed.data(using: seed.fastestEncoding)!
 	}
 	
 	var randomInputSource: GKRandomSource {
@@ -29,9 +29,9 @@ class EvolutionOfLearningTests: XCTestCase {
 		return GKRandomDistribution(randomSource: randomInputSource, lowestValue: 0, highestValue: 1)
 	}
 	
-	var randomWeightSeed: NSData {
+	var randomWeightSeed: Data {
 		let seed = "weight"
-		return seed.dataUsingEncoding(seed.fastestEncoding)!
+		return seed.data(using: seed.fastestEncoding)!
 	}
 	
 	var randomWeightSource: GKRandomSource {
@@ -74,7 +74,7 @@ class EvolutionOfLearningTests: XCTestCase {
 	
 	func testSingleLayerSingleOutputNeuralNetworkPerformance() {
 		let inputs = makeRandomInputs(), weights = makeRandomWeights()
-		measureBlock() {
+		measure() {
 			let network = SingleLayerSingleOutputNeuralNetwork(weights: weights, activation: self.activation)
 			network.activateWithInputs(inputs)
 		}
@@ -82,7 +82,7 @@ class EvolutionOfLearningTests: XCTestCase {
 	
 	func testSingleLayerSingleOutputFFNNPerformance() {
 		let inputs = makeRandomInputs(), weights = makeRandomWeights()
-		measureBlock() {
+		measure() {
 			let network = SingleLayerSingleOutputFFNN(weights: weights, activation: self.activation)
 			network.activateWithInputs(inputs)
 		}
@@ -90,7 +90,7 @@ class EvolutionOfLearningTests: XCTestCase {
 	
 	func testSingleLayerNeuralNetworkPerformance() {
 		let inputs = makeRandomInputs(), weights = [makeRandomWeights()]
-		measureBlock() {
+		measure() {
 			let network = SingleLayerNeuralNetwork(weights: weights, activation: self.activation)
 			network.activateWithInputs(inputs)
 		}
@@ -274,7 +274,7 @@ class EvolutionOfLearningTests: XCTestCase {
 	
 	func testWeightEncodings() {
 		let numberOfBits = 3
-		var bits = [Bool](count: numberOfBits, repeatedValue: false)
+		var bits = [Bool](repeating: false, count: numberOfBits)
 		
 		let offset = -2
 		let encoding = signedExponentialEncoding(exponentOffset: offset)
@@ -282,13 +282,13 @@ class EvolutionOfLearningTests: XCTestCase {
 		repeat {
 			let encodingBits = [1] + bits
 			let j = encodedInt(from: bits)
-			let value = encoding(bits: encodingBits)
+			let value = encoding(encodingBits)
 			print("\(makeTestString(bits: bits)) \(j) \(value)")
 		} while increment(&bits)
 	}
 	
-	func increment(inout bits: [Bool]) -> Bool {
-		for (index, bit) in bits.enumerate().reverse() {
+	func increment(_ bits: inout [Bool]) -> Bool {
+		for (index, bit) in bits.enumerated().reversed() {
 			if bit == false {
 				bits[index] = !bit
 			}
@@ -339,11 +339,11 @@ class EvolutionOfLearningTests: XCTestCase {
 	
 }
 
-func makeTestString(bits bits: [Bool]) -> String {
-	return bits.map({ $0 ? "1" : "0" }).joinWithSeparator("")
+func makeTestString(bits: [Bool]) -> String {
+	return bits.map({ $0 ? "1" : "0" }).joined(separator: "")
 }
 
-extension Bool: IntegerLiteralConvertible {
+extension Bool: ExpressibleByIntegerLiteral {
 	
 	public init(integerLiteral: Int) {
 		if integerLiteral == 0 {

@@ -10,7 +10,7 @@ import Foundation
 
 public protocol Chromosome {
 	
-	static func twoPointCrossover(chromosome1: Self, chromosome2: Self) -> (Self, Self)
+	static func twoPointCrossover(_ chromosome1: Self, chromosome2: Self) -> (Self, Self)
 	
 	var genes: [Bool] { get }
 	
@@ -25,7 +25,7 @@ public protocol Chromosome {
 	mutating func mutate(withRate mutationRate: Double)
 	
 	/// Removes the specified number of genes from the beginning of the chromosome.
-	mutating func removeFirst(n: Int)
+	mutating func removeFirst(_ n: Int)
 	
 	subscript(index: Int) -> Bool { get set }
 	

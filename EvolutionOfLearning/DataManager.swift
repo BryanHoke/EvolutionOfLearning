@@ -18,8 +18,8 @@ public protocol DataManager : class {
 	func beginNewTrial()
 	
 	///
-	func beginRecordingExperiment(experiment: ExperimentType)
+	func beginRecordingExperiment(_ experiment: ExperimentType)
 	
 	///
-	func recordPopulation(population: Population<ExperimentType.Record.IndividualType>)
+	func recordPopulation(_ population: Population<ExperimentType.Record.IndividualType>)
 }

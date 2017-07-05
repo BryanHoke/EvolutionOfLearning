@@ -24,18 +24,18 @@ public struct NetworkEvolutionExperiment<IndividualType : Individual> : Experime
 		}
 	}
 	
-	private func makeTrial() -> NetworkEvolutionTrial<IndividualType> {
+	fileprivate func makeTrial() -> NetworkEvolutionTrial<IndividualType> {
 		let selectedTasks = selectTasks(from: tasks, count: config.evolutionaryTaskCount)
 		return NetworkEvolutionTrial(tasks: selectedTasks, config: config)
 	}
 	
-	private func selectTasks(from tasks: [Task], count: Int) -> [Task] {
+	fileprivate func selectTasks(from tasks: [Task], count: Int) -> [Task] {
 		var tasks = tasks
 		var selectedTasks = [Task]()
 		
 		for _ in 0..<count {
 			let index = Int(arc4random_uniform(UInt32(tasks.count)))
-			let task = tasks.removeAtIndex(index)
+			let task = tasks.remove(at: index)
 			selectedTasks.append(task)
 		}
 		

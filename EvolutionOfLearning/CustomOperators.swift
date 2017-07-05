@@ -8,16 +8,16 @@
 
 import Foundation
 
-infix operator ⚬ { }
+infix operator ⚬
 
 /// Function composition operator.
-func ⚬<A, B, C>(lhs: A -> B, rhs: B -> C) -> A -> C {
+func ⚬<A, B, C>(lhs: @escaping (A) -> B, rhs: @escaping (B) -> C) -> (A) -> C {
 	return { (input: A) -> (C) in
 		return rhs(lhs(input))
 	}
 }
 
-func ⚬<A, B, C>(lhs: A -> B?, rhs: B -> C) -> A -> C? {
+func ⚬<A, B, C>(lhs: @escaping (A) -> B?, rhs: @escaping (B) -> C) -> (A) -> C? {
 	return { (input: A) -> (C?) in
 		guard let lhsOut = lhs(input) else {
 			return nil

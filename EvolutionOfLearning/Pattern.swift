@@ -10,7 +10,7 @@ import Foundation
 
 public struct Pattern {
 	
-	public static func patternsWithInputVectors(inputVectors: [[Double]], targets: [Double]) -> [Pattern] {
+	public static func patternsWithInputVectors(_ inputVectors: [[Double]], targets: [Double]) -> [Pattern] {
 		return zip(inputVectors, targets)
 			  .map(Pattern.init)
 	}
@@ -24,7 +24,7 @@ public struct Pattern {
 extension Pattern : CustomStringConvertible {
 	
 	public var description: String {
-		return inputs.map({ "\(Int($0))" }).joinWithSeparator(" ")
+		return inputs.map({ "\(Int($0))" }).joined(separator: " ")
 		+ " : \(Int(target))"
 	}
 	

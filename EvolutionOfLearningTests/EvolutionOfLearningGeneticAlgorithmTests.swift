@@ -24,7 +24,7 @@ class EvolutionOfLearningGeneticAlgorithmTests: XCTestCase {
         super.tearDown()
     }
 	
-	func stringify(bools: [Bool]) -> String {
+	func stringify(_ bools: [Bool]) -> String {
 		return bools.reduce("") { $0 + ($1 ? "1" : "0") }
 	}
 	
@@ -73,7 +73,7 @@ class EvolutionOfLearningGeneticAlgorithmTests: XCTestCase {
 	func testChromosomeMutationPerformance() {
 		let testChromosome1 = tChromosome1
 		let mutationRate = 0.5
-		measureBlock { () -> Void in
+		measure { () -> Void in
 			testChromosome1.mutateWithRate(mutationRate)
 		}
 	}

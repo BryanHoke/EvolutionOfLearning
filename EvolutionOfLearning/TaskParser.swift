@@ -13,7 +13,7 @@ public struct TaskParser {
 	/// Constructs `Task` values from the parsed data stored in a file at a given path.
 	public func tasks(withFileAt path: String) throws -> [Task] {
 		let fileContent = try! String(contentsOfFile: path)
-		let tokens = fileContent.componentsSeparatedByCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+		let tokens = fileContent.components(separatedBy: CharacterSet.whitespacesAndNewlines)
 		return try tasks(with: tokens)
 	}
 	
@@ -29,8 +29,8 @@ public struct TaskParser {
 			inputCount = try readInt(from: tokens, at: &index),
 			taskCount = try readInt(from: tokens, at: &index)
 			
-			var inputVectors: [[Double]] = .init(count: examplarCount, repeatedValue: [])
-			var targetVectors: [[Double]] = .init(count: taskCount, repeatedValue: [])
+			var inputVectors: [[Double]] = .init(repeating: [], count: examplarCount)
+			var targetVectors: [[Double]] = .init(repeating: [], count: taskCount)
 			
 			for examplarIndex in 0..<examplarCount {
 				
@@ -53,7 +53,7 @@ public struct TaskParser {
 		return tasks(inputs: inputs, targets: targets)
 	}
 	
-	private func readInt(from tokens: [String], inout at index: Int) throws -> Int {
+	fileprivate func readInt(from tokens: [String], at index: inout Int) throws -> Int {
 		guard let intValue = Int(tokens[index]) else {
 			throw NSError(domain: "", code: 1, userInfo: ["index": index])
 		}
@@ -61,7 +61,7 @@ public struct TaskParser {
 		return intValue
 	}
 	
-	private func readDouble(from tokens: [String], inout at index: Int) throws -> Double {
+	fileprivate func readDouble(from tokens: [String], at index: inout Int) throws -> Double {
 		guard let doubleValue = Double(tokens[index]) else {
 			throw NSError(domain: "", code: 2, userInfo: ["index": index])
 		}
@@ -70,10 +70,10 @@ public struct TaskParser {
 	}
 	
 	/// Constructs `Task` values from input and target vectors.
-	public func tasks(inputs inputs: [[[Double]]], targets: [[[Double]]]) -> [Task] {
+	public func tasks(inputs: [[[Double]]], targets: [[[Double]]]) -> [Task] {
 		var count = 0
 		var tasks: [Task] = []
-		for (i, inputVectors) in inputs.enumerate() {
+		for (i, inputVectors) in inputs.enumerated() {
 			for j in 0..<targets[i].count {
 				let targetVector = targets[i][j]
 				let patterns = Pattern.patternsWithInputVectors(inputVectors, targets: targetVector)

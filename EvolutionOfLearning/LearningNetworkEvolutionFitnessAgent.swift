@@ -37,9 +37,9 @@ public struct LearningNetworkEvolutionFitnessAgent<ChromosomeType : Chromosome> 
 	
 	public let tasks: [Task]
 	
-	private var geneMap: GeneMap
+	fileprivate var geneMap: GeneMap
 	
-	private mutating func buildGeneMap() {
+	fileprivate mutating func buildGeneMap() {
 		for task in tasks {
 			geneMap.addMapping(for: task)
 		}
@@ -47,7 +47,7 @@ public struct LearningNetworkEvolutionFitnessAgent<ChromosomeType : Chromosome> 
 	
 	// TODO: Test
 	public func seed() -> ChromosomeType {
-		let sizes = [learningRuleSize] + geneMap.mapping.map { (mapping: (index: Int, range: Range<Int>)) -> Int in
+		let sizes = [learningRuleSize] + geneMap.mapping.map { (mapping: (index: Int, range: CountableRange<Int>)) -> Int in
 			mapping.range.count
 		}
 		return ChromosomeType.init(segmentSizes: sizes, seed: randomBool)

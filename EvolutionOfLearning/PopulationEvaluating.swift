@@ -12,47 +12,47 @@ public protocol PopulationEvaluating {
 	
 	associatedtype IndividualType : Individual
 	
-	func evaluate(inout population: Population<IndividualType>)
+	func evaluate(_ population: inout Population<IndividualType>)
 	
 }
 
-public class ConcurrentPopulationEvaluator<IndividualType : Individual> : PopulationEvaluating {
+open class ConcurrentPopulationEvaluator<IndividualType : Individual> : PopulationEvaluating {
 	
 	public typealias FitnessFunc = (IndividualType.ChromosomeType) -> Double
 	
 	public typealias PopulationType = Population<IndividualType>
 	
-	public let fitnessFunc: FitnessFunc
+	open let fitnessFunc: FitnessFunc
 	
-	private var fitnesses: [Double] = []
+	fileprivate var fitnesses: [Double] = []
 	
-	public init(fitnessFunc: FitnessFunc) {
+	public init(fitnessFunc: @escaping FitnessFunc) {
 		self.fitnessFunc = fitnessFunc
 	}
 	
-	public func evaluate(inout population: PopulationType) {
-		fitnesses = Array<Double>(count: population.count, repeatedValue: 0)
+	open func evaluate(_ population: inout PopulationType) {
+		fitnesses = Array<Double>(repeating: 0, count: population.count)
 		let blocks = makeDispatchBlocks(forEvaluating: &population)
-		concurrentlyDispatch(blocks, priority: DISPATCH_QUEUE_PRIORITY_HIGH)
-		for (index, fitness) in fitnesses.enumerate() {
+		concurrentlyDispatch(blocks, priority: DispatchQueue.GlobalQueuePriority.high)
+		for (index, fitness) in fitnesses.enumerated() {
 			population[index].fitness = fitness
 		}
 	}
 	
-	private func makeDispatchBlocks(inout forEvaluating population: PopulationType) -> [dispatch_block_t] {
-		return population.indices.map { index -> dispatch_block_t in
+	fileprivate func makeDispatchBlocks(forEvaluating population: inout PopulationType) -> [()->()] {
+		return population.indices.map { index -> ()->() in
 			self.makeBlockToEvaluateFitness(of: &population[index], atIndex: index)
 		}
 	}
 	
-	private func makeBlockToEvaluateFitness(inout of member: IndividualType, atIndex index: Int) -> dispatch_block_t {
+	fileprivate func makeBlockToEvaluateFitness(of member: inout IndividualType, atIndex index: Int) -> ()->() {
 		return {
 			self.evaluateFitness(of: &member)
 			self.fitnesses[index] = member.fitness
 		}
 	}
 	
-	private func evaluateFitness(inout of member: IndividualType) {
+	fileprivate func evaluateFitness(of member: inout IndividualType) {
 		let chromosome = member.chromosome
 		member.fitness = fitnessFunc(chromosome)
 	}

@@ -8,11 +8,11 @@
 
 import Foundation
 
-struct OrderedDictionary<Key: Hashable, Value> : DictionaryLiteralConvertible {
+struct OrderedDictionary<Key: Hashable, Value> : ExpressibleByDictionaryLiteral {
 	
-	private(set) var dictionary: [Key: Value] = [:]
+	fileprivate(set) var dictionary: [Key: Value] = [:]
 	
-	private(set) var orderedKeys: [Key] = []
+	fileprivate(set) var orderedKeys: [Key] = []
 	
 	init(dictionaryLiteral elements: (Key, Value)...) {
 		for (key, value) in elements {
@@ -37,8 +37,8 @@ struct OrderedDictionary<Key: Hashable, Value> : DictionaryLiteralConvertible {
 		return dictionary[key]
 	}
 	
-	func previousValueForKey(key: Key) -> Value? {
-		guard let index = orderedKeys.indexOf(key) else {
+	func previousValueForKey(_ key: Key) -> Value? {
+		guard let index = orderedKeys.index(of: key) else {
 			return nil
 		}
 		let prevIndex = index - 1
@@ -48,8 +48,8 @@ struct OrderedDictionary<Key: Hashable, Value> : DictionaryLiteralConvertible {
 		return value(at: prevIndex)
 	}
 	
-	func nextValueForKey(key: Key) -> Value? {
-		guard let index = orderedKeys.indexOf(key) else {
+	func nextValueForKey(_ key: Key) -> Value? {
+		guard let index = orderedKeys.index(of: key) else {
 			return nil
 		}
 		let nextIndex = index + 1
@@ -59,20 +59,20 @@ struct OrderedDictionary<Key: Hashable, Value> : DictionaryLiteralConvertible {
 		return value(at: nextIndex)
 	}
 	
-	mutating func removeAll(keepCapacity keepCapacity: Bool = true) {
-		orderedKeys.removeAll(keepCapacity: keepCapacity)
-		dictionary.removeAll(keepCapacity: keepCapacity)
+	mutating func removeAll(keepCapacity: Bool = true) {
+		orderedKeys.removeAll(keepingCapacity: keepCapacity)
+		dictionary.removeAll(keepingCapacity: keepCapacity)
 	}
 	
 }
 
-extension OrderedDictionary : CollectionType {
+extension OrderedDictionary : Collection {
 	
 	typealias Element = (Key, Value)
 	
 	typealias Index = Int
 	
-	typealias Generator = OrderedDictionaryGenerator<Key, Value>
+	typealias Iterator = OrderedDictionaryGenerator<Key, Value>
 	
 	var count: Int {
 		return dictionary.count
@@ -89,7 +89,7 @@ extension OrderedDictionary : CollectionType {
 		return 0
 	}
 	
-	func generate() -> Generator {
+	func makeIterator() -> Iterator {
 		return OrderedDictionaryGenerator(self)
 	}
 	
@@ -112,13 +112,13 @@ extension OrderedDictionary : CollectionType {
 	
 }
 
-struct OrderedDictionaryGenerator<Key : Hashable, Value> : GeneratorType {
+struct OrderedDictionaryGenerator<Key : Hashable, Value> : IteratorProtocol {
 	
 	typealias Element = (Key, Value)
 	
-	private let orderedDictionary: OrderedDictionary<Key, Value>
+	fileprivate let orderedDictionary: OrderedDictionary<Key, Value>
 	
-	private var currentIndex = 0
+	fileprivate var currentIndex = 0
 	
 	init(_ indexedDictionary: OrderedDictionary<Key, Value>) {
 		self.orderedDictionary = indexedDictionary

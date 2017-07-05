@@ -18,11 +18,11 @@ struct ExperimentOverviewFileWriter<Record : TrialRecord> {
 	
 	let fileExtension = ".csv"
 	
-	func persist(overview: Overview, inDirectory directoryPath: String) {
+	func persist(_ overview: Overview, inDirectory directoryPath: String) {
 		let content = makeFileContent(for: overview)
 		let path = "\(directoryPath)/\(baseFilename)\(fileExtension)"
 		do {
-			try content.writeToFile(path, atomically: true, encoding: NSUTF8StringEncoding)
+			try content.write(toFile: path, atomically: true, encoding: String.Encoding.utf8)
 		}
 		catch let error as NSError {
 			preconditionFailure("\(error)")
@@ -51,7 +51,7 @@ struct ExperimentOverviewFileWriter<Record : TrialRecord> {
 	
 	func makeFileContent(for pair: StatPair) -> String {
 		let count = pair.averages.count
-		return (0..<count).map({ "\($0), \(pair.averages[$0]), \(pair.maximums[$0])" }).joinWithSeparator("\n")
+		return (0..<count).map({ "\($0), \(pair.averages[$0]), \(pair.maximums[$0])" }).joined(separator: "\n")
 	}
 	
 }

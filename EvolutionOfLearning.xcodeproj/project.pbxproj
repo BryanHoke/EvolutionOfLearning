@@ -653,16 +653,16 @@
 					};
 					4A825EC11B2D019E00C8CEA3 = {
 						CreatedOnToolsVersion = 7.0;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 0830;
 					};
 					4A825ED81B2D019E00C8CEA3 = {
 						CreatedOnToolsVersion = 7.0;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 0830;
 						TestTargetID = 4A825EC11B2D019E00C8CEA3;
 					};
 					4A825EE31B2D019E00C8CEA3 = {
 						CreatedOnToolsVersion = 7.0;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 0830;
 						TestTargetID = 4A825EC11B2D019E00C8CEA3;
 					};
 					4AE298B21D5A43E900B88F8B = {
@@ -1083,7 +1083,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = BryanHoke.EvolutionOfLearning;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -1097,7 +1097,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = BryanHoke.EvolutionOfLearning;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -1110,7 +1110,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = BryanHoke.EvolutionOfLearningTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EvolutionOfLearning.app/Contents/MacOS/EvolutionOfLearning";
 			};
 			name = Debug;
@@ -1125,7 +1125,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = BryanHoke.EvolutionOfLearningTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EvolutionOfLearning.app/Contents/MacOS/EvolutionOfLearning";
 			};
 			name = Release;
@@ -1138,7 +1138,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = BryanHoke.EvolutionOfLearningUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = EvolutionOfLearning;
 				USES_XCTRUNNER = YES;
 			};
@@ -1152,7 +1152,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = BryanHoke.EvolutionOfLearningUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = EvolutionOfLearning;
 				USES_XCTRUNNER = YES;
 			};
@@ -1196,6 +1196,7 @@
 				4A67DF661EF30D06003508FB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		4A825EBD1B2D019E00C8CEA3 /* Build configuration list for PBXProject "EvolutionOfLearning" */ = {
 			isa = XCConfigurationList;

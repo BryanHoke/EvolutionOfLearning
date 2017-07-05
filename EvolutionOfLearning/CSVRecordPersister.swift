@@ -14,7 +14,7 @@ class CSVRecordPersister<Record : ExperimentRecord> : RecordPersisting {
 		return "/Users/bryanhoke/Projects/BDHSoftware/EvolutionOfLearning/Results/"
 	}
 	
-	func persist(record: Record) {
+	func persist(_ record: Record) {
 		
 	}
 	

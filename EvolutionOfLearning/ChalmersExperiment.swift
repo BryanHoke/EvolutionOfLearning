@@ -29,7 +29,7 @@ public struct ChalmersExperiment<IndividualType : Individual> : Experiment {
 		}
 	}
 	
-	private func makeTrial() -> ChalmersTrial<IndividualType> {
+	fileprivate func makeTrial() -> ChalmersTrial<IndividualType> {
 		let selected = selectTasks(from: tasks, evolutionaryTaskCount: config.evolutionaryTaskCount, testTaskCount: config.testTaskCount)
 		return ChalmersTrial(
 			evolutionaryTasks: selected.evolutionary,
@@ -37,7 +37,7 @@ public struct ChalmersExperiment<IndividualType : Individual> : Experiment {
 			config: config)
 	}
 	
-	private func selectTasks(from tasks: [Task], evolutionaryTaskCount: Int, testTaskCount: Int) -> (evolutionary: [Task], test: [Task]) {
+	fileprivate func selectTasks(from tasks: [Task], evolutionaryTaskCount: Int, testTaskCount: Int) -> (evolutionary: [Task], test: [Task]) {
 		var tasks = tasks
 		let evolutionaryTasks = extractTasks(from: &tasks, count: evolutionaryTaskCount)
 		let testTasks = extractTasks(from: &tasks, count: testTaskCount)
@@ -48,11 +48,11 @@ public struct ChalmersExperiment<IndividualType : Individual> : Experiment {
 		return (evolutionary: evolutionaryTasks, test: testTasks)
 	}
 	
-	private func extractTasks(inout from tasks: [Task], count: Int) -> [Task] {
+	fileprivate func extractTasks(from tasks: inout [Task], count: Int) -> [Task] {
 		var extractedTasks: [Task] = []
 		for _ in 0..<count {
 			let index = Int(arc4random_uniform(UInt32(tasks.count)))
-			let task = tasks.removeAtIndex(index)
+			let task = tasks.remove(at: index)
 			extractedTasks.append(task)
 		}
 		return extractedTasks

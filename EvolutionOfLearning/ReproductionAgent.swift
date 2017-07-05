@@ -12,7 +12,7 @@ public protocol ReproductionAgent {
 	
 	associatedtype IndividualType : Individual
 	
-	func reproduce(population: Population<IndividualType>) -> Population<IndividualType>
+	func reproduce(_ population: Population<IndividualType>) -> Population<IndividualType>
 	
 }
 
@@ -20,13 +20,13 @@ public struct AnyReproductionAgent<IndividualType : Individual> : ReproductionAg
 	
 	public typealias PopulationType = Population<IndividualType>
 	
-	private let _reproduce: (PopulationType) -> PopulationType
+	fileprivate let _reproduce: (PopulationType) -> PopulationType
 	
-	public init<Agent : ReproductionAgent where Agent.IndividualType == IndividualType>(_ agent: Agent) {
+	public init<Agent : ReproductionAgent>(_ agent: Agent) where Agent.IndividualType == IndividualType {
 		_reproduce = agent.reproduce
 	}
 	
-	public func reproduce(population: PopulationType) -> PopulationType {
+	public func reproduce(_ population: PopulationType) -> PopulationType {
 		return _reproduce(population)
 	}
 	
@@ -56,7 +56,7 @@ public struct ChalmersReproductionAgent<IndividualType : Individual> : Reproduct
 	}
 	
 	/// - note: Assumes the population is already sorted
-	public func reproduce(population: PopulationType) -> PopulationType {
+	public func reproduce(_ population: PopulationType) -> PopulationType {
 		let elites = elitistSelection(from: population)
 		
 		let selected = rouletteWheelSelection(from: population)
@@ -76,20 +76,20 @@ public struct ChalmersReproductionAgent<IndividualType : Individual> : Reproduct
 	
 	// MARK: - Selection
 	
-	private func elitistSelection(from population: PopulationType) -> PopulationType {
+	fileprivate func elitistSelection(from population: PopulationType) -> PopulationType {
 		return population
 			.elitistSelection(using: elitismCount)
 			.reproduceWithCloning()
 	}
 	
-	private func rouletteWheelSelection(from population: PopulationType) -> PopulationType {
+	fileprivate func rouletteWheelSelection(from population: PopulationType) -> PopulationType {
 		let selectionSize = population.count - elitismCount
 		return population.rouletteWheelSelection(newPopulationSize: selectionSize)
 	}
 	
 	// MARK: - Reproduction
 	
-	private func crossoverPopulation(from population: PopulationType) -> PopulationType {
+	fileprivate func crossoverPopulation(from population: PopulationType) -> PopulationType {
 		// Individuals are selected for crossover uniformly
 		let crossoverSize = Int(Double(population.count + elitismCount) * crossoverRate)
 		let branchSelector = PopulationType.uniformSelectionIndices(crossoverSize)
@@ -102,7 +102,7 @@ public struct ChalmersReproductionAgent<IndividualType : Individual> : Reproduct
 		}
 	}
 	
-	private func mutate(population: PopulationType) -> PopulationType {
+	fileprivate func mutate(_ population: PopulationType) -> PopulationType {
 		return population.mutated(withRate: mutationRate)
 	}
 	

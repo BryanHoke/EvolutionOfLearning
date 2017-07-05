@@ -13,13 +13,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 	
 	var configurationWindowController: ConfigurationWindowController!
 
-	func applicationDidFinishLaunching(aNotification: NSNotification) {
+	func applicationDidFinishLaunching(_ aNotification: Notification) {
 		// Insert code here to initialize your application
 		configurationWindowController = ConfigurationWindowController(windowNibName: "ConfigurationWindowController")
 		configurationWindowController.window?.makeKeyAndOrderFront(self)
 	}
 
-	func applicationWillTerminate(aNotification: NSNotification) {
+	func applicationWillTerminate(_ aNotification: Notification) {
 		// Insert code here to tear down your application
 	}
 

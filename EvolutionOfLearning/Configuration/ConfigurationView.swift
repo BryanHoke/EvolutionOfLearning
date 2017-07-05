@@ -18,7 +18,7 @@ class ConfigurationView: NSView {
 		addSubview(stackView)
 		stackView.frame = bounds
 		
-		stackView.autoresizingMask = [.ViewWidthSizable, .ViewHeightSizable]
+		stackView.autoresizingMask = [.viewWidthSizable, .viewHeightSizable]
 		
 //		stackView.translatesAutoresizingMaskIntoConstraints = false
 //		stackView.topAnchor.constraintEqualToAnchor(topAnchor).active = true
@@ -26,7 +26,7 @@ class ConfigurationView: NSView {
 //		stackView.leadingAnchor.constraintEqualToAnchor(leadingAnchor).active = true
 //		stackView.trailingAnchor.constraintEqualToAnchor(trailingAnchor).active = true
 		
-		stackView.orientation = .Vertical
+		stackView.orientation = .vertical
 	}
 	
 	required init?(coder: NSCoder) {
@@ -47,6 +47,6 @@ class ConfigurationView: NSView {
 	
 	let runButton = NSButton()
 	
-	private let stackView: NSStackView
+	fileprivate let stackView: NSStackView
     
 }

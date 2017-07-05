@@ -27,7 +27,7 @@ class HelperTests: XCTestCase {
 
     func testPerformanceExample() {
         // This is an example of a performance test case.
-        self.measureBlock {
+        self.measure {
             // Put the code you want to measure the time of here.
         }
     }
@@ -42,22 +42,22 @@ class HelperTests: XCTestCase {
 		let encoding10 = signedExponentialEncoding(exponentOffset: -10)
 		
 		var bits: [Bool] = [1, 1, 1, 1, 1]
-		var value = encoding11(bits: bits)
+		var value = encoding11(bits)
 		XCTAssertEqual(value, 16)
 		
-		value = encoding10(bits: bits)
+		value = encoding10(bits)
 		XCTAssertEqual(value, 32)
 		
 		bits[0] = 0
-		value = encoding11(bits: bits)
+		value = encoding11(bits)
 		XCTAssertEqual(value, -16)
 		
 		bits = [1, 0, 0, 0, 1]
-		value = encoding11(bits: bits)
+		value = encoding11(bits)
 		XCTAssertEqual(value, 0.0009765625)
 		
 		bits = [1, 0, 0, 0, 0]
-		value = encoding11(bits: bits)
+		value = encoding11(bits)
 		XCTAssertEqual(value, 0)
 	}
 	

@@ -26,21 +26,21 @@ public struct IdentifiedIndividual<ChromosomeType : Chromosome> : Individual {
 	public var fitness: Double = 0
 	
 	///
-	public let id = NSUUID()
+	public let id = UUID()
 	
 	///
-	public private(set) var parentID1: NSUUID?
+	public fileprivate(set) var parentID1: UUID?
 	
 	///
-	public private(set) var parentID2: NSUUID?
+	public fileprivate(set) var parentID2: UUID?
 	
-	public static func clone(individual: IdentifiedIndividual) -> IdentifiedIndividual {
+	public static func clone(_ individual: IdentifiedIndividual) -> IdentifiedIndividual {
 		var offspring = IdentifiedIndividual(chromosome: individual.chromosome)
 		offspring.inheritParentID(of: individual)
 		return offspring
 	}
 	
-	public static func crossover(pair: IndividualPair, using operator: CrossoverOperator) -> IndividualPair {
+	public static func crossover(_ pair: IndividualPair, using operator: CrossoverOperator) -> IndividualPair {
 		let offspringChromosomes = `operator`(pair.0.chromosome, pair.1.chromosome)
 		var offspring = (IdentifiedIndividual<ChromosomeType>(chromosome: offspringChromosomes.0), IdentifiedIndividual<ChromosomeType>(chromosome: offspringChromosomes.1))
 		offspring.0.inhereritParentIDs(of: pair)
@@ -48,14 +48,14 @@ public struct IdentifiedIndividual<ChromosomeType : Chromosome> : Individual {
 		return offspring
 	}
 	
-	public static func mutate(individual: IdentifiedIndividual, using operator: MutationOperator) -> IdentifiedIndividual {
+	public static func mutate(_ individual: IdentifiedIndividual, using operator: MutationOperator) -> IdentifiedIndividual {
 		let offspringChromosome = `operator`(individual.chromosome)
 		var offspring = IdentifiedIndividual<ChromosomeType>(chromosome: offspringChromosome)
 		offspring.parentID1 = individual.id
 		return offspring
 	}
 	
-	public static func recombine(pair: IndividualPair, using operator: RecombinationOperator) -> IdentifiedIndividual {
+	public static func recombine(_ pair: IndividualPair, using operator: RecombinationOperator) -> IdentifiedIndividual {
 		let offspringChromosome = `operator`(pair.0.chromosome, pair.1.chromosome)
 		var offspring = IdentifiedIndividual(chromosome: offspringChromosome)
 		offspring.inhereritParentIDs(of: pair)

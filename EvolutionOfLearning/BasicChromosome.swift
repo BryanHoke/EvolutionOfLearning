@@ -21,7 +21,7 @@ public struct BasicChromosome : Chromosome {
 	}
 	
 	public init(segmentSizes: [Int], seed: () -> Bool) {
-		let size = segmentSizes.reduce(0, combine: +)
+		let size = segmentSizes.reduce(0, +)
 		self.init(size: size, seed: seed)
 	}
 	
@@ -29,11 +29,11 @@ public struct BasicChromosome : Chromosome {
 
 extension BasicChromosome {
 
-	public static func mutate(inout chromosome: BasicChromosome, withRate mutationRate: Double, usingSeed seed: Int) {
+	public static func mutate(_ chromosome: inout BasicChromosome, withRate mutationRate: Double, usingSeed seed: Int) {
 		chromosome.mutate(withRate: mutationRate, usingSeed: seed)
 	}
 	
-	public static func mutate(inout chromosome: BasicChromosome, withRate mutationRate: Double) {
+	public static func mutate(_ chromosome: inout BasicChromosome, withRate mutationRate: Double) {
 		mutate(&chromosome, withRate: mutationRate, usingSeed: Int(arc4random()))
 	}
 
@@ -57,31 +57,31 @@ extension BasicChromosome : Hashable {
 
 extension BasicChromosome {
 	
-	public func mutateAtIndices(mutationIndices: Set<Int>) -> BasicChromosome {
+	public func mutateAtIndices(_ mutationIndices: Set<Int>) -> BasicChromosome {
 		var mutant = self
 		mutant.mutateInPlaceAtIndices(mutationIndices)
 		return mutant
 	}
 	
-	public func mutateAtIndex(index: Int) -> BasicChromosome {
+	public func mutateAtIndex(_ index: Int) -> BasicChromosome {
 		var mutant = self
 		mutant.mutateInPlaceAtIndex(index)
 		return mutant
 	}
 	
-	public func mutateWithRate(mutationRate: Double, seed: Int = Int(arc4random())) -> BasicChromosome {
+	public func mutateWithRate(_ mutationRate: Double, seed: Int = Int(arc4random())) -> BasicChromosome {
 		var mutant = self
 		mutant.mutate(withRate: mutationRate, usingSeed: seed)
 		return mutant
 	}
 	
-	public mutating func mutateInPlaceAtIndices(mutationIndices: Set<Int>) {
+	public mutating func mutateInPlaceAtIndices(_ mutationIndices: Set<Int>) {
 		for index in mutationIndices {
 			mutateInPlaceAtIndex(index)
 		}
 	}
 	
-	public mutating func mutateInPlaceAtIndex(index: Int) {
+	public mutating func mutateInPlaceAtIndex(_ index: Int) {
 		self[index] = !self[index]
 	}
 	
@@ -107,7 +107,7 @@ extension BasicChromosome {
 	/// Returns the offspring of a two-point crossover operation between this `Chromosome` and a pair `Chromosome`.
 	///
 	/// - note: The number of genes crossed-over is in the range `1..<count`. I.e., the two points may be equal and will never span the length of the `Chromosome`.
-	public func twoPointCrossoverWithChromosome(pairChromosome: BasicChromosome) -> (BasicChromosome, BasicChromosome) {
+	public func twoPointCrossoverWithChromosome(_ pairChromosome: BasicChromosome) -> (BasicChromosome, BasicChromosome) {
 		// Generate a start point in the range 0..<(count - 1)
 		let start = Int(arc4random_uniform(UInt32(count - 1)))
 		
@@ -122,7 +122,7 @@ extension BasicChromosome {
 	/// Returns the offspring of a two-point crossover operation between this `Chromosome` and a pair `Chromosome`, using a specified random seed to generate the crossover points.
 	///
 	/// - note: The number of genes crossed-over is in the range `1..<count`. I.e., the two points may be equal and never span the length of the `Chromosome`.
-	public func twoPointCrossoverWithChromosome(pairChromosome: BasicChromosome, seed: UInt32) -> (BasicChromosome, BasicChromosome) {
+	public func twoPointCrossoverWithChromosome(_ pairChromosome: BasicChromosome, seed: UInt32) -> (BasicChromosome, BasicChromosome) {
 //		srand(seed)
 		// Generate a start locus in the range 0..<(count - 1)
 		let start = Int(arc4random()) % (count - 1)
@@ -135,7 +135,7 @@ extension BasicChromosome {
 	}
 	
 	/// Returns the offspring of a two-point crossover operation between this `Chromosome` and a pair `Chromosome`, using a specified range defined by the two points of crossover
-	public func twoPointCrossoverWithChromosome(pairChromosome: BasicChromosome, range: Range<Int>) -> (BasicChromosome, BasicChromosome) {
+	public func twoPointCrossoverWithChromosome(_ pairChromosome: BasicChromosome, range: Range<Int>) -> (BasicChromosome, BasicChromosome) {
 		var offspring = (self, pairChromosome)
 		
 		offspring.0.genes[range] = pairChromosome.genes[range]
@@ -150,7 +150,7 @@ extension BasicChromosome {
 	/// Returns a point in the range `start..<count`, unless `start == 0` in which case the range is `start..<(count - 1)`.
 	///
 	/// - parameter randomGenerator: Generates an `Int` in the range `0..<$0`.
-	private func twoPointCrossoverEndLocusForStartLocus(start: Int, randomGenerator: UInt32 -> Int) -> Int {
+	fileprivate func twoPointCrossoverEndLocusForStartLocus(_ start: Int, randomGenerator: (UInt32) -> Int) -> Int {
 		var rangeSpan = UInt32(count - start)
 		// Make sure the entire chromosome isn't crossed-over
 		if start == 0 {
@@ -171,13 +171,13 @@ extension BasicChromosome {
 
 extension BasicChromosome {
 	
-	public static func mutation(mutationRate: Double) -> (BasicChromosome) -> BasicChromosome {
+	public static func mutation(_ mutationRate: Double) -> (BasicChromosome) -> BasicChromosome {
 		return { chromosome in
 			chromosome.mutateWithRate(mutationRate)
 		}
 	}
 	
-	public static func twoPointCrossover(chromosome1: BasicChromosome, chromosome2: BasicChromosome) -> (BasicChromosome, BasicChromosome) {
+	public static func twoPointCrossover(_ chromosome1: BasicChromosome, chromosome2: BasicChromosome) -> (BasicChromosome, BasicChromosome) {
 		return chromosome1.twoPointCrossoverWithChromosome(chromosome2)
 	}
 	
@@ -185,13 +185,13 @@ extension BasicChromosome {
 
 // MARK: - CollectionType
 
-extension BasicChromosome : CollectionType {
+extension BasicChromosome : Collection {
 	
 	public typealias Element = Bool
 	
 	public typealias Index = Int
 	
-	public typealias Generator = IndexingGenerator<[Bool]>
+	public typealias Iterator = IndexingIterator<[Bool]>
 	
 	public typealias SubSlice = ArraySlice<Bool>
 	
@@ -215,11 +215,11 @@ extension BasicChromosome : CollectionType {
 		return 0
 	}
 	
-	public func generate() -> BasicChromosome.Generator {
-		return BasicChromosome.Generator(genes)
+	public func makeIterator() -> BasicChromosome.Iterator {
+		return BasicChromosome.Iterator(genes)
 	}
 	
-	public mutating func removeFirst(n: Int) {
+	public mutating func removeFirst(_ n: Int) {
 		genes.removeFirst(n)
 	}
 	
@@ -245,7 +245,7 @@ extension BasicChromosome : CollectionType {
 
 // MARK: - LiteralConvertible
 
-extension BasicChromosome : ArrayLiteralConvertible, StringLiteralConvertible {
+extension BasicChromosome : ExpressibleByArrayLiteral, ExpressibleByStringLiteral {
 	
 	public init(arrayLiteral elements: BasicChromosome.Element...) {
 		genes = elements
@@ -273,7 +273,7 @@ public func ==(lhs: BasicChromosome, rhs: BasicChromosome) -> Bool {
 
 public prefix func !(chromosome: BasicChromosome) -> BasicChromosome {
 	var newChromosome = chromosome
-	for (i, gene) in newChromosome.enumerate() {
+	for (i, gene) in newChromosome.enumerated() {
 		newChromosome.genes[i] = !gene
 	}
 	return newChromosome

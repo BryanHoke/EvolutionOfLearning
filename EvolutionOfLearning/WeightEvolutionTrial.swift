@@ -25,7 +25,7 @@ public struct NetworkEvolutionTrial<IndividualType : Individual> {
 		return NetworkEvolutionTrialRecord(evolutionRecord: evolutionRecord)
 	}
 	
-	private func runEvolution() -> EvolutionRecord<IndividualType> {
+	fileprivate func runEvolution() -> EvolutionRecord<IndividualType> {
 		let fitness = makeFitnessAgent(with: tasks)
 		let reproduction = makeReproductionAgent()
 		let environment = makeEnvironment(fitness, reproduction: reproduction)
@@ -33,20 +33,20 @@ public struct NetworkEvolutionTrial<IndividualType : Individual> {
 		return evolution.run()
 	}
 	
-	private func makeFitnessAgent(with tasks: [Task]) -> AnyFitnessAgent<ChromosomeType> {
+	fileprivate func makeFitnessAgent(with tasks: [Task]) -> AnyFitnessAgent<ChromosomeType> {
 		let fitnessConfig = config.fitnessConfig
 		return AnyFitnessAgent(NetworkEvolutionFitnessAgent(config: fitnessConfig, tasks: tasks))
 	}
 	
-	private func makeReproductionAgent() -> AnyReproductionAgent<IndividualType> {
+	fileprivate func makeReproductionAgent() -> AnyReproductionAgent<IndividualType> {
 		return AnyReproductionAgent(ChalmersReproductionAgent(config: config.reproductionConfig))
 	}
 	
-	private func makeEnvironment(fitness: AnyFitnessAgent<ChromosomeType>, reproduction: AnyReproductionAgent<IndividualType>) -> EvolutionaryEnvironment<IndividualType> {
+	fileprivate func makeEnvironment(_ fitness: AnyFitnessAgent<ChromosomeType>, reproduction: AnyReproductionAgent<IndividualType>) -> EvolutionaryEnvironment<IndividualType> {
 		return EvolutionaryEnvironment(config: config.environmentConfig, fitnessAgent: fitness, reproductionAgent: reproduction)
 	}
 	
-	private func makeEvolution<EnvironmentType : Environment>(environment: EnvironmentType) -> Evolution<EnvironmentType> {
+	fileprivate func makeEvolution<EnvironmentType : Environment>(_ environment: EnvironmentType) -> Evolution<EnvironmentType> {
 		return Evolution(config: config.evolutionConfig, environment: environment)
 	}
 	

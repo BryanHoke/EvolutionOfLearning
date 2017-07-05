@@ -12,12 +12,12 @@ struct ConfigFileWriter {
 	
 	let filename = "Config.txt"
 	
-	func write(config: ExperimentConfig, inDirectory directoryPath: String) {
+	func write(_ config: ExperimentConfig, inDirectory directoryPath: String) {
 		let content = makeFileContent(for: config)
 		let path = "\(directoryPath)/\(filename)"
 		
 		do {
-			try content.writeToFile(path, atomically: true, encoding: NSUTF8StringEncoding)
+			try content.write(toFile: path, atomically: true, encoding: String.Encoding.utf8)
 		}
 		catch let error as NSError {
 			preconditionFailure("\(error)")
