@@ -218,7 +218,7 @@ extension Population {
 	public func populationWithUniformSelection(_ count: Int) -> PopulationType {
 		var newPopulation = PopulationType()
 		var pool = self
-		let newPopulationSize = min(count, pool.count)
+		let newPopulationSize = Swift.min(count, pool.count)
 		
 		for i in 0..<newPopulationSize {
 			let index = Int(arc4random_uniform(UInt32(newPopulationSize - i)))
@@ -252,7 +252,7 @@ extension Population {
 		return { population in
 			var selectedIndices = Set<Int>()
 			var pool = (0..<population.count).map { $0 }
-			let selectionCount = min(count, pool.count)
+			let selectionCount = Swift.min(count, pool.count)
 			
 			for i in 0..<selectionCount {
 				let index = Int(arc4random_uniform(UInt32(selectionCount - i)))
