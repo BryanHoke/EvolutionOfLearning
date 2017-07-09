@@ -106,7 +106,7 @@ public struct SegmentedChromosome : Chromosome, ExpressibleByArrayLiteral {
 		}
 	}
 	
-	public subscript(subRange: Range<Int>) -> ArraySlice<Bool> {
+	public subscript(subRange: CountableRange<Int>) -> ArraySlice<Bool> {
 		get {
 			return genes[subRange]
 		}

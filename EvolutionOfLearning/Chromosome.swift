@@ -29,7 +29,7 @@ public protocol Chromosome {
 	
 	subscript(index: Int) -> Bool { get set }
 	
-	subscript(subRange: Range<Int>) -> ArraySlice<Bool> { get set }
+	subscript(subRange: CountableRange<Int>) -> ArraySlice<Bool> { get set }
 	
 	func +(lhs: Self, rhs: Self) -> Self
 	

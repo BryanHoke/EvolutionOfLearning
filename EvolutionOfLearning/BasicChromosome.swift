@@ -116,7 +116,7 @@ extension BasicChromosome {
 			return Int(arc4random_uniform(rangeSpan))
 		})
 		
-		return twoPointCrossoverWithChromosome(pairChromosome, range: start...end)
+		return twoPointCrossoverWithChromosome(pairChromosome, range: Range(start...end))
 	}
 	
 	/// Returns the offspring of a two-point crossover operation between this `Chromosome` and a pair `Chromosome`, using a specified random seed to generate the crossover points.
@@ -131,7 +131,7 @@ extension BasicChromosome {
 			return Int(arc4random()) % Int(rangeSpan)
 		})
 		
-		return twoPointCrossoverWithChromosome(pairChromosome, range: start...end)
+		return twoPointCrossoverWithChromosome(pairChromosome, range: Range(start...end))
 	}
 	
 	/// Returns the offspring of a two-point crossover operation between this `Chromosome` and a pair `Chromosome`, using a specified range defined by the two points of crossover
@@ -232,7 +232,7 @@ extension BasicChromosome : Collection {
 		}
 	}
 	
-	public subscript(subRange: Range<Int>) -> BasicChromosome.SubSlice {
+	public subscript(subRange: CountableRange<Int>) -> BasicChromosome.SubSlice {
 		get {
 			return genes[subRange]
 		}
