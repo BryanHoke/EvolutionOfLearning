@@ -24,7 +24,7 @@ public struct ConcurrentDispatcher {
 			queue.async(group: group, execute: block)
 		}
 		
-		group.wait(timeout: DispatchTime.distantFuture)
+		let _ = group.wait(timeout: DispatchTime.distantFuture)
 	}
 	
 }
@@ -37,5 +37,5 @@ public func concurrentlyDispatch(_ blocks: [()->()], qos: DispatchQoS.QoSClass) 
 		queue.async(group: group, execute: block)
 	}
 	
-	group.wait(timeout: DispatchTime.distantFuture)
+	let _ = group.wait(timeout: DispatchTime.distantFuture)
 }
