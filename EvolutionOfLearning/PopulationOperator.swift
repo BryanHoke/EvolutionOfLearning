@@ -8,11 +8,11 @@
 
 import Foundation
 
+private var __rouletteWheelSelection_once: () = { () -> Void in
+    srand48(Int(arc4random()))
+}()
+
 public struct PopulationOperator<Member : Individual> : PopulationOperating {
-	
-	private lazy var __once: () = { () -> Void in
-			srand48(Int(arc4random()))
-		}()
 	
 	public typealias PopulationType = Population<Member>
 	
@@ -30,8 +30,7 @@ public struct PopulationOperator<Member : Individual> : PopulationOperating {
 	}
 	
 	public func rouletteWheelSelection(from population: PopulationType) -> Member {
-		var onceToken: Int = 0
-		_ = self.__once
+		_ = __rouletteWheelSelection_once
 		
 		let fitnessRatioThreshold = drand48()
 		
