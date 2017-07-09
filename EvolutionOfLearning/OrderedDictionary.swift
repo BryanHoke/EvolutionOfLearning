@@ -67,6 +67,10 @@ struct OrderedDictionary<Key: Hashable, Value> : ExpressibleByDictionaryLiteral 
 }
 
 extension OrderedDictionary : Collection {
+    
+    func index(after i: Int) -> Int {
+        return i + 1
+    }
 	
 	typealias Element = (Key, Value)
 	

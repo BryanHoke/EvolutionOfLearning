@@ -9,6 +9,10 @@
 import Foundation
 import Darwin
 
+private var __rouletteWheelSelect_once: () = { () -> Void in
+    srand48(Int(arc4random()))
+}()
+
 /// An ordered collection of `Individual`s.
 public struct Population<Member : Individual> : ExpressibleByArrayLiteral {
 	
@@ -167,10 +171,7 @@ extension Population {
 	/// Roulette wheel selection is a replacing selection where the probability of an individual being selected is linearly proportional to its fitness.
 	public func rouletteWheelSelect() -> Member {
 		// Seed the random double generator (once)
-		var onceToken: Int = 0
-		dispatch_once(&onceToken) { () -> Void in
-			srand48(Int(arc4random()))
-		}
+		let _ = __rouletteWheelSelect_once
 		
 		// Randomly generate a cumulative fitness ratio threshold
 		let fitnessRatioThreshold = drand48()
@@ -268,6 +269,10 @@ extension Population {
 // MARK: - CollectionType
 
 extension Population : Collection {
+    
+    public func index(after i: Int) -> Int {
+        return i + 1
+    }
 	
 	public typealias Element = Member
 	

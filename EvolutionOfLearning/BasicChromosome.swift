@@ -186,38 +186,24 @@ extension BasicChromosome {
 // MARK: - CollectionType
 
 extension BasicChromosome : Collection {
-	
+
 	public typealias Element = Bool
 	
 	public typealias Index = Int
 	
-	public typealias Iterator = IndexingIterator<[Bool]>
-	
 	public typealias SubSlice = ArraySlice<Bool>
-	
-	public var count: Int {
-		return genes.count
-	}
+    
+    public var startIndex: Int {
+        return 0
+    }
 	
 	public var endIndex: Int {
 		return genes.endIndex
 	}
-	
-	public var first: Bool? {
-		return genes.first
-	}
-	
-	public var isEmpty: Bool {
-		return genes.isEmpty
-	}
-	
-	public var startIndex: Int {
-		return 0
-	}
-	
-	public func makeIterator() -> BasicChromosome.Iterator {
-		return BasicChromosome.Iterator(genes)
-	}
+    
+    public func index(after i: Int) -> Int {
+        return i + 1
+    }
 	
 	public mutating func removeFirst(_ n: Int) {
 		genes.removeFirst(n)
