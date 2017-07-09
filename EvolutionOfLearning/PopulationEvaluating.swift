@@ -42,20 +42,16 @@ open class ConcurrentPopulationEvaluator<IndividualType : Individual> : Populati
 	
 	fileprivate func makeDispatchBlocks(forEvaluating population: inout PopulationType) -> [()->()] {
 		return population.indices.map { index -> ()->() in
-			self.makeBlockToEvaluateFitness(of: &population[index], atIndex: index)
+			self.makeBlockToEvaluateFitness(of: population[index], atIndex: index)
 		}
 	}
 	
-	fileprivate func makeBlockToEvaluateFitness(of member: inout IndividualType, atIndex index: Int) -> ()->() {
+	fileprivate func makeBlockToEvaluateFitness(of member: IndividualType, atIndex index: Int) -> ()->() {
 		return {
-			self.evaluateFitness(of: &member)
-			self.fitnesses[index] = member.fitness
+			let chromosome = member.chromosome
+            let fitness = self.fitnessFunc(chromosome)
+			self.fitnesses[index] = fitness
 		}
 	}
-	
-	fileprivate func evaluateFitness(of member: inout IndividualType) {
-		let chromosome = member.chromosome
-		member.fitness = fitnessFunc(chromosome)
-	}
-	
+    
 }
